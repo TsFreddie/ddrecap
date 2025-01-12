@@ -275,7 +275,7 @@ export const POST: RequestHandler = async ({ url }) => {
 	return produce(
 		async ({ emit, lock }) => {
 			try {
-				const data = await getYearlyData(name, year, offset);
+				const data = getYearlyData(name, year, offset);
 				if (data) {
 					const d = decode(data) as YearlyData;
 					if (stopped) return;
@@ -422,7 +422,7 @@ export const POST: RequestHandler = async ({ url }) => {
 				d.map = mapperMaps;
 
 				// store data in db
-				await setYearlyData(name, year, offset, encode(d) as any);
+				setYearlyData(name, year, offset, encode(d) as any);
 
 				if (stopped) return;
 				emit('data', JSON.stringify({ d }));
