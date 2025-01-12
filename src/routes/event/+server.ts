@@ -252,7 +252,11 @@ export const POST: RequestHandler = async ({ url }) => {
 	// the less than an hour error should be acceptable
 	// the finally date should be displayed in the user's timezone
 	// errors can only show up when the user have date info at the start or the end of the year
-	let offset = parseInt(timezone.slice(4));
+
+	let offset = parseInt(timezone.slice(3));
+	if (isNaN(offset)) {
+		offset = 0;
+	}
 
 	// referece: https://en.wikipedia.org/wiki/List_of_UTC_offsets
 	if (offset < -12 || offset > 14) {
@@ -261,6 +265,8 @@ export const POST: RequestHandler = async ({ url }) => {
 
 	// this will be used for querying the database
 	const tz = `${offset < 0 ? '-' : '+'}${Math.abs(offset).toString().padStart(2, '0')}:00`;
+
+	console.log(tz);
 
 	const start = new Date(`${year}-01-01T00:00:00`);
 	const end = new Date(`${year}-12-31T23:59:59`);

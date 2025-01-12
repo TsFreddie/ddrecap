@@ -1338,14 +1338,21 @@
 
 	/** this is needed to grab user's system timezone and navigate to the timezone specific recap page */
 	const goForName = (name: string) => {
-		const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-		console.log(timezone);
-		goto(
-			`?name=${encodeAsciiURIComponent(name)}&year=${data.year}&tz=${encodeURIComponent(timezone)}`,
-			{
-				replaceState: true
-			}
-		);
+		try {
+			const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			goto(
+				`?name=${encodeAsciiURIComponent(name)}&year=${data.year}&tz=${encodeURIComponent(timezone)}`,
+				{
+					replaceState: true
+				}
+			);
+		} catch (e) {
+			console.error('Failed to check user timezone');
+			console.error(e);
+			goto(
+				`?name=${encodeAsciiURIComponent(name)}&year=${data.year}&tz=${encodeURIComponent('UTC')}`
+			);
+		}
 	};
 </script>
 
@@ -1427,7 +1434,7 @@
 
 {#snippet regularFormat(id: number, card: CardData)}
 	<div
-		class="motion-delay-700 flex h-full w-full items-center justify-center text-[0.8em] transition-[backdrop-filter]"
+		class="flex h-full w-full items-center justify-center text-[0.8em] transition-[backdrop-filter] motion-delay-700"
 		class:motion-opacity-in-0={id == currentCard}
 		class:motion-opacity-out-0={id != currentCard}
 		class:backdrop-blur-sm={showContent}
@@ -1442,7 +1449,7 @@
 		>
 			{#if card.leftTeeSkin}
 				<div
-					class="motion-duration-500 motion-delay-700 absolute left-[-12.5%] h-[20%] w-[20%]"
+					class="absolute left-[-12.5%] h-[20%] w-[20%] motion-duration-500 motion-delay-700"
 					style="top: {card.leftTeeTop ?? 0}%"
 					class:motion-translate-x-in-[-50%]={showContent && id == currentCard}
 					class:motion-translate-x-out-[-50%]={!showContent && id != currentCard}
@@ -1462,7 +1469,7 @@
 			{/if}
 			{#if card.rightTeeSkin}
 				<div
-					class="motion-duration-500 motion-delay-700 absolute right-[-12.5%] h-[20%] w-[20%]"
+					class="absolute right-[-12.5%] h-[20%] w-[20%] motion-duration-500 motion-delay-700"
 					style="top: {card.rightTeeTop ?? 0}%"
 					class:motion-translate-x-in-[50%]={showContent && id == currentCard}
 					class:motion-translate-x-out-[50%]={!showContent && id != currentCard}
@@ -1508,7 +1515,7 @@
 
 {#snippet noBlurRegularFormat(id: number, card: CardData)}
 	<div
-		class="motion-delay-700 flex h-full w-full items-center justify-center text-[0.8em]"
+		class="flex h-full w-full items-center justify-center text-[0.8em] motion-delay-700"
 		class:motion-opacity-in-0={id == currentCard}
 		class:motion-opacity-out-0={id != currentCard}
 	>
@@ -1565,7 +1572,7 @@
 				{data.year} Badges for {data.name}
 			</div>
 			<div
-				class="motion-duration-500 motion-delay-700 absolute left-[-9%] top-[70%] h-[20%] w-[20%]"
+				class="absolute left-[-9%] top-[70%] h-[20%] w-[20%] motion-duration-500 motion-delay-700"
 				class:motion-translate-x-in-[-70%]={id == currentCard}
 				class:motion-translate-x-out-[-70%]={id != currentCard}
 				class:motion-rotate-in-[-12deg]={id == currentCard}
@@ -1582,7 +1589,7 @@
 				/>s
 			</div>
 			<div
-				class="motion-duration-500 motion-delay-1500 absolute bottom-[2.5%] left-[7%] flex h-[30%] w-[55%] flex-row items-center justify-center"
+				class="absolute bottom-[2.5%] left-[7%] flex h-[30%] w-[55%] flex-row items-center justify-center motion-duration-500 motion-delay-1500"
 				class:motion-opacity-in-0={id == currentCard}
 			>
 				<div class="rounded-lg bg-white/80 px-[3%] py-[2%] text-center text-[0.9em] text-black">
@@ -1629,7 +1636,7 @@
 			{/if}
 			<div class="h-svh"></div>
 		</div>
-		<div class="absolute left-[5%] right-0 top-0 z-20 flex flex-row space-y-2">
+		<div class="absolute left-[5%] right-0 top-0 z-20 flex flex-row space-x-2">
 			{#if data.player}
 				<div class="rounded-b-xl bg-blue-600 px-4 py-2 font-semibold">
 					DDNet {data.year} Recap for {data.player.name}
@@ -1637,10 +1644,15 @@
 			{/if}
 		</div>
 		<div class="absolute bottom-0 left-0 right-0 z-20 flex flex-row space-y-2">
+			{#if data.tz}
+				<div class="absolute bottom-0 right-0 rounded-t-xl bg-blue-500 px-4 py-2 font-semibold">
+					Timezone: {data.tz}
+				</div>
+			{/if}
 			<a
 				data-sveltekit-replacestate
 				href="/"
-				class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-slate-600 px-4 py-2 text-white hover:bg-slate-700"
+				class="rounded-tr bg-slate-600 px-4 py-2 text-white motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 hover:bg-slate-700"
 			>
 				Change name
 			</a>
@@ -1673,7 +1685,7 @@
 					style="background-image: url(/assets/yearly/bif.png)"
 				>
 					<div
-						class="motion-translate-x-loop-[800%] motion-duration-[5000ms] absolute h-[150%] w-16 translate-x-[-400%] rotate-12 bg-slate-200/10"
+						class="absolute h-[150%] w-16 translate-x-[-400%] rotate-12 bg-slate-200/10 motion-translate-x-loop-[800%] motion-duration-[5000ms]"
 					></div>
 					{#if error}
 						<div
@@ -1682,11 +1694,19 @@
 							Unknown error, please try again later
 						</div>
 					{:else}
-						<div class="rounded-3xl bg-slate-700/40 px-8 py-4 text-xl font-bold backdrop-blur-lg">
-							<div class="motion-scale-loop-[110%] motion-duration-2000 w-fit text-red-300">
+						<div
+							class="rounded-3xl bg-slate-700/40 px-8 py-4 text-center text-xl font-bold backdrop-blur-lg"
+						>
+							<div class="w-full text-red-300 motion-scale-loop-[110%] motion-duration-2000">
 								Happy new year!
 							</div>
 							DDNet {data.year} Recap
+							<div class="text-sm">
+								Powered by <a
+									class="text-orange-400 hover:text-orange-300"
+									href="https://db.ddstats.org">ddstats.org</a
+								>
+							</div>
 						</div>
 					{/if}
 				</div>
@@ -1695,7 +1715,7 @@
 						<div class="flex h-[10rem] w-full flex-col items-center justify-center gap-4">
 							<div class="flex flex-col space-y-2">
 								<button
-									class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 text-nowrap rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+									class="text-nowrap rounded bg-blue-500 px-4 py-2 text-white motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 hover:bg-blue-600"
 									onclick={() => goto(``)}
 								>
 									Re-enter name
@@ -1725,7 +1745,7 @@
 							{#key data.player.name}
 								<div out:fade>
 									<div
-										class="motion-translate-x-in-[-200%] motion-rotate-in-12 motion-duration-1000 motion-delay-100 flex flex-row items-center justify-center gap-8"
+										class="flex flex-row items-center justify-center gap-8 motion-translate-x-in-[-200%] motion-rotate-in-12 motion-duration-1000 motion-delay-100"
 									>
 										<TeeRender
 											className="relative h-20 w-20"
@@ -1743,7 +1763,7 @@
 									</div>
 									<div class="flex flex-col space-y-2">
 										<button
-											class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 mt-2 text-nowrap rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+											class="mt-2 text-nowrap rounded bg-blue-500 px-4 py-2 text-white motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 hover:bg-blue-600"
 											onclick={startProcess}
 										>
 											{isMobile() ? 'Tap' : 'Click'} here to start
@@ -1753,7 +1773,7 @@
 										<a
 											data-sveltekit-replacestate
 											href="/"
-											class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-slate-800 px-4 py-2 text-white hover:bg-slate-900"
+											class="rounded-tr bg-slate-800 px-4 py-2 text-white motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 hover:bg-slate-900"
 										>
 											Change name
 										</a>
@@ -1767,7 +1787,7 @@
 								<div class="text-sm text-slate-300">
 									Enter player name
 									{#if data.error}
-										<span class="motion-text-loop-red-400 text-red-500">
+										<span class="text-red-500 motion-text-loop-red-400">
 											{data.error}
 										</span>
 									{/if}
