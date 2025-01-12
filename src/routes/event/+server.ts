@@ -240,7 +240,7 @@ export const POST: RequestHandler = async ({ url }) => {
 			timeZone: timezone,
 			hour: '2-digit',
 			hour12: false,
-			timeZoneName: 'short'
+			timeZoneName: 'shortOffset'
 		});
 		timezone =
 			dateTimeFormat.formatToParts(date).find((part) => part.type == 'timeZoneName')?.value ||
