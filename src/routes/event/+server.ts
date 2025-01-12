@@ -266,8 +266,6 @@ export const POST: RequestHandler = async ({ url }) => {
 	// this will be used for querying the database
 	const tz = `${offset < 0 ? '-' : '+'}${Math.abs(offset).toString().padStart(2, '0')}:00`;
 
-	console.log(tz);
-
 	const start = new Date(`${year}-01-01T00:00:00`);
 	const end = new Date(`${year}-12-31T23:59:59`);
 	const lastYearEnd = new Date(`${year - 1}-12-31T23:59:59`);
