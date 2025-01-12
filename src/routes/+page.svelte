@@ -1237,27 +1237,24 @@
 		} else {
 			showContent = !showContent;
 
-			try {
-				if (
-					navigator.canShare &&
-					navigator.canShare() &&
-					totalCards &&
-					currentCard == totalCards.cards.length - 1
-				) {
-					navigator.share({
-						title: `DDNet ${data.year} Recap for ${data.name}`,
-						text: `Check out ${data.name}'s DDNet ${data.year} recap`,
-						url: shareableUrl
-					});
-				} else {
-					navigator.clipboard.writeText(
-						`Check out ${data.name}'s DDNet ${data.year} recap: ${shareableUrl}`
-					);
+			if (totalCards && currentCard == totalCards.cards.length - 1) {
+				try {
+					if (navigator.canShare && navigator.canShare()) {
+						navigator.share({
+							title: `DDNet ${data.year} Recap for ${data.name}`,
+							text: `Check out ${data.name}'s DDNet ${data.year} recap`,
+							url: shareableUrl
+						});
+					} else {
+						navigator.clipboard.writeText(
+							`Check out ${data.name}'s DDNet ${data.year} recap: ${shareableUrl}`
+						);
 
-					shareInfo = 'Copied to clipboard!';
+						shareInfo = 'Copied to clipboard!';
+					}
+				} catch {
+					shareError = 'Failed to share. You can copy the address manually or take a screenshot';
 				}
-			} catch {
-				shareError = 'Failed to share. You can copy the address manually or take a screenshot';
 			}
 		}
 		draggingPointer = null;
