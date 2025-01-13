@@ -1640,7 +1640,7 @@
 		</div>
 		<div class="absolute bottom-0 left-0 right-0 z-20 flex flex-row space-y-2">
 			{#if data.tz}
-				<div class="absolute bottom-0 right-0 rounded-t-xl bg-blue-500 px-4 py-2 font-semibold">
+				<div class="absolute bottom-0 right-0 rounded-tl-xl bg-blue-500 px-4 py-2 font-semibold">
 					Timezone: {data.tz}
 				</div>
 			{/if}
