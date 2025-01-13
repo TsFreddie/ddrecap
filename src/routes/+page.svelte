@@ -890,12 +890,10 @@
 			const isBonusMap = mapHasBonus(d.lf[0]);
 			const dateTime = new Date(d.lf[2] * 1000);
 			const titles = [];
-			if (d.lf[1] >= 12 * 60 * 60) {
-				if (isBonusMap) {
-					titles.push({ bg: '#f28482', color: '#000', text: 'Time Wizard' });
-				} else {
-					titles.push({ bg: '#c8b6ff', color: '#000', text: 'Afk Warrior' });
-				}
+			if (isBonusMap) {
+				titles.push({ bg: '#f28482', color: '#000', text: 'Time Wizard' });
+			} else if (d.lf[1] >= 12 * 60 * 60) {
+				titles.push({ bg: '#c8b6ff', color: '#000', text: 'Afk Warrior' });
 			} else if (d.lf[1] >= 4 * 60 * 60) {
 				titles.push({ bg: '#ffd6ff', color: '#000', text: 'Perseverance' });
 			}
