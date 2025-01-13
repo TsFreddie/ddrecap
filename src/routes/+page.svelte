@@ -1071,7 +1071,7 @@
 		}
 		if (d.map && d.map.length > 0) {
 			// 地图作者
-			const titles = [{ bg: '#333533', color: '#fff', text: 'DDNet Artist' }];
+			const titles = [{ bg: '#333533', color: '#fff', text: 'Level Designer' }];
 			allTitles.push(...titles);
 			cards.push({
 				titles,
