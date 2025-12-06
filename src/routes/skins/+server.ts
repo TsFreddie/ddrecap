@@ -1,4 +1,3 @@
-import { error } from '@sveltejs/kit';
 import { skins } from '$lib/server/fetches/skins';
 
 export const GET = async ({ url }) => {
