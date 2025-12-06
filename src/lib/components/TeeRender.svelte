@@ -1,5 +1,12 @@
-<script module lang="ts">
-	export interface TeePose {
+<script lang="ts">
+	import { encodeBase64 } from '$lib/base64';
+	import { skinQueue } from '$lib/skin-queue';
+	import { onDestroy, onMount } from 'svelte';
+	import { ddnetColorToRgb } from '$lib/ddnet/helpers';
+	import { rgbToFilter } from '$lib/rgbToFilter';
+	import { getSkinUrl } from '$lib/stores/skins';
+
+	interface TeePose {
 		bodyRotation: number;
 		eyesRotation: number;
 		frontFootRotation: number;
@@ -8,15 +15,6 @@
 		frontFootPosition: string;
 		backFootPosition: string;
 	}
-</script>
-
-<script lang="ts">
-	import { encodeBase64 } from '$lib/base64';
-	import { skinQueue } from '$lib/skin-queue';
-	import { onDestroy, onMount } from 'svelte';
-	import { ddnetColorToRgb } from '$lib/ddnet/helpers';
-	import { rgbToFilter } from '$lib/rgbToFilter';
-	import { getSkinUrl } from '$lib/stores/skins';
 
 	const {
 		/** Target url of the skin, if not provided, either `name` or `url` must be provided */

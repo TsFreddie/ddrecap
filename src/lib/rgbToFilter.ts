@@ -109,7 +109,14 @@ const loss = (filters: number[], target: Target): number => {
 	color.g = clamp(color.g * contrast + offset * 255);
 	color.b = clamp(color.b * contrast + offset * 255);
 	const currentHsl = hsl(color);
-	return Math.abs(color.r - target.rgb.r) + Math.abs(color.g - target.rgb.g) + Math.abs(color.b - target.rgb.b) + Math.abs(currentHsl.h - target.hsl.h) + Math.abs(currentHsl.s - target.hsl.s) + Math.abs(currentHsl.l - target.hsl.l);
+	return (
+		Math.abs(color.r - target.rgb.r) +
+		Math.abs(color.g - target.rgb.g) +
+		Math.abs(color.b - target.rgb.b) +
+		Math.abs(currentHsl.h - target.hsl.h) +
+		Math.abs(currentHsl.s - target.hsl.s) +
+		Math.abs(currentHsl.l - target.hsl.l)
+	);
 };
 
 const clampSpsa = (value: number, idx: number): number => {

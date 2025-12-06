@@ -1,9 +1,8 @@
-import type { PageServerLoad } from './$types';
 import { decodeAsciiURIComponent } from '$lib/link';
 import { decodeBase64Url } from '$lib/base64url';
 import { decode } from 'msgpackr';
 
-export const load = (async ({ fetch, url, parent }) => {
+export const load = async ({ fetch, url, parent }) => {
 	let year = parseInt(url.searchParams.get('year') || '2024');
 	let name = decodeAsciiURIComponent(url.searchParams.get('name') || '');
 	let tz = url.searchParams.get('tz') || 'utc+0';
@@ -51,4 +50,4 @@ export const load = (async ({ fetch, url, parent }) => {
 	}
 
 	return { year, name, skin, player, tz, ...(await parent()) };
-}) satisfies PageServerLoad;
+};

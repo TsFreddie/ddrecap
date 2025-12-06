@@ -1,4 +1,3 @@
-import type { RequestHandler } from './$types';
 import sqlstring from 'sqlstring-sqlite';
 import { produce } from 'sveltekit-sse';
 import { maps } from '$lib/server/fetches/maps';
@@ -227,7 +226,7 @@ const findTeamSize = async (tz: string, name: string, start: Date, end: Date) =>
 	return result.rows as [number, string, string][];
 };
 
-export const POST: RequestHandler = async ({ url }) => {
+export const POST = async ({ url }) => {
 	const name = url.searchParams.get('name') || '';
 	const year = parseInt(url.searchParams.get('year') || CURRENT_YEARLY.toString());
 	let timezone = (url.searchParams.get('tz') || 'utc+0').toLowerCase();

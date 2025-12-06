@@ -1,8 +1,7 @@
 import { error } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
 import { skins } from '$lib/server/fetches/skins';
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET = async ({ url }) => {
 	const name = url.searchParams.get('name');
 
 	if (!name) {
