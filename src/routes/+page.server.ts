@@ -1,9 +1,10 @@
 import { decodeAsciiURIComponent } from '$lib/link';
 import { decodeBase64Url } from '$lib/base64url';
 import { decode } from 'msgpackr';
+import { CURRENT_YEAR } from '$lib/consts';
 
 export const load = async ({ fetch, url, parent }) => {
-	let year = parseInt(url.searchParams.get('year') || '2024');
+	let year = parseInt(url.searchParams.get('year') || CURRENT_YEAR.toString());
 	let name = decodeAsciiURIComponent(url.searchParams.get('name') || '');
 	let tz = url.searchParams.get('tz') || 'utc+0';
 

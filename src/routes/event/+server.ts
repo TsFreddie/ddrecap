@@ -5,9 +5,7 @@ import { ddnetDate } from '$lib/ddnet/helpers';
 import { getYearlyData, setYearlyData } from '$lib/server/db/yearly';
 import { encode, decode } from 'msgpackr';
 import { error } from '@sveltejs/kit';
-
-// define current yearly, will only generate yearly data for this year
-const CURRENT_YEARLY = 2024;
+import { CURRENT_YEAR } from '$lib/consts';
 
 export type YearlyData = {
 	/** version */
@@ -228,7 +226,7 @@ const findTeamSize = async (tz: string, name: string, start: Date, end: Date) =>
 
 export const POST = async ({ url }) => {
 	const name = url.searchParams.get('name') || '';
-	const year = parseInt(url.searchParams.get('year') || CURRENT_YEARLY.toString());
+	const year = parseInt(url.searchParams.get('year') || CURRENT_YEAR.toString());
 	let timezone = (url.searchParams.get('tz') || 'utc+0').toLowerCase();
 
 	if (!timezone.startsWith('utc+') && !timezone.startsWith('gmt+')) {
@@ -289,7 +287,7 @@ export const POST = async ({ url }) => {
 				}
 
 				// don't generate yearly data for other years
-				if (year != CURRENT_YEARLY) {
+				if (year != CURRENT_YEAR) {
 					throw new Error('Not available');
 				}
 

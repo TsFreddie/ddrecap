@@ -14,6 +14,7 @@
 	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
 	import TeeRender from '$lib/components/TeeRender.svelte';
+	import * as m from '$lib/paraglide/messages';
 
 	type CardFormat = Snippet<[number, CardData]>;
 
@@ -1108,7 +1109,7 @@
 						type: 'b',
 						bg: '#A00F2A',
 						color: '#fff',
-						text: `Happy New Year!`,
+						text: m.happy_new_year(),
 						rotation: 0
 					}
 				],
@@ -1634,7 +1635,7 @@
 		<div class="absolute top-0 right-0 left-[5%] z-20 flex flex-row space-x-2">
 			{#if data.player}
 				<div class="rounded-b-xl bg-blue-600 px-4 py-2 font-semibold">
-					DDNet {data.year} Recap for {data.player.name}
+					DDNet Recap {data.year} for {data.player.name}
 				</div>
 			{/if}
 		</div>
@@ -1693,9 +1694,9 @@
 							class="rounded-3xl bg-slate-700/40 px-8 py-4 text-center text-xl font-bold backdrop-blur-lg"
 						>
 							<div class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300">
-								Happy new year!
+								{m.happy_new_year()}
 							</div>
-							DDNet {data.year} Recap
+							DDNet Recap {data.year}
 							<div class="text-sm">
 								Powered by <a
 									class="text-orange-400 hover:text-orange-300"
