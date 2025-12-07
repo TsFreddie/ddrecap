@@ -1754,8 +1754,8 @@
 										/>
 										<div class="flex flex-col">
 											<div class="font-semibold text-slate-300">{data.player.name}</div>
-											<div>Points：{data.player.points.points}pts</div>
-											<div>Rank：No.{data.player.points.rank}</div>
+											<div>{m.points_info({points:`${data.player.points.points}pts`})}</div>
+											<div>{m.rank_info({rank: data.player.points.rank})}</div>
 										</div>
 									</div>
 									<div class="flex flex-col space-y-2">
@@ -1763,7 +1763,7 @@
 											class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 mt-2 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600"
 											onclick={startProcess}
 										>
-											{isMobile() ? 'Tap' : 'Click'} here to start
+											{m.start_recap()}
 										</button>
 									</div>
 									<div class="absolute right-0 bottom-0 left-0 flex flex-row space-y-2">
@@ -1772,7 +1772,7 @@
 											href="/"
 											class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-slate-800 px-4 py-2 text-white hover:bg-slate-900"
 										>
-											Change name
+											{m.change_name()}
 										</a>
 									</div>
 								</div>

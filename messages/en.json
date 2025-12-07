@@ -5,5 +5,10 @@
 	"ddnet_recap_for": "DDNet Recap {year} for {player}",
 	"powered_by": "Powered by",
 	"enter_player_name": "Enter player name",
-	"go": "Go"
+	"go": "Go",
+	"points_info": "Points: {points}",
+	"rank_info": "Rank: {rank}",
+	"action_to_start": "{isMobile() ? 'Tap' : 'Click'} here to start",
+	"start_recap": "Start recap",
+	"change_name": "Change name"
 }
