@@ -1,4 +1,9 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"happy_new_year": "Happy New Year!"
+	"happy_new_year": "Happy New Year!",
+	"ddnet_recap": "DDNet Recap",
+	"ddnet_recap_for": "DDNet Recap {year} for {player}",
+	"powered_by": "Powered by",
+	"enter_player_name": "Enter player name",
+	"go": "Go"
 }

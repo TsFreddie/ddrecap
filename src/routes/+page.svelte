@@ -1356,9 +1356,9 @@
 
 <svelte:head>
 	{#if data.name}
-		<title>{data.name} - DDNet Recap {data.year}</title>
+		<title>{data.name} - {m.ddnet_recap()} {data.year}</title>
 	{:else}
-		<title>DDNet Recap {data.year}</title>
+		<title>{m.ddnet_recap()} {data.year}</title>
 	{/if}
 </svelte:head>
 
@@ -1635,7 +1635,7 @@
 		<div class="absolute top-0 right-0 left-[5%] z-20 flex flex-row space-x-2">
 			{#if data.player}
 				<div class="rounded-b-xl bg-blue-600 px-4 py-2 font-semibold">
-					DDNet Recap {data.year} for {data.player.name}
+					{m.ddnet_recap_for({ year: data.year, player: data.player.name })}
 				</div>
 			{/if}
 		</div>
@@ -1696,11 +1696,12 @@
 							<div class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300">
 								{m.happy_new_year()}
 							</div>
-							DDNet Recap {data.year}
+							{m.ddnet_recap()}
+							{data.year}
 							<div class="text-sm">
-								Powered by <a
-									class="text-orange-400 hover:text-orange-300"
-									href="https://teeworlds.cn">teeworlds.cn</a
+								{m.powered_by()}
+								<a class="text-orange-400 hover:text-orange-300" href="https://teeworlds.cn"
+									>teeworlds.cn</a
 								>
 							</div>
 						</div>
@@ -1781,7 +1782,7 @@
 						{#key 'entry'}
 							<div class="flex flex-col space-y-2">
 								<div class="text-sm text-slate-300">
-									Enter player name
+									{m.enter_player_name()}
 									{#if data.error}
 										<span class="motion-text-loop-red-400 text-red-500">
 											{data.error}
@@ -1806,7 +1807,7 @@
 										if (gotoName) goForName(gotoName);
 									}}
 								>
-									Go
+									{m.go()}
 								</button>
 							</div>
 						{/key}

@@ -26,6 +26,3 @@ vite.config.ts.timestamp-*
 
 .vscode
 
-# Paraglide
-src/lib/paraglide
-project.inlang/cache
