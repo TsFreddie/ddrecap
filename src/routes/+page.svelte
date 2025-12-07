@@ -1754,8 +1754,7 @@
 										/>
 										<div class="flex flex-col">
 											<div class="font-semibold text-slate-300">{data.player.name}</div>
-											<div>{m.points_info({points:`${data.player.points.points}pts`})}</div>
-											<div>{m.rank_info({rank: data.player.points.rank})}</div>
+											<div>{m.points_info({points:`${data.player.points}pts`})}</div>
 										</div>
 									</div>
 									<div class="flex flex-col space-y-2">

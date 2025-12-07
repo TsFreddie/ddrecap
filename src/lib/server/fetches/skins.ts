@@ -27,8 +27,8 @@ export const skins = new FetchCache<SkinInfo>(
 		result.skins = result.skins.map((skin) => {
 			skin.url =
 				skin.type == 'normal'
-					? `https://ddnet.org/skins/skin/${encodeURIComponent(skin.name)}.${skin.imgtype}`
-					: `https://ddnet.org/skins/skin/${encodeURIComponent(skin.type)}/${encodeURIComponent(skin.name)}.${skin.imgtype}`;
+					? `https://teeworlds.cn/api/skins/${encodeURIComponent(skin.name)}.${skin.imgtype}`
+					: `https://teeworlds.cn/api/skins/${encodeURIComponent(skin.type)}/${encodeURIComponent(skin.name)}.${skin.imgtype}`;
 			map[skin.name] = skin.url;
 			return skin;
 		});

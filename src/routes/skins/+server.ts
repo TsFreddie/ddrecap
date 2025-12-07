@@ -7,7 +7,8 @@ export const GET = async ({ url }) => {
 		const skinData = await skins.fetch();
 		return new Response(JSON.stringify(skinData.map), {
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'cache-control': 'public, max-age=21600'
 			}
 		});
 	}
@@ -15,16 +16,22 @@ export const GET = async ({ url }) => {
 	let skin = '{}';
 
 	try {
-		skin = await (
-			await fetch(`https://teeworlds.cn/ddnet/playerskin?name=${encodeURIComponent(name)}`)
-		).text();
+		const playerData = await (
+			await fetch(`https://ddstats.tw/profile/json?player=${encodeURIComponent(name)}`)
+		).json();
+		skin = JSON.stringify({
+			n: playerData.skin_name,
+			b: playerData.skin_color_body,
+			f: playerData.skin_color_feet
+		});
 	} catch (e) {
 		console.error(e);
 	}
 
 	return new Response(skin, {
 		headers: {
-			'Content-Type': 'application/json'
+			'content-type': 'application/json',
+			'cache-control': 'public, max-age=600'
 		}
 	});
 };

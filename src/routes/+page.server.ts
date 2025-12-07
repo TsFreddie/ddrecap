@@ -23,31 +23,29 @@ export const load = async ({ fetch, url, parent }) => {
 	}
 
 	let player;
+	let skin;
 
 	try {
 		const playerData = await (
-			await fetch(`https://ddnet.org/players/?json2=${encodeURIComponent(name)}`)
+			await fetch(`https://ddstats.tw/profile/json?player=${encodeURIComponent(name)}`)
 		).json();
-		if (!playerData || !playerData.player) {
+		if (!playerData || !playerData.name) {
 			const error = `404 - Player ${name} not found`;
 			return { year, error, tz, ...(await parent()) };
 		}
 		player = {
-			name: playerData.player,
+			name: playerData.name,
 			points: playerData.points
+		};
+		skin = {
+			n: playerData.skin_name,
+			b: playerData.skin_color_body,
+			f: playerData.skin_color_feet
 		};
 	} catch (e) {
 		console.error(e);
 		const error = `404 - Player ${name} not found`;
 		return { year, error, tz, ...(await parent()) };
-	}
-
-	let skin = null;
-
-	try {
-		skin = await (await fetch(`/skins?name=${encodeURIComponent(name)}`)).json();
-	} catch (e) {
-		console.error(e);
 	}
 
 	return { year, name, skin, player, tz, ...(await parent()) };
