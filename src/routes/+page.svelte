@@ -1138,7 +1138,6 @@
 			});
 		}
 
-
 		// 分享
 		cards.push({
 			format: shareFormat,
