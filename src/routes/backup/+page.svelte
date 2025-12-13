@@ -6,15 +6,13 @@
 	import { escapeHTML, month, secondsToTime, uaIsMobile } from '$lib/helpers';
 	import { mapType } from '$lib/ddnet/helpers';
 	import * as qrcode from 'qrcode';
+	import type { YearlyData } from '../event/+server';
 	import { encode } from 'msgpackr';
 	import { encodeBase64Url } from '$lib/base64url';
 	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
 	import TeeRender from '$lib/components/TeeRender.svelte';
 	import * as m from '$lib/paraglide/messages';
-	import type { YearlyData } from '$lib/consts';
-	import QueryWorker from '$lib/query-engine.worker?worker';
-	import { DateTime } from 'luxon';
 
 	type CardFormat = Snippet<[number, CardData]>;
 
@@ -178,23 +176,9 @@
 	};
 
 	let startAnimation = $state(true);
-	let loadingState = $state('loading_init');
 	let loadingProgress = $state(-1);
 
-	let maps:
-		| {
-				name: string;
-				thumbnail: string;
-				type: string;
-				points: number;
-				difficulty: number;
-				mapper: string;
-				release: string;
-				width: number;
-				height: number;
-				tiles: string[];
-		  }[]
-		| null = null;
+	let maps: MapList | null = null;
 
 	const startProcess = async () => {
 		const name = data.name;
@@ -213,38 +197,33 @@
 
 		loadingProgress = 0;
 		try {
-			// download maps
 			if (!maps) {
-				maps = await (await fetch('/maps')).json();
+				maps = await (await fetch('https://ddnet.org/releases/maps.json')).json();
 			}
-			loadingProgress = 0.1;
+			loadingProgress = 0.01;
 
-			// process player data
-			const result = await new Promise<{
-				db: Uint8Array;
-				data: Partial<YearlyData>;
-			}>((resolve) => {
-				let queryWorker = new QueryWorker();
-				queryWorker.postMessage({ maps, name, year: data.year, tz: data.tz });
-				queryWorker.onmessage = (e) => {
-					if (e.data.type == 'progress') {
-						loadingProgress = 0.05 + (e.data.progress / 100) * 0.95;
-					} else if (e.data.type == 'result') {
-						resolve(e.data.result);
-					}
-				};
+			const sseSource = source(
+				`/event?name=${encodeURIComponent(name)}&year=${data.year}&tz=${encodeURIComponent(data.tz)}`
+			);
+
+			sseSource.select('progress').subscribe((progress) => {
+				if (!progress) return;
+				loadingProgress = parseInt(progress) / 100;
 			});
 
-			// download the blob
-			// const blob = new Blob([result.db as any], { type: 'application/x-sqlite3' });
-			// const url = URL.createObjectURL(blob);
-			// const a = document.createElement('a');
-			// a.href = url;
-			// a.download = `${name}.sqlite`;
-			// a.click();
-			// URL.revokeObjectURL(url);
+			const result = await new Promise<any>((resolve, reject) => {
+				sseSource.select('data').subscribe((result) => {
+					if (!result) return;
+					const data = JSON.parse(result);
+					resolve(data);
+				});
+				sseSource.select('error').subscribe((error) => {
+					if (!error) return;
+					reject(error);
+				});
+			});
 
-			d = result.data;
+			d = result.d;
 		} catch (e) {
 			error = true;
 			console.error(e);
@@ -317,7 +296,7 @@
 				content: [
 					{
 						type: 't',
-						text: `By the end of ${data.year},<br>you have gathered a ${firstWord} total of ${d.tp} points`
+						text: `By the end of ${d.y},<br>you have gathered a ${firstWord} total of ${d.tp} points`
 					},
 					{
 						type: 't',
@@ -659,7 +638,7 @@
 				mapper: `${d.lnf[0]} by ${getMapper(d.lnf[0])}`
 			});
 		}
-		if (d.ymf && d.ymf[1] > 0) {
+		if (d.ymf && d.ymfs && d.ymf[1] > 0) {
 			// 新潮追随者
 			const titles = [];
 			if (d.ymf[1] >= 80) {
@@ -687,6 +666,10 @@
 						color: '#000',
 						text: `${Math.round((d.ymf[1] / d.ymf[0]) * 100)}%`,
 						rotation: -4
+					},
+					{
+						type: 't',
+						text: `Among these, you favored <span class="text-orange-400 font-semibold">${mapType(d.ymfs[0])}</span> maps,<br>completing <span class="text-orange-400">${d.ymfs[2]}/${d.ymfs[1]}</span> maps.`
 					}
 				],
 				background: '/assets/yearly/p9.png',
@@ -1349,7 +1332,7 @@
 	/** this is needed to grab user's system timezone and navigate to the timezone specific recap page */
 	const goForName = (name: string) => {
 		try {
-			const timezone = DateTime.local().zoneName;
+			const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 			goto(
 				`?name=${encodeAsciiURIComponent(name)}&year=${data.year}&tz=${encodeURIComponent(timezone)}`,
 				{
@@ -1741,11 +1724,9 @@
 								out:fade
 								in:fade
 							>
-								<div class="font-bold">
-									{m.ddnet_recap_for({ year: data.year, player: data.name })}
-								</div>
+								<div class="font-bold">{data.name} - {data.year} Recap</div>
 								<div class="flex flex-row items-center justify-center gap-2">
-									<div>{m.loading()}</div>
+									<div>Preparing...</div>
 									<div class="w-[3.5rem]text-center">{Math.round(loadingProgress * 100)}%</div>
 								</div>
 								<div class="h-5 w-full overflow-hidden rounded border border-sky-700 bg-sky-900">
@@ -1771,7 +1752,7 @@
 										/>
 										<div class="flex flex-col">
 											<div class="font-semibold text-slate-300">{data.player.name}</div>
-											<div>{m.points_info({ points: `${data.player.points}pts` })}</div>
+											<div>{m.points_info({points:`${data.player.points}pts`})}</div>
 										</div>
 									</div>
 									<div class="flex flex-col space-y-2">

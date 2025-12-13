@@ -15,9 +15,6 @@ export type MapList = {
 	tiles: string[];
 }[];
 
-export const maps = new FetchCache<MapList>(
-	'https://ddnet.org/releases/maps.json',
-	async (response) => {
-		return await response.json();
-	}
-);
+export const maps = new FetchCache<MapList>('https://teeworlds.cn/api/maps', async (response) => {
+	return await response.json();
+});

@@ -10,5 +10,6 @@
 	"rank_info": "Rank: {rank}",
 	"action_to_start": "{isMobile() ? 'Tap' : 'Click'} here to start",
 	"start_recap": "Start recap",
-	"change_name": "Change name"
+	"change_name": "Change name",
+	"loading": "Preparing..."
 }

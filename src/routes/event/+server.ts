@@ -8,12 +8,6 @@ import { error } from '@sveltejs/kit';
 import { CURRENT_YEAR } from '$lib/consts';
 
 export type YearlyData = {
-	/** version */
-	v: number;
-	/** name */
-	n: string;
-	/** year */
-	y: number;
 	/** this year total points */
 	tp: number;
 	/** last year total points */

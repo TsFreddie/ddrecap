@@ -1,0 +1,261 @@
+import { unpack } from 'msgpackr';
+import sql, { type BindParams } from 'sql.js';
+import { DateTime, Duration } from 'luxon';
+import type { MapList } from './server/fetches/maps';
+import type { YearlyData } from './consts';
+
+export const query = async (
+	maps: MapList,
+	name: string,
+	year: number,
+	tz: string,
+	progress: (progress: number) => void
+) => {
+	const SQL = await sql({
+		locateFile: (file) => `/assets/${file}`
+	});
+	progress(20);
+	const playerData = await fetch(`/download/${encodeURIComponent(name)}`);
+	progress(30);
+	const playerDataBuffer = await playerData.arrayBuffer();
+	progress(40);
+	const unpacked: {
+		races: [string, number, number, string][];
+		teamRaces: [Uint8Array, string, number, string, number][];
+	} = unpack(playerDataBuffer as any);
+
+	const db = new SQL.Database();
+	db.run(`
+		CREATE TABLE race (
+			Map TEXT,
+			Time REAL,
+			Timestamp INTEGER,
+			Server TEXT
+		);
+		CREATE TABLE teamrace (
+			ID BLOB,
+			Name TEXT,
+			Map TEXT,
+			Time REAL,
+			Timestamp INTEGER
+		);
+		CREATE TABLE maps (
+			Map TEXT,
+			Type TEXT,
+			Points INTEGER,
+			Difficulty TEXT,
+			Mapper TEXT,
+			Timestamp INTEGER
+		);
+	`);
+
+	db.run('BEGIN TRANSACTION');
+
+	const insertRaceStmt = db.prepare(
+		'INSERT INTO race (Map, Time, Timestamp, Server) VALUES (?, ?, ?, ?)'
+	);
+	for (const race of unpacked.races) {
+		insertRaceStmt.run(race);
+	}
+	insertRaceStmt.free();
+
+	const insertTeamRaceStmt = db.prepare(
+		'INSERT INTO teamrace (ID, Name, Map, Time, Timestamp) VALUES (?, ?, ?, ?, ?)'
+	);
+	for (const teamrace of unpacked.teamRaces) {
+		insertTeamRaceStmt.run(teamrace);
+	}
+	insertTeamRaceStmt.free();
+
+	const insertMapStmt = db.prepare(
+		'INSERT INTO maps (Map, Type, Points, Difficulty, Mapper, Timestamp) VALUES (?, ?, ?, ?, ?, ?)'
+	);
+	for (const map of maps) {
+		insertMapStmt.run([
+			map.name,
+			map.type,
+			map.points,
+			map.difficulty,
+			map.mapper,
+			DateTime.fromISO(map.release + 'Z').toSeconds()
+		]);
+	}
+	insertMapStmt.free();
+
+	db.run('COMMIT');
+	progress(50);
+
+	const one = (sql: string, args: BindParams = []) => {
+		const stmt = db.prepare(sql, args);
+		console.log(stmt.getSQL());
+		stmt.step();
+		const result = stmt.get();
+		stmt.free();
+		return result.length === 0 ? undefined : result;
+	};
+
+	const all = (sql: string, args: BindParams = []) => {
+		const stmt = db.prepare(sql, args);
+		console.log(stmt.getSQL());
+		const result = [];
+		while (stmt.step()) {
+			result.push(stmt.get());
+		}
+		stmt.free();
+		return result;
+	};
+
+	const s = Duration.fromMillis(1000);
+	const opt = { zone: tz };
+	const previousYearStart = DateTime.fromObject({ year: year - 1 }, opt).toSeconds();
+	const previousYearEnd = DateTime.fromObject({ year }, opt).minus(s).toSeconds();
+	const yearStart = DateTime.fromObject({ year }, opt).toSeconds();
+	const yearEnd = DateTime.fromObject({ year: year + 1 }, opt)
+		.minus(s)
+		.toSeconds();
+
+	console.log('Y-1 ST', previousYearStart);
+	console.log('Y-1 ED', previousYearEnd);
+	console.log('Y-0 ST', yearStart);
+	console.log('Y-0 ED', yearEnd);
+
+	// format: [+-][0-9]{2}:[0-9]{2}
+	const offsetMinutes = new Date().getTimezoneOffset();
+	const offset = (() => {
+		const sign = offsetMinutes <= 0 ? '+' : '-';
+		const absMinutes = Math.abs(offsetMinutes);
+		const hours = Math.floor(absMinutes / 60);
+		const minutes = absMinutes % 60;
+		const hoursStr = hours.toString().padStart(2, '0');
+		const minutesStr = minutes.toString().padStart(2, '0');
+		return `${sign}${hoursStr}:${minutesStr}`;
+	})();
+
+	/** This year total points */
+	const tp = one(
+		`
+SELECT SUM(Points) FROM (SELECT maps.Map, maps.Points FROM maps JOIN race ON race.Map = maps.Map WHERE race.Timestamp <= ? GROUP BY maps.Map);`,
+		[yearEnd]
+	)?.[0] as number;
+
+	/** Last year total points */
+	const lp = one(
+		`
+SELECT SUM(Points) FROM (SELECT maps.Map, maps.Points FROM maps JOIN race ON race.Map = maps.Map WHERE race.Timestamp <= ? GROUP BY maps.Map);`,
+		[previousYearEnd]
+	)?.[0] as number;
+
+	/** Most point gainer */
+	const mpg = one(
+		`
+WITH lastYearAllMaps AS (SELECT maps.Map, maps.Points FROM maps JOIN race ON race.Map = maps.Map WHERE race.Timestamp <= ? GROUP BY maps.Map),
+thisYearMaps AS (SELECT maps.Map, maps.Points FROM maps JOIN race ON race.Map = maps.Map WHERE race.Timestamp >= ? AND race.Timestamp <= ? GROUP BY maps.Map)
+SELECT ty.Map, ty.Points
+FROM thisYearMaps ty
+LEFT JOIN lastYearAllMaps ly ON ty.Map = ly.Map
+WHERE ly.Map IS NULL ORDER BY ty.Points DESC LIMIT 1;`,
+		[previousYearEnd, yearStart, yearEnd]
+	) as [string, number];
+
+	/** Total races */
+	const tr = one(
+		`
+SELECT COUNT(*) FROM race WHERE Timestamp >= ? AND Timestamp <= ?;`,
+		[yearStart, yearEnd]
+	)?.[0] as number;
+
+	/** Hourly slices */
+	const slices = all(
+		`
+SELECT floor(Timestamp / 3600) * 3600 as Slice, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? and Timestamp <= ? GROUP BY Slice ORDER BY Cnt DESC;`,
+		[yearStart, yearEnd]
+	) as [number, number][];
+
+	const hourRange = [
+		[0, 3, 'range_midnight', 0],
+		[4, 7, 'range_dawn', 0],
+		[9, 12, 'range_morning', 0],
+		[13, 16, 'range_afternoon', 0],
+		[17, 20, 'range_evening', 0],
+		[21, 24, 'range_night', 0]
+	] as [number, number, string, number][];
+
+	for (const slice of slices) {
+		const time = DateTime.fromSeconds(slice[0], { zone: tz });
+		const range = hourRange.find((range) => range[0] <= time.hour && time.hour <= range[1]);
+		if (range) {
+			range[3] += slice[1];
+		}
+	}
+
+	hourRange.sort((a, b) => b[3] - a[3]);
+
+	/** Most hourly range */
+	const mhr = [hourRange[0][2], hourRange[0][3]] as [string, number];
+
+	/** Late night finishes */
+	const lnf = one(
+		`
+SELECT r.Map, r.Time, r.Timestamp FROM maps m JOIN
+(SELECT Map, Time, Timestamp FROM race WHERE (
+	(time(Timestamp, 'unixepoch', $offset) < '05:00' AND Time <= CAST(strftime('%M', datetime(Timestamp, 'unixepoch', $offset)) as INT) * 60 + CAST(strftime('%H', datetime(Timestamp, 'unixepoch', $offset)) as INT) * 3600 + 7200) OR
+	(time(Timestamp, 'unixepoch', $offset) < '08:00' AND Time >= CAST(strftime('%H', datetime(Timestamp, 'unixepoch', $offset)) as INT) * 1800)
+	)
+AND Timestamp >= $yearStart AND Timestamp <= $yearEnd) r
+ON m.Map = r.Map AND m.Points > 0 ORDER BY Time desc LIMIT 1;
+		`,
+		{
+			$yearStart: yearStart,
+			$yearEnd: yearEnd,
+			$offset: offset
+		}
+	) as [string, number, number];
+
+	/** Map released this year most finished maps */
+	const thisYearMapFinishes = all(
+		`
+WITH thisYearMaps AS (SELECT Type, Map FROM maps WHERE Timestamp >= ? AND Timestamp <= ? AND Points > 0)
+SELECT thisYearMaps.Map, COUNT(race.Map) as Finishes FROM race RIGHT JOIN thisYearMaps ON race.Map = thisYearMaps.Map GROUP BY thisYearMaps.Map ORDER BY Finishes DESC;
+		`,
+		[yearStart, yearEnd]
+	) as [string, number][];
+
+	/** This year map finishes */
+	const ymf = [
+		thisYearMapFinishes.length,
+		thisYearMapFinishes.filter((data) => data[1]).length
+	] as [number, number];
+
+	/** Nearest release record */
+	const nrr = one(
+		`
+SELECT m.Map, r.Timestamp - m.Timestamp as TimeDiff FROM maps m JOIN race r
+	ON m.Map = r.Map AND m.Timestamp >= ? AND m.Timestamp <= ?
+	ORDER BY r.Timestamp - m.Timestamp ASC LIMIT 1;`,
+		[yearStart, yearEnd]
+	) as [string, number];
+
+	const data: Partial<YearlyData> = {
+		tp,
+		lp,
+		mpg,
+		tr,
+		mhr,
+		lnf,
+		ymf,
+		nrr
+	};
+
+	return {
+		db: db.export(),
+		data: data
+	};
+};
+
+onmessage = async (e) => {
+	const { maps, name, year, tz } = e.data;
+	const result = await query(maps, name, year, tz, (progress) => {
+		postMessage({ type: 'progress', progress });
+	});
+	postMessage({ type: 'result', result });
+};

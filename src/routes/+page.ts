@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
 
-const ssr = false;
+export const ssr = false;
 
 export const load = async ({ url, data, parent }) => {
 	let ua = null;
