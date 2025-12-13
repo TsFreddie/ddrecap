@@ -2,7 +2,39 @@ import { unpack } from 'msgpackr';
 import sql, { type BindParams } from 'sql.js';
 import { DateTime, Duration } from 'luxon';
 import type { MapList } from './server/fetches/maps';
-import type { YearlyData } from './consts';
+
+export type YearlyData = {
+	/** this year total points */
+	tp: number;
+	/** last year total points */
+	lp: number;
+	/** most point gainer [map, points] */
+	mpg: [string, number];
+	/** total races */
+	tr: number;
+	/** most hourly race [timeName, finishes] */
+	mhr: [string, number];
+	/** most monthly race [startMonth, endMonth, seasonName, finishes] */
+	mmr: [number, number, string, number];
+	/** late night finish [map, time, timestamp] */
+	lnf: [string, number, number];
+	/** this year's map finishes [total, finished, map, finishes] */
+	ymf: [number, number, string, number];
+	/** most finishes servers [server, finishes] */
+	mps: [string, number];
+	/** most finished map [map, num] */
+	mfm: [string, number];
+	/** longest time finished race [map, time, timestamp] */
+	lf: [string, number, number];
+	/** most played teammates [[name, num], [name, num]] */
+	mpt: [string, number][];
+	/** biggest team size [teamsize, map, playerNames, timestamp] */
+	bt: [number, string, string, number];
+	/** nearest release record [map, time] */
+	nrr: [string, number];
+	/** mapper special */
+	map: string[];
+};
 
 export const query = async (
 	maps: MapList,
@@ -21,7 +53,7 @@ export const query = async (
 	progress(40);
 	const unpacked: {
 		races: [string, number, number, string][];
-		teamRaces: [Uint8Array, string, number, string, number][];
+		teamRaces: [string, string, number, string, number][];
 	} = unpack(playerDataBuffer as any);
 
 	const db = new SQL.Database();
@@ -33,7 +65,7 @@ export const query = async (
 			Server TEXT
 		);
 		CREATE TABLE teamrace (
-			ID BLOB,
+			ID TEXT,
 			Name TEXT,
 			Map TEXT,
 			Time REAL,
@@ -223,8 +255,10 @@ SELECT thisYearMaps.Map, COUNT(race.Map) as Finishes FROM race RIGHT JOIN thisYe
 	/** This year map finishes */
 	const ymf = [
 		thisYearMapFinishes.length,
-		thisYearMapFinishes.filter((data) => data[1]).length
-	] as [number, number];
+		thisYearMapFinishes.filter((data) => data[1]).length,
+		thisYearMapFinishes[0]?.[0],
+		thisYearMapFinishes[0]?.[1]
+	] as [number, number, string, number];
 
 	/** Nearest release record */
 	const nrr = one(
@@ -235,6 +269,82 @@ SELECT m.Map, r.Timestamp - m.Timestamp as TimeDiff FROM maps m JOIN race r
 		[yearStart, yearEnd]
 	) as [string, number];
 
+	/** Most finished map server */
+	const mps = one(
+		`
+SELECT m.Type, COUNT(r.Map) as Finishes FROM Maps m JOIN
+        (SELECT Map FROM race
+        WHERE Timestamp >= ? AND Timestamp <= ?) r
+    ON m.Map = r.Map GROUP BY Type ORDER BY Finishes DESC LIMIT 1;`,
+		[yearStart, yearEnd]
+	) as [string, number];
+
+	/** Most finished map */
+	const mfm = one(
+		`
+SELECT Map, COUNT(Map) as Num FROM race 
+    WHERE Timestamp >= ? AND Timestamp <= ?
+    GROUP BY Map ORDER BY Num DESC LIMIT 1;`,
+		[yearStart, yearEnd]
+	) as [string, number];
+
+	/** Longest finished race */
+	const lf = one(
+		`
+SELECT r.Map, r.Time, r.Timestamp FROM maps m JOIN 
+		(SELECT Map, Time, Timestamp from race
+			WHERE Timestamp >= ? AND Timestamp <= ?) r
+	ON m.Map = r.Map AND m.Points > 0 ORDER BY Time DESC LIMIT 1;`,
+		[yearStart, yearEnd]
+	) as [string, number, number];
+
+	/** most played teammate */
+	const mpt = all(
+		`
+WITH FilteredIDs AS (
+    SELECT DISTINCT ID
+    FROM teamrace
+    WHERE Timestamp >= ? AND Timestamp <= ?
+)
+SELECT t.Name, COUNT(t.ID) as Num
+FROM teamrace t
+JOIN FilteredIDs f ON t.ID = f.ID
+WHERE t.Name != ?
+GROUP BY t.Name ORDER BY Num DESC LIMIT 2;`,
+		[yearStart, yearEnd, name]
+	) as [string, number][];
+
+	/** biggest team */
+	const bt = one(
+		`
+WITH FilteredIDs AS (
+    SELECT DISTINCT ID
+    FROM teamrace
+    WHERE Timestamp >= ? AND Timestamp <= ? AND ID != ''
+)
+SELECT COUNT() as Num, t.Map, GROUP_CONCAT(t.Name, ', '), t.Timestamp
+FROM teamrace t
+JOIN FilteredIDs f ON t.ID = f.ID
+GROUP BY t.ID ORDER BY Num DESC LIMIT 1;`,
+		[yearStart, yearEnd]
+	) as [number, string, string, number];
+
+	/** mapper special */
+	const mapperMaps = maps
+		.filter((map) => {
+			const releaseDate = map.release?.slice(0, 4);
+			return releaseDate == year.toString();
+		})
+		.filter((map) => {
+			const mappers = map.mapper
+				.split(',')
+				.flatMap((mapper) => mapper.split('&'))
+				.map((mapper) => mapper.trim());
+			return mappers.includes(name);
+		})
+		.map((map) => map.name);
+	const map = mapperMaps;
+
 	const data: Partial<YearlyData> = {
 		tp,
 		lp,
@@ -243,7 +353,13 @@ SELECT m.Map, r.Timestamp - m.Timestamp as TimeDiff FROM maps m JOIN race r
 		mhr,
 		lnf,
 		ymf,
-		nrr
+		nrr,
+		mps,
+		mfm,
+		lf,
+		mpt,
+		bt,
+		map
 	};
 
 	return {

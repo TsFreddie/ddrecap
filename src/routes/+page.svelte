@@ -12,7 +12,7 @@
 	import type { Snippet } from 'svelte';
 	import TeeRender from '$lib/components/TeeRender.svelte';
 	import * as m from '$lib/paraglide/messages';
-	import type { YearlyData } from '$lib/consts';
+	import type { YearlyData } from '$lib/query-engine.worker';
 	import QueryWorker from '$lib/query-engine.worker?worker';
 	import { DateTime } from 'luxon';
 
@@ -178,7 +178,6 @@
 	};
 
 	let startAnimation = $state(true);
-	let loadingState = $state('loading_init');
 	let loadingProgress = $state(-1);
 
 	let maps:
@@ -250,6 +249,7 @@
 			console.error(e);
 		}
 
+		// TODO: better locale
 		const locale = new Intl.DateTimeFormat().resolvedOptions().locale;
 		const dateFormat = new Intl.DateTimeFormat(locale, {
 			dateStyle: 'medium',
@@ -692,6 +692,28 @@
 				background: '/assets/yearly/p9.png',
 				mapper: 'Planet 9 by Silex'
 			});
+
+			if (d.ymf[3] > 1) {
+				cards[cards.length - 1].content!.push(
+					{
+						type: 't',
+						text: `Among these maps, you finished`
+					},
+					{
+						type: 'b',
+						bg: '#fdd300',
+						color: '#000',
+						text: d.ymf[2],
+						rotation: 2
+					},
+					{
+						type: 't',
+						text: `the most times (${d.ymf[3]} finishes).`
+					}
+				);
+				cards[cards.length - 1].background = bgMap(d.ymf[2]);
+				cards[cards.length - 1].mapper = `${d.ymf[2]} by ${getMapper(d.ymf[2])}`;
+			}
 		}
 		if (d.nrr && d.nrr[1] < 24 * 60 * 60) {
 			// 离发布最近完成
@@ -1073,7 +1095,7 @@
 					},
 					{
 						type: 't',
-						text: `and finished <span class="font-semibold text-orange-400">${escapeHTML(d.bt[1])}</span> together`
+						text: `and finished <span class="font-semibold text-orange-400">${escapeHTML(d.bt[1])}</span> together on ${date(new Date(d.bt[3] * 1000))}`
 					},
 					{
 						type: 't',
@@ -1116,26 +1138,6 @@
 			});
 		}
 
-		if (d.y) {
-			// 新年快乐
-			cards.push({
-				content: [
-					{
-						type: 'b',
-						bg: '#A00F2A',
-						color: '#fff',
-						text: m.happy_new_year(),
-						rotation: 0
-					}
-				],
-				t: 80,
-				l: 50,
-				b: 5,
-				r: 5,
-				format: noBlurRegularFormat,
-				background: '/assets/yearly/year.png'
-			});
-		}
 
 		// 分享
 		cards.push({

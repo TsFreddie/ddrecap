@@ -17,12 +17,12 @@ const getTeamRaceStmt = db.prepare<
 		Map: number;
 		Name: string;
 		Time: string;
-		ID: Uint8Array;
+		ID: string;
 		Timestamp: number;
 	},
 	[string]
 >(
-	'SELECT t.Map, t.Name, t.Time, t.ID, t.Timestamp FROM teamrace JOIN teamrace as t ON teamrace.ID = t.ID WHERE teamrace.name = ?'
+	'SELECT t.Map, t.Name, t.Time, HEX(t.ID) as ID, t.Timestamp FROM teamrace JOIN teamrace as t ON teamrace.ID = t.ID WHERE teamrace.name = ?'
 );
 
 export function getPlayerDatabase(name: string) {
@@ -33,9 +33,14 @@ export function getPlayerDatabase(name: string) {
 		races: races.map(
 			(r) => [r.Map, r.Time, r.Timestamp, r.Server] as [string, number, number, string]
 		),
-		teamRaces: teamRaces.map(
-			(r) =>
-				[r.ID, r.Name, r.Map, r.Time, r.Timestamp] as [Uint8Array, string, number, string, number]
-		)
+		teamRaces: teamRaces.map((r) => {
+			return [Buffer.from(r.ID, 'hex').toString('base64').replace(/=+$/, ''), r.Name, r.Map, r.Time, r.Timestamp] as [
+				string,
+				string,
+				number,
+				string,
+				number
+			];
+		})
 	};
 }
