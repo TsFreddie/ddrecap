@@ -92,5 +92,24 @@ CREATE INDEX teamrace_name_id_idx ON teamrace (Name, ID);
 
 CREATE INDEX teamrace_id_idx ON teamrace (ID);
 
+-- Create index for maps
+CREATE INDEX maps_map_idx ON maps (Map);
+
+-- Cache latest record
+CREATE TABLE
+    kv (Key TEXT PRIMARY KEY, Value TEXT);
+
+INSERT INTO
+    kv (Key, Value)
+SELECT
+    'database_time' as Key,
+    Timestamp as Value
+FROM
+    race
+ORDER BY
+    Timestamp DESC
+LIMIT
+    1;
+
 -- Compact the database
 VACUUM;

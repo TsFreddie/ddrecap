@@ -7,6 +7,7 @@ export const escapeHTML = (str: string) => {
 		.replace(/'/g, '&#x27;');
 };
 
+// TODO: i18n
 export const secondsToTime = (totalSeconds: number) => {
 	const hours = Math.floor(totalSeconds / 3600);
 	const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -39,6 +40,22 @@ const MONTHS = [
 	'December'
 ];
 
+// TODO: i18n
 export const month = (month: number) => {
 	return MONTHS[month - 1];
+};
+
+export const getPlayerSkin = async (player: string) => {
+	if (!player) return { n: null };
+	try {
+		const skin = await (await fetch(`/skins?name=${encodeURIComponent(player)}`)).json();
+		if (!skin.n || skin.n === 'x-spec') {
+			return { n: null };
+		}
+		return skin;
+	} catch (e) {
+		console.error('Failed to fetch player skin for ' + player);
+		console.error(e);
+		return { n: null };
+	}
 };

@@ -16,14 +16,11 @@ export const GET = async ({ url }) => {
 	let skin = '{}';
 
 	try {
-		const playerData = await (
-			await fetch(`https://ddstats.tw/profile/json?player=${encodeURIComponent(name)}`)
-		).json();
-		skin = JSON.stringify({
-			n: playerData.skin_name,
-			b: playerData.skin_color_body,
-			f: playerData.skin_color_feet
-		});
+		skin = JSON.stringify(
+			await (
+				await fetch(`https://teeworlds.cn/api/playerskin?name=${encodeURIComponent(name)}`)
+			).json()
+		);
 	} catch (e) {
 		console.error(e);
 	}

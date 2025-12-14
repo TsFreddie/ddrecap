@@ -1,4 +1,5 @@
 import { Database } from 'bun:sqlite';
+import { get } from 'svelte/store';
 
 const db = new Database('./cache/ddnet.sqlite');
 
@@ -25,6 +26,22 @@ const getTeamRaceStmt = db.prepare<
 	'SELECT t.Map, t.Name, t.Time, HEX(t.ID) as ID, t.Timestamp FROM teamrace JOIN teamrace as t ON teamrace.ID = t.ID WHERE teamrace.name = ?'
 );
 
+const getPointsStmt = db.prepare<
+	{
+		Points: number;
+	},
+	[string]
+>(
+	'SELECT SUM(Points) as Points FROM (SELECT Map FROM race WHERE Name = ? GROUP BY Map) r JOIN maps ON r.Map = maps.Map;'
+);
+
+const getKv = db.prepare<
+	{
+		Value: string;
+	},
+	[string]
+>('SELECT Value FROM kv WHERE Key = ?');
+
 export function getPlayerDatabase(name: string) {
 	const races = getRaceStmt.all(name);
 	const teamRaces = getTeamRaceStmt.all(name);
@@ -34,13 +51,21 @@ export function getPlayerDatabase(name: string) {
 			(r) => [r.Map, r.Time, r.Timestamp, r.Server] as [string, number, number, string]
 		),
 		teamRaces: teamRaces.map((r) => {
-			return [Buffer.from(r.ID, 'hex').toString('base64').replace(/=+$/, ''), r.Name, r.Map, r.Time, r.Timestamp] as [
-				string,
-				string,
-				number,
-				string,
-				number
-			];
+			return [
+				Buffer.from(r.ID, 'hex').toString('base64').replace(/=+$/, ''),
+				r.Name,
+				r.Map,
+				r.Time,
+				r.Timestamp
+			] as [string, string, number, string, number];
 		})
 	};
+}
+
+export function getPoints(name: string) {
+	return getPointsStmt.get(name)?.Points ?? null;
+}
+
+export function getDatabaseTime() {
+	return parseInt(getKv.get('database_time')?.Value ?? '0');
 }

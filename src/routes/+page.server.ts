@@ -2,8 +2,9 @@ import { decodeAsciiURIComponent } from '$lib/link';
 import { decodeBase64Url } from '$lib/base64url';
 import { decode } from 'msgpackr';
 import { CURRENT_YEAR } from '$lib/consts';
+import { getPoints } from '$lib/server/db.js';
 
-export const load = async ({ fetch, url, parent }) => {
+export const load = async ({ url, parent }) => {
 	let year = parseInt(url.searchParams.get('year') || CURRENT_YEAR.toString());
 	let name = decodeAsciiURIComponent(url.searchParams.get('name') || '');
 	let tz = url.searchParams.get('tz') || 'utc+0';
@@ -26,22 +27,22 @@ export const load = async ({ fetch, url, parent }) => {
 	let skin;
 
 	try {
-		const playerData = await (
-			await fetch(`https://ddstats.tw/profile/json?player=${encodeURIComponent(name)}`)
-		).json();
-		if (!playerData || !playerData.name) {
+		const points = getPoints(name);
+		if (!points) {
 			const error = `404 - Player ${name} not found`;
 			return { year, error, tz, ...(await parent()) };
 		}
+
 		player = {
-			name: playerData.name,
-			points: playerData.points
+			name: name,
+			points: points
 		};
-		skin = {
-			n: playerData.skin_name,
-			b: playerData.skin_color_body,
-			f: playerData.skin_color_feet
-		};
+
+		try {
+			skin = await (
+				await fetch(`https://teeworlds.cn/api/playerskin?name=${encodeURIComponent(name)}`)
+			).json();
+		} catch {}
 	} catch (e) {
 		console.error(e);
 		const error = `404 - Player ${name} not found`;
