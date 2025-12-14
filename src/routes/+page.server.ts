@@ -4,7 +4,7 @@ import { decode } from 'msgpackr';
 import { CURRENT_YEAR } from '$lib/consts';
 import { getDatabaseTime, getPoints } from '$lib/server/db.js';
 
-export const load = async ({ url, parent, cookies }) => {
+export const load = async ({ url, parent }) => {
 	let year = parseInt(url.searchParams.get('year') || CURRENT_YEAR.toString());
 	let name = decodeAsciiURIComponent(url.searchParams.get('name') || '');
 	let tz = url.searchParams.get('tz') || 'utc+0';
@@ -30,7 +30,7 @@ export const load = async ({ url, parent, cookies }) => {
 	try {
 		const points = getPoints(name);
 		if (!points) {
-			const error = `404 - Player ${name} not found`;
+			const error = `404 - ${name} NO RECORDS`;
 			return { databaseTime, year, error, tz, ...(await parent()) };
 		}
 
@@ -46,7 +46,7 @@ export const load = async ({ url, parent, cookies }) => {
 		} catch {}
 	} catch (e) {
 		console.error(e);
-		const error = `404 - Player ${name} not found`;
+		const error = `500 - UNKNOWN ERROR`;
 		return { databaseTime, year, error, tz, ...(await parent()) };
 	}
 

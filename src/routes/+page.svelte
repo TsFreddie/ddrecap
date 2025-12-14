@@ -426,9 +426,9 @@
 
 <svelte:head>
 	{#if data.name}
-		<title>{data.name} - {m.ddnet_recap()} {data.year}</title>
+		<title>{data.name} - {m.page_ddnet_recap()} {data.year}</title>
 	{:else}
-		<title>{m.ddnet_recap()} {data.year}</title>
+		<title>{m.page_ddnet_recap()} {data.year}</title>
 	{/if}
 </svelte:head>
 
@@ -700,7 +700,7 @@
 		<div class="absolute top-0 right-0 left-[5%] z-20 flex flex-row">
 			{#if data.player}
 				<div class="rounded-b-xl bg-blue-600 px-4 py-2 font-semibold">
-					{m.ddnet_recap_for({ year: data.year, player: data.player.name })}
+					{m.page_ddnet_recap_for({ year: data.year, player: data.player.name })}
 				</div>
 			{/if}
 		</div>
@@ -710,7 +710,7 @@
 				href="/"
 				class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-slate-600 px-4 py-2 text-white hover:bg-slate-700"
 			>
-				{m.change_name()}
+				{m.page_change_name()}
 			</a>
 		</div>
 		{#if currentCard == 0 && !startAnimation}
@@ -752,12 +752,12 @@
 							class="rounded-3xl bg-slate-700/40 px-8 py-4 text-center text-xl font-bold backdrop-blur-lg"
 						>
 							<div class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300">
-								{m.happy_new_year()}
+								{m.page_happy_new_year()}
 							</div>
-							{m.ddnet_recap()}
+							{m.page_ddnet_recap()}
 							{data.year}
 							<div class="text-sm">
-								{m.powered_by()}
+								{m.page_powered_by()}
 								<a class="text-orange-400 hover:text-orange-300" href="https://teeworlds.cn"
 									>teeworlds.cn</a
 								>
@@ -774,7 +774,7 @@
 										class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600"
 										onclick={() => goto(``)}
 									>
-										{m.go_back()}
+										{m.page_go_back()}
 									</button>
 								</div>
 							</div>
@@ -786,10 +786,10 @@
 									in:fade
 								>
 									<div class="font-bold">
-										{m.ddnet_recap_for({ year: data.year, player: data.name })}
+										{m.page_ddnet_recap_for({ year: data.year, player: data.name })}
 									</div>
 									<div class="flex flex-row items-center justify-center gap-2">
-										<div>{m.loading()}</div>
+										<div>{m.page_loading()}</div>
 										<div class="w-[3.5rem]text-center">{Math.round(loadingProgress * 100)}%</div>
 									</div>
 									<div class="h-5 w-full overflow-hidden rounded border border-sky-700 bg-sky-900">
@@ -813,7 +813,7 @@
 											/>
 											<div class="flex flex-col">
 												<div class="font-semibold text-slate-300">{data.player.name}</div>
-												<div>{m.points_info({ points: `${data.player.points}pts` })}</div>
+												<div>{m.page_points_info({ points: `${data.player.points}pts` })}</div>
 											</div>
 										</div>
 										<div class="flex flex-col">
@@ -821,7 +821,7 @@
 												class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 mt-2 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600 cursor-pointer"
 												onclick={startProcess}
 											>
-												{m.start_recap()}
+												{m.page_start_recap()}
 											</button>
 										</div>
 										<div class="h-8"></div>
@@ -831,7 +831,7 @@
 												href="/"
 												class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-slate-800 px-4 py-2 text-white hover:bg-slate-900"
 											>
-												{m.change_name()}
+												{m.page_change_name()}
 											</a>
 										</div>
 									</div>
@@ -841,7 +841,7 @@
 							{#key 'entry'}
 								<div class="flex flex-col gap-2">
 									<div class="text-sm text-slate-300">
-										{m.enter_player_name()}
+										{m.page_enter_player_name()}
 										{#if data.error}
 											<span class="motion-text-loop-red-400 text-red-500">
 												{data.error}
@@ -865,10 +865,10 @@
 											if (gotoName) goForName(gotoName);
 										}}
 									>
-										{m.go()}
+										{m.page_go()}
 									</button>
 									<div class="text-sm">
-										{m.database_time({ date: new Date(data.databaseTime).toDateString() })}
+										{m.page_database_time({ date: new Date(data.databaseTime).toDateString() })}
 									</div>
 								</div>
 							{/key}
@@ -883,7 +883,7 @@
 		class="absolute z-100 right-0 bottom-0 rounded-tl-xl bg-blue-500 px-4 py-0.5 flex items-center gap-4"
 	>
 		<div class="text-xs flex flex-col items-center justify-center">
-			<div>{m.timezone()}</div>
+			<div>{m.page_timezone()}</div>
 			<div>{data.tz ?? DateTime.local().zoneName}</div>
 		</div>
 		<button

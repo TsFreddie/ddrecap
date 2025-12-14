@@ -107,7 +107,7 @@ export const generateCards = async (
 		if (delta >= 5000) {
 			verse_a = m.card_points_verse_a_5000();
 			enderLevel = Math.max(enderLevel, 3);
-			titles.push({ bg: '#dc2f02', color: '#fff', text: 'Full Throttle' });
+			titles.push({ bg: '#dc2f02', color: '#fff', text: m.title_full_throttle() });
 		} else if (delta >= 1000) {
 			verse_a = m.card_points_verse_a_1000();
 			enderLevel = Math.max(enderLevel, 2);
@@ -150,84 +150,51 @@ export const generateCards = async (
 			mapper: 'Sunny Side Up by Ravie'
 		});
 	} else if (d.tp != null) {
-		// 今年分数
-		if (d.tp == 0) {
-			const titles = [{ bg: '#caffbf', color: '#000', text: 'New Beginning' }];
-			allTitles.push(...titles);
-
-			cards.push({
-				titles,
-				content: [
-					{
-						type: 't',
-						text: `By the end of ${data.year},<br>you have <span class="font-semibold text-orange-400">no points</span> on record yet`
-					},
-					{
-						type: 't',
-						text: `But we know you have already started your journey`
-					},
-					{
-						type: 't',
-						text: 'Welcome to DDNet! We hope you will enjoy this'
-					},
-					{
-						type: 'b',
-						bg: '#fdd300',
-						color: '#000',
-						text: `new beginning`,
-						rotation: -4
-					}
-				],
-				background: '/assets/yearly/lf.png',
-				mapper: 'Lavender Forest by Pipou'
-			});
-		} else {
-			const titles = [{ bg: '#b7b7a4', color: '#000', text: 'Returning Voyage' }];
-			allTitles.push(...titles);
-			cards.push({
-				titles,
-				content: [
-					{
-						type: 't',
-						text: `By the end of ${data.year},<br>your have ${d.tp} points on record`
-					},
-					{
-						type: 't',
-						text: `Compared to last year,<br>you have earned <span class="font-semibold text-orange-400">no new points</span>`
-					},
-					{
-						type: 't',
-						text: "It's been a while since your last adventure."
-					},
-					{
-						type: 't',
-						text: 'We sincerely hope to see you back in the game for'
-					},
-					{
-						type: 'b',
-						bg: '#fdd300',
-						color: '#000',
-						text: `new adventures`,
-						rotation: -4
-					}
-				],
-				background: '/assets/yearly/lf.png',
-				mapper: 'Lavender Forest by Pipou'
-			});
-		}
+		const titles = [{ bg: '#b7b7a4', color: '#000', text: m.title_returning_voyage() }];
+		allTitles.push(...titles);
+		cards.push({
+			titles,
+			content: [
+				{
+					type: 't',
+					text: m.card_returning_voyage_verse_1({ year: data.year, points: d.tp })
+				},
+				{
+					type: 't',
+					text: m.card_returning_voyage_verse_2()
+				},
+				{
+					type: 't',
+					text: m.card_returning_voyage_verse_3()
+				},
+				{
+					type: 't',
+					text: m.card_returning_voyage_verse_4()
+				},
+				{
+					type: 'b',
+					bg: '#fdd300',
+					color: '#000',
+					text: m.card_returning_voyage_verse_5(),
+					rotation: -4
+				}
+			],
+			background: '/assets/yearly/lf.png',
+			mapper: 'Lavender Forest by Pipou'
+		});
 	}
 	if (d.mpg) {
 		// 分数成就
 		const titles = [];
 		if (d.mpg[1] >= 34) {
-			titles.push({ bg: '#a8dadc', color: '#000', text: 'Peak Performer' });
+			titles.push({ bg: '#a8dadc', color: '#000', text: m.title_peak_performer() });
 			allTitles.push(...titles);
 			cards.push({
 				titles,
 				content: [
 					{
 						type: 't',
-						text: `In the new maps you’ve conquered this year,<br>this one is truly a <span class="font-semibold text-orange-400">career highlight</span> for you.`
+						text: m.card_peak_performer_verse_1()
 					},
 					{
 						type: 'b',
@@ -239,7 +206,7 @@ export const generateCards = async (
 					},
 					{
 						type: 't',
-						text: `This success added a total of`,
+						text: m.card_peak_performer_verse_2(),
 						t: -3,
 						b: -3,
 						rotation: -24
@@ -254,25 +221,26 @@ export const generateCards = async (
 					},
 					{
 						type: 't',
-						text: `This means you have mastered an insanely difficult map.`
+						text: m.card_peak_performer_verse_3()
 					},
 					{
 						type: 't',
-						text: `May you not rest on these laurels,<br>but continue to push towards even greater challenges.`
+						text: m.card_peak_performer_verse_4()
 					}
 				],
 				background: bgMap(d.mpg[0]),
 				mapper: `${d.mpg[0]} by ${getMapper(d.mpg[0])}`
 			});
 		} else {
-			if (d.mpg[1] >= 18) titles.push({ bg: '#f1faee', color: '#000', text: 'Steady Progress' });
+			if (d.mpg[1] >= 18)
+				titles.push({ bg: '#f1faee', color: '#000', text: m.title_steady_progress() });
 			allTitles.push(...titles);
 			cards.push({
 				titles,
 				content: [
 					{
 						type: 't',
-						text: `In the new maps you’ve finished this year,<br>this map stands out as your <span class="font-semibold text-orange-400">shining moment</span>.`
+						text: m.card_steady_progress_verse_1()
 					},
 					{
 						type: 'b',
@@ -284,7 +252,7 @@ export const generateCards = async (
 					},
 					{
 						type: 't',
-						text: `By mastering this map, you've earned`,
+						text: m.card_steady_progress_verse_2(),
 						t: -3,
 						b: -3,
 						rotation: -24
@@ -299,11 +267,11 @@ export const generateCards = async (
 					},
 					{
 						type: 't',
-						text: `Keep conquering new challenges,`
+						text: m.card_steady_progress_verse_3()
 					},
 					{
 						type: 't',
-						text: `and shine on even higher scoring maps.`
+						text: m.card_steady_progress_verse_4()
 					}
 				],
 				background: bgMap(d.mpg[0]),
@@ -315,11 +283,11 @@ export const generateCards = async (
 		// 常玩时间
 		const titles = [];
 		if (d.mhr[0] == 'Morning') {
-			titles.push({ bg: '#2a9d8f', color: '#000', text: 'Early Bird' });
+			titles.push({ bg: '#2a9d8f', color: '#000', text: m.title_early_bird() });
 		}
 
 		if ((d.tr || 0) >= 10 && d.mhr[1] / d.tr >= 0.5) {
-			titles.push({ bg: '#e5989b', color: '#000', text: 'Clockwork' });
+			titles.push({ bg: '#e5989b', color: '#000', text: m.title_clockwork() });
 		}
 
 		let bg;
@@ -351,19 +319,18 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: `You have successfully <span class="font-semibold text-orange-400">crossed the finish line</span> a total of`
+					text: m.card_finishes_verse_1()
 				},
 				{
 					type: 'b',
-					text: `${d.tr} times`,
+					text: `${d.tr} ${m.unit_times()}`,
 					bg: '#fdd300',
 					color: '#000',
 					rotation: -4
 				},
 				{
 					type: 't',
-					text: `Among these,<br><span class="text-orange-400">${d.mhr[1]} times</span> were during the`,
-					x: -30
+					text: m.card_finishes_verse_2({ count: d.mhr[1] })
 				},
 				{
 					type: 'b',
@@ -377,7 +344,7 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: 'Does this time hold special significance for you?'
+					text: m.card_finishes_verse_3()
 				}
 			],
 			...bg
@@ -410,7 +377,7 @@ export const generateCards = async (
 		const titles = [];
 		let prePhrase = false;
 		if (d.tr && d.tr >= 10 && d.mmr[3] / d.tr >= 0.5) {
-			titles.push({ bg: '#e07a5f', color: '#000', text: 'Seasonal' });
+			titles.push({ bg: '#e07a5f', color: '#000', text: m.title_seasonal() });
 			prePhrase = true;
 		}
 
@@ -422,12 +389,16 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: `${prePhrase ? 'You seem to share a peculiar rhythm with the seasons.<br>' : ''}Your <span class="font-semibold text-orange-400">most active season</span> is the`
+					text: m.card_seasonal_verse_1({ prePhrase: prePhrase })
 				},
 				{ type: 'b', bg: '#fdd300', color: '#000', text: `${d.mmr[2]}`, rotation: 5 },
 				{
 					type: 't',
-					text: `From <span class="text-orange-400">${month(d.mmr[0])} to ${month(d.mmr[1])}</span>,<br>you crossed the finish line <span class="text-orange-400">${d.mmr[3]} times</span>`
+					text: m.card_seasonal_verse_2({
+						start: month(d.mmr[0]),
+						end: month(d.mmr[1]),
+						count: d.mmr[3]
+					})
 				}
 			],
 			...bg
@@ -439,7 +410,7 @@ export const generateCards = async (
 		const titles = [];
 
 		if (dateTime.getHours() >= 2 || d.lnf[1] >= 2 * 60 * 60) {
-			titles.push({ bg: '#14213d', color: '#fff', text: 'Night Owl' });
+			titles.push({ bg: '#14213d', color: '#fff', text: m.title_night_owl() });
 		}
 
 		allTitles.push(...titles);
@@ -448,11 +419,14 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: `There was a special moment<br>on <span class="font-semibold text-orange-400">${date(dateTime)}</span>`
+					text: m.card_night_owl_verse_1({ date: date(dateTime) })
 				},
 				{
 					type: 't',
-					text: `You took ${secondsToTime(d.lnf[1])} to complete <span class="font-semibold text-orange-400">${escapeHTML(d.lnf[0])}</span><br>and crossed the finish line at`
+					text: m.card_night_owl_verse_2({
+						time: secondsToTime(d.lnf[1]),
+						map: escapeHTML(d.lnf[0])
+					})
 				},
 				{
 					type: 'b',
@@ -463,11 +437,11 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: 'While the sky is dark, your passion burns bright.'
+					text: m.card_night_owl_verse_3()
 				},
 				{
 					type: 't',
-					text: 'Do you still remember the effort you put in at that moment?'
+					text: m.card_night_owl_verse_4()
 				}
 			],
 			background: bgMap(d.lnf[0]),
@@ -478,11 +452,11 @@ export const generateCards = async (
 		// 新潮追随者
 		const titles = [];
 		if (d.ymf[1] >= 80) {
-			titles.push({ bg: '#a0c4ff', color: '#000', text: 'Map Master' });
+			titles.push({ bg: '#a0c4ff', color: '#000', text: m.title_map_master() });
 		} else if (d.ymf[1] >= 60) {
-			titles.push({ bg: '#caffbf', color: '#000', text: 'Path Pioneer' });
+			titles.push({ bg: '#caffbf', color: '#000', text: m.title_path_pioneer() });
 		} else if (d.ymf[1] >= 40) {
-			titles.push({ bg: '#ffd6a5', color: '#000', text: 'Map Explorer' });
+			titles.push({ bg: '#ffd6a5', color: '#000', text: m.title_map_explorer() });
 		}
 		allTitles.push(...titles);
 		cards.push({
@@ -490,11 +464,14 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: `Among the <span class="text-orange-400">${d.ymf[0]} new challenging maps</span> released this year,<br>you successfully completed <span class="font-semibold text-orange-400">${d.ymf[1] >= d.ymf[0] ? 'all' : d.ymf[1]}</span> of them`
+					text: m.card_new_map_verse_1({
+						total: d.ymf[0],
+						completed: d.ymf[1] >= d.ymf[0] ? 'all' : d.ymf[1]
+					})
 				},
 				{
 					type: 't',
-					text: `This means you achieved a finish rate of`
+					text: m.card_new_map_verse_2()
 				},
 				{
 					type: 'b',
@@ -512,7 +489,7 @@ export const generateCards = async (
 			cards[cards.length - 1].content!.push(
 				{
 					type: 't',
-					text: `Among these maps, you finished`
+					text: m.card_new_map_verse_3()
 				},
 				{
 					type: 'b',
@@ -523,7 +500,7 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: `the most times (${d.ymf[3]} finishes).`
+					text: m.card_new_map_verse_4({ count: d.ymf[3] })
 				}
 			);
 			cards[cards.length - 1].background = bgMap(d.ymf[2]);
@@ -534,7 +511,7 @@ export const generateCards = async (
 		// 离发布最近完成
 		const titles = [];
 		if (d.nrr[1] < 2 * 60 * 60) {
-			titles.push({ bg: '#3f37c9', color: '#fff', text: 'Hawk Eye' });
+			titles.push({ bg: '#3f37c9', color: '#fff', text: m.title_speed_demon() });
 		}
 		allTitles.push(...titles);
 		cards.push({
@@ -542,7 +519,7 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: `You finished ${escapeHTML(d.nrr[0])} only`
+					text: m.card_speed_demon_verse_1({ map: escapeHTML(d.nrr[0]) })
 				},
 				{
 					type: 'b',
@@ -553,11 +530,12 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: `<span class="text-orange-400 font-semibold">after its release</span>`
+					text: m.card_speed_demon_verse_2()
 				},
 				{
 					type: 't',
-					text: 'Not even a hawk could spot you racing to the finish line'
+					text:
+						d.nrr[1] >= 6 * 60 * 60 ? m.card_speed_demon_verse_3b() : m.card_speed_demon_verse_3a()
 				}
 			],
 			background: bgMap(d.nrr[0]),
@@ -623,28 +601,28 @@ export const generateCards = async (
 
 		if (d.mps[1] >= 20) {
 			if (type == 'novice') {
-				titles.push({ bg: '#10002b', color: '#fff', text: 'Casual Enjoyer' });
+				titles.push({ bg: '#10002b', color: '#fff', text: m.title_casual_enjoyer() });
 			} else if (type == 'moderate') {
-				titles.push({ bg: '#240046', color: '#fff', text: 'Challenge Solver' });
+				titles.push({ bg: '#240046', color: '#fff', text: m.title_challange_solver() });
 			} else if (type == 'brutal') {
-				titles.push({ bg: '#3c096c', color: '#fff', text: 'Professional Player' });
+				titles.push({ bg: '#3c096c', color: '#fff', text: m.title_professional_player() });
 			} else if (type == 'insane') {
-				titles.push({ bg: '#5a189a', color: '#fff', text: 'Amazingly Insane' });
+				titles.push({ bg: '#5a189a', color: '#fff', text: m.title_amazingly_insane() });
 			} else if (type == 'dummy') {
-				titles.push({ bg: '#6f1d1b', color: '#fff', text: 'Combined Mind' });
+				titles.push({ bg: '#6f1d1b', color: '#fff', text: m.title_combined_mind() });
 			} else if (type == 'solo') {
-				titles.push({ bg: '#bb9457', color: '#000', text: 'Lone Wolf' });
+				titles.push({ bg: '#bb9457', color: '#000', text: m.title_lone_wolf() });
 			} else if (type.startsWith('ddmax')) {
-				titles.push({ bg: '#432818', color: '#fff', text: 'DDmaX Enjoyer' });
+				titles.push({ bg: '#432818', color: '#fff', text: m.title_ddmax_enjoyer() });
 			} else if (type == 'oldschool') {
-				titles.push({ bg: '#99582a', color: '#000', text: 'Oldschool Enjoyer' });
+				titles.push({ bg: '#99582a', color: '#000', text: m.title_oldschool_enjoyer() });
 			} else if (type == 'race') {
-				titles.push({ bg: '#ffe6a7', color: '#000', text: 'Racer' });
+				titles.push({ bg: '#ffe6a7', color: '#000', text: m.title_racer() });
 			}
 		}
 
 		if (d.mps[1] >= 10 && type == 'fun') {
-			titles.push({ bg: '#ffbf69', color: '#000', text: 'TRUE PLAYER' });
+			titles.push({ bg: '#ffbf69', color: '#000', text: m.title_true_player() });
 		}
 
 		allTitles.push(...titles);
@@ -654,7 +632,7 @@ export const generateCards = async (
 				content: [
 					{
 						type: 't',
-						text: `Your most played map type is`
+						text: m.card_map_type_verse_1()
 					},
 					{
 						type: 'b',
@@ -665,7 +643,7 @@ export const generateCards = async (
 					},
 					{
 						type: 't',
-						text: `You seem to have discovered the true way to play DDNet`
+						text: m.card_map_type_verse_fun()
 					}
 				],
 				...bg
@@ -676,7 +654,7 @@ export const generateCards = async (
 				content: [
 					{
 						type: 't',
-						text: `Your most played map type is`
+						text: m.card_map_type_verse_1()
 					},
 					{
 						type: 'b',
@@ -687,7 +665,7 @@ export const generateCards = async (
 					},
 					{
 						type: 't',
-						text: `This year, you've crossed the finish line of ${mapType(d.mps[0])} maps <span class="font-semibold text-orange-400">${d.mps[1]} times</span>`
+						text: m.card_map_type_verse_2({ type: mapType(d.mps[0]), count: d.mps[1] })
 					}
 				],
 				...bg
@@ -700,17 +678,17 @@ export const generateCards = async (
 
 		const titles = [];
 		if (map.startsWith('Kobra')) {
-			titles.push({ bg: '#e0e1dd', color: '#000', text: 'Snake Oiler' });
+			titles.push({ bg: '#e0e1dd', color: '#000', text: m.title_snake_oiler() });
 		} else if (map == 'LearnToPlay') {
-			titles.push({ bg: '#3d5a80', color: '#fff', text: 'LiveToPlay' });
+			titles.push({ bg: '#3d5a80', color: '#fff', text: m.title_live_to_play() });
 		} else if (map == 'Sunny Side Up') {
-			titles.push({ bg: '#ffc300', color: '#000', text: 'Always Sunny in DDNet' });
+			titles.push({ bg: '#ffc300', color: '#000', text: m.title_always_sunny() });
 		} else if (map == 'Tutorial') {
-			titles.push({ bg: '#a7c957', color: '#000', text: 'Live and Learn' });
+			titles.push({ bg: '#a7c957', color: '#000', text: m.title_live_and_learn() });
 		} else if (map == 'Epix') {
-			titles.push({ bg: '#89c2d9', color: '#000', text: 'Narrow Trail' });
+			titles.push({ bg: '#89c2d9', color: '#000', text: m.title_narrow_trail() });
 		} else if (map == 'Linear') {
-			titles.push({ bg: '#e9edc9', color: '#000', text: 'Solo Traveler' });
+			titles.push({ bg: '#e9edc9', color: '#000', text: m.title_solo_traveler() });
 		}
 
 		allTitles.push(...titles);
@@ -719,7 +697,7 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: `Your most played map is`
+					text: m.card_map_verse_1()
 				},
 				{
 					type: 'b',
@@ -730,7 +708,7 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: `You finished this map <span class="font-semibold text-orange-400">${d.mfm[1]} time</span><br>You must really like this map`
+					text: m.card_map_verse_2()
 				}
 			],
 			background: bgMap(d.mfm[0]),
@@ -743,11 +721,11 @@ export const generateCards = async (
 		const dateTime = new Date(d.lf[2] * 1000);
 		const titles = [];
 		if (isBonusMap) {
-			titles.push({ bg: '#f28482', color: '#000', text: 'Time Wizard' });
+			titles.push({ bg: '#f28482', color: '#000', text: m.title_time_wizard() });
 		} else if (d.lf[1] >= 12 * 60 * 60) {
-			titles.push({ bg: '#c8b6ff', color: '#000', text: 'Afk Warrior' });
+			titles.push({ bg: '#c8b6ff', color: '#000', text: m.title_afk_warrior() });
 		} else if (d.lf[1] >= 4 * 60 * 60) {
-			titles.push({ bg: '#ffd6ff', color: '#000', text: 'Perseverance' });
+			titles.push({ bg: '#ffd6ff', color: '#000', text: m.title_perseverance() });
 		}
 		allTitles.push(...titles);
 
@@ -756,7 +734,9 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: `On <span class="text-orange-400 font-semibold">${date(dateTime)}</span>, you took`
+					text: m.card_slowest_verse_1({
+						date: `<span class="text-orange-400 font-semibold">${date(dateTime)}</span>`
+					})
 				},
 				{
 					type: 'b',
@@ -767,23 +747,23 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: `to complete <span class="font-semibold text-orange-400">${escapeHTML(d.lf[0])}</span>.`
+					text: m.card_slowest_verse_2({
+						map: `<span class="font-semibold text-orange-400">${escapeHTML(d.lf[0])}</span>`
+					})
 				},
 				{
 					type: 't',
-					text: 'This marks your <span class="font-semibold text-orange-400">slowest completion record</span> this year.<br>Your resilience and determination helped you reach the end.'
+					text: m.card_slowest_verse_3()
 				},
 				{
 					type: 't',
-					text: 'Or perhaps,',
+					text: m.card_slowest_verse_4(),
 					t: -2,
 					b: -2
 				},
 				{
 					type: 't',
-					text: isBonusMap
-						? 'was it some mysterious time magic at work?'
-						: 'is this just a unique hobby of yours?'
+					text: isBonusMap ? m.card_slowest_verse_5_bonus() : m.card_slowest_verse_5_regular()
 				}
 			],
 			background: bgMap(d.lf[0]),
@@ -794,11 +774,11 @@ export const generateCards = async (
 		// 最常玩队友
 		const titles = [];
 		if (d.mpt[0][1] >= 100) {
-			titles.push({ bg: '#2ec4b6', color: '#000', text: 'Unstoppable Duo' });
+			titles.push({ bg: '#2ec4b6', color: '#000', text: m.title_unstoppable_duo() });
 		} else if (d.mpt[0][1] >= 50) {
-			titles.push({ bg: '#00509d', color: '#fff', text: 'Inseparable Team' });
+			titles.push({ bg: '#00509d', color: '#fff', text: m.title_inseparable_team() });
 		} else if (d.mpt[0][1] >= 20) {
-			titles.push({ bg: '#00296b', color: '#fff', text: 'Brotherly Bond' });
+			titles.push({ bg: '#00296b', color: '#fff', text: m.title_brotherly_bond() });
 		}
 		allTitles.push(...titles);
 		if (d.mpt[1]) {
@@ -810,7 +790,7 @@ export const generateCards = async (
 				content: [
 					{
 						type: 't',
-						text: `Team race usually needs a teammate`
+						text: m.card_team_verse_1()
 					},
 					{
 						type: 'b',
@@ -821,11 +801,11 @@ export const generateCards = async (
 					},
 					{
 						type: 't',
-						text: `seems like your best buddy.<br>You have finished <span class="font-semibold text-orange-400">${d.mpt[0][1]} times</span> together`
+						text: m.card_team_verse_2({ count: d.mpt[0][1] })
 					},
 					{
 						type: 't',
-						text: `Just in case that was a dummy,`
+						text: m.card_team_verse_3()
 					},
 					{
 						type: 'b',
@@ -836,7 +816,7 @@ export const generateCards = async (
 					},
 					{
 						type: 't',
-						text: `is your second most teamed player. You've finished <span class="font-semibold text-orange-400">${d.mpt[1][1]} times</span> together.`
+						text: m.card_team_verse_4({ count: d.mpt[1][1] })
 					}
 				],
 				leftTeeSkin,
@@ -853,7 +833,7 @@ export const generateCards = async (
 				content: [
 					{
 						type: 't',
-						text: `Team race usually needs a teammate`
+						text: m.card_team_verse_1()
 					},
 					{
 						type: 'b',
@@ -864,7 +844,7 @@ export const generateCards = async (
 					},
 					{
 						type: 't',
-						text: `seems like your best buddy.<br>You have finished <span class="font-semibold text-orange-400">${d.mpt[0][1]} times</span> together`
+						text: m.card_team_verse_2({ count: d.mpt[0][1] })
 					}
 				],
 				background: '/assets/yearly/wx.png',
@@ -878,7 +858,7 @@ export const generateCards = async (
 		// 最大团队
 		const titles = [];
 		if (d.bt[0] >= 8) {
-			titles.push({ bg: '#bee9e8', color: '#000', text: 'Tee Army' });
+			titles.push({ bg: '#bee9e8', color: '#000', text: m.title_tee_army() });
 		}
 		allTitles.push(...titles);
 		cards.push({
@@ -886,22 +866,25 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: `You and other ${d.bt[0] - 1} Tees formed a stack of`
+					text: m.card_stack_verse_1({ count: d.bt[0] - 1 })
 				},
 				{
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: `${d.bt[0]} Tees Team`,
+					text: m.card_stack_verse_2({ count: d.bt[0] }),
 					rotation: -4
 				},
 				{
 					type: 't',
-					text: `and finished <span class="font-semibold text-orange-400">${escapeHTML(d.bt[1])}</span> together on ${date(new Date(d.bt[3] * 1000))}`
+					text: m.card_stack_verse_3({
+						map: `<span class="font-semibold text-orange-400">${escapeHTML(d.bt[1])}</span>`,
+						date: date(new Date(d.bt[3] * 1000))
+					})
 				},
 				{
 					type: 't',
-					text: `The team: ${escapeHTML(d.bt[2])}`
+					text: m.card_stack_verse_4({ members: escapeHTML(d.bt[2]) })
 				}
 			],
 			background: bgMap(d.bt[1]),
@@ -910,29 +893,29 @@ export const generateCards = async (
 	}
 	if (d.map && d.map.length > 0) {
 		// 地图作者
-		const titles = [{ bg: '#333533', color: '#fff', text: 'Level Designer' }];
+		const titles = [{ bg: '#333533', color: '#fff', text: m.title_level_designer() }];
 		allTitles.push(...titles);
 		cards.push({
 			titles,
 			content: [
 				{
 					type: 't',
-					text: `This year, you have participated in publishing`
+					text: m.card_level_designer_verse_1()
 				},
 				{
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: `${d.map.length} maps`,
+					text: `${d.map.length} ${m.unit_map()}`,
 					rotation: -4
 				},
 				{
 					type: 't',
-					text: `${d.map.length > 1 ? 'Maps: ' : ''}${escapeHTML(d.map.join(', '))}`
+					text: m.card_level_designer_verse_2({ maps: escapeHTML(d.map.join(', ')) })
 				},
 				{
 					type: 't',
-					text: `Thank you for your contributions`
+					text: m.card_level_designer_verse_3()
 				}
 			],
 			background: bgMap(d.map[0]),
@@ -947,7 +930,7 @@ export const generateCards = async (
 				type: 'b',
 				bg: '#A00F2A',
 				color: '#fff',
-				text: m.happy_new_year(),
+				text: m.page_happy_new_year(),
 				rotation: 0
 			}
 		],
@@ -966,7 +949,7 @@ export const generateCards = async (
 	});
 
 	if (allTitles.length == 0) {
-		allTitles.push({ bg: '#8338ec', color: '#fff', text: 'Unnamed Hero' });
+		allTitles.push({ bg: '#8338ec', color: '#fff', text: m.title_unnamed_hero() });
 	}
 
 	return {
