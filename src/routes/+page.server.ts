@@ -2,12 +2,13 @@ import { decodeAsciiURIComponent } from '$lib/link';
 import { decodeBase64Url } from '$lib/base64url';
 import { decode } from 'msgpackr';
 import { CURRENT_YEAR } from '$lib/consts';
-import { getPoints } from '$lib/server/db.js';
+import { getDatabaseTime, getPoints } from '$lib/server/db.js';
 
-export const load = async ({ url, parent }) => {
+export const load = async ({ url, parent, cookies }) => {
 	let year = parseInt(url.searchParams.get('year') || CURRENT_YEAR.toString());
 	let name = decodeAsciiURIComponent(url.searchParams.get('name') || '');
 	let tz = url.searchParams.get('tz') || 'utc+0';
+	let databaseTime = getDatabaseTime();
 
 	let code = url.searchParams.get('code');
 
@@ -20,7 +21,7 @@ export const load = async ({ url, parent }) => {
 	}
 
 	if (!name) {
-		return { year, ...(await parent()) };
+		return { databaseTime, year, ...(await parent()) };
 	}
 
 	let player;
@@ -30,7 +31,7 @@ export const load = async ({ url, parent }) => {
 		const points = getPoints(name);
 		if (!points) {
 			const error = `404 - Player ${name} not found`;
-			return { year, error, tz, ...(await parent()) };
+			return { databaseTime, year, error, tz, ...(await parent()) };
 		}
 
 		player = {
@@ -46,8 +47,8 @@ export const load = async ({ url, parent }) => {
 	} catch (e) {
 		console.error(e);
 		const error = `404 - Player ${name} not found`;
-		return { year, error, tz, ...(await parent()) };
+		return { databaseTime, year, error, tz, ...(await parent()) };
 	}
 
-	return { year, name, skin, player, tz, ...(await parent()) };
+	return { databaseTime, year, name, skin, player, tz, ...(await parent()) };
 };

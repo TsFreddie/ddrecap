@@ -1,4 +1,27 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"happy_new_year": "新年快乐！"
+	"happy_new_year": "新年快乐！",
+	"ddnet_recap": "DDNet 年度总结",
+	"ddnet_recap_for": "{player} 的 DDNet {year} 年度总结",
+	"powered_by": "查询引擎",
+	"enter_player_name": "请输入玩家名",
+	"go": "开始",
+	"points_info": "分数：{points}",
+	"start_recap": "进入年度总结",
+	"change_name": "更换玩家名",
+	"loading": "加载中……",
+	"database_time": "数据截至：{date}",
+	"go_back": "返回",
+	"timezone": "数据时区",
+	"title_points_30000": "傲视群雄",
+	"card_points_word_10000": "傲视群雄",
+	"card_points_word_3000": "成绩赫然",
+	"card_points_word": "令人欣慰",
+	"card_points_verse_a_5000": "你火力全开，在今年<span class=\"font-semibold text-orange-400\">斩获了</span>",
+	"card_points_verse_a_1000": "你不留余力，在今年<span class=\"font-semibold text-orange-400\">收获了</span>",
+	"card_points_verse_a": "你脚踏实地，在今年<span class=\"font-semibold text-orange-400\">得到了</span>",
+	"card_points_verse_b_3": "不畏浮云遮望眼，只缘身在最高层。你凭借精湛的操作与技巧，成为了实力的代言人",
+	"card_points_verse_b_2": "千淘万漉虽辛苦，吹尽狂沙始到金。你用行动证明了你的含金量，不畏艰险，亦不畏苦难",
+	"card_points_verse_b": "长风破浪会有时，直挂云帆济沧海。 相信接下来的你一定会更加出色",
+	"card_points_verse": "截至 {year} 岁末，你总共拥有里程 {points}pts<br>{word}"
 }

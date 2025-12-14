@@ -15,6 +15,7 @@
 	import QueryWorker from '$lib/query-engine.worker?worker';
 	import { DateTime } from 'luxon';
 	import { generateCards, type CardData } from '$lib/cards';
+	import { getLocale, setLocale } from '$lib/paraglide/runtime.js';
 
 	type CardFormat = Snippet<[number, CardData]>;
 
@@ -187,15 +188,6 @@
 					}
 				};
 			});
-
-			// download the blob
-			// const blob = new Blob([result.db as any], { type: 'application/x-sqlite3' });
-			// const url = URL.createObjectURL(blob);
-			// const a = document.createElement('a');
-			// a.href = url;
-			// a.download = `${name}.sqlite`;
-			// a.click();
-			// URL.revokeObjectURL(url);
 
 			d = result.data;
 			totalCards = await generateCards(maps!, data, d, m);
@@ -705,25 +697,20 @@
 			{/if}
 			<div class="h-svh"></div>
 		</div>
-		<div class="absolute top-0 right-0 left-[5%] z-20 flex flex-row space-x-2">
+		<div class="absolute top-0 right-0 left-[5%] z-20 flex flex-row">
 			{#if data.player}
 				<div class="rounded-b-xl bg-blue-600 px-4 py-2 font-semibold">
 					{m.ddnet_recap_for({ year: data.year, player: data.player.name })}
 				</div>
 			{/if}
 		</div>
-		<div class="absolute right-0 bottom-0 left-0 z-20 flex flex-row space-y-2">
-			{#if data.tz}
-				<div class="absolute right-0 bottom-0 rounded-tl-xl bg-blue-500 px-4 py-2 font-semibold">
-					Timezone: {data.tz}
-				</div>
-			{/if}
+		<div class="absolute right-0 bottom-0 left-0 z-20 flex flex-row">
 			<a
 				data-sveltekit-replacestate
 				href="/"
 				class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-slate-600 px-4 py-2 text-white hover:bg-slate-700"
 			>
-				Change name
+				{m.change_name()}
 			</a>
 		</div>
 		{#if currentCard == 0 && !startAnimation}
@@ -745,9 +732,7 @@
 			in:fade
 		>
 			<div
-				class="relative w-96 overflow-hidden rounded-lg border border-slate-600 bg-slate-700 shadow-md transition-all duration-500"
-				class:h-[18rem]={!data.player}
-				class:h-[20.5rem]={data.player}
+				class="relative w-96 h-87 overflow-hidden rounded-lg border border-slate-600 bg-slate-700 shadow-md transition-all duration-500"
 			>
 				<div
 					class="relative flex h-32 items-center justify-center overflow-hidden rounded-t-lg bg-cover bg-center"
@@ -780,112 +765,132 @@
 						</div>
 					{/if}
 				</div>
-				<div class="h-full max-h-[calc(100svh-20rem)] space-y-3 p-4">
-					{#if error}
-						<div class="flex h-40 w-full flex-col items-center justify-center gap-4">
-							<div class="flex flex-col space-y-2">
-								<button
-									class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600"
-									onclick={() => goto(``)}
-								>
-									Re-enter name
-								</button>
-							</div>
-						</div>
-					{:else if data.player}
-						{#if loadingProgress >= 0}
-							<div
-								class="flex h-40 w-full flex-col items-center justify-center gap-4"
-								out:fade
-								in:fade
-							>
-								<div class="font-bold">
-									{m.ddnet_recap_for({ year: data.year, player: data.name })}
-								</div>
-								<div class="flex flex-row items-center justify-center gap-2">
-									<div>{m.loading()}</div>
-									<div class="w-[3.5rem]text-center">{Math.round(loadingProgress * 100)}%</div>
-								</div>
-								<div class="h-5 w-full overflow-hidden rounded border border-sky-700 bg-sky-900">
-									<div
-										class="h-full rounded bg-sky-600"
-										style="width: {loadingProgress * 100}%;"
-									></div>
-								</div>
-							</div>
-						{:else}
-							{#key data.player.name}
-								<div out:fade>
-									<div
-										class="motion-translate-x-in-[-200%] motion-rotate-in-12 motion-duration-1000 motion-delay-100 flex flex-row items-center justify-center gap-8"
+				<div class="h-55 flex items-center justify-center p-4">
+					<div>
+						{#if error}
+							<div class="flex w-full flex-col items-center justify-center gap-4">
+								<div class="flex flex-col">
+									<button
+										class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600"
+										onclick={() => goto(``)}
 									>
-										<TeeRender
-											className="relative h-20 w-20"
-											name={data.skin?.n}
-											body={data.skin?.b}
-											feet={data.skin?.f}
-										/>
+										{m.go_back()}
+									</button>
+								</div>
+							</div>
+						{:else if data.player}
+							{#if loadingProgress >= 0}
+								<div
+									class="flex w-full flex-col items-center justify-center gap-4"
+									out:fade
+									in:fade
+								>
+									<div class="font-bold">
+										{m.ddnet_recap_for({ year: data.year, player: data.name })}
+									</div>
+									<div class="flex flex-row items-center justify-center gap-2">
+										<div>{m.loading()}</div>
+										<div class="w-[3.5rem]text-center">{Math.round(loadingProgress * 100)}%</div>
+									</div>
+									<div class="h-5 w-full overflow-hidden rounded border border-sky-700 bg-sky-900">
+										<div
+											class="h-full rounded bg-sky-600"
+											style="width: {loadingProgress * 100}%;"
+										></div>
+									</div>
+								</div>
+							{:else}
+								{#key data.player.name}
+									<div out:fade>
+										<div
+											class="motion-translate-x-in-[-200%] motion-rotate-in-12 motion-duration-1000 motion-delay-100 flex flex-row items-center justify-center gap-8"
+										>
+											<TeeRender
+												className="relative h-20 w-20"
+												name={data.skin?.n}
+												body={data.skin?.b}
+												feet={data.skin?.f}
+											/>
+											<div class="flex flex-col">
+												<div class="font-semibold text-slate-300">{data.player.name}</div>
+												<div>{m.points_info({ points: `${data.player.points}pts` })}</div>
+											</div>
+										</div>
 										<div class="flex flex-col">
-											<div class="font-semibold text-slate-300">{data.player.name}</div>
-											<div>{m.points_info({ points: `${data.player.points}pts` })}</div>
+											<button
+												class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 mt-2 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600 cursor-pointer"
+												onclick={startProcess}
+											>
+												{m.start_recap()}
+											</button>
+										</div>
+										<div class="h-8"></div>
+										<div class="absolute right-0 bottom-0 left-0 flex flex-row">
+											<a
+												data-sveltekit-replacestate
+												href="/"
+												class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-slate-800 px-4 py-2 text-white hover:bg-slate-900"
+											>
+												{m.change_name()}
+											</a>
 										</div>
 									</div>
-									<div class="flex flex-col space-y-2">
-										<button
-											class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 mt-2 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600"
-											onclick={startProcess}
-										>
-											{m.start_recap()}
-										</button>
+								{/key}
+							{/if}
+						{:else}
+							{#key 'entry'}
+								<div class="flex flex-col gap-2">
+									<div class="text-sm text-slate-300">
+										{m.enter_player_name()}
+										{#if data.error}
+											<span class="motion-text-loop-red-400 text-red-500">
+												{data.error}
+											</span>
+										{/if}
 									</div>
-									<div class="absolute right-0 bottom-0 left-0 flex flex-row space-y-2">
-										<a
-											data-sveltekit-replacestate
-											href="/"
-											class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-slate-800 px-4 py-2 text-white hover:bg-slate-900"
-										>
-											{m.change_name()}
-										</a>
+									<input
+										type="text"
+										class="w-full rounded border border-slate-500 bg-slate-600 px-3 py-2 text-sm font-normal shadow-md md:flex-1"
+										bind:value={gotoName}
+										onkeydown={(ev) => {
+											if (ev.key == 'Enter') {
+												if (gotoName) goForName(gotoName);
+											}
+										}}
+									/>
+									<button
+										class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:bg-blue-500 disabled:opacity-50
+										cursor-pointer"
+										onclick={() => {
+											if (gotoName) goForName(gotoName);
+										}}
+									>
+										{m.go()}
+									</button>
+									<div class="text-sm">
+										{m.database_time({ date: new Date(data.databaseTime).toDateString() })}
 									</div>
 								</div>
 							{/key}
 						{/if}
-					{:else}
-						{#key 'entry'}
-							<div class="flex flex-col space-y-2">
-								<div class="text-sm text-slate-300">
-									{m.enter_player_name()}
-									{#if data.error}
-										<span class="motion-text-loop-red-400 text-red-500">
-											{data.error}
-										</span>
-									{/if}
-								</div>
-								<input
-									type="text"
-									class="w-full rounded border border-slate-500 bg-slate-600 px-3 py-2 text-sm font-normal shadow-md md:flex-1"
-									bind:value={gotoName}
-									onkeydown={(ev) => {
-										if (ev.key == 'Enter') {
-											if (gotoName) goForName(gotoName);
-										}
-									}}
-								/>
-							</div>
-							<div class="flex flex-col space-y-2">
-								<button
-									class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:bg-blue-500 disabled:opacity-50"
-									onclick={() => {
-										if (gotoName) goForName(gotoName);
-									}}
-								>
-									{m.go()}
-								</button>
-							</div>
-						{/key}
-					{/if}
+					</div>
 				</div>
 			</div>
 		</div>
 	{/if}
+
+	<div
+		class="absolute z-100 right-0 bottom-0 rounded-tl-xl bg-blue-500 px-4 py-0.5 flex items-center gap-4"
+	>
+		<div class="text-xs flex flex-col items-center justify-center">
+			<div>{m.timezone()}</div>
+			<div>{data.tz ?? DateTime.local().zoneName}</div>
+		</div>
+		<button
+			class="text-white cursor-pointer font-semibold"
+			onclick={() => {
+				setLocale(getLocale() === 'en' ? 'zh-CN' : 'en');
+			}}>{getLocale()}</button
+		>
+	</div>
 </div>

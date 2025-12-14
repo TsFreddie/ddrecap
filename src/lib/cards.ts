@@ -91,44 +91,38 @@ export const generateCards = async (
 		let enderLevel = 1;
 		const titles: { bg: string; color: string; text: string }[] = [];
 		if (d.tp >= 10000) {
-			firstWord = 'copious';
-			titles.push({ bg: '#ffba08', color: '#000', text: 'Completionist' });
+			firstWord = m.card_points_word_10000();
+			titles.push({ bg: '#ffba08', color: '#000', text: m.title_points_30000() });
 			enderLevel = 3;
 		} else if (d.tp >= 3000) {
-			firstWord = 'considerable';
+			firstWord = m.card_points_word_3000();
 			enderLevel = 2;
 		} else {
-			firstWord = 'gratifying';
+			firstWord = m.card_points_word();
 			enderLevel = 1;
 		}
 
 		const delta = d.tp - d.lp;
-		let verb;
+		let verse_a;
 		if (delta >= 5000) {
-			verb =
-				'You went all out this year, <span class="font-semibold text-orange-400">gained</span> an additional';
+			verse_a = m.card_points_verse_a_5000();
 			enderLevel = Math.max(enderLevel, 3);
 			titles.push({ bg: '#dc2f02', color: '#fff', text: 'Full Throttle' });
 		} else if (delta >= 1000) {
-			verb =
-				'This year, You gave it your all, <span class="font-semibold text-orange-400">reaped</span> an additional';
+			verse_a = m.card_points_verse_a_1000();
 			enderLevel = Math.max(enderLevel, 2);
 		} else {
-			verb =
-				'You kept it steady this year, <span class="font-semibold text-orange-400">earned</span> an additional';
+			verse_a = m.card_points_verse_a();
 			enderLevel = Math.max(enderLevel, 1);
 		}
 
-		let enderText = '';
+		let verse_b = '';
 		if (enderLevel == 3) {
-			enderText =
-				'Reaching the peak, you become the embodiment of skill and expertise. Your mastery is unmatched.';
+			verse_b = m.card_points_verse_b_3();
 		} else if (enderLevel == 2) {
-			enderText =
-				'Through determination and effort, you have proven your worth. Challenges are no obstacle for you.';
+			verse_b = m.card_points_verse_b_2();
 		} else {
-			enderText =
-				"The winds will guide you to greater heights. Believe in your potential, and you'll excel even further.";
+			verse_b = m.card_points_verse_b();
 		}
 
 		// 今年分数
@@ -138,16 +132,16 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: `By the end of ${data.year},<br>you have gathered a ${firstWord} total of ${d.tp} points`
+					text: m.card_points_verse({ year: data.year, word: firstWord, points: d.tp })
 				},
 				{
 					type: 't',
-					text: `${verb}`
+					text: `${verse_a}`
 				},
-				{ type: 'b', bg: '#fdd300', color: '#000', text: `${d.tp - d.lp} points`, rotation: 4 },
+				{ type: 'b', bg: '#fdd300', color: '#000', text: `${d.tp - d.lp} pts`, rotation: 4 },
 				{
 					type: 't',
-					text: `${enderText}`
+					text: `${verse_b}`
 				}
 			],
 			background: '/assets/yearly/ssu.png',
