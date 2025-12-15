@@ -708,7 +708,7 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: m.card_map_verse_2()
+					text: m.card_map_verse_2({ finishes: d.mfm[1] })
 				}
 			],
 			background: bgMap(d.mfm[0]),

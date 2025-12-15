@@ -357,6 +357,26 @@
 		}, 200);
 	};
 
+	const onKeyDown = (ev: KeyboardEvent) => {
+		if (startAnimation) return;
+		if (!cardReady) return;
+
+		const { key } = ev;
+		if (key === 'ArrowUp') {
+			ev.preventDefault();
+			updateCardDelta(1); // positive delta moves to previous card
+		} else if (key === 'ArrowDown') {
+			ev.preventDefault();
+			updateCardDelta(-1); // negative delta moves to next card
+		} else if (key === ' ' || key === 'Spacebar') {
+			// block spacebar
+			ev.preventDefault();
+		} else if (key === 'Tab') {
+			// block tab
+			ev.preventDefault();
+		}
+	};
+
 	let observer: IntersectionObserver | null = null;
 
 	$effect(() => {
@@ -422,7 +442,7 @@
 </script>
 
 <div></div>
-<svelte:window onresize={onResize} />
+<svelte:window onresize={onResize} onkeydown={onKeyDown} />
 
 <svelte:head>
 	{#if data.name}
@@ -631,7 +651,7 @@
 				</div>
 			</div>
 			<div class="absolute top-[1%] font-semibold text-black">
-				{data.year} Badges for {data.name}
+				{m.page_badges_for({ year: data.year, name: data.name! })}
 			</div>
 			<div
 				class="motion-duration-500 motion-delay-700 absolute top-[70%] left-[-9%] h-[20%] w-[20%]"
@@ -720,7 +740,7 @@
 				in:fade
 			>
 				<div class="motion-preset-oscillate text-[0.7em]">
-					↓ {isMobile() ? 'Swipe up' : 'Scroll'} to continue ↓
+					{isMobile() ? m.page_continue_mobile() : m.page_continue()}
 				</div>
 			</div>
 		{/if}
