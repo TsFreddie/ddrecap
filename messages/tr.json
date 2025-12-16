@@ -1,0 +1,250 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"card_biggest_improvement_verse_1": "{date} tarihinde, bu rekorla en büyük gelişmenizi gösterdiniz",
+	"card_biggest_improvement_verse_2": "{date} tarihinde kırdığınız <span class=\"font-semibold text-orange-400\">{time}</span> süreli önceki rekorunuzu geliştirerek",
+	"card_biggest_improvement_verse_3": "Şu oranda bir gelişme sağladınız:",
+	"card_finishes_verse_1": "Bu yıl harikalar yarattınız, toplamda",
+	"card_finishes_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "Bunların <span class=\"text-orange-400\">{count} kez</span>i",
+				"plural=*": "Bunların <span class=\"text-orange-400\">{count} kez</span>i"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_finishes_verse_2_period": [
+		{
+			"declarations": ["input period"],
+			"match": {
+				"period=afternoon": "öğleden sonra",
+				"period=dawn": "şafaktan önce",
+				"period=evening": "akşam",
+				"period=midnight": "gece yarısı",
+				"period=morning": "sabah",
+				"period=night": "gece"
+			},
+			"selectors": ["period"]
+		}
+	],
+	"card_finishes_verse_3": "Bu zaman dilimi sizin için özel bir anlam taşıyor mu?",
+	"card_first_finish_verse_1": "Hatırlıyor musunuz?",
+	"card_first_finish_verse_2": "tarihinde <span class=\"font-semibold text-orange-400\">{map}</span> haritasının bitiş çizgisini ilk kez geçtiniz",
+	"card_first_finish_verse_3": "Bu sizin ilk bitirişinizdi. Bu, DDNet ailesine katılalı",
+	"card_level_designer_verse_1": "Bu yıl, hayata geçirilmesine yardım ettiğiniz harita sayısı:",
+	"card_level_designer_verse_2": "Yarattıklarınız arasında şunlar var: {maps}",
+	"card_level_designer_verse_3": "Katkılarınız için teşekkür ederiz",
+	"card_map_type_verse_1": "En çok oynadığınız harita türü",
+	"card_map_type_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz",
+				"plural=*": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_map_type_verse_fun": "DDNet'i oynamanın gerçek yolunu keşfetmiş gibisiniz",
+	"card_map_verse_1": "En çok oynadığınız harita",
+	"card_map_verse_2": [
+		{
+			"declarations": ["input finishes", "local plural = finishes: plural"],
+			"match": {
+				"plural=one": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz. Bu haritaya karşı özel bir zaafınız olmalı!",
+				"plural=*": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz. Bu haritaya karşı özel bir zaafınız olmalı!"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_monthly_verse_1": "En aktif olduğunuz ay",
+	"card_monthly_verse_2": "Oyun sürenizin <span class=\"font-semibold text-orange-400\">{percent}</span>unu bu ayda geçirdiniz",
+	"card_new_map_verse_1": [
+		{
+			"declarations": ["input total", "local plural = total: plural"],
+			"match": {
+				"plural=one": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız",
+				"plural=*": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_new_map_verse_2": "Bu, şu tamamlama oranına ulaştığınız anlamına geliyor:",
+	"card_new_map_verse_3": "Bu haritalar arasında, özellikle şunu sevdiniz:",
+	"card_new_map_verse_4": "Bu haritayı <span class=\"font-semibold text-orange-400\">{count} kez</span> tamamladınız",
+	"card_night_owl_verse_1": "<span class=\"font-semibold text-orange-400\">{date}</span> tarihinde<br>özel bir an yaşandı",
+	"card_night_owl_verse_2": "<span class=\"font-semibold text-orange-400\">{map}</span> haritasını tamamlamak için {time} harcadınız<br>ve bitişe şu saatte ulaştınız:",
+	"card_night_owl_verse_3": "Gökyüzü karanlık olsa da, tutkunuz parlamaya devam ediyor",
+	"card_night_owl_verse_4": "O anda verdiğiniz çabayı hâlâ hatırlıyor musunuz?",
+	"card_no_points_verse_1": "{year} yılı sonu itibarıyla kayıtlarınızda <span class=\"text-orange-400\">hiç puanınız bulunmuyor</span>.",
+	"card_no_points_verse_2": "Ancak yolculuğunuza başladığınızı biliyoruz. DDNet'te keyifli vakit geçirmenizi umuyoruz.",
+	"card_peak_performer_verse_1": "Bu yıl fethettiğiniz yeni haritalar arasında,<br>bu harita sizin için gerçek bir <span class=\"font-semibold text-orange-400\">kariyer zirvesi</span> oldu",
+	"card_peak_performer_verse_2": "Bu başarı toplam",
+	"card_peak_performer_verse_3": "puan getirdi. Bu, inanılmaz derecede zor bir haritada uzmanlaştığınız anlamına gelir",
+	"card_peak_performer_verse_4": "Bu başarıların gölgesinde dinlenmeyin,<br>daha büyük zorluklara doğru ilerlemeye devam edin",
+	"card_points_verse": "{year} yılı sonu itibarıyla, <br>{word} toplamda {points} puan biriktirdiniz",
+	"card_points_verse_a": "Bu yıl istikrarı korudunuz ve <span class=\"font-semibold text-orange-400\">kazandığınız</span> ek puan:",
+	"card_points_verse_a_1000": "Bu yıl elinizden gelenin en iyisini yaptınız ve <span class=\"font-semibold text-orange-400\">hasat ettiğiniz</span> ek puan:",
+	"card_points_verse_a_5000": "Bu yıl var gücünüzle çalıştınız ve <span class=\"font-semibold text-orange-400\">elde ettiğiniz</span> ek puan:",
+	"card_points_verse_b": "Rüzgarlar sizi daha yükseklere taşıyacak. Potansiyelinize inanın, daha da başarılı olacaksınız",
+	"card_points_verse_b_2": "Kararlılık ve çaba sayesinde değerinizi kanıtladınız. Zorluklar sizin için engel değil",
+	"card_points_verse_b_3": "Zirveye ulaşarak, beceri ve uzmanlığın somut örneği haline geldiniz. Ustalığınız benzersiz",
+	"card_points_verse_new": "Bu yıl, {year}, oyundaki ilk yılınız ve {word} toplamda",
+	"card_points_word": "tatmin edici",
+	"card_points_word_10000": "devasa",
+	"card_points_word_3000": "kayda değer",
+	"card_returning_voyage_verse_1": "{year} yılı sonu itibarıyla,<br>kayıtlarınızda {points} puanınız var",
+	"card_returning_voyage_verse_2": "Geçen yıla kıyasla,<br><span class=\"font-semibold text-orange-400\">yeni puan kazanmadınız</span>",
+	"card_returning_voyage_verse_3": "Son maceranızın üzerinden epey zaman geçti",
+	"card_returning_voyage_verse_4": "Sizi oyuna geri dönüp",
+	"card_returning_voyage_verse_5": "yeni maceralar yaşamanızı içtenlikle umuyoruz",
+	"card_runtime_verse_1": "Bu yılki tüm yarış sürenizin toplamı",
+	"card_runtime_verse_2": "Ayrıca, <span class=\"font-semibold text-orange-400\">ddstats.tw</span>'e göre bu yıl toplam {duration} çevrimiçi kaldınız",
+	"card_runtime_verse_weird": "Bir şekilde isminiz, yarış kayıtlarınızdan daha az göründü. Belki de bu yıl isminizi değiştirdiniz?",
+	"card_second_map_verse_1": "En çok oynadığınız ikinci harita",
+	"card_second_map_verse_2": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz ve umarız onu hatırlıyorsunuzdur!",
+	"card_server_verse_1": "En çok oynadığınız DDNet sunucusu",
+	"card_server_verse_2": "Yarışlarınızın <span class=\"font-semibold text-orange-400\">{percent} kadarını</span> bu sunucuda tamamladınız",
+	"card_server_verse_3": "Ayrıca, şu sunucularda da göründünüz:<br>{servers}",
+	"card_slowest_verse_1": "{date} tarihinde,",
+	"card_slowest_verse_2": "{map} haritasını tamamlamak için",
+	"card_slowest_verse_3": "süre harcadınız. Bu, bu yılki <span class=\"font-semibold text-orange-400\">en yavaş tamamlama rekorunuz</span>.<br>Dayanıklılığınız ve kararlılığınız sona ulaşmanıza yardım etti",
+	"card_slowest_verse_4": "Yoksa,",
+	"card_slowest_verse_5_bonus": "gizemli bir zaman büyüsü mü iş başındaydı?",
+	"card_slowest_verse_5_regular": "bu sadece size özgü bir hobi mi?",
+	"card_speed_demon_verse_1": "{map} haritasını yayınlandıktan sadece",
+	"card_speed_demon_verse_2": "sonra tamamladınız",
+	"card_speed_demon_verse_3a": "Bir hız iblisi gibi, arkanızda sadece bir iz bırakarak",
+	"card_speed_demon_verse_3b": "Hiçbir harita yayını, amansız takibinizden kaçamaz",
+	"card_speedrunner_verse_1": "{date} tarihinde, arka arkaya",
+	"card_speedrunner_verse_2": "haritayı <span class=\"font-semibold text-orange-400\">bir saat içinde</span> tamamladınız.<br>İşte tamamladığınız haritalar:",
+	"card_stack_verse_1": "Siz ve {count} diğer Tee, toplam",
+	"card_stack_verse_2": "{count} Kişilik Takım",
+	"card_stack_verse_3": "oluşturup {date} tarihinde {map} haritasını birlikte tamamladınız",
+	"card_stack_verse_4": "Takım: {members}",
+	"card_steady_progress_verse_1": "Bu yıl tamamladığınız yeni haritalar arasında,<br>bu harita sizin <span class=\"font-semibold text-orange-400\">parlayan anınız</span> olarak öne çıkıyor",
+	"card_steady_progress_verse_2": "Bu haritada uzmanlaşarak",
+	"card_steady_progress_verse_3": "puan kazandınız. Yeni zorlukları fethetmeye devam edin,",
+	"card_steady_progress_verse_4": "ve daha yüksek puanlı haritalarda parlamaya devam edin",
+	"card_team_verse_1": "Her takım yarışının güvenilir bir takım arkadaşına ihtiyacı vardır!",
+	"card_team_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "sizin en iyi dostunuz.<br>Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz",
+				"plural=*": "sizin en iyi dostunuz.<br>Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_team_verse_3": "Ayrıca,",
+	"card_team_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "sizin en çok takım olduğunuz ikinci oyuncu. Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz",
+				"plural=*": "sizin en çok takım olduğunuz ikinci oyuncu. Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"format_dhms": "",
+	"format_hm": "",
+	"format_hms": "",
+	"format_m": "",
+	"format_ms": "",
+	"format_s": "",
+	"page_badges_for": "{name} için {year} Rozetleri",
+	"page_change_name": "İsmi değiştir",
+	"page_continue": "↓ Devam etmek için aşağı kaydırın ↓",
+	"page_continue_mobile": "↓ Devam etmek için yukarı kaydırın ↓",
+	"page_database_time": "Veri kesim tarihi: {date}",
+	"page_ddnet_recap": "DDNet {year} Özeti",
+	"page_ddnet_recap_desc": "DDNet {year} Özetinizi görüntüleyin",
+	"page_ddnet_recap_for": "{player} için DDNet {year} Özeti",
+	"page_enter_player_name": "Oyuncu adını girin",
+	"page_go": "Git",
+	"page_go_back": "Geri dön",
+	"page_happy_new_year": "Mutlu Yıllar!",
+	"page_loading": "Hazırlanıyor..",
+	"page_points_info": "Puan: {points}",
+	"page_powered_by": "Destekleyen",
+	"page_share": "{name} kişisinin DDNet {year} özetini inceleyin: {link}",
+	"page_start_recap": "Özete başla",
+	"page_timezone": "Saat dilimi",
+	"title_afk_warrior": "AFK Savaşçısı",
+	"title_always_sunny": "DDNet'te Her Zaman Güneşli",
+	"title_amazingly_insane": "İnanılmaz Derecede Çılgın",
+	"title_brotherly_bond": "Kardeşlik Bağı",
+	"title_casual_enjoyer": "Sıradan Keyif Alan",
+	"title_challange_solver": "Meydan Okuyan Çözücü",
+	"title_clockwork": "Saatin Tıkırtısı",
+	"title_combined_mind": "Birleşik Zihin",
+	"title_ddmax_enjoyer": "DDmaX Keyif Alanı",
+	"title_early_bird": "Erkenci Kuş",
+	"title_full_throttle": "Tam Gaz",
+	"title_fulltime_player": "Tam Zamanlı Oyuncu",
+	"title_inseparable_team": "Ayrılmaz Takım",
+	"title_level_designer": "Seviye Tasarımcısı",
+	"title_live_and_learn": "Yaşa ve Öğren",
+	"title_live_to_play": "Oynamak İçin Yaşar",
+	"title_lone_wolf": "Yalnız Kurt",
+	"title_map_explorer": "Harita Kâşifi",
+	"title_map_master": "Harita Ustası",
+	"title_monthly": "Takvim Kırıcı",
+	"title_narrow_trail": "Dar Patika",
+	"title_new_beginning": "Yolculuk Başlıyor",
+	"title_night_owl": "Gece Baykuşu",
+	"title_oldschool_enjoyer": "Eskikul Keyif Alanı",
+	"title_path_pioneer": "Patika Öncüsü",
+	"title_peak_performer": "Zirve Performansçısı",
+	"title_perseverance": "Sebat",
+	"title_points_30000": "Tamamlayıcı",
+	"title_professional_player": "Profesyonel Oyuncu",
+	"title_racer": "Yarışçı",
+	"title_returning_voyage": "Dönüş Yolculuğu",
+	"title_runtime_error": "Boşlukszaman Bozulması",
+	"title_shared_name": "Paylaşılan İsim",
+	"title_snake_oiler": "Yılan Yağlayıcısı",
+	"title_solo_traveler": "Solo Gezgin",
+	"title_speed_demon": "Hız İblisi",
+	"title_speedrunner": "Hız Koşucusu",
+	"title_steady_progress": "Düzenli İlerleme",
+	"title_tee_army": "Tee Ordusu",
+	"title_time_wizard": "Zaman Büyücüsü",
+	"title_true_player": "Gerçek Oyuncu",
+	"title_unnamed_hero": "İsimsiz Kahraman",
+	"title_unstoppable_duo": "Durdurulamaz İkili",
+	"title_veteran": "{years} Yıllık Emektar",
+	"unit_maps": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "{count} harita",
+				"plural=*": "{count} harita"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_times": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "{count} kez",
+				"plural=*": "{count} kez"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_years": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "{count} yıl",
+				"plural=*": "{count} yıl"
+			},
+			"selectors": ["plural"]
+		}
+	]
+}
