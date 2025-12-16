@@ -179,7 +179,7 @@ export const query = async (
 	console.log('Y-0 ED BERLIN', berlinYearEnd);
 
 	// format: [+-][0-9]{2}:[0-9]{2}
-	const offsetMinutes = DateTime.now().setZone(tz).offset;
+	const offsetMinutes = DateTime.fromSeconds(yearEnd).setZone(tz).offset;
 	const offset = (() => {
 		const sign = offsetMinutes <= 0 ? '-' : '+';
 		const absMinutes = Math.abs(offsetMinutes);
