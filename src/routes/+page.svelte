@@ -15,7 +15,13 @@
 	import QueryWorker from '$lib/query-engine.worker?worker';
 	import { DateTime } from 'luxon';
 	import { generateCards, type CardData } from '$lib/cards';
-	import { getLocale, setLocale } from '$lib/paraglide/runtime.js';
+	import { getLocale, setLocale, type Locale } from '$lib/paraglide/runtime.js';
+
+	const locales: { code: Locale; name: string }[] = [
+		{ code: 'en', name: 'English' },
+		{ code: 'zh-CN', name: '简体中文' }
+	];
+	let dropdownOpen = $state(false);
 
 	type CardFormat = Snippet<[number, CardData]>;
 
@@ -927,11 +933,44 @@
 			<div>{m.page_timezone()}</div>
 			<div>{data.tz ?? DateTime.local().zoneName}</div>
 		</div>
-		<button
-			class="text-white cursor-pointer font-semibold"
-			onclick={() => {
-				setLocale(getLocale() === 'en' ? 'zh-CN' : 'en');
-			}}>{getLocale()}</button
-		>
+		<div class="relative">
+			<button
+				class="text-white cursor-pointer font-semibold flex items-center gap-1"
+				onclick={() => (dropdownOpen = !dropdownOpen)}
+				onblur={() => setTimeout(() => (dropdownOpen = false), 100)}
+			>
+				{locales.find((l) => l.code === getLocale())?.name ?? getLocale()}
+				<svg
+					class="w-4 h-4"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"
+					></path>
+				</svg>
+			</button>
+			{#if dropdownOpen}
+				<div
+					class="absolute bottom-full right-0 mb-1 bg-blue-600 rounded-lg shadow-lg z-10 min-w-[120px]"
+				>
+					{#each locales as locale}
+						<button
+							class="w-full text-left px-4 py-2 text-white hover:bg-blue-700 first:rounded-t-lg last:rounded-b-lg {locale.code ===
+							getLocale()
+								? 'bg-blue-800'
+								: ''}"
+							onclick={() => {
+								setLocale(locale.code);
+								dropdownOpen = false;
+							}}
+						>
+							{locale.name}
+						</button>
+					{/each}
+				</div>
+			{/if}
+		</div>
 	</div>
 </div>
