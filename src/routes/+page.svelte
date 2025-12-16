@@ -3,7 +3,7 @@
 	import { afterNavigate, goto, replaceState } from '$app/navigation';
 	import { encodeAsciiURIComponent } from '$lib/link';
 	import { fade } from 'svelte/transition';
-	import { uaIsMobile } from '$lib/helpers';
+	import { datetime, uaIsMobile } from '$lib/helpers';
 	import * as qrcode from 'qrcode';
 	import { encode } from 'msgpackr';
 	import { encodeBase64Url } from '$lib/base64url';
@@ -190,7 +190,7 @@
 			});
 
 			d = result.data;
-			totalCards = await generateCards(maps!, data, d, m);
+			totalCards = await generateCards(maps!, data, d, m, getLocale());
 		} catch (e) {
 			error = true;
 			console.error(e);
@@ -447,8 +447,25 @@
 <svelte:head>
 	{#if data.name}
 		<title>{data.name} - {m.page_ddnet_recap()} {data.year}</title>
+		<meta property="og:title" content={m.page_ddnet_recap()} />
+		<meta property="og:type" content="website" />
+		<meta
+			property="og:description"
+			content={m.page_ddnet_recap_for({ year: data.year, player: data.name })}
+		/> <meta property="og:image" content="https://teeworlds.cn/shareicon.png" />
+		<meta name="title" content={m.page_ddnet_recap()} />
+		<meta
+			name="description"
+			content={m.page_ddnet_recap_for({ year: data.year, player: data.name })}
+		/>
 	{:else}
 		<title>{m.page_ddnet_recap()} {data.year}</title>
+		<meta property="og:title" content={m.page_ddnet_recap()} />
+		<meta property="og:type" content="website" />
+		<meta property="og:description" content={m.page_ddnet_recap_desc({ year: data.year })} />
+		<meta property="og:image" content="https://teeworlds.cn/shareicon.png" />
+		<meta name="title" content={m.page_ddnet_recap()} />
+		<meta name="description" content={m.page_ddnet_recap_desc({ year: data.year })} />
 	{/if}
 </svelte:head>
 
@@ -473,10 +490,7 @@
 		{#if card.mapper}
 			<div
 				class="motion-duration-250 absolute mt-[-10%] flex h-[10%] w-[75%] flex-col items-center justify-center overflow-hidden rounded-t-xl bg-teal-900 text-[0.5em] transition-transform"
-				class:motion-translate-y-in-[100%]={id == currentCard}
-				class:motion-translate-y-out-[100%]={id != currentCard}
-				class:motion-delay-500={id == currentCard}
-				class:translate-y-[50%]={showContent}
+				class:translate-y-[50%]!={showContent}
 				class:ml-[20%]={id % 3 == 0}
 				class:ml-[5%]={id % 3 == 1}
 				class:ml-[13%]={id % 3 == 2}
@@ -497,9 +511,7 @@
 			</div>
 		</div>
 		{#if card.titles}
-			<div
-				class="absolute right-[5%] bottom-[-5%] left-[5%] flex flex-row flex-nowrap text-[0.6em]"
-			>
+			<div class="absolute right-[5%] bottom-[-5%] left-[5%] flex flex-row flex-wrap text-[0.6em]">
 				{#each card.titles as title, i}
 					<div
 						class="m-[1%] rounded-3xl border border-white/50 px-[4%] py-[1%] text-center font-semibold text-nowrap"
@@ -641,7 +653,7 @@
 					{#if totalCards?.titles}
 						{#each totalCards.titles as title}
 							<span
-								class="m-[1%] rounded-3xl border border-black/50 px-[2%] py-[0.25%] text-center font-semibold text-nowrap"
+								class="m-[1%] rounded-3xl border border-black/50 px-[2%] py-[0.25%] text-center font-semibold text-nowrap text-[0.9em]"
 								style="background-color: {title.bg};{title.color ? `color: ${title.color};` : ''}"
 							>
 								{title.text}
@@ -735,7 +747,7 @@
 		</div>
 		{#if currentCard == 0 && !startAnimation}
 			<div
-				class="absolute right-0 bottom-[5%] left-0 z-20 flex items-center justify-center text-[7svw] sm:text-[4svh]"
+				class="absolute right-0 bottom-[8%] left-0 z-20 flex items-center justify-center text-[7svw] sm:text-[4svh]"
 				out:fade
 				in:fade
 			>
@@ -785,8 +797,8 @@
 						</div>
 					{/if}
 				</div>
-				<div class="h-55 flex items-center justify-center p-4">
-					<div>
+				<div class="h-55 flex items-center px-8 py-4">
+					<div class="w-full">
 						{#if error}
 							<div class="flex w-full flex-col items-center justify-center gap-4">
 								<div class="flex flex-col">
@@ -888,7 +900,13 @@
 										{m.page_go()}
 									</button>
 									<div class="text-sm">
-										{m.page_database_time({ date: new Date(data.databaseTime).toDateString() })}
+										{m.page_database_time({
+											date: datetime(
+												new Date(data.databaseTime * 1000),
+												data.tz ?? DateTime.local().zoneName,
+												getLocale()
+											)
+										})}
 									</div>
 								</div>
 							{/key}

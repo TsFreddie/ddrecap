@@ -25,7 +25,11 @@ export const load = async ({ url, parent }) => {
 	}
 
 	let player;
-	let skin;
+	let skin: {
+		n: string;
+		b?: number;
+		f?: number;
+	} = { n: 'default' };
 
 	try {
 		const points = getPoints(name);
@@ -43,6 +47,12 @@ export const load = async ({ url, parent }) => {
 			skin = await (
 				await fetch(`https://teeworlds.cn/api/playerskin?name=${encodeURIComponent(name)}`)
 			).json();
+
+			console.log(skin);
+
+			if (!skin.n || skin.n === 'x-spec') {
+				skin = { n: 'default' };
+			}
 		} catch {}
 	} catch (e) {
 		console.error(e);

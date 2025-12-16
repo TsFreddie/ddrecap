@@ -1,5 +1,15 @@
 import { mapType } from './ddnet/helpers';
-import { escapeHTML, getPlayerSkin, month, secondsToTime } from './helpers';
+import {
+	date,
+	datetime,
+	duration,
+	durationFull,
+	durationMinutes,
+	escapeHTML,
+	getPlayerSkin,
+	month,
+	time
+} from './helpers';
 import type { m as messages } from './paraglide/messages';
 import type { YearlyData } from './query-engine.worker';
 
@@ -62,7 +72,8 @@ export const generateCards = async (
 		skin: { n: string; b?: number; f?: number };
 	},
 	d: Partial<YearlyData>,
-	m: typeof messages
+	m: typeof messages,
+	locale: string
 ) => {
 	const getMapper = (name: string) => maps?.find((map) => map.name == name)?.mapper || '不详';
 	const mapHasBonus = (name: string) =>
@@ -70,18 +81,7 @@ export const generateCards = async (
 	const bgMap = (name: string) =>
 		maps?.find((map) => map.name == name)?.thumbnail || '/assets/yearly/bif.png';
 
-	// TODO: better locale
-	const locale = new Intl.DateTimeFormat().resolvedOptions().locale;
-	const dateFormat = new Intl.DateTimeFormat(locale, {
-		dateStyle: 'medium',
-		timeZone: data.tz
-	});
-	const timeFormat = new Intl.DateTimeFormat(locale, {
-		timeStyle: 'short',
-		timeZone: data.tz
-	});
-	const date = (date: Date) => dateFormat.format(date);
-	const time = (date: Date) => timeFormat.format(date);
+	const tz = data.tz;
 
 	const cards: CardData[] = [];
 	const allTitles: { bg: string; color: string; text: string }[] = [];
@@ -90,6 +90,10 @@ export const generateCards = async (
 		let firstWord;
 		let enderLevel = 1;
 		const titles: { bg: string; color: string; text: string }[] = [];
+		if (d.lp == 0) {
+			titles.push({ bg: '#ffba08', color: '#000', text: m.title_new_beginning() });
+		}
+
 		if (d.tp >= 10000) {
 			firstWord = m.card_points_word_10000();
 			titles.push({ bg: '#ffba08', color: '#000', text: m.title_points_30000() });
@@ -127,28 +131,49 @@ export const generateCards = async (
 
 		// 今年分数
 		allTitles.push(...titles);
-		cards.push({
-			titles,
-			content: [
-				{
-					type: 't',
-					text: m.card_points_verse({ year: data.year, word: firstWord, points: d.tp })
-				},
-				{
-					type: 't',
-					text: `${verse_a}`
-				},
-				{ type: 'b', bg: '#fdd300', color: '#000', text: `${d.tp - d.lp} pts`, rotation: 4 },
-				{
-					type: 't',
-					text: `${verse_b}`
-				}
-			],
-			background: '/assets/yearly/ssu.png',
-			leftTeeTop: 5,
-			leftTeeSkin: data.skin,
-			mapper: 'Sunny Side Up by Ravie'
-		});
+		if (d.lp == 0) {
+			cards.push({
+				titles,
+				content: [
+					{
+						type: 't',
+						text: m.card_points_verse_new({ year: data.year, word: firstWord })
+					},
+					{ type: 'b', bg: '#fdd300', color: '#000', text: `${d.tp - d.lp} pts`, rotation: 4 },
+					{
+						type: 't',
+						text: `${verse_b}`
+					}
+				],
+				background: '/assets/yearly/sb.png',
+				leftTeeTop: 5,
+				leftTeeSkin: data.skin,
+				mapper: 'SKYBOW by Exotix'
+			});
+		} else {
+			cards.push({
+				titles,
+				content: [
+					{
+						type: 't',
+						text: m.card_points_verse({ year: data.year, word: firstWord, points: d.tp })
+					},
+					{
+						type: 't',
+						text: `${verse_a}`
+					},
+					{ type: 'b', bg: '#fdd300', color: '#000', text: `${d.tp - d.lp} pts`, rotation: 4 },
+					{
+						type: 't',
+						text: `${verse_b}`
+					}
+				],
+				background: '/assets/yearly/ssu.png',
+				leftTeeTop: 5,
+				leftTeeSkin: data.skin,
+				mapper: 'Sunny Side Up by Ravie'
+			});
+		}
 	} else if (d.tp != null) {
 		const titles = [{ bg: '#b7b7a4', color: '#000', text: m.title_returning_voyage() }];
 		allTitles.push(...titles);
@@ -183,6 +208,7 @@ export const generateCards = async (
 			mapper: 'Lavender Forest by Pipou'
 		});
 	}
+
 	if (d.mpg) {
 		// 分数成就
 		const titles = [];
@@ -201,7 +227,7 @@ export const generateCards = async (
 						bg: '#fdd300',
 						color: '#000',
 						text: `${escapeHTML(d.mpg[0])}`,
-						rotation: -24,
+						rotation: -12,
 						x: -50
 					},
 					{
@@ -209,14 +235,14 @@ export const generateCards = async (
 						text: m.card_peak_performer_verse_2(),
 						t: -3,
 						b: -3,
-						rotation: -24
+						rotation: -12
 					},
 					{
 						type: 'b',
 						bg: '#fdd300',
 						color: '#000',
 						text: `${d.mpg[1]}pts`,
-						rotation: -24,
+						rotation: -12,
 						x: 50
 					},
 					{
@@ -247,7 +273,7 @@ export const generateCards = async (
 						bg: '#fdd300',
 						color: '#000',
 						text: `${escapeHTML(d.mpg[0])}`,
-						rotation: -24,
+						rotation: -12,
 						x: -50
 					},
 					{
@@ -255,14 +281,14 @@ export const generateCards = async (
 						text: m.card_steady_progress_verse_2(),
 						t: -3,
 						b: -3,
-						rotation: -24
+						rotation: -12
 					},
 					{
 						type: 'b',
 						bg: '#fdd300',
 						color: '#000',
 						text: `${d.mpg[1]}pts`,
-						rotation: -24,
+						rotation: -12,
 						x: 50
 					},
 					{
@@ -279,10 +305,11 @@ export const generateCards = async (
 			});
 		}
 	}
+
 	if (d.tr && d.mhr && d.mhr[1] > 0) {
 		// 常玩时间
 		const titles = [];
-		if (d.mhr[0] == 'Morning') {
+		if (d.mhr[0] == 'morning') {
 			titles.push({ bg: '#2a9d8f', color: '#000', text: m.title_early_bird() });
 		}
 
@@ -292,15 +319,15 @@ export const generateCards = async (
 
 		let bg;
 		switch (d.mhr[0]) {
-			case 'Dawn':
-			case 'Morning':
+			case 'dawn':
+			case 'morning':
 				bg = {
 					background: '/assets/yearly/s.png',
 					mapper: 'Spoon by Ravie'
 				};
 				break;
-			case 'Afternoon':
-			case 'Evening':
+			case 'afternoon':
+			case 'evening':
 				bg = {
 					background: '/assets/yearly/w.png',
 					mapper: 'willow by louis'
@@ -323,10 +350,11 @@ export const generateCards = async (
 				},
 				{
 					type: 'b',
-					text: `${d.tr} ${m.unit_times()}`,
+					text: m.unit_times({ count: d.tr }),
 					bg: '#fdd300',
 					color: '#000',
-					rotation: -4
+					rotation: -4,
+					x: -5
 				},
 				{
 					type: 't',
@@ -334,13 +362,11 @@ export const generateCards = async (
 				},
 				{
 					type: 'b',
-					text: `${d.mhr[0]}`,
+					text: m.card_finishes_verse_2_period({ period: d.mhr[0] }),
 					bg: '#fdd300',
 					color: '#000',
 					rotation: 4,
-					x: 100,
-					t: -18,
-					b: 3
+					x: 5
 				},
 				{
 					type: 't',
@@ -350,24 +376,25 @@ export const generateCards = async (
 			...bg
 		});
 	}
-	if (d.mmr && d.mmr[3] > 0) {
+
+	if (d.tr && d.mmr && d.mmr[1] > 0) {
 		let bg;
-		if (d.mmr[0] == 1) {
+		if (d.mmr[0] >= 1 && d.mmr[0] < 4) {
 			bg = {
 				background: '/assets/yearly/bif.png',
 				mapper: 'Back in Festivity by Silex & Pipou'
 			};
-		} else if (d.mmr[0] == 4) {
+		} else if (d.mmr[0] >= 4 && d.mmr[0] < 7) {
 			bg = {
 				background: '/assets/yearly/p2.png',
 				mapper: 'powerless2 by spiritdote'
 			};
-		} else if (d.mmr[0] == 7) {
+		} else if (d.mmr[0] >= 7 && d.mmr[0] < 10) {
 			bg = {
 				background: '/assets/yearly/h2.png',
 				mapper: 'Holidays 2 by Destoros'
 			};
-		} else if (d.mmr[0] == 10) {
+		} else {
 			bg = {
 				background: '/assets/yearly/lt.png',
 				mapper: 'Lonely Travel by QuiX'
@@ -376,8 +403,8 @@ export const generateCards = async (
 
 		const titles = [];
 		let prePhrase = false;
-		if (d.tr && d.tr >= 10 && d.mmr[3] / d.tr >= 0.5) {
-			titles.push({ bg: '#e07a5f', color: '#000', text: m.title_seasonal() });
+		if (d.tr >= 10 && d.mmr[1] / d.tr >= 2 / 12) {
+			titles.push({ bg: '#e07a5f', color: '#000', text: m.title_monthly() });
 			prePhrase = true;
 		}
 
@@ -389,21 +416,71 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: m.card_seasonal_verse_1({ prePhrase: prePhrase })
+					text: m.card_monthly_verse_1({ prePhrase: prePhrase })
 				},
-				{ type: 'b', bg: '#fdd300', color: '#000', text: `${d.mmr[2]}`, rotation: 5 },
+				{ type: 'b', bg: '#fdd300', color: '#000', text: month(d.mmr[0], locale), rotation: 5 },
 				{
 					type: 't',
-					text: m.card_seasonal_verse_2({
-						start: month(d.mmr[0]),
-						end: month(d.mmr[1]),
-						count: d.mmr[3]
+					text: m.card_monthly_verse_2({
+						percent: Math.ceil((d.mmr[1] / d.tr) * 100).toFixed(0) + '%'
 					})
 				}
 			],
 			...bg
 		});
 	}
+
+	if (d.rt) {
+		// 过图时间
+		const titles = [];
+		if ((d.tt || d.rt) >= 365 * 24 * 60 * 60) {
+			titles.push({ bg: '#85BDA6', color: '#000', text: m.title_shared_name() });
+		}
+
+		if ((d.tt || d.rt) >= 900 * 3600) {
+			titles.push({ bg: '#3E885B', color: '#fff', text: m.title_fulltime_player() });
+		}
+
+		if (d.tt && d.tt < d.rt * 0.5) {
+			titles.push({ bg: '#BEDCFE', color: '#000', text: m.title_runtime_error() });
+		}
+
+		const card: (typeof cards)[0] = {
+			titles: titles,
+			content: [
+				{
+					type: 't',
+					text: m.card_runtime_verse_1()
+				},
+				{
+					type: 'b',
+					bg: '#fdd300',
+					color: '#000',
+					text: durationFull(d.rt, locale, m)
+				}
+			],
+			background: '/assets/yearly/wr.png',
+			mapper: 'Withered Rose by louis'
+		};
+
+		if (d.tt) {
+			card.content!.push({
+				type: 't',
+				text: m.card_runtime_verse_2({ duration: durationFull(d.tt, locale, m) })
+			});
+
+			if (d.tt < d.rt * 0.5) {
+				card.content!.push({
+					type: 't',
+					text: m.card_runtime_verse_weird()
+				});
+			}
+		}
+
+		cards.push(card);
+		allTitles.push(...titles);
+	}
+
 	if (d.lnf) {
 		// 夜猫子
 		const dateTime = new Date(d.lnf[2] * 1000);
@@ -419,12 +496,12 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: m.card_night_owl_verse_1({ date: date(dateTime) })
+					text: m.card_night_owl_verse_1({ date: date(dateTime, tz, locale) })
 				},
 				{
 					type: 't',
 					text: m.card_night_owl_verse_2({
-						time: secondsToTime(d.lnf[1]),
+						time: duration(d.lnf[1], locale, m),
 						map: escapeHTML(d.lnf[0])
 					})
 				},
@@ -432,7 +509,7 @@ export const generateCards = async (
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: `${time(dateTime)}`,
+					text: `${time(dateTime, tz, locale)}`,
 					rotation: -4
 				},
 				{
@@ -448,6 +525,7 @@ export const generateCards = async (
 			mapper: `${d.lnf[0]} by ${getMapper(d.lnf[0])}`
 		});
 	}
+
 	if (d.ymf && d.ymf[1] > 0) {
 		// 新潮追随者
 		const titles = [];
@@ -466,7 +544,7 @@ export const generateCards = async (
 					type: 't',
 					text: m.card_new_map_verse_1({
 						total: d.ymf[0],
-						completed: d.ymf[1] >= d.ymf[0] ? 'all' : d.ymf[1]
+						completed: d.ymf[1]
 					})
 				},
 				{
@@ -507,6 +585,7 @@ export const generateCards = async (
 			cards[cards.length - 1].mapper = `${d.ymf[2]} by ${getMapper(d.ymf[2])}`;
 		}
 	}
+
 	if (d.nrr && d.nrr[1] < 24 * 60 * 60) {
 		// 离发布最近完成
 		const titles = [];
@@ -525,7 +604,7 @@ export const generateCards = async (
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: `${secondsToTime(d.nrr[1])}`,
+					text: durationMinutes(d.nrr[1], locale, m),
 					rotation: -4
 				},
 				{
@@ -542,6 +621,7 @@ export const generateCards = async (
 			mapper: `${d.nrr[0]} by ${getMapper(d.nrr[0])}`
 		});
 	}
+
 	if (d.mps && d.mps[1] > 0) {
 		const titles = [];
 		const type = d.mps[0].toLowerCase();
@@ -672,6 +752,7 @@ export const generateCards = async (
 			});
 		}
 	}
+
 	if (d.mfm && d.mfm[1] > 1) {
 		// 通过最多的地图
 		const map = d.mfm[0];
@@ -715,6 +796,66 @@ export const generateCards = async (
 			mapper: `${d.mfm[0]} by ${getMapper(d.mfm[0])}`
 		});
 	}
+
+	if (d.sfm && d.sfm[1] > 1) {
+		// 通过第二多的地图
+		cards.push({
+			titles: [],
+			content: [
+				{
+					type: 't',
+					text: m.card_second_map_verse_1()
+				},
+				{
+					type: 'b',
+					bg: '#fdd300',
+					color: '#000',
+					text: `${escapeHTML(d.sfm[0])}`,
+					rotation: -3
+				},
+				{
+					type: 't',
+					text: m.card_second_map_verse_2({ finishes: d.sfm[1] })
+				}
+			],
+			background: bgMap(d.sfm[0]),
+			mapper: `${d.sfm[0]} by ${getMapper(d.sfm[0])}`
+		});
+	}
+
+	if (d.sf && d.sf[1] > 1) {
+		// 服务器完成数最多的服务器
+		cards.push({
+			titles: [],
+			content: [
+				{
+					type: 't',
+					text: m.card_server_verse_1()
+				},
+				{
+					type: 'b',
+					bg: '#fdd300',
+					color: '#000',
+					text: `DDNet ${escapeHTML(d.sf[0])}`,
+					rotation: -3
+				},
+				{
+					type: 't',
+					text: m.card_server_verse_2({ finishes: d.sf[1] })
+				}
+			],
+			background: '/assets/yearly/bb.png',
+			mapper: 'Bamboozled by StorмPʜöɴix'
+		});
+
+		if (d.sf[2]) {
+			cards[cards.length - 1].content!.push({
+				type: 't',
+				text: m.card_server_verse_3({ servers: d.sf[2] })
+			});
+		}
+	}
+
 	if (d.lf && d.lf[1] > 1) {
 		// 最慢的记录
 		const isBonusMap = mapHasBonus(d.lf[0]);
@@ -735,14 +876,14 @@ export const generateCards = async (
 				{
 					type: 't',
 					text: m.card_slowest_verse_1({
-						date: `<span class="text-orange-400 font-semibold">${date(dateTime)}</span>`
+						date: `<span class="text-orange-400 font-semibold">${date(dateTime, tz, locale)}</span>`
 					})
 				},
 				{
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: `${secondsToTime(d.lf[1])}`,
+					text: durationMinutes(d.lf[1], locale, m),
 					rotation: -4
 				},
 				{
@@ -770,6 +911,45 @@ export const generateCards = async (
 			mapper: `${d.lf[0]} by ${getMapper(d.lf[0])}`
 		});
 	}
+
+	if (d.fw && d.fw[1] > 2) {
+		// 连续过图
+		const titles = [];
+		if (d.fw[1] > 10) {
+			titles.push({ bg: '#3E2F5B', color: '#fff', text: m.title_speedrunner() });
+		}
+		allTitles.push(...titles);
+
+		cards.push({
+			titles,
+			content: [
+				{
+					type: 't',
+					text: m.card_speedrunner_verse_1({
+						date: datetime(new Date(d.fw[0] * 1000), tz, locale)
+					})
+				},
+				{
+					type: 'b',
+					bg: '#fdd300',
+					color: '#000',
+					text: m.unit_maps({ count: d.fw[1] }),
+					rotation: -4
+				},
+				{
+					type: 't',
+					text: m.card_speedrunner_verse_2()
+				},
+				{
+					type: 't',
+					text: `<div class="opacity-70" style="font-size:0.8em">${escapeHTML(d.fw[2])}</div>`
+				}
+			],
+			background: '/assets/yearly/br.png',
+			mapper: 'Brassrun by Kaniosek'
+		});
+	}
+
 	if (d.mpt && d.mpt[0]) {
 		// 最常玩队友
 		const titles = [];
@@ -854,6 +1034,7 @@ export const generateCards = async (
 			});
 		}
 	}
+
 	if (d.bt && d.bt[0] > 4) {
 		// 最大团队
 		const titles = [];
@@ -879,7 +1060,7 @@ export const generateCards = async (
 					type: 't',
 					text: m.card_stack_verse_3({
 						map: `<span class="font-semibold text-orange-400">${escapeHTML(d.bt[1])}</span>`,
-						date: date(new Date(d.bt[3] * 1000))
+						date: date(new Date(d.bt[3] * 1000), tz, locale)
 					})
 				},
 				{
@@ -891,6 +1072,7 @@ export const generateCards = async (
 			mapper: `${d.bt[1]} by ${getMapper(d.bt[1])}`
 		});
 	}
+
 	if (d.map && d.map.length > 0) {
 		// 地图作者
 		const titles = [{ bg: '#333533', color: '#fff', text: m.title_level_designer() }];
@@ -906,7 +1088,7 @@ export const generateCards = async (
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: `${d.map.length} ${m.unit_map()}`,
+					text: m.unit_maps({ count: d.map.length }),
 					rotation: -4
 				},
 				{

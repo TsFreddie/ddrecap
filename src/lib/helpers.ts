@@ -1,3 +1,6 @@
+import { DateTime, Duration } from 'luxon';
+import type { m as messages } from './paraglide/messages';
+
 export const escapeHTML = (str: string) => {
 	return str
 		.replace(/&/g, '&amp;')
@@ -7,17 +10,6 @@ export const escapeHTML = (str: string) => {
 		.replace(/'/g, '&#x27;');
 };
 
-// TODO: i18n
-export const secondsToTime = (totalSeconds: number) => {
-	const hours = Math.floor(totalSeconds / 3600);
-	const minutes = Math.floor((totalSeconds % 3600) / 60);
-	const seconds = Math.floor(totalSeconds % 60);
-
-	if (hours > 0)
-		return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-	return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-};
-
 export const uaIsMobile = (ua: string | null) => {
 	if (!ua) return false;
 	const regex =
@@ -25,37 +17,128 @@ export const uaIsMobile = (ua: string | null) => {
 	return regex.test(ua);
 };
 
-const MONTHS = [
-	'January',
-	'February',
-	'March',
-	'April',
-	'May',
-	'June',
-	'July',
-	'August',
-	'September',
-	'October',
-	'November',
-	'December'
-];
+export const month = (month: number, langLocale: string) => {
+	let locale = DateTime.local().locale;
+	if (langLocale.split('-')[0] !== locale.split('-')[0]) {
+		// use langLocale if target language is different from browser language
+		locale = langLocale;
+	}
 
-// TODO: i18n
-export const month = (month: number) => {
-	return MONTHS[month - 1];
+	return DateTime.fromObject({ month }).setLocale(locale).toLocaleString({ month: 'long' });
+};
+
+export const date = (date: Date, tz: string, displayLocale: string) => {
+	let locale = DateTime.local().locale;
+	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
+		// perfer user locale if the display language is the same lang.
+		locale = displayLocale;
+	}
+	return DateTime.fromJSDate(date).setLocale(locale).setZone(tz).toLocaleString(DateTime.DATE_MED);
+};
+
+export const time = (date: Date, tz: string, displayLocale: string) => {
+	let locale = DateTime.local().locale;
+	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
+		// perfer user locale if the display language is the same lang.
+		locale = displayLocale;
+	}
+
+	return DateTime.fromJSDate(date)
+		.setLocale(locale)
+		.setZone(tz)
+		.toLocaleString({ hour: 'numeric', minute: 'numeric' });
+};
+
+export const datetime = (date: Date, tz: string, displayLocale: string) => {
+	let locale = DateTime.local().locale;
+	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
+		// perfer user locale if the display language is the same lang.
+		locale = displayLocale;
+	}
+	console.log(locale);
+	return DateTime.fromJSDate(date)
+		.setLocale(locale)
+		.setZone(tz)
+		.toLocaleString(DateTime.DATETIME_MED);
+};
+
+export const durationFull = (seconds: number, displayLocale: string, m: typeof messages) => {
+	let locale = DateTime.local().locale;
+	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
+		// perfer user locale if the display language is the same lang.
+		locale = displayLocale;
+	}
+	const days = Math.floor(seconds / 86400);
+	const hours = Math.floor((seconds % 86400) / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	seconds = Math.round(seconds % 60);
+
+	const format =
+		days == 0
+			? hours == 0
+				? minutes == 0
+					? m.format_s()
+					: m.format_ms()
+				: m.format_hms()
+			: m.format_dhms();
+	if (format) {
+		return Duration.fromObject({ days, hours, minutes, seconds }).toFormat(format);
+	}
+
+	return Duration.fromObject({ days, hours, minutes, seconds })
+		.reconfigure({ locale })
+		.toHuman({ listStyle: 'narrow', showZeros: false });
+};
+
+export const duration = (seconds: number, displayLocale: string, m: typeof messages) => {
+	let locale = DateTime.local().locale;
+	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
+		// perfer user locale if the display language is the same lang.
+		locale = displayLocale;
+	}
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	seconds = Math.round(seconds % 60);
+
+	const format = hours == 0 ? (minutes == 0 ? m.format_s() : m.format_ms()) : m.format_hms();
+	if (format) {
+		return Duration.fromObject({ hours, minutes, seconds }).toFormat(format);
+	}
+
+	return Duration.fromObject({ hours, minutes, seconds })
+		.reconfigure({ locale })
+		.toHuman({ listStyle: 'narrow', showZeros: false });
+};
+
+export const durationMinutes = (seconds: number, displayLocale: string, m: typeof messages) => {
+	let locale = DateTime.local().locale;
+	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
+		// perfer user locale if the display language is the same lang.
+		locale = displayLocale;
+	}
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	const format = hours == 0 ? m.format_m() : m.format_hm();
+	if (format) {
+		return Duration.fromObject({ hours, minutes }).toFormat(format);
+	}
+
+	return Duration.fromObject({ hours, minutes })
+		.reconfigure({ locale })
+		.toHuman({ listStyle: 'narrow', showZeros: false });
 };
 
 export const getPlayerSkin = async (player: string) => {
-	if (!player) return { n: null };
+	if (!player) return { n: 'default' };
 	try {
 		const skin = await (await fetch(`/skins?name=${encodeURIComponent(player)}`)).json();
 		if (!skin.n || skin.n === 'x-spec') {
-			return { n: null };
+			return { n: 'default' };
 		}
 		return skin;
 	} catch (e) {
 		console.error('Failed to fetch player skin for ' + player);
 		console.error(e);
-		return { n: null };
+		return { n: 'default' };
 	}
 };

@@ -109,11 +109,11 @@
 				const buffer = new Uint8Array(skinData);
 				skin = `data:${contentType};base64,${encodeBase64(buffer)}`;
 			} else {
-				skin = fallbackSkin;
+				skin = body && feet ? DEFAULT_SKIN_GS : DEFAULT_SKIN;
 				loadingSkin = 'default';
 			}
 		} else {
-			skin = fallbackSkin;
+			skin = body && feet ? DEFAULT_SKIN_GS : DEFAULT_SKIN;
 			loadingSkin = 'cancelled';
 		}
 	};

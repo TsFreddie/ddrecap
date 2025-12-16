@@ -14,8 +14,8 @@ export type YearlyData = {
 	tr: number;
 	/** most hourly race [timeName, finishes] */
 	mhr: [string, number];
-	/** most monthly race [startMonth, endMonth, seasonName, finishes] */
-	mmr: [number, number, string, number];
+	/** most monthly race [month (1-12), finishes] */
+	mmr: [number, number];
 	/** late night finish [map, time, timestamp] */
 	lnf: [string, number, number];
 	/** this year's map finishes [total, finished, map, finishes] */
@@ -24,6 +24,8 @@ export type YearlyData = {
 	mps: [string, number];
 	/** most finished map [map, num] */
 	mfm: [string, number];
+	/** second finished map [map, num] */
+	sfm: [string, number];
 	/** longest time finished race [map, time, timestamp] */
 	lf: [string, number, number];
 	/** most played teammates [[name, num], [name, num]] */
@@ -34,6 +36,14 @@ export type YearlyData = {
 	nrr: [string, number];
 	/** mapper special */
 	map: string[];
+	/** run time */
+	rt: number;
+	/** tracker time */
+	tt: number;
+	/** server finishes [server, finishes, other servers] */
+	sf: [string, number, string];
+	/** finishes window [start, count, maps] */
+	fw: [number, number, string];
 };
 
 export const query = async (
@@ -79,6 +89,13 @@ export const query = async (
 			Mapper TEXT,
 			Timestamp INTEGER
 		);
+
+		CREATE INDEX maps_map ON maps(Map);
+		CREATE INDEX maps_timestamp ON maps(Timestamp);
+		CREATE INDEX race_map ON race(Map);
+		CREATE INDEX race_timestamp ON race(Timestamp);
+		CREATE INDEX teamrace_map ON teamrace(Map);
+		CREATE INDEX teamrace_timestamp ON teamrace(Timestamp);
 	`);
 
 	db.run('BEGIN TRANSACTION');
@@ -164,18 +181,20 @@ export const query = async (
 	})();
 
 	/** This year total points */
-	const tp = one(
-		`
+	const tp =
+		(one(
+			`
 SELECT SUM(Points) FROM (SELECT maps.Map, maps.Points FROM maps JOIN race ON race.Map = maps.Map WHERE race.Timestamp <= ? GROUP BY maps.Map);`,
-		[yearEnd]
-	)?.[0] as number;
+			[yearEnd]
+		)?.[0] as number) || 0;
 
 	/** Last year total points */
-	const lp = one(
-		`
+	const lp =
+		(one(
+			`
 SELECT SUM(Points) FROM (SELECT maps.Map, maps.Points FROM maps JOIN race ON race.Map = maps.Map WHERE race.Timestamp <= ? GROUP BY maps.Map);`,
-		[previousYearEnd]
-	)?.[0] as number;
+			[previousYearEnd]
+		)?.[0] as number) || 0;
 
 	/** Most point gainer */
 	const mpg = one(
@@ -204,13 +223,15 @@ SELECT floor(Timestamp / 3600) * 3600 as Slice, COUNT(*) as Cnt FROM race WHERE 
 	) as [number, number][];
 
 	const hourRange = [
-		[0, 3, 'range_midnight', 0],
-		[4, 7, 'range_dawn', 0],
-		[9, 12, 'range_morning', 0],
-		[13, 16, 'range_afternoon', 0],
-		[17, 20, 'range_evening', 0],
-		[21, 24, 'range_night', 0]
+		[0, 3, 'midnight', 0],
+		[4, 7, 'dawn', 0],
+		[9, 12, 'morning', 0],
+		[13, 16, 'afternoon', 0],
+		[17, 20, 'evening', 0],
+		[21, 24, 'night', 0]
 	] as [number, number, string, number][];
+
+	const monthCount: [number, number][] = new Array(12).fill(true).map((_, i) => [i, 0]);
 
 	for (const slice of slices) {
 		const time = DateTime.fromSeconds(slice[0], { zone: tz });
@@ -218,12 +239,17 @@ SELECT floor(Timestamp / 3600) * 3600 as Slice, COUNT(*) as Cnt FROM race WHERE 
 		if (range) {
 			range[3] += slice[1];
 		}
+		monthCount[time.month - 1][1] = monthCount[time.month - 1][1] + slice[1];
 	}
 
 	hourRange.sort((a, b) => b[3] - a[3]);
 
 	/** Most hourly range */
 	const mhr = [hourRange[0][2], hourRange[0][3]] as [string, number];
+
+	/** Most monthly range */
+	monthCount.sort((a, b) => b[1] - a[1]);
+	const mmr = [monthCount[0][0] + 1, monthCount[0][1]] as [number, number];
 
 	/** Late night finishes */
 	const lnf = one(
@@ -288,6 +314,15 @@ SELECT Map, COUNT(Map) as Num FROM race
 		[yearStart, yearEnd]
 	) as [string, number];
 
+	/** Second most finished map */
+	const sfm = one(
+		`
+SELECT Map, COUNT(Map) as Num FROM race 
+    WHERE Timestamp >= ? AND Timestamp <= ?
+    GROUP BY Map ORDER BY Num DESC LIMIT 1 OFFSET 1;`,
+		[yearStart, yearEnd]
+	) as [string, number];
+
 	/** Longest finished race */
 	const lf = one(
 		`
@@ -345,21 +380,98 @@ GROUP BY t.ID ORDER BY Num DESC LIMIT 1;`,
 		.map((map) => map.name);
 	const map = mapperMaps;
 
+	/** run time */
+	const rt = one(`SELECT SUM(Time) FROM race WHERE Timestamp >= ? AND Timestamp <= ?;`, [
+		yearStart,
+		yearEnd
+	])?.[0] as number;
+
+	/** tracker time */
+	let tt = 0;
+	try {
+		const tracker = (await (await fetch(`/ddstats/${encodeURIComponent(name)}`)).json()) as {
+			playtime: number[];
+		};
+		tt = tracker.playtime.reduce((a, b) => a + b, 0);
+	} catch (e) {
+		console.log(e);
+	}
+
+	/** server finishes */
+	const serverFinishes = all(
+		`
+SELECT Server, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? AND Timestamp <= ? GROUP BY Server ORDER BY Cnt DESC;`,
+		[yearStart, yearEnd]
+	) as [string, number][];
+
+	const sf = [
+		serverFinishes[0]?.[0],
+		serverFinishes[0]?.[1] || 0,
+		serverFinishes
+			.slice(1)
+			.map((s) => `${s[0]}<span class="opacity-70" style="font-size:0.65em">(${s[1]})</span>`)
+			.join(' ')
+	] as [string, number, string];
+
+	/** finishes window */
+	const mostDistinctMapFinishWindow = one(
+		`SELECT floor(Timestamp / 3600) * 3600 as Slice, COUNT(DISTINCT Map) as Cnt FROM race WHERE Timestamp >= ? and Timestamp <= ? GROUP BY Slice ORDER BY Cnt DESC LIMIT 1;`,
+		[yearStart, yearEnd]
+	) as [number, number];
+
+	let fw: [number, number, string] | undefined;
+
+	// find all the map finishes in the 2 hour span
+	if (mostDistinctMapFinishWindow) {
+		const mapFinishes = all(
+			`SELECT Map, min(Timestamp) as T FROM race WHERE timestamp >= ? AND timestamp < ? GROUP BY Map ORDER BY T`,
+			[mostDistinctMapFinishWindow[0] - 1800, mostDistinctMapFinishWindow[0] + 5400]
+		) as [string, number][];
+		// sliding window find the most finishes in a 60 minute window
+		let left = 0;
+		let maxCount = 0;
+		let bestStart = 0;
+		let bestEnd = 0;
+
+		for (let right = 0; right < mapFinishes.length; right++) {
+			while (mapFinishes[right][1] - mapFinishes[left][1] > 3600) {
+				left++;
+			}
+
+			const currentCount = right - left + 1;
+			if (currentCount > maxCount) {
+				maxCount = currentCount;
+				bestStart = mapFinishes[left][1];
+				bestEnd = mapFinishes[left][1] + 3600;
+			}
+		}
+
+		// collect result
+		const maps = mapFinishes.filter((data) => data[1] >= bestStart && data[1] < bestEnd);
+		fw = [bestStart, maps.length, maps.map((m) => m[0]).join('・')];
+	}
+
 	const data: Partial<YearlyData> = {
 		tp,
 		lp,
 		mpg,
 		tr,
 		mhr,
+		mmr,
 		lnf,
 		ymf,
 		nrr,
 		mps,
 		mfm,
+		sfm,
 		lf,
 		mpt,
 		bt,
-		map
+		map,
+		rt,
+		tt,
+		sf,
+		fw
 	};
 
 	return {
