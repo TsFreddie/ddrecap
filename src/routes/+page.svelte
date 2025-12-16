@@ -43,10 +43,10 @@
 	const leftTeePose = {
 		bodyRotation: 15,
 		eyesRotation: -8,
-		frontFootRotation: 69,
+		frontFootRotation: 25,
 		backFootRotation: 50,
 		eyesPosition: '-4%, 0%',
-		frontFootPosition: '-17%, -1%',
+		frontFootPosition: '-17%, 8%',
 		backFootPosition: '-7%, -4%'
 	};
 	const rightTeePose = {
@@ -489,8 +489,9 @@
 	>
 		{#if card.mapper}
 			<div
-				class="motion-duration-250 absolute mt-[-10%] flex h-[10%] w-[75%] flex-col items-center justify-center overflow-hidden rounded-t-xl bg-teal-900 text-[0.5em] transition-transform"
-				class:translate-y-[50%]!={showContent}
+				class="motion-duration-250 absolute mt-[-10%] flex h-[10%] w-[75%] flex-col items-center justify-center overflow-hidden rounded-t-xl bg-linear-to-r from-cyan-500 to-blue-500 text-white text-[0.5em] transition-transform"
+				class:translate-y-[50%]={showContent || id != currentCard}
+				class:translate-y-[120%]={id != currentCard}
 				class:ml-[20%]={id % 3 == 0}
 				class:ml-[5%]={id % 3 == 1}
 				class:ml-[13%]={id % 3 == 2}
@@ -501,7 +502,7 @@
 			</div>
 		{/if}
 		<div
-			class="absolute h-full w-full overflow-hidden rounded-3xl bg-white shadow-2xl shadow-black"
+			class="absolute h-full w-full overflow-hidden rounded-4xl bg-white shadow-2xl shadow-black"
 		>
 			<div
 				class="absolute h-full w-full bg-cover bg-center"
@@ -585,7 +586,7 @@
 				{#each card.content as item}
 					{#if item.type == 't'}
 						<div
-							class="rounded-xl bg-slate-700/90 px-[4%] py-[1%] text-center text-[0.7em]"
+							class="rounded-[1em] bg-zinc-700/90 px-[4%] py-[1%] text-center text-[0.7em] border border-t-zinc-600/80 border-l-zinc-600/80 border-zinc-700"
 							style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
 								0}%);margin-top: {item.t ?? 0}%;margin-bottom: {item.b ?? 0}%;"
 						>
@@ -593,7 +594,7 @@
 						</div>
 					{:else if item.type == 'b'}
 						<div
-							class="rounded px-[4.5%] py-[1.5%] text-center font-semibold"
+							class="rounded-[0.5em] px-[4.5%] py-[1.5%] text-center font-semibold"
 							style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
 								0}%);background-color: {item.bg};margin-top: {item.t ??
 								0}%;margin-bottom: {item.b ?? 0}%;{item.color ? `color: ${item.color};` : ''}"
@@ -622,12 +623,12 @@
 			{#if card.content}
 				{#each card.content as item}
 					{#if item.type == 't'}
-						<div class="rounded-lg bg-slate-700/80 px-2 py-1 text-center text-[0.7em]">
+						<div class="rounded-[1em] bg-zinc-700/80 px-2 py-1 text-center text-[0.7em]">
 							{@html item.text}
 						</div>
 					{:else if item.type == 'b'}
 						<div
-							class="rounded px-4 py-2 text-center font-semibold"
+							class="rounded-[0.5em] px-4 py-2 text-center font-semibold"
 							style="transform: rotate({item.rotation}deg);background-color: {item.bg};{item.color
 								? `color: ${item.color};`
 								: ''}"
@@ -647,7 +648,7 @@
 			class="absolute top-[2%] right-[2%] bottom-[2%] left-[2%] flex flex-col items-center justify-center gap-[3%]"
 		>
 			<div
-				class="absolute top-0 right-0 bottom-[35%] left-0 flex grow items-center justify-center rounded-xl border-[0.25em] border-sky-200/60 bg-sky-100/90 pt-[7%]"
+				class="absolute top-0 right-0 bottom-[35%] left-0 flex grow items-center justify-center rounded-[1em] border-[0.25em] border-sky-200/60 bg-sky-100/90 pt-[7%]"
 			>
 				<div class="flex w-full flex-row flex-wrap items-center justify-center">
 					{#if totalCards?.titles}
@@ -684,7 +685,9 @@
 				class="motion-duration-500 motion-delay-1500 absolute bottom-[2.5%] left-[7%] flex h-[30%] w-[55%] flex-row items-center justify-center"
 				class:motion-opacity-in-0={id == currentCard}
 			>
-				<div class="rounded-lg bg-white/80 px-[3%] py-[2%] text-center text-[0.9em] text-black">
+				<div
+					class="rounded-[0.8em] bg-white/80 px-[3%] py-[2%] text-center text-[0.9em] text-black"
+				>
 					{#if shareError}
 						{shareError}
 					{:else if shareInfo}
@@ -698,7 +701,7 @@
 			</div>
 			<div class="absolute right-[5%] bottom-[2.5%] flex h-[30%] w-[30%]">
 				<div
-					class="h-full w-full rounded-lg bg-white bg-cover bg-center"
+					class="h-full w-full rounded-[0.8em] bg-white bg-cover bg-center"
 					style="background-image: url({shareableQRCode});"
 				></div>
 			</div>
@@ -740,7 +743,7 @@
 			<a
 				data-sveltekit-replacestate
 				href="/"
-				class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-slate-600 px-4 py-2 text-white hover:bg-slate-700"
+				class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-zinc-600 px-4 py-2 text-white hover:bg-zinc-700"
 			>
 				{m.page_change_name()}
 			</a>
@@ -759,19 +762,19 @@
 	</div>
 	{#if !totalCards || !cardReady || error}
 		<div
-			class="absolute z-50 flex h-full w-full items-center justify-center bg-slate-800 px-2"
+			class="absolute z-50 flex h-full w-full items-center justify-center bg-zinc-800 px-2"
 			out:fade
 			in:fade
 		>
 			<div
-				class="relative w-96 h-87 overflow-hidden rounded-lg border border-slate-600 bg-slate-700 shadow-md transition-all duration-500"
+				class="relative w-96 h-87 overflow-hidden rounded-[0.8em] border border-zinc-600 bg-zinc-700 shadow-md transition-all duration-500"
 			>
 				<div
 					class="relative flex h-32 items-center justify-center overflow-hidden rounded-t-lg bg-cover bg-center"
 					style="background-image: url(/assets/yearly/bif.png)"
 				>
 					<div
-						class="motion-translate-x-loop-[800%] motion-duration-5000 absolute h-[150%] w-16 translate-x-[-400%] rotate-12 bg-slate-200/10"
+						class="motion-translate-x-loop-[800%] motion-duration-5000 absolute h-[150%] w-16 translate-x-[-400%] rotate-12 bg-zinc-200/10"
 					></div>
 					{#if error}
 						<div
@@ -781,7 +784,7 @@
 						</div>
 					{:else}
 						<div
-							class="rounded-3xl bg-slate-700/40 px-8 py-4 text-center text-xl font-bold backdrop-blur-lg"
+							class="rounded-3xl bg-zinc-700/40 px-8 py-4 text-center text-xl font-bold backdrop-blur-lg"
 						>
 							<div class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300">
 								{m.page_happy_new_year()}
@@ -844,7 +847,7 @@
 												feet={data.skin?.f}
 											/>
 											<div class="flex flex-col">
-												<div class="font-semibold text-slate-300">{data.player.name}</div>
+												<div class="font-semibold text-zinc-300">{data.player.name}</div>
 												<div>{m.page_points_info({ points: `${data.player.points}pts` })}</div>
 											</div>
 										</div>
@@ -861,7 +864,7 @@
 											<a
 												data-sveltekit-replacestate
 												href="/"
-												class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-slate-800 px-4 py-2 text-white hover:bg-slate-900"
+												class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-zinc-800 px-4 py-2 text-white hover:bg-zinc-900"
 											>
 												{m.page_change_name()}
 											</a>
@@ -872,7 +875,7 @@
 						{:else}
 							{#key 'entry'}
 								<div class="flex flex-col gap-2">
-									<div class="text-sm text-slate-300">
+									<div class="text-sm text-zinc-300">
 										{m.page_enter_player_name()}
 										{#if data.error}
 											<span class="motion-text-loop-red-400 text-red-500">
@@ -882,7 +885,7 @@
 									</div>
 									<input
 										type="text"
-										class="w-full rounded border border-slate-500 bg-slate-600 px-3 py-2 text-sm font-normal shadow-md md:flex-1"
+										class="w-full rounded border border-zinc-500 bg-zinc-600 px-3 py-2 text-sm font-normal shadow-md md:flex-1"
 										bind:value={gotoName}
 										onkeydown={(ev) => {
 											if (ev.key == 'Enter') {

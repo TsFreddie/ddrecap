@@ -1,10 +1,6 @@
 @import 'tailwindcss';
 @plugin 'tailwindcss-motion';
 
-html {
-	@apply bg-slate-800;
-}
-
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-hide::-webkit-scrollbar {
 	display: none;
