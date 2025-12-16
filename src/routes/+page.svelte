@@ -927,6 +927,22 @@
 		</div>
 	{/if}
 
+	{#if totalCards && cardReady && !error && !startAnimation}
+		<div
+			class="fixed right-0.5 top-1/2 transform -translate-y-1/2 z-30 flex flex-col items-center gap-2 w-3"
+		>
+			{#each totalCards.cards as _, i}
+				<div
+					aria-label="card {i + 1}"
+					style="--n: {i * 25}ms"
+					class="w-2 h-2 rounded-full bg-white/50 transition-all duration-300 motion-opacity-in-0 motion-scale-in-0 motion-delay-(--n) shadow shadow-black/50
+					
+						{i === currentCard ? 'w-3 h-3 bg-linear-to-r from-blue-400 to-teal-400' : ''}"
+				></div>
+			{/each}
+		</div>
+	{/if}
+
 	<div
 		class="absolute z-100 right-0 bottom-0 rounded-tl-xl bg-blue-500 px-4 py-0.5 flex items-center gap-4"
 	>
