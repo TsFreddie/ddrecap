@@ -9,7 +9,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "Из них <span class=\"text-orange-400\">{count} раз</span> это случилось",
-				"plural=other": "Из них <span class=\"text-orange-400\">{count} раз</span> это случилось"
+				"plural=*": "Из них <span class=\"text-orange-400\">{count} раз</span> это случилось"
 			},
 			"selectors": ["plural"]
 		}
@@ -41,7 +41,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "В этом году вы пересекли финишную черту на {type} картах <span class=\"font-semibold text-orange-400\">{count} раз</span>",
-				"plural=other": "В этом году вы пересекли финишную черту на {type} картах <span class=\"font-semibold text-orange-400\">{count} раза</span>"
+				"plural=*": "В этом году вы пересекли финишную черту на {type} картах <span class=\"font-semibold text-orange-400\">{count} раза</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -53,7 +53,7 @@
 			"declarations": ["input finishes", "local plural = finishes: plural"],
 			"match": {
 				"plural=one": "Вы пересекли её финишную черту <span class=\"font-semibold text-orange-400\">{finishes} раз</span>. Должно быть, у вас к этой карте особая слабость!",
-				"plural=other": "Вы пересекли её финишную черту <span class=\"font-semibold text-orange-400\">{finishes} раза</span>. Должно быть, у вас к этой карте особая слабость!"
+				"plural=*": "Вы пересекли её финишную черту <span class=\"font-semibold text-orange-400\">{finishes} раза</span>. Должно быть, у вас к этой карте особая слабость!"
 			},
 			"selectors": ["plural"]
 		}
@@ -65,7 +65,7 @@
 			"declarations": ["input total", "local plural = total: plural"],
 			"match": {
 				"plural=one": "Среди <span class=\"text-orange-400\">{total} новой сложной карты</span>, выпущенной в этом году,<br>вы успешно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> из них",
-				"plural=other": "Среди <span class=\"text-orange-400\">{total} новых сложных карт</span>, выпущенных в этом году,<br>вы успешно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> из них"
+				"plural=*": "Среди <span class=\"text-orange-400\">{total} новых сложных карт</span>, выпущенных в этом году,<br>вы успешно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> из них"
 			},
 			"selectors": ["plural"]
 		}
@@ -133,7 +133,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "— ваш лучший друг.<br>Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раз</span>",
-				"plural=other": "— ваш лучший друг.<br>Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раза</span>"
+				"plural=*": "— ваш лучший друг.<br>Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раза</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -144,7 +144,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "— ваш второй по частоте командный игрок. Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раз</span>",
-				"plural=other": "— ваш второй по частоте командный игрок. Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раза</span>"
+				"plural=*": "— ваш второй по частоте командный игрок. Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раза</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -222,7 +222,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "{count} карту",
-				"plural=other": "{count} карт"
+				"plural=*": "{count} карт"
 			},
 			"selectors": ["plural"]
 		}
@@ -232,7 +232,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "{count} раз",
-				"plural=other": "{count} раза"
+				"plural=*": "{count} раза"
 			},
 			"selectors": ["plural"]
 		}
@@ -242,7 +242,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "{count} год",
-				"plural=other": "{count} года"
+				"plural=*": "{count} года"
 			},
 			"selectors": ["plural"]
 		}

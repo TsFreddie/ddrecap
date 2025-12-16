@@ -9,7 +9,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "Out of those, <span class=\"text-orange-400\">{count} time</span> happened",
-				"plural=other": "Out of those, <span class=\"text-orange-400\">{count} times</span> happened"
+				"plural=*": "Out of those, <span class=\"text-orange-400\">{count} times</span> happened"
 			},
 			"selectors": ["plural"]
 		}
@@ -41,7 +41,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "This year, you've crossed the finish line of {type} maps <span class=\"font-semibold text-orange-400\">{count} time</span>",
-				"plural=other": "This year, you've crossed the finish line of {type} maps <span class=\"font-semibold text-orange-400\">{count} times</span>"
+				"plural=*": "This year, you've crossed the finish line of {type} maps <span class=\"font-semibold text-orange-400\">{count} times</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -53,7 +53,7 @@
 			"declarations": ["input finishes", "local plural = finishes: plural"],
 			"match": {
 				"plural=one": "You crossed its finish line <span class=\"font-semibold text-orange-400\">{finishes} time</span>. You must have a soft spot for this map!",
-				"plural=other": "You crossed its finish line <span class=\"font-semibold text-orange-400\">{finishes} times</span>. You must have a soft spot for this map!"
+				"plural=*": "You crossed its finish line <span class=\"font-semibold text-orange-400\">{finishes} times</span>. You must have a soft spot for this map!"
 			},
 			"selectors": ["plural"]
 		}
@@ -65,7 +65,7 @@
 			"declarations": ["input total", "local plural = total: plural"],
 			"match": {
 				"plural=one": "Among the <span class=\"text-orange-400\">{total} new challenging map</span> released this year,<br>you successfully completed <span class=\"font-semibold text-orange-400\">{completed}</span> of them",
-				"plural=other": "Among the <span class=\"text-orange-400\">{total} new challenging maps</span> released this year,<br>you successfully completed <span class=\"font-semibold text-orange-400\">{completed}</span> of them"
+				"plural=*": "Among the <span class=\"text-orange-400\">{total} new challenging maps</span> released this year,<br>you successfully completed <span class=\"font-semibold text-orange-400\">{completed}</span> of them"
 			},
 			"selectors": ["plural"]
 		}
@@ -133,7 +133,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "is your best buddy.<br>You've finished together <span class=\"font-semibold text-orange-400\">{count} time</span>",
-				"plural=other": "is your best buddy.<br>You've finished together <span class=\"font-semibold text-orange-400\">{count} times</span>"
+				"plural=*": "is your best buddy.<br>You've finished together <span class=\"font-semibold text-orange-400\">{count} times</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -144,7 +144,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "is your second most teamed player. You've finished together <span class=\"font-semibold text-orange-400\">{count} time</span>",
-				"plural=other": "is your second most teamed player. You've finished together <span class=\"font-semibold text-orange-400\">{count} times</span>"
+				"plural=*": "is your second most teamed player. You've finished together <span class=\"font-semibold text-orange-400\">{count} times</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -222,7 +222,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "{count} map",
-				"plural=other": "{count} maps"
+				"plural=*": "{count} maps"
 			},
 			"selectors": ["plural"]
 		}
@@ -232,7 +232,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "{count} time",
-				"plural=other": "{count} times"
+				"plural=*": "{count} times"
 			},
 			"selectors": ["plural"]
 		}
@@ -242,7 +242,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "{count} year",
-				"plural=other": "{count} years"
+				"plural=*": "{count} years"
 			},
 			"selectors": ["plural"]
 		}

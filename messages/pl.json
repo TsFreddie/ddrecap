@@ -9,7 +9,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "Z tego, <span class=\"text-orange-400\">{count} raz</span> zdarzyło się",
-				"plural=other": "Z tego, <span class=\"text-orange-400\">{count} razy</span> zdarzyło się"
+				"plural=*": "Z tego, <span class=\"text-orange-400\">{count} razy</span> zdarzyło się"
 			},
 			"selectors": ["plural"]
 		}
@@ -41,7 +41,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "W tym roku przekroczyłeś/przekroczyłaś linię mety na mapach typu {type} <span class=\"font-semibold text-orange-400\">{count} raz</span>",
-				"plural=other": "W tym roku przekroczyłeś/przekroczyłaś linię mety na mapach typu {type} <span class=\"font-semibold text-orange-400\">{count} razy</span>"
+				"plural=*": "W tym roku przekroczyłeś/przekroczyłaś linię mety na mapach typu {type} <span class=\"font-semibold text-orange-400\">{count} razy</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -53,7 +53,7 @@
 			"declarations": ["input finishes", "local plural = finishes: plural"],
 			"match": {
 				"plural=one": "Przekroczyłeś/Przekroczyłaś jej linię mety <span class=\"font-semibold text-orange-400\">{finishes} raz</span>. Musisz mieć do niej szczególną słabość!",
-				"plural=other": "Przekroczyłeś/Przekroczyłaś jej linię mety <span class=\"font-semibold text-orange-400\">{finishes} razy</span>. Musisz mieć do niej szczególną słabość!"
+				"plural=*": "Przekroczyłeś/Przekroczyłaś jej linię mety <span class=\"font-semibold text-orange-400\">{finishes} razy</span>. Musisz mieć do niej szczególną słabość!"
 			},
 			"selectors": ["plural"]
 		}
@@ -65,7 +65,7 @@
 			"declarations": ["input total", "local plural = total: plural"],
 			"match": {
 				"plural=one": "Spośród <span class=\"text-orange-400\">{total} nowej wymagającej mapy</span> wydanej w tym roku,<br>pomyślnie ukończyłeś/ukończyłaś <span class=\"font-semibold text-orange-400\">{completed}</span> z nich",
-				"plural=other": "Spośród <span class=\"text-orange-400\">{total} nowych wymagających map</span> wydanych w tym roku,<br>pomyślnie ukończyłeś/ukończyłaś <span class=\"font-semibold text-orange-400\">{completed}</span> z nich"
+				"plural=*": "Spośród <span class=\"text-orange-400\">{total} nowych wymagających map</span> wydanych w tym roku,<br>pomyślnie ukończyłeś/ukończyłaś <span class=\"font-semibold text-orange-400\">{completed}</span> z nich"
 			},
 			"selectors": ["plural"]
 		}
@@ -133,7 +133,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "jest twoim najlepszym kumplem.<br>Ukończyliście razem <span class=\"font-semibold text-orange-400\">{count} raz</span>",
-				"plural=other": "jest twoim najlepszym kumplem.<br>Ukończyliście razem <span class=\"font-semibold text-orange-400\">{count} razy</span>"
+				"plural=*": "jest twoim najlepszym kumplem.<br>Ukończyliście razem <span class=\"font-semibold text-orange-400\">{count} razy</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -144,7 +144,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "jest twoim drugim najczęstszym partnerem drużynowym. Ukończyliście razem <span class=\"font-semibold text-orange-400\">{count} raz</span>",
-				"plural=other": "jest twoim drugim najczęstszym partnerem drużynowym. Ukończyliście razem <span class=\"font-semibold text-orange-400\">{count} razy</span>"
+				"plural=*": "jest twoim drugim najczęstszym partnerem drużynowym. Ukończyliście razem <span class=\"font-semibold text-orange-400\">{count} razy</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -222,7 +222,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "{count} mapa",
-				"plural=other": "{count} map"
+				"plural=*": "{count} map"
 			},
 			"selectors": ["plural"]
 		}
@@ -232,7 +232,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "{count} raz",
-				"plural=other": "{count} razy"
+				"plural=*": "{count} razy"
 			},
 			"selectors": ["plural"]
 		}
@@ -242,7 +242,7 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=one": "{count} rok",
-				"plural=other": "{count} lat"
+				"plural=*": "{count} lat"
 			},
 			"selectors": ["plural"]
 		}
