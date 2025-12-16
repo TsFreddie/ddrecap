@@ -18,6 +18,7 @@
 
 	const locales: { code: Locale; name: string }[] = [
 		{ code: 'en', name: 'English' },
+		{ code: 'de', name: 'Deutsch' },
 		{ code: 'zh-CN', name: '简体中文' }
 	];
 	let dropdownOpen = $state(false);
@@ -310,7 +311,10 @@
 				try {
 					if (navigator.canShare && navigator.canShare()) {
 						navigator.share({
-							title: `DDNet ${data.year} Recap for ${data.name}`,
+							title: m.page_ddnet_recap_for({
+								player: data.name!,
+								year: data.year
+							}),
 							text: text,
 							url: shareableUrl
 						});
@@ -453,25 +457,25 @@
 
 <svelte:head>
 	{#if data.name}
-		<title>{data.name} - {m.page_ddnet_recap()} {data.year}</title>
-		<meta property="og:title" content={m.page_ddnet_recap()} />
+		<title>{data.name} - {m.page_ddnet_recap({ year: data.year })} {data.year}</title>
+		<meta property="og:title" content={m.page_ddnet_recap({ year: data.year })} />
 		<meta property="og:type" content="website" />
 		<meta
 			property="og:description"
 			content={m.page_ddnet_recap_for({ year: data.year, player: data.name })}
 		/> <meta property="og:image" content="https://teeworlds.cn/shareicon.png" />
-		<meta name="title" content={m.page_ddnet_recap()} />
+		<meta name="title" content={m.page_ddnet_recap({ year: data.year })} />
 		<meta
 			name="description"
 			content={m.page_ddnet_recap_for({ year: data.year, player: data.name })}
 		/>
 	{:else}
-		<title>{m.page_ddnet_recap()} {data.year}</title>
-		<meta property="og:title" content={m.page_ddnet_recap()} />
+		<title>{m.page_ddnet_recap({ year: data.year })} {data.year}</title>
+		<meta property="og:title" content={m.page_ddnet_recap({ year: data.year })} />
 		<meta property="og:type" content="website" />
 		<meta property="og:description" content={m.page_ddnet_recap_desc({ year: data.year })} />
 		<meta property="og:image" content="https://teeworlds.cn/shareicon.png" />
-		<meta name="title" content={m.page_ddnet_recap()} />
+		<meta name="title" content={m.page_ddnet_recap({ year: data.year })} />
 		<meta name="description" content={m.page_ddnet_recap_desc({ year: data.year })} />
 	{/if}
 </svelte:head>
@@ -796,8 +800,7 @@
 							<div class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300">
 								{m.page_happy_new_year()}
 							</div>
-							{m.page_ddnet_recap()}
-							{data.year}
+							{m.page_ddnet_recap({ year: data.year })}
 							<div class="text-sm">
 								{m.page_powered_by()}
 								<a class="text-orange-400 hover:text-orange-300" href="https://teeworlds.cn"

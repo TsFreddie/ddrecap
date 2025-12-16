@@ -106,7 +106,7 @@
 	"page_continue": "↓ 滚动以继续 ↓",
 	"page_continue_mobile": "↓ 上划以继续 ↓",
 	"page_database_time": "数据截至：{date}",
-	"page_ddnet_recap": "DDNet 年度总结",
+	"page_ddnet_recap": "DDNet {year} 年度总结",
 	"page_ddnet_recap_desc": "查看你的 DDNet {year} 年度总结",
 	"page_ddnet_recap_for": "{player} 的 DDNet {year} 年度总结",
 	"page_enter_player_name": "请输入玩家名",
