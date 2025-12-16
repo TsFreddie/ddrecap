@@ -231,15 +231,22 @@ export const generateCards = async (
 		// 首次记录
 		const titles = [];
 
+		const veteranYears = Math.floor(d.ff[2] / 31557600 / 5) * 5;
+		if (veteranYears >= 5) {
+			titles.push({ bg: '#ffba08', color: '#000', text: m.title_veteran({ years: veteranYears }) });
+		}
+
+		let years = (d.ff[2] / 31557600).toFixed(1);
+		if (years.endsWith('.0')) {
+			years = years.slice(0, -2);
+		}
+
 		cards.push({
 			titles,
 			content: [
 				{
-					type: 'b',
-					text: d.ff[0],
-					bg: '#fdd300',
-					color: '#000',
-					rotation: 4
+					type: 't',
+					text: m.card_first_finish_verse_1()
 				},
 				{
 					type: 'b',
@@ -247,8 +254,25 @@ export const generateCards = async (
 					bg: '#fdd300',
 					color: '#000',
 					rotation: -4
+				},
+				{
+					type: 't',
+					text: m.card_first_finish_verse_2({ map: d.ff[0] })
+				},
+				{
+					type: 't',
+					text: m.card_first_finish_verse_3()
+				},
+				{
+					type: 'b',
+					text: m.unit_years({ count: years }),
+					bg: '#fdd300',
+					color: '#000',
+					rotation: 4
 				}
-			]
+			],
+			background: '/assets/yearly/r.png',
+			mapper: 'Romantic by Wartoz & ɳ0vą'
 		});
 	}
 
@@ -284,7 +308,7 @@ export const generateCards = async (
 						type: 'b',
 						bg: '#fdd300',
 						color: '#000',
-						text: `${d.mpg[1]}pts`,
+						text: `${d.mpg[1]} pts`,
 						rotation: -12,
 						x: 50
 					},
@@ -330,7 +354,7 @@ export const generateCards = async (
 						type: 'b',
 						bg: '#fdd300',
 						color: '#000',
-						text: `${d.mpg[1]}pts`,
+						text: `${d.mpg[1]} pts`,
 						rotation: -12,
 						x: 50
 					},
@@ -499,7 +523,7 @@ export const generateCards = async (
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: durationFull(d.rt, locale, m)
+					text: `<div style="font-size: 0.75em">${durationFull(d.rt, locale, m)}</div>`
 				}
 			],
 			background: '/assets/yearly/wr.png',
@@ -993,7 +1017,7 @@ export const generateCards = async (
 		});
 	}
 
-	if (d.bi && d.bi[2] > 0) {
+	if (d.bi && d.bi[2] >= 1) {
 		// 单次最大提升
 		const titles: any[] = [];
 		allTitles.push(...titles);
@@ -1003,27 +1027,38 @@ export const generateCards = async (
 			content: [
 				{
 					type: 't',
-					text: `${datetime(new Date(d.bi[3] * 1000), tz, locale)} -> ${datetime(new Date(d.bi[4] * 1000), tz, locale)}`
+					text: m.card_biggest_improvement_verse_1({
+						date: datetime(new Date(d.bi[3] * 1000), tz, locale)
+					})
 				},
 				{
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: d.bi[0],
-					rotation: 6
+					text: `${d.bi[0]}<br><div style="font-size: 0.75em">${duration(d.bi[1], locale, m)}</div>`,
+					rotation: 1
 				},
 				{
 					type: 't',
-					text: `${duration(d.bi[1] + d.bi[2], locale, m)} -> ${duration(d.bi[1], locale, m)}`
+					text: m.card_biggest_improvement_verse_2({
+						date: datetime(new Date(d.bi[4] * 1000), tz, locale),
+						time: duration(d.bi[1] + d.bi[2], locale, m)
+					})
+				},
+				{
+					type: 't',
+					text: m.card_biggest_improvement_verse_3()
 				},
 				{
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: duration(d.bi[2], locale, m),
-					rotation: -4
+					text: Math.round((d.bi[2] / (d.bi[1] + d.bi[2])) * 1000) / 10 + '%',
+					rotation: -3
 				}
-			]
+			],
+			background: '/assets/yearly/nn.png',
+			mapper: 'Not Novice by wee & Ybivawka~'
 		});
 	}
 

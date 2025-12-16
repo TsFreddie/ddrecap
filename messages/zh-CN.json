@@ -1,5 +1,8 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"card_biggest_improvement_verse_1": "在{date}，你达成了今年最大的个人记录突破",
+	"card_biggest_improvement_verse_2": "打破了之前于{date}创下的{time}记录",
+	"card_biggest_improvement_verse_3": "这一记录提升了",
 	"card_finishes_verse_1": "今年你活力满满，战果颇丰<br>总共顺利<span class=\"font-semibold text-orange-400\">冲过了终点</span>",
 	"card_finishes_verse_2": "在这其中<br>有<span class=\"text-orange-400\"> {count} 次</span>冲线，都是在",
 	"card_finishes_verse_2_period": [
@@ -17,6 +20,9 @@
 		}
 	],
 	"card_finishes_verse_3": "这个时间段对你来说有更加特殊的意义吗？",
+	"card_first_finish_verse_1": "你是否还记得？于",
+	"card_first_finish_verse_2": "冲过了 <span class=\"font-semibold text-orange-400\">{map}</span> 的终点线",
+	"card_first_finish_verse_3": "这是你的第一次过关。这意味着你加入了 DDNet",
 	"card_level_designer_verse_1": "今年你一共参与发布了",
 	"card_level_designer_verse_2": "发布的地图为 {maps}",
 	"card_level_designer_verse_3": "诚挚地感谢你对 DDNet 社区做出的贡献",
@@ -41,7 +47,7 @@
 	"card_peak_performer_verse_2": "你因此拿下足足",
 	"card_peak_performer_verse_3": "这意味着你已成功攻克了疯狂难度的地图",
 	"card_peak_performer_verse_4": "期望你不会止步不前<br>而是将步伐迈向更极限的远方",
-	"card_points_verse": "截至 {year} 年岁末，你总共拥有里程 {points}pts <br>{word}",
+	"card_points_verse": "截至 {year} 年岁末，你总共拥有里程 {points} pts <br>{word}",
 	"card_points_verse_a": "你脚踏实地，在今年<span class=\"font-semibold text-orange-400\">得到了</span>",
 	"card_points_verse_a_1000": "你不留余力，在今年<span class=\"font-semibold text-orange-400\">收获了</span>",
 	"card_points_verse_a_5000": "你火力全开，在今年<span class=\"font-semibold text-orange-400\">斩获了</span>",
@@ -52,8 +58,8 @@
 	"card_points_word": "稳扎稳打",
 	"card_points_word_10000": "傲视群雄",
 	"card_points_word_3000": "成绩赫然",
-	"card_returning_voyage_verse_1": "截至 {year} 岁末，你的总分为 {points}pts",
-	"card_returning_voyage_verse_2": "与往年相比，你尚未获得任何新pts",
+	"card_returning_voyage_verse_1": "截至 {year} 岁末，你的总里程为 {points} pts",
+	"card_returning_voyage_verse_2": "与往年相比，你尚未获得任何新里程",
 	"card_returning_voyage_verse_3": "难不成你是某位功成身退的游戏高手？<br>又或是因为生活琐事，无法自由地驰骋于关卡之间？<br>不管怎样，无论是游戏里还是游戏外，瓶颈期就像黎明前的黑暗，熬过了就能迎来曙光",
 	"card_returning_voyage_verse_4": "希望你知道，此时此刻绝非终点，而是另一个",
 	"card_returning_voyage_verse_5": "全新的起点",
@@ -110,6 +116,7 @@
 	"page_loading": "加载中……",
 	"page_points_info": "里程：{points}",
 	"page_powered_by": "查询引擎",
+	"page_share": "快来看看 {name} 的 DDNet {year} 年度总结: {link}",
 	"page_start_recap": "进入年度总结",
 	"page_timezone": "数据时区",
 	"title_afk_warrior": "挂机狂魔",
@@ -155,6 +162,18 @@
 	"title_true_player": "TRUE PLAYER",
 	"title_unnamed_hero": "深藏功与名",
 	"title_unstoppable_duo": "所向披靡",
+	"title_veteran": [
+		{
+			"declarations": ["input years"],
+			"match": {
+				"years=*": "{years}年老兵",
+				"years=10": "十年老兵",
+				"years=5": "五年老兵"
+			},
+			"selectors": ["years"]
+		}
+	],
 	"unit_maps": "{count} 张地图",
-	"unit_times": "{count} 次"
+	"unit_times": "{count} 次",
+	"unit_years": "{count} 年"
 }

@@ -5,7 +5,6 @@
 	import { fade } from 'svelte/transition';
 	import { datetime, uaIsMobile } from '$lib/helpers';
 	import * as qrcode from 'qrcode';
-	import { encode } from 'msgpackr';
 	import { encodeBase64Url } from '$lib/base64url';
 	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
@@ -303,17 +302,20 @@
 			showContent = !showContent;
 
 			if (totalCards && currentCard == totalCards.cards.length - 1) {
+				const text = m.page_share({
+					name: data.name!,
+					year: data.year,
+					link: shareableUrl!
+				});
 				try {
 					if (navigator.canShare && navigator.canShare()) {
 						navigator.share({
 							title: `DDNet ${data.year} Recap for ${data.name}`,
-							text: `Check out ${data.name}'s DDNet ${data.year} recap`,
+							text: text,
 							url: shareableUrl
 						});
 					} else {
-						navigator.clipboard.writeText(
-							`Check out ${data.name}'s DDNet ${data.year} recap: ${shareableUrl}`
-						);
+						navigator.clipboard.writeText(text);
 
 						shareInfo = 'Copied to clipboard!';
 					}
@@ -853,7 +855,7 @@
 											/>
 											<div class="flex flex-col">
 												<div class="font-semibold text-zinc-300">{data.player.name}</div>
-												<div>{m.page_points_info({ points: `${data.player.points}pts` })}</div>
+												<div>{m.page_points_info({ points: `${data.player.points} pts` })}</div>
 											</div>
 										</div>
 										<div class="flex flex-col">

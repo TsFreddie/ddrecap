@@ -4,8 +4,8 @@ import { DateTime, Duration } from 'luxon';
 import type { MapList } from './server/fetches/maps';
 
 export type YearlyData = {
-	/** first finish [map, timestamp] */
-	ff: [string, number];
+	/** first finish [map, timestamp, years] */
+	ff: [string, number, number];
 	/** this year total points */
 	tp: number;
 	/** last year total points */
@@ -193,9 +193,9 @@ export const query = async (
 	/** First finish */
 	const ff = one(
 		`
-SELECT Map, Timestamp FROM race WHERE race.Timestamp <= ? ORDER BY race.Timestamp ASC LIMIT 1;`,
-		[yearEnd]
-	) as [string, number];
+SELECT Map, Timestamp, ? - Timestamp as Years FROM race WHERE race.Timestamp <= ? ORDER BY race.Timestamp ASC LIMIT 1;`,
+		[yearEnd, yearEnd]
+	) as [string, number, number];
 
 	/** This year total points */
 	const tp =
@@ -285,8 +285,6 @@ ON m.Map = r.Map AND m.Points > 0 ORDER BY Time desc LIMIT 1;
 			$offset: offset
 		}
 	) as [string, number, number];
-
-	console.log(lnf);
 
 	/** Map released this year most finished maps */
 	const thisYearMapFinishes = all(
@@ -481,7 +479,7 @@ WITH YearMapTimes AS
 	(SELECT race.Map, min(Time) as MinTime, race.Timestamp FROM race
    JOIN maps ON race.Map = maps.Map WHERE Points > 0 AND Type != 'Fun' AND Type != 'Event' AND race.Timestamp >= ? AND race.Timestamp <= ? GROUP BY race.Map)
 SELECT race.Map, MinTime, min(race.Time) - MinTime as Delta, YearMapTimes.Timestamp, race.Timestamp as PrvTimestamp
-FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < YearMapTimes.Timestamp GROUP BY race.Map ORDER BY Delta DESC LIMIT 1;		
+FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < YearMapTimes.Timestamp GROUP BY race.Map ORDER BY Delta / race.Time DESC LIMIT 1;		
 `,
 		[yearStart, yearEnd]
 	) as [string, number, number, number, number];

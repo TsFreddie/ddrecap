@@ -1,5 +1,8 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"card_biggest_improvement_verse_1": "At {date}, you've made your biggest improvement with this record",
+	"card_biggest_improvement_verse_2": "breaking your previous record <span class=\"font-semibold text-orange-400\">{time}</span> made at {date}",
+	"card_biggest_improvement_verse_3": "Achieving an improvement of",
 	"card_finishes_verse_1": "You've been on fire this year, crossing the finish line a total of",
 	"card_finishes_verse_2": [
 		{
@@ -26,6 +29,9 @@
 		}
 	],
 	"card_finishes_verse_3": "Does this time hold special significance for you?",
+	"card_first_finish_verse_1": "Do you remember? At",
+	"card_first_finish_verse_2": "you crossed the finished line of <span class=\"font-semibold text-orange-400\">{map}</span>",
+	"card_first_finish_verse_3": "This is your first finish ever. That means you have joined DDNet for",
 	"card_level_designer_verse_1": "This year, you've helped bring to life",
 	"card_level_designer_verse_2": "Your creations include: {maps}",
 	"card_level_designer_verse_3": "Thank you for your contributions",
@@ -164,6 +170,7 @@
 	"page_loading": "Preparing..",
 	"page_points_info": "Points: {points}",
 	"page_powered_by": "Powered by",
+	"page_share": "Check out {name}'s DDNet {year} recap: {link}",
 	"page_start_recap": "Start recap",
 	"page_timezone": "Timezone",
 	"title_afk_warrior": "AFK Warrior",
@@ -209,6 +216,7 @@
 	"title_true_player": "True Player",
 	"title_unnamed_hero": "Unnamed Hero",
 	"title_unstoppable_duo": "Unstoppable Duo",
+	"title_veteran": "{years}-Year Veteran",
 	"unit_maps": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],
@@ -225,6 +233,16 @@
 			"match": {
 				"plural=one": "{count} time",
 				"plural=other": "{count} times"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_years": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "{count} year",
+				"plural=other": "{count} years"
 			},
 			"selectors": ["plural"]
 		}
