@@ -19,6 +19,7 @@
 	const locales: { code: Locale; name: string }[] = [
 		{ code: 'en', name: 'English' },
 		{ code: 'de', name: 'Deutsch' },
+		{ code: 'pl', name: 'Polski' },
 		{ code: 'ru', name: 'Русский' },
 		{ code: 'uk', name: 'Українська' },
 		{ code: 'zh-CN', name: '简体中文' },
