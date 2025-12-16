@@ -174,6 +174,24 @@ export const generateCards = async (
 				mapper: 'Sunny Side Up by Ravie'
 			});
 		}
+	} else if (d.tp === 0) {
+		const titles = [{ bg: '#ffba08', color: '#000', text: m.title_new_beginning() }];
+		allTitles.push(...titles);
+		cards.push({
+			titles,
+			content: [
+				{
+					type: 't',
+					text: m.card_no_points_verse_1({ year: data.year })
+				},
+				{
+					type: 't',
+					text: m.card_no_points_verse_2()
+				}
+			],
+			background: '/assets/yearly/lf.png',
+			mapper: 'Lavender Forest by Pipou'
+		});
 	} else if (d.tp != null) {
 		const titles = [{ bg: '#b7b7a4', color: '#000', text: m.title_returning_voyage() }];
 		allTitles.push(...titles);
@@ -206,6 +224,31 @@ export const generateCards = async (
 			],
 			background: '/assets/yearly/lf.png',
 			mapper: 'Lavender Forest by Pipou'
+		});
+	}
+
+	if (d.ff && d.ff[0] && d.ff[1]) {
+		// 首次记录
+		const titles = [];
+
+		cards.push({
+			titles,
+			content: [
+				{
+					type: 'b',
+					text: d.ff[0],
+					bg: '#fdd300',
+					color: '#000',
+					rotation: 4
+				},
+				{
+					type: 'b',
+					text: datetime(new Date(d.ff[1] * 1000), tz, locale),
+					bg: '#fdd300',
+					color: '#000',
+					rotation: -4
+				}
+			]
 		});
 	}
 
@@ -403,7 +446,7 @@ export const generateCards = async (
 
 		const titles = [];
 		let prePhrase = false;
-		if (d.tr >= 10 && d.mmr[1] / d.tr >= 2 / 12) {
+		if (d.tr >= 10 && d.mmr[1] / d.tr >= 3 / 12) {
 			titles.push({ bg: '#e07a5f', color: '#000', text: m.title_monthly() });
 			prePhrase = true;
 		}
@@ -823,7 +866,7 @@ export const generateCards = async (
 		});
 	}
 
-	if (d.sf && d.sf[1] > 1) {
+	if (d.tr && d.sf && d.sf[1] > 1) {
 		// 服务器完成数最多的服务器
 		cards.push({
 			titles: [],
@@ -841,7 +884,7 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: m.card_server_verse_2({ finishes: d.sf[1] })
+					text: m.card_server_verse_2({ percent: ((d.sf[1] / d.tr) * 100).toFixed(1) + '%' })
 				}
 			],
 			background: '/assets/yearly/bb.png',
@@ -947,6 +990,40 @@ export const generateCards = async (
 			],
 			background: '/assets/yearly/br.png',
 			mapper: 'Brassrun by Kaniosek'
+		});
+	}
+
+	if (d.bi && d.bi[2] > 0) {
+		// 单次最大提升
+		const titles: any[] = [];
+		allTitles.push(...titles);
+
+		cards.push({
+			titles,
+			content: [
+				{
+					type: 't',
+					text: `${datetime(new Date(d.bi[3] * 1000), tz, locale)} -> ${datetime(new Date(d.bi[4] * 1000), tz, locale)}`
+				},
+				{
+					type: 'b',
+					bg: '#fdd300',
+					color: '#000',
+					text: d.bi[0],
+					rotation: 6
+				},
+				{
+					type: 't',
+					text: `${duration(d.bi[1] + d.bi[2], locale, m)} -> ${duration(d.bi[1], locale, m)}`
+				},
+				{
+					type: 'b',
+					bg: '#fdd300',
+					color: '#000',
+					text: duration(d.bi[2], locale, m),
+					rotation: -4
+				}
+			]
 		});
 	}
 

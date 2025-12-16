@@ -5,18 +5,18 @@ import { CURRENT_YEAR } from '$lib/consts';
 import { getDatabaseTime, getPoints } from '$lib/server/db.js';
 
 export const load = async ({ url, parent }) => {
-	let year = parseInt(url.searchParams.get('year') || CURRENT_YEAR.toString());
-	let name = decodeAsciiURIComponent(url.searchParams.get('name') || '');
-	let tz = url.searchParams.get('tz') || 'utc+0';
+	let year = parseInt(url.searchParams.get('y') || CURRENT_YEAR.toString());
+	let name = decodeAsciiURIComponent(url.searchParams.get('n') || '');
+	let tz = url.searchParams.get('t') || 'utc+0';
 	let databaseTime = getDatabaseTime();
 
 	let code = url.searchParams.get('code');
 
 	if (code) {
-		const decoded = decodeBase64Url(code, { buffer: true });
-		const { n, y, t } = decode(decoded) as { n: string; y: number; t: string };
-		name = n || name;
-		year = y || year;
+		const decoded = decodeBase64Url(code);
+		const [y, t, ...rest] = decoded.split('\u0003');
+		name = rest.join('\u0003') || name;
+		year = parseInt(y) || year;
 		tz = t || tz;
 	}
 

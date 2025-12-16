@@ -202,10 +202,12 @@
 			console.error(e);
 		}
 
-		const code = encodeBase64Url(encode({ n: data.name, y: data.year, t: data.tz }) as any);
+		const code = encodeBase64Url(`${data.year}\u0003${data.tz}\u0003${data.name}`);
+
 		const url = new URL(window.location.href);
 		url.search = `?code=${code}`;
 		replaceState(url.toString(), page.state);
+
 		shareableUrl = url.toString();
 		shareableQRCode = await qrcode.toDataURL(url.toString());
 
@@ -420,17 +422,14 @@
 	const goForName = (name: string) => {
 		try {
 			const timezone = DateTime.local().zoneName;
-			goto(
-				`?name=${encodeAsciiURIComponent(name)}&year=${data.year}&tz=${encodeURIComponent(timezone)}`,
-				{
-					replaceState: true
-				}
-			);
+			goto(`?y=${data.year}&t=${encodeURIComponent(timezone)}&n=${encodeAsciiURIComponent(name)}`, {
+				replaceState: true
+			});
 		} catch (e) {
 			console.error('Failed to check user timezone');
 			console.error(e);
 			goto(
-				`?name=${encodeAsciiURIComponent(name)}&year=${data.year}&tz=${encodeURIComponent('UTC')}`
+				`?year=${data.year}&t=${encodeURIComponent('utc+0')}&n=${encodeAsciiURIComponent(name)}`
 			);
 		}
 	};
@@ -592,7 +591,7 @@
 				{#each card.content as item}
 					{#if item.type == 't'}
 						<div
-							class="rounded-[1em] bg-zinc-700/90 px-[4%] py-[1%] text-center text-[0.7em] border border-t-zinc-600/80 border-l-zinc-600/80 border-zinc-700"
+							class="rounded-[1em] bg-zinc-700/90 px-[4%] py-[1%] text-center text-[0.7em] border border-t-zinc-600/80 border-l-zinc-600/80 border-zinc-800/40"
 							style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
 								0}%);margin-top: {item.t ?? 0}%;margin-bottom: {item.b ?? 0}%;"
 						>

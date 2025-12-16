@@ -4,6 +4,8 @@ import { DateTime, Duration } from 'luxon';
 import type { MapList } from './server/fetches/maps';
 
 export type YearlyData = {
+	/** first finish [map, timestamp] */
+	ff: [string, number];
 	/** this year total points */
 	tp: number;
 	/** last year total points */
@@ -44,6 +46,8 @@ export type YearlyData = {
 	sf: [string, number, string];
 	/** finishes window [start, count, maps] */
 	fw: [number, number, string];
+	/** biggest improvement [map, time, delta, timestamp, prevtimestamp] */
+	bi: [string, number, number, number, number];
 };
 
 export const query = async (
@@ -162,16 +166,22 @@ export const query = async (
 	const yearEnd = DateTime.fromObject({ year: year + 1 }, opt)
 		.minus(s)
 		.toSeconds();
+	const berlinYearStart = DateTime.fromObject({ year }, { zone: 'Europe/Berlin' }).toSeconds();
+	const berlinYearEnd = DateTime.fromObject({ year: year + 1 }, { zone: 'Europe/Berlin' })
+		.minus(s)
+		.toSeconds();
 
 	console.log('Y-1 ST', previousYearStart);
 	console.log('Y-1 ED', previousYearEnd);
 	console.log('Y-0 ST', yearStart);
 	console.log('Y-0 ED', yearEnd);
+	console.log('Y-0 ST BERLIN', berlinYearStart);
+	console.log('Y-0 ED BERLIN', berlinYearEnd);
 
 	// format: [+-][0-9]{2}:[0-9]{2}
-	const offsetMinutes = new Date().getTimezoneOffset();
+	const offsetMinutes = DateTime.now().setZone(tz).offset;
 	const offset = (() => {
-		const sign = offsetMinutes <= 0 ? '+' : '-';
+		const sign = offsetMinutes <= 0 ? '-' : '+';
 		const absMinutes = Math.abs(offsetMinutes);
 		const hours = Math.floor(absMinutes / 60);
 		const minutes = absMinutes % 60;
@@ -179,6 +189,13 @@ export const query = async (
 		const minutesStr = minutes.toString().padStart(2, '0');
 		return `${sign}${hoursStr}:${minutesStr}`;
 	})();
+
+	/** First finish */
+	const ff = one(
+		`
+SELECT Map, Timestamp FROM race WHERE race.Timestamp <= ? ORDER BY race.Timestamp ASC LIMIT 1;`,
+		[yearEnd]
+	) as [string, number];
 
 	/** This year total points */
 	const tp =
@@ -254,10 +271,10 @@ SELECT floor(Timestamp / 3600) * 3600 as Slice, COUNT(*) as Cnt FROM race WHERE 
 	/** Late night finishes */
 	const lnf = one(
 		`
-SELECT r.Map, r.Time, r.Timestamp FROM maps m JOIN
-(SELECT Map, Time, Timestamp FROM race WHERE (
+SELECT r.Map, r.Time, r.Timestamp, r.rowid FROM maps m JOIN
+(SELECT Map, Time, Timestamp, rowid FROM race WHERE (
 	(time(Timestamp, 'unixepoch', $offset) < '05:00' AND Time <= CAST(strftime('%M', datetime(Timestamp, 'unixepoch', $offset)) as INT) * 60 + CAST(strftime('%H', datetime(Timestamp, 'unixepoch', $offset)) as INT) * 3600 + 7200) OR
-	(time(Timestamp, 'unixepoch', $offset) < '08:00' AND Time >= CAST(strftime('%H', datetime(Timestamp, 'unixepoch', $offset)) as INT) * 1800)
+	(time(Timestamp, 'unixepoch', $offset) < '08:00' AND Time <= 12 * 3600 AND Time >= CAST(strftime('%H', datetime(Timestamp, 'unixepoch', $offset)) as INT) * 1800)
 	)
 AND Timestamp >= $yearStart AND Timestamp <= $yearEnd) r
 ON m.Map = r.Map AND m.Points > 0 ORDER BY Time desc LIMIT 1;
@@ -269,13 +286,17 @@ ON m.Map = r.Map AND m.Points > 0 ORDER BY Time desc LIMIT 1;
 		}
 	) as [string, number, number];
 
+	console.log(lnf);
+
 	/** Map released this year most finished maps */
 	const thisYearMapFinishes = all(
 		`
 WITH thisYearMaps AS (SELECT Type, Map FROM maps WHERE Timestamp >= ? AND Timestamp <= ? AND Points > 0)
-SELECT thisYearMaps.Map, COUNT(race.Map) as Finishes FROM race RIGHT JOIN thisYearMaps ON race.Map = thisYearMaps.Map GROUP BY thisYearMaps.Map ORDER BY Finishes DESC;
+SELECT thisYearMaps.Map, COUNT(race.Map) as Finishes
+FROM race RIGHT JOIN thisYearMaps ON race.Map = thisYearMaps.Map WHERE Timestamp >= ? AND Timestamp <= ?
+GROUP BY thisYearMaps.Map ORDER BY Finishes DESC;
 		`,
-		[yearStart, yearEnd]
+		[berlinYearStart, berlinYearEnd, berlinYearStart, yearEnd]
 	) as [string, number][];
 
 	/** This year map finishes */
@@ -409,7 +430,10 @@ SELECT Server, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? AND Timestamp <= ?
 		serverFinishes[0]?.[1] || 0,
 		serverFinishes
 			.slice(1)
-			.map((s) => `${s[0]}<span class="opacity-70" style="font-size:0.65em">(${s[1]})</span>`)
+			.map(
+				(s) =>
+					`${s[0]}<span class="opacity-70" style="font-size:0.65em">(${((s[1] / tr) * 100).toFixed(1) + '%'})</span>`
+			)
 			.join(' ')
 	] as [string, number, string];
 
@@ -451,7 +475,19 @@ SELECT Server, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? AND Timestamp <= ?
 		fw = [bestStart, maps.length, maps.map((m) => m[0]).join('・')];
 	}
 
+	const bi = one(
+		`
+WITH YearMapTimes AS
+	(SELECT race.Map, min(Time) as MinTime, race.Timestamp FROM race
+   JOIN maps ON race.Map = maps.Map WHERE Points > 0 AND Type != 'Fun' AND Type != 'Event' AND race.Timestamp >= ? AND race.Timestamp <= ? GROUP BY race.Map)
+SELECT race.Map, MinTime, min(race.Time) - MinTime as Delta, YearMapTimes.Timestamp, race.Timestamp as PrvTimestamp
+FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < YearMapTimes.Timestamp GROUP BY race.Map ORDER BY Delta DESC LIMIT 1;		
+`,
+		[yearStart, yearEnd]
+	) as [string, number, number, number, number];
+
 	const data: Partial<YearlyData> = {
+		ff,
 		tp,
 		lp,
 		mpg,
@@ -471,7 +507,8 @@ SELECT Server, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? AND Timestamp <= ?
 		rt,
 		tt,
 		sf,
-		fw
+		fw,
+		bi
 	};
 
 	return {

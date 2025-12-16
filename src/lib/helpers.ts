@@ -1,5 +1,6 @@
 import { DateTime, Duration } from 'luxon';
 import type { m as messages } from './paraglide/messages';
+import { encodeBase64Url } from './base64url';
 
 export const escapeHTML = (str: string) => {
 	return str
@@ -141,4 +142,8 @@ export const getPlayerSkin = async (player: string) => {
 		console.error(e);
 		return { n: 'default' };
 	}
+};
+
+export const code = async (data: { n: string; y: number; t: number }) => {
+	return encodeBase64Url(`${data.t}\u0003${data.y}\u0003${data.n}`);
 };
