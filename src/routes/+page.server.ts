@@ -48,8 +48,6 @@ export const load = async ({ url, parent }) => {
 				await fetch(`https://teeworlds.cn/api/playerskin?name=${encodeURIComponent(name)}`)
 			).json();
 
-			console.log(skin);
-
 			if (!skin.n || skin.n === 'x-spec') {
 				skin = { n: 'default' };
 			}
