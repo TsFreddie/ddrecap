@@ -19,7 +19,10 @@
 	const locales: { code: Locale; name: string }[] = [
 		{ code: 'en', name: 'English' },
 		{ code: 'de', name: 'Deutsch' },
-		{ code: 'zh-CN', name: '简体中文' }
+		{ code: 'ru', name: 'Русский' },
+		{ code: 'uk', name: 'Українська' },
+		{ code: 'zh-CN', name: '简体中文' },
+		{ code: 'zh-TW', name: '繁体中文' }
 	];
 	let dropdownOpen = $state(false);
 

@@ -1,0 +1,250 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"card_biggest_improvement_verse_1": "{date} ви досягли свого найбільшого покращення з цим рекордом",
+	"card_biggest_improvement_verse_2": "побивши свій попередній рекорд <span class=\"font-semibold text-orange-400\">{time}</span>, встановлений {date}",
+	"card_biggest_improvement_verse_3": "Досягнуто покращення на",
+	"card_finishes_verse_1": "Цього року ви були нестримні, всього ви перетнули фінішну лінію",
+	"card_finishes_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "З них <span class=\"text-orange-400\">{count} раз</span> це трапилося",
+				"plural=other": "З них <span class=\"text-orange-400\">{count} разів</span> це трапилося"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_finishes_verse_2_period": [
+		{
+			"declarations": ["input period"],
+			"match": {
+				"period=afternoon": "вдень",
+				"period=dawn": "на світанку",
+				"period=evening": "ввечері",
+				"period=midnight": "опівночі",
+				"period=morning": "вранці",
+				"period=night": "вночі"
+			},
+			"selectors": ["period"]
+		}
+	],
+	"card_finishes_verse_3": "Чи має цей час для вас особливе значення?",
+	"card_first_finish_verse_1": "Пам'ятаєте?",
+	"card_first_finish_verse_2": "ви перетнули фінішну лінію карти <span class=\"font-semibold text-orange-400\">{map}</span>",
+	"card_first_finish_verse_3": "Це ваш найперший фініш. Це означає, що ви в DDNet уже",
+	"card_level_designer_verse_1": "Цього року ви допомогли оживити",
+	"card_level_designer_verse_2": "Ваші творіння включають: {maps}",
+	"card_level_designer_verse_3": "Дякуємо за ваш внесок",
+	"card_map_type_verse_1": "Ваш найбільш зіграний тип карт —",
+	"card_map_type_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "Цього року ви перетнули фінішну лінію на {type} картах <span class=\"font-semibold text-orange-400\">{count} раз</span>",
+				"plural=other": "Цього року ви перетнули фінішну лінію на {type} картах <span class=\"font-semibold text-orange-400\">{count} рази</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_map_type_verse_fun": "Здається, ви відкрили для себе справжній спосіб гри в DDNet",
+	"card_map_verse_1": "Ваша найбільш зіграна карта —",
+	"card_map_verse_2": [
+		{
+			"declarations": ["input finishes", "local plural = finishes: plural"],
+			"match": {
+				"plural=one": "Ви перетнули її фінішну лінію <span class=\"font-semibold text-orange-400\">{finishes} раз</span>. Мабуть, у вас до цієї карти особлива слабкість!",
+				"plural=other": "Ви перетнули її фінішну лінію <span class=\"font-semibold text-orange-400\">{finishes} рази</span>. Мабуть, у вас до цієї карти особлива слабкість!"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_monthly_verse_1": "Ваш найактивніший місяць —",
+	"card_monthly_verse_2": "Ви провели <span class=\"font-semibold text-orange-400\">{percent}</span> вашого ігрового часу цього місяця",
+	"card_new_map_verse_1": [
+		{
+			"declarations": ["input total", "local plural = total: plural"],
+			"match": {
+				"plural=one": "Серед <span class=\"text-orange-400\">{total} нової складної карти</span>, випущеної цього року,<br>ви успішно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> з них",
+				"plural=other": "Серед <span class=\"text-orange-400\">{total} нових складних карт</span>, випущених цього року,<br>ви успішно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> з них"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_new_map_verse_2": "Це означає, що ваш відсоток завершення склав",
+	"card_new_map_verse_3": "Серед цих карт ви особливо любите",
+	"card_new_map_verse_4": "Ви завершили цю карту <span class=\"font-semibold text-orange-400\">{count} рази</span>",
+	"card_night_owl_verse_1": "Був особливий момент<br><span class=\"font-semibold text-orange-400\">{date}</span>",
+	"card_night_owl_verse_2": "Вам знадобилося {time}, щоб пройти <span class=\"font-semibold text-orange-400\">{map}</span><br>і перетнути фінішну лінію о",
+	"card_night_owl_verse_3": "Хоча небо темне, ваша пристрасть палає яскраво",
+	"card_night_owl_verse_4": "Ви ще пам'ятаєте зусилля, які доклали в той момент?",
+	"card_no_points_verse_1": "Станом на кінець {year} року у вас <span class=\"text-orange-400\">немає жодного очка</span> в записах.",
+	"card_no_points_verse_2": "Але ми знаємо, що ви вже розпочали свою подорож. Сподіваємося, вам сподобається ваше перебування в DDNet.",
+	"card_peak_performer_verse_1": "Серед нових карт, які ви підкорили цього року,<br>ця — справжня <span class=\"font-semibold text-orange-400\">вершина кар'єри</span> для вас",
+	"card_peak_performer_verse_2": "Цей успіх приніс загалом",
+	"card_peak_performer_verse_3": "Це означає, що ви освоїли неймовірно складну карту",
+	"card_peak_performer_verse_4": "Нехай ви не спочиваєте на лаврах,<br>а продовжуєте рухатися до ще більших випробувань",
+	"card_points_verse": "Станом на кінець {year} року <br>ви накопичили {word} {points} очок",
+	"card_points_verse_a": "Цього року ви тримали стабільний темп і <span class=\"font-semibold text-orange-400\">заробили</span> додаткові",
+	"card_points_verse_a_1000": "Цього року ви виклалися на повну і <span class=\"font-semibold text-orange-400\">зібрали</span> додаткові",
+	"card_points_verse_a_5000": "Цього року ви пішли ва-банк і <span class=\"font-semibold text-orange-400\">отримали</span> додаткові",
+	"card_points_verse_b": "Вітер направить вас до більших висот. Вірьте у свій потенціал, і ви перевершите себе",
+	"card_points_verse_b_2": "Завдяки рішучості та зусиллям ви довели свою цінність. Випробування для вас — не перешкода",
+	"card_points_verse_b_3": "Досягнувши вершини, ви стали втіленням майстерності та досвіду. Ваша майстерність неперевершена",
+	"card_points_verse_new": "Цього року, {year}, — ваш перший рік у грі, і ви заробили {word}",
+	"card_points_word": "вражаючу суму в",
+	"card_points_word_10000": "колосальну суму в",
+	"card_points_word_3000": "значну суму в",
+	"card_returning_voyage_verse_1": "Станом на кінець {year} року<br>у вас в записах {points} очок",
+	"card_returning_voyage_verse_2": "Порівняно з минулим роком<br>ви <span class=\"font-semibold text-orange-400\">не заробили нових очок</span>",
+	"card_returning_voyage_verse_3": "Минуло багато часу з вашого останнього пригоди",
+	"card_returning_voyage_verse_4": "Ми щиро сподіваємося побачити вас знову в грі заради",
+	"card_returning_voyage_verse_5": "нових пригод",
+	"card_runtime_verse_1": "Весь ваш час перегонів цього року в сумі склав",
+	"card_runtime_verse_2": "Крім того, згідно з <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, ви були онлайн {duration} цього року",
+	"card_runtime_verse_weird": "Чомусь ваше ім'я з'являлося рідше, ніж ваші записи перегонів. Можливо, ви змінювали ім'я цього року?",
+	"card_second_map_verse_1": "Ваша друга за популярністю карта —",
+	"card_second_map_verse_2": "Ви перетнули її фінішну лінію <span class=\"font-semibold text-orange-400\">{finishes} рази</span>, і, сподіваємося, ви її пам'ятаєте!",
+	"card_server_verse_1": "Ваш найбільш зіграний сервер DDNet —",
+	"card_server_verse_2": "Ви завершили <span class=\"font-semibold text-orange-400\">{percent} заїздів</span> на цьому сервері",
+	"card_server_verse_3": "Крім того, ви також з'являлися на:<br>{servers}",
+	"card_slowest_verse_1": "{date} вам знадобилося",
+	"card_slowest_verse_2": "щоб пройти {map}",
+	"card_slowest_verse_3": "Це ваш <span class=\"font-semibold text-orange-400\">найповільніший рекорд проходження</span> цього року.<br>Ваша стійкість і рішучість допомогли вам дістатися до кінця",
+	"card_slowest_verse_4": "А може,",
+	"card_slowest_verse_5_bonus": "це було якесь загадкове часове чаклунство?",
+	"card_slowest_verse_5_regular": "це просто ваше унікальне хобі?",
+	"card_speed_demon_verse_1": "Ви завершили {map} всього",
+	"card_speed_demon_verse_2": "після її виходу",
+	"card_speed_demon_verse_3a": "Як демон швидкості, що залишає за собою лише розмитий слід",
+	"card_speed_demon_verse_3b": "Жоден випуск карти не може уникнути вашого невблаганного переслідування",
+	"card_speedrunner_verse_1": "{date} ви завершили серію з",
+	"card_speedrunner_verse_2": "<span class=\"font-semibold text-orange-400\">протягом години</span>.<br>Ось карти, які ви пройшли:",
+	"card_stack_verse_1": "Ви та {count} інших Ті зібралися в стак з",
+	"card_stack_verse_2": "Команда з {count} Ті",
+	"card_stack_verse_3": "і разом пройшли {map} {date}",
+	"card_stack_verse_4": "Команда: {members}",
+	"card_steady_progress_verse_1": "Серед нових карт, які ви завершили цього року,<br>ця карта вирізняється як ваша <span class=\"font-semibold text-orange-400\">зіркова година</span>",
+	"card_steady_progress_verse_2": "Освоївши цю карту, ви заробили",
+	"card_steady_progress_verse_3": "Продовжуйте підкорювати нові випробування,",
+	"card_steady_progress_verse_4": "і сяйте на картах з ще більшою цінністю",
+	"card_team_verse_1": "Кожній командній гонці потрібен надійний напарник!",
+	"card_team_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "— ваш найкращий друг.<br>Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} раз</span>",
+				"plural=other": "— ваш найкращий друг.<br>Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} рази</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_team_verse_3": "Крім того,",
+	"card_team_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "— ваш другий за частотою командний гравець. Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} раз</span>",
+				"plural=other": "— ваш другий за частотою командний гравець. Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} рази</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"format_dhms": "",
+	"format_hm": "",
+	"format_hms": "",
+	"format_m": "",
+	"format_ms": "",
+	"format_s": "",
+	"page_badges_for": "Значки {year} року для {name}",
+	"page_change_name": "Змінити ім'я",
+	"page_continue": "↓ Прокрутіть, щоб продовжити ↓",
+	"page_continue_mobile": "↓ Свайп угор, щоб продовжити ↓",
+	"page_database_time": "Дані актуальні на: {date}",
+	"page_ddnet_recap": "Підсумки року в DDNet",
+	"page_ddnet_recap_desc": "Перегляньте свої підсумки {year} року в DDNet",
+	"page_ddnet_recap_for": "Підсумки {year} року в DDNet для {player}",
+	"page_enter_player_name": "Введіть ім'я гравця",
+	"page_go": "Вперед",
+	"page_go_back": "Назад",
+	"page_happy_new_year": "З Новим роком!",
+	"page_loading": "Підготовка..",
+	"page_points_info": "Очки: {points}",
+	"page_powered_by": "На платформі",
+	"page_share": "Перегляньте підсумки {year} року в DDNet у {name}: {link}",
+	"page_start_recap": "Почати звіт",
+	"page_timezone": "Часовий пояс",
+	"title_afk_warrior": "AFK-Воїн",
+	"title_always_sunny": "Завжди Сонячно в DDNet",
+	"title_amazingly_insane": "Дивовижно Божевільний",
+	"title_brotherly_bond": "Братські Узи",
+	"title_casual_enjoyer": "Казуальний Гравець",
+	"title_challange_solver": "Руйнівник Випробувань",
+	"title_clockwork": "Годинниковий Механізм",
+	"title_combined_mind": "Об'єднаний Розум",
+	"title_ddmax_enjoyer": "Цінитель DDmaX",
+	"title_early_bird": "Рання Пташка",
+	"title_full_throttle": "Повний вперед",
+	"title_fulltime_player": "Гравець на Повну Ставку",
+	"title_inseparable_team": "Нерозлучна Команда",
+	"title_level_designer": "Дизайнер Рівнів",
+	"title_live_and_learn": "Живи та Вчись",
+	"title_live_to_play": "Живу, щоб Грати",
+	"title_lone_wolf": "Самотній Вовк",
+	"title_map_explorer": "Дослідник Карт",
+	"title_map_master": "Майстер Карт",
+	"title_monthly": "Здолатель Календаря",
+	"title_narrow_trail": "Вузька Стежка",
+	"title_new_beginning": "Початок Шляху",
+	"title_night_owl": "Нічна Сова",
+	"title_oldschool_enjoyer": "Цінитель Олдскулу",
+	"title_path_pioneer": "Першопроходець",
+	"title_peak_performer": "Вершинний Досягач",
+	"title_perseverance": "Наполегливість",
+	"title_points_30000": "Завершувач",
+	"title_professional_player": "Професійний Гравець",
+	"title_racer": "Гонщик",
+	"title_returning_voyage": "Повернення",
+	"title_runtime_error": "Спотворений Простір-Час",
+	"title_shared_name": "Спільне Ім'я",
+	"title_snake_oiler": "Зміїний Мастильник",
+	"title_solo_traveler": "Соло-Мандрівник",
+	"title_speed_demon": "Демон Швидкості",
+	"title_speedrunner": "Спідранер",
+	"title_steady_progress": "Стабільний Прогрес",
+	"title_tee_army": "Армія Ті",
+	"title_time_wizard": "Чарівник Часу",
+	"title_true_player": "Справжній Гравець",
+	"title_unnamed_hero": "Безіменний Герой",
+	"title_unstoppable_duo": "Незупинне Дуо",
+	"title_veteran": "Ветеран {years} років",
+	"unit_maps": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "{count} карту",
+				"plural=other": "{count} карт"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_times": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "{count} раз",
+				"plural=other": "{count} рази"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_years": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=one": "{count} рік",
+				"plural=other": "{count} роки"
+			},
+			"selectors": ["plural"]
+		}
+	]
+}
