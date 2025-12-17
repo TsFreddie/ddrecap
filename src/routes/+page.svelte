@@ -19,6 +19,8 @@
 	const locales: { code: Locale; name: string }[] = [
 		{ code: 'en', name: 'English' },
 		{ code: 'de', name: 'Deutsch' },
+		{ code: 'ja', name: '日本語' },
+		{ code: 'ko', name: '한국어' },
 		{ code: 'pl', name: 'Polski' },
 		{ code: 'ru', name: 'Русский' },
 		{ code: 'tr', name: 'Türkçe' },
@@ -462,7 +464,7 @@
 
 <svelte:head>
 	{#if data.name}
-		<title>{data.name} - {m.page_ddnet_recap({ year: data.year })} {data.year}</title>
+		<title>{data.name} - {m.page_ddnet_recap({ year: data.year })}</title>
 		<meta property="og:title" content={m.page_ddnet_recap({ year: data.year })} />
 		<meta property="og:type" content="website" />
 		<meta
@@ -475,7 +477,7 @@
 			content={m.page_ddnet_recap_for({ year: data.year, player: data.name })}
 		/>
 	{:else}
-		<title>{m.page_ddnet_recap({ year: data.year })} {data.year}</title>
+		<title>{m.page_ddnet_recap({ year: data.year })}</title>
 		<meta property="og:title" content={m.page_ddnet_recap({ year: data.year })} />
 		<meta property="og:type" content="website" />
 		<meta property="og:description" content={m.page_ddnet_recap_desc({ year: data.year })} />
@@ -802,7 +804,7 @@
 						<div
 							class="rounded-3xl bg-zinc-700/40 px-8 py-4 text-center text-xl font-bold backdrop-blur-lg"
 						>
-							<div class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300">
+							<div class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300 text-nowrap">
 								{m.page_happy_new_year()}
 							</div>
 							{m.page_ddnet_recap({ year: data.year })}
