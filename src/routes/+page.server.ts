@@ -25,11 +25,6 @@ export const load = async ({ url, parent }) => {
 	}
 
 	let player;
-	let skin: {
-		n: string;
-		b?: number;
-		f?: number;
-	} = { n: 'default' };
 
 	try {
 		const points = getPoints(name);
@@ -42,21 +37,11 @@ export const load = async ({ url, parent }) => {
 			name: name,
 			points: points
 		};
-
-		try {
-			skin = await (
-				await fetch(`https://teeworlds.cn/api/playerskin?name=${encodeURIComponent(name)}`)
-			).json();
-
-			if (!skin.n || skin.n === 'x-spec') {
-				skin = { n: 'default' };
-			}
-		} catch {}
 	} catch (e) {
 		console.error(e);
 		const error = `500 - UNKNOWN ERROR`;
 		return { databaseTime, year, error, tz, ...(await parent()) };
 	}
 
-	return { databaseTime, year, name, skin, player, tz, ...(await parent()) };
+	return { databaseTime, year, name, player, tz, ...(await parent()) };
 };

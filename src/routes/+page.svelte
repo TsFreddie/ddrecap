@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { afterNavigate, goto, replaceState } from '$app/navigation';
+	import { afterNavigate, goto, invalidateAll, replaceState } from '$app/navigation';
 	import { encodeAsciiURIComponent } from '$lib/link';
 	import { fade } from 'svelte/transition';
 	import { datetime, uaIsMobile } from '$lib/helpers';
@@ -15,6 +15,8 @@
 	import { DateTime } from 'luxon';
 	import { generateCards, type CardData } from '$lib/cards';
 	import { getLocale, setLocale, type Locale } from '$lib/paraglide/runtime.js';
+
+	let pageKey = $state(0);
 
 	const locales: { code: Locale; name: string }[] = [
 		{ code: 'en', name: 'English' },
@@ -239,11 +241,6 @@
 		startAnimation = true;
 		loadingProgress = -1;
 		currentCard = -1;
-
-		if (observer) {
-			observer.disconnect();
-			observer = null;
-		}
 	});
 
 	let dragStart = 0;
@@ -729,278 +726,288 @@
 {/snippet}
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="fixed top-0 right-0 bottom-0 left-0">
-	<div
-		class="absolute h-full w-full touch-none"
-		onpointerdown={onPointerDown}
-		onpointermove={onPointerMove}
-		onpointerup={onPointerUp}
-		onpointercancel={onPointerCancel}
-		onwheel={onWheel}
-	>
+{#key pageKey}
+	<div class="fixed top-0 right-0 bottom-0 left-0">
 		<div
-			bind:this={scrollRoot}
-			class="scrollbar-hide pointer-events-none h-full w-full flex-col gap-1 overflow-y-scroll"
+			class="absolute h-full w-full touch-none"
+			onpointerdown={onPointerDown}
+			onpointermove={onPointerMove}
+			onpointerup={onPointerUp}
+			onpointercancel={onPointerCancel}
+			onwheel={onWheel}
 		>
-			<div class="h-svh"></div>
-			{#if totalCards}
-				{#each totalCards.cards as card, i}
-					{@const format = getFormat(card.format)}
-					{@render cardSnippet(i, card, format)}
-				{/each}
-			{/if}
-			<div class="h-svh"></div>
-		</div>
-		<div class="absolute top-0 right-0 left-[5%] z-20 flex flex-row">
-			{#if data.player}
-				<div class="rounded-b-xl bg-blue-600 px-4 py-2 font-semibold">
-					{m.page_ddnet_recap_for({ year: data.year, player: data.player.name })}
+			<div
+				bind:this={scrollRoot}
+				class="scrollbar-hide pointer-events-none h-full w-full flex-col gap-1 overflow-y-scroll"
+			>
+				<div class="h-svh"></div>
+				{#if totalCards}
+					{#each totalCards.cards as card, i}
+						{@const format = getFormat(card.format)}
+						{@render cardSnippet(i, card, format)}
+					{/each}
+				{/if}
+				<div class="h-svh"></div>
+			</div>
+			<div class="absolute top-0 right-0 left-[5%] z-20 flex flex-row">
+				{#if data.player}
+					<div class="rounded-b-xl bg-blue-600 px-4 py-2 font-semibold">
+						{m.page_ddnet_recap_for({ year: data.year, player: data.player.name })}
+					</div>
+				{/if}
+			</div>
+			<div class="absolute right-0 bottom-0 left-0 z-20 flex flex-row">
+				<a
+					data-sveltekit-replacestate
+					href="/"
+					class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-zinc-600 px-4 py-2 text-white hover:bg-zinc-700"
+				>
+					{m.page_change_name()}
+				</a>
+			</div>
+			{#if currentCard == 0 && !startAnimation}
+				<div
+					class="absolute right-0 bottom-[8%] left-0 z-20 flex items-center justify-center text-[7svw] sm:text-[4svh]"
+					out:fade
+					in:fade
+				>
+					<div class="motion-preset-oscillate text-[0.7em]">
+						{isMobile() ? m.page_continue_mobile() : m.page_continue()}
+					</div>
 				</div>
 			{/if}
 		</div>
-		<div class="absolute right-0 bottom-0 left-0 z-20 flex flex-row">
-			<a
-				data-sveltekit-replacestate
-				href="/"
-				class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-zinc-600 px-4 py-2 text-white hover:bg-zinc-700"
-			>
-				{m.page_change_name()}
-			</a>
-		</div>
-		{#if currentCard == 0 && !startAnimation}
+		{#if !totalCards || !cardReady || error}
 			<div
-				class="absolute right-0 bottom-[8%] left-0 z-20 flex items-center justify-center text-[7svw] sm:text-[4svh]"
+				class="absolute z-50 flex h-full w-full items-center justify-center bg-zinc-800 px-2"
 				out:fade
 				in:fade
 			>
-				<div class="motion-preset-oscillate text-[0.7em]">
-					{isMobile() ? m.page_continue_mobile() : m.page_continue()}
-				</div>
-			</div>
-		{/if}
-	</div>
-	{#if !totalCards || !cardReady || error}
-		<div
-			class="absolute z-50 flex h-full w-full items-center justify-center bg-zinc-800 px-2"
-			out:fade
-			in:fade
-		>
-			<div
-				class="relative w-96 h-87 overflow-hidden rounded-[0.8em] border border-zinc-600 bg-zinc-700 shadow-md transition-all duration-500"
-			>
 				<div
-					class="relative flex h-32 items-center justify-center overflow-hidden rounded-t-lg bg-cover bg-center"
-					style="background-image: url(/assets/yearly/bif.png)"
+					class="relative w-96 h-87 overflow-hidden rounded-[0.8em] border border-zinc-600 bg-zinc-700 shadow-md transition-all duration-500"
 				>
 					<div
-						class="motion-translate-x-loop-[800%] motion-duration-5000 absolute h-[150%] w-16 translate-x-[-400%] rotate-12 bg-zinc-200/10"
-					></div>
-					{#if error}
+						class="relative flex h-32 items-center justify-center overflow-hidden rounded-t-lg bg-cover bg-center"
+						style="background-image: url(/assets/yearly/bif.png)"
+					>
 						<div
-							class="motion-preset-shake rounded-3xl bg-red-700/40 px-8 py-4 text-xl font-bold text-white backdrop-blur-lg"
-						>
-							Unknown error, please try again later
-						</div>
-					{:else}
-						<div
-							class="rounded-3xl bg-zinc-700/40 px-8 py-4 text-center text-xl font-bold backdrop-blur-lg"
-						>
-							<div
-								class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300 text-nowrap"
-							>
-								{m.page_happy_new_year()}
-							</div>
-							{m.page_ddnet_recap({ year: data.year })}
-							<div class="text-sm">
-								{m.page_powered_by()}
-								<a class="text-orange-400 hover:text-orange-300" href="https://teeworlds.cn"
-									>teeworlds.cn</a
-								>
-							</div>
-						</div>
-					{/if}
-				</div>
-				<div class="h-55 flex items-center px-8 py-4">
-					<div class="w-full">
+							class="motion-translate-x-loop-[800%] motion-duration-5000 absolute h-[150%] w-16 translate-x-[-400%] rotate-12 bg-zinc-200/10"
+						></div>
 						{#if error}
-							<div class="flex w-full flex-col items-center justify-center gap-4">
-								<div class="flex flex-col">
-									<button
-										class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600"
-										onclick={() => goto(``)}
+							<div
+								class="motion-preset-shake rounded-3xl bg-red-700/40 px-8 py-4 text-xl font-bold text-white backdrop-blur-lg"
+							>
+								Unknown error, please try again later
+							</div>
+						{:else}
+							<div
+								class="rounded-3xl bg-zinc-700/40 px-8 py-4 text-center text-xl font-bold backdrop-blur-lg"
+							>
+								<div
+									class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300 text-nowrap"
+								>
+									{m.page_happy_new_year()}
+								</div>
+								{m.page_ddnet_recap({ year: data.year })}
+								<div class="text-sm">
+									{m.page_powered_by()}
+									<a class="text-orange-400 hover:text-orange-300" href="https://teeworlds.cn"
+										>teeworlds.cn</a
 									>
-										{m.page_go_back()}
-									</button>
 								</div>
 							</div>
-						{:else if data.player}
-							{#if loadingProgress >= 0}
-								<div
-									class="flex w-full flex-col items-center justify-center gap-4"
-									out:fade
-									in:fade
-								>
-									<div class="font-bold">
-										{m.page_ddnet_recap_for({ year: data.year, player: data.name })}
-									</div>
-									<div class="flex flex-row items-center justify-center gap-2">
-										<div>{m.page_loading()}</div>
-										<div class="w-[3.5rem]text-center">{Math.round(loadingProgress * 100)}%</div>
-									</div>
-									<div class="h-5 w-full overflow-hidden rounded border border-sky-700 bg-sky-900">
-										<div
-											class="h-full rounded bg-sky-600"
-											style="width: {loadingProgress * 100}%;"
-										></div>
+						{/if}
+					</div>
+					<div class="h-55 flex items-center px-8 py-4">
+						<div class="w-full">
+							{#if error}
+								<div class="flex w-full flex-col items-center justify-center gap-4">
+									<div class="flex flex-col">
+										<button
+											class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600"
+											onclick={() => goto(``)}
+										>
+											{m.page_go_back()}
+										</button>
 									</div>
 								</div>
-							{:else}
-								{#key data.player.name}
-									<div out:fade>
+							{:else if data.player}
+								{#if loadingProgress >= 0}
+									<div
+										class="flex w-full flex-col items-center justify-center gap-4"
+										out:fade
+										in:fade
+									>
+										<div class="font-bold">
+											{m.page_ddnet_recap_for({ year: data.year, player: data.name })}
+										</div>
+										<div class="flex flex-row items-center justify-center gap-2">
+											<div>{m.page_loading()}</div>
+											<div class="w-[3.5rem]text-center">{Math.round(loadingProgress * 100)}%</div>
+										</div>
 										<div
-											class="motion-translate-x-in-[-200%] motion-rotate-in-12 motion-duration-1000 motion-delay-100 flex flex-row items-center justify-center gap-8"
+											class="h-5 w-full overflow-hidden rounded border border-sky-700 bg-sky-900"
 										>
-											<TeeRender
-												className="relative h-20 w-20"
-												name={data.skin?.n}
-												body={data.skin?.b}
-												feet={data.skin?.f}
-											/>
+											<div
+												class="h-full rounded bg-sky-600"
+												style="width: {loadingProgress * 100}%;"
+											></div>
+										</div>
+									</div>
+								{:else}
+									{#key data.player.name}
+										<div out:fade>
+											<div
+												class="motion-translate-x-in-[-200%] motion-rotate-in-12 motion-duration-1000 motion-delay-100 flex flex-row items-center justify-center gap-8"
+											>
+												<TeeRender
+													className="relative h-20 w-20"
+													name={data.skin?.n}
+													body={data.skin?.b}
+													feet={data.skin?.f}
+												/>
+												<div class="flex flex-col">
+													<div class="font-semibold text-zinc-300">{data.player.name}</div>
+													<div>{m.page_points_info({ points: `${data.player.points} pts` })}</div>
+												</div>
+											</div>
 											<div class="flex flex-col">
-												<div class="font-semibold text-zinc-300">{data.player.name}</div>
-												<div>{m.page_points_info({ points: `${data.player.points} pts` })}</div>
+												<button
+													class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 mt-2 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600 cursor-pointer"
+													onclick={startProcess}
+												>
+													{m.page_start_recap()}
+												</button>
+											</div>
+											<div class="h-8"></div>
+											<div class="absolute right-0 bottom-0 left-0 flex flex-row">
+												<a
+													data-sveltekit-replacestate
+													href="/"
+													class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-zinc-800 px-4 py-2 text-white hover:bg-zinc-900"
+												>
+													{m.page_change_name()}
+												</a>
 											</div>
 										</div>
-										<div class="flex flex-col">
-											<button
-												class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 mt-2 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600 cursor-pointer"
-												onclick={startProcess}
-											>
-												{m.page_start_recap()}
-											</button>
+									{/key}
+								{/if}
+							{:else}
+								{#key 'entry'}
+									<div class="flex flex-col gap-2">
+										<div class="text-sm text-zinc-300">
+											{m.page_enter_player_name()}
+											{#if data.error}
+												<span class="motion-text-loop-red-400 text-red-500">
+													{data.error}
+												</span>
+											{/if}
 										</div>
-										<div class="h-8"></div>
-										<div class="absolute right-0 bottom-0 left-0 flex flex-row">
-											<a
-												data-sveltekit-replacestate
-												href="/"
-												class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-zinc-800 px-4 py-2 text-white hover:bg-zinc-900"
-											>
-												{m.page_change_name()}
-											</a>
+										<input
+											type="text"
+											class="w-full rounded border border-zinc-500 bg-zinc-600 px-3 py-2 text-sm font-normal shadow-md md:flex-1"
+											bind:value={gotoName}
+											onkeydown={(ev) => {
+												if (ev.key == 'Enter') {
+													if (gotoName) goForName(gotoName);
+												}
+											}}
+										/>
+										<button
+											class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:bg-blue-500 disabled:opacity-50
+										cursor-pointer"
+											onclick={() => {
+												if (gotoName) goForName(gotoName);
+											}}
+										>
+											{m.page_go()}
+										</button>
+										<div class="text-sm">
+											{m.page_database_time({
+												date: datetime(
+													new Date(data.databaseTime * 1000),
+													data.tz ?? DateTime.local().zoneName,
+													getLocale()
+												)
+											})}
 										</div>
 									</div>
 								{/key}
 							{/if}
-						{:else}
-							{#key 'entry'}
-								<div class="flex flex-col gap-2">
-									<div class="text-sm text-zinc-300">
-										{m.page_enter_player_name()}
-										{#if data.error}
-											<span class="motion-text-loop-red-400 text-red-500">
-												{data.error}
-											</span>
-										{/if}
-									</div>
-									<input
-										type="text"
-										class="w-full rounded border border-zinc-500 bg-zinc-600 px-3 py-2 text-sm font-normal shadow-md md:flex-1"
-										bind:value={gotoName}
-										onkeydown={(ev) => {
-											if (ev.key == 'Enter') {
-												if (gotoName) goForName(gotoName);
-											}
-										}}
-									/>
-									<button
-										class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:bg-blue-500 disabled:opacity-50
-										cursor-pointer"
-										onclick={() => {
-											if (gotoName) goForName(gotoName);
-										}}
-									>
-										{m.page_go()}
-									</button>
-									<div class="text-sm">
-										{m.page_database_time({
-											date: datetime(
-												new Date(data.databaseTime * 1000),
-												data.tz ?? DateTime.local().zoneName,
-												getLocale()
-											)
-										})}
-									</div>
-								</div>
-							{/key}
-						{/if}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	{/if}
+		{/if}
 
-	{#if totalCards && cardReady && !error && !startAnimation}
-		<div
-			class="fixed right-0.5 top-1/2 transform -translate-y-1/2 z-30 flex flex-col items-center gap-2 w-3"
-		>
-			{#each totalCards.cards as _, i}
-				<div
-					aria-label="card {i + 1}"
-					style="--n: {i * 25}ms"
-					class="w-2 h-2 rounded-full bg-white/50 transition-all duration-300 motion-opacity-in-0 motion-scale-in-0 motion-delay-(--n) shadow shadow-black/50
+		{#if totalCards && cardReady && !error && !startAnimation}
+			<div
+				class="fixed right-0.5 top-1/2 transform -translate-y-1/2 z-30 flex flex-col items-center gap-2 w-3"
+			>
+				{#each totalCards.cards as _, i}
+					<div
+						aria-label="card {i + 1}"
+						style="--n: {i * 25}ms"
+						class="w-2 h-2 rounded-full bg-white/50 transition-all duration-300 motion-opacity-in-0 motion-scale-in-0 motion-delay-(--n) shadow shadow-black/50
 					
 						{i === currentCard ? 'w-3 h-3 bg-linear-to-r from-blue-400 to-teal-400' : ''}"
-				></div>
-			{/each}
-		</div>
-	{/if}
+					></div>
+				{/each}
+			</div>
+		{/if}
 
-	<div
-		class="absolute z-100 right-0 bottom-0 rounded-tl-xl bg-blue-500 px-4 py-0.5 flex items-center gap-4"
-	>
-		<div class="text-xs flex flex-col items-center justify-center">
-			<div>{m.page_timezone()}</div>
-			<div>{data.tz ?? DateTime.local().zoneName}</div>
-		</div>
-		<div class="relative">
-			<button
-				class="text-white cursor-pointer font-semibold flex items-center gap-1"
-				onclick={() => (dropdownOpen = !dropdownOpen)}
-				onblur={() => setTimeout(() => (dropdownOpen = false), 100)}
-			>
-				{locales.find((l) => l.code === getLocale())?.name ?? getLocale()}
-				<svg
-					class="w-4 h-4"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-					xmlns="http://www.w3.org/2000/svg"
+		<div
+			class="absolute z-100 right-0 bottom-0 rounded-tl-xl bg-blue-500 px-4 py-0.5 flex items-center gap-4"
+		>
+			<div class="text-xs flex flex-col items-center justify-center">
+				<div>{m.page_timezone()}</div>
+				<div>{data.tz ?? DateTime.local().zoneName}</div>
+			</div>
+			<div class="relative">
+				<button
+					class="text-white cursor-pointer font-semibold flex items-center gap-1"
+					onclick={() => (dropdownOpen = !dropdownOpen)}
+					onblur={() => setTimeout(() => (dropdownOpen = false), 100)}
 				>
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"
-					></path>
-				</svg>
-			</button>
-			{#if dropdownOpen}
-				<div
-					class="absolute bottom-full right-0 mb-1 bg-blue-600 rounded-lg shadow-lg z-10 min-w-[120px]"
-				>
-					{#each locales as locale}
-						<button
-							class="w-full text-left px-4 py-2 text-white hover:bg-blue-700 first:rounded-t-lg last:rounded-b-lg {locale.code ===
-							getLocale()
-								? 'bg-blue-800'
-								: ''}"
-							onclick={() => {
-								setLocale(locale.code);
-								dropdownOpen = false;
-							}}
-						>
-							{locale.name}
-						</button>
-					{/each}
-				</div>
-			{/if}
+					{locales.find((l) => l.code === getLocale())?.name ?? getLocale()}
+					<svg
+						class="w-4 h-4"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"
+						></path>
+					</svg>
+				</button>
+				{#if dropdownOpen}
+					<div
+						class="absolute bottom-full right-0 mb-1 bg-slate-600 rounded-lg shadow-lg z-10 min-w-[120px]"
+					>
+						{#each locales as locale}
+							<button
+								class="w-full text-left px-4 py-2 text-white hover:bg-slate-700 cursor-pointer first:rounded-t-lg last:rounded-b-lg {locale.code ===
+								getLocale()
+									? 'bg-slate-500'
+									: ''}"
+								onclick={async () => {
+									scrollVersion = -100;
+									setLocale(locale.code, { reload: false });
+									let regen = cardReady;
+									await goto(page.url, { replaceState: true, invalidateAll: true });
+									scrollVersion = 0;
+									pageKey++;
+									dropdownOpen = false;
+									if (regen) startProcess();
+								}}
+							>
+								{locale.name}
+							</button>
+						{/each}
+					</div>
+				{/if}
+			</div>
 		</div>
 	</div>
-</div>
+{/key}
