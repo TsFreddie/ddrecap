@@ -204,6 +204,7 @@
 
 			d = result.data;
 			totalCards = await generateCards(maps!, data, d, m, getLocale());
+			loadingProgress = 1;
 		} catch (e) {
 			error = true;
 			console.error(e);
@@ -804,7 +805,9 @@
 						<div
 							class="rounded-3xl bg-zinc-700/40 px-8 py-4 text-center text-xl font-bold backdrop-blur-lg"
 						>
-							<div class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300 text-nowrap">
+							<div
+								class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300 text-nowrap"
+							>
 								{m.page_happy_new_year()}
 							</div>
 							{m.page_ddnet_recap({ year: data.year })}

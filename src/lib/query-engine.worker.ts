@@ -138,12 +138,17 @@ export const query = async (
 	db.run('COMMIT');
 	progress(50);
 
+	let queryCount = 0;
+	const totalQuery = 20;
+
 	const one = (sql: string, args: BindParams = []) => {
 		const stmt = db.prepare(sql, args);
 		console.log(stmt.getSQL());
 		stmt.step();
 		const result = stmt.get();
 		stmt.free();
+		queryCount++;
+		progress(50 + (queryCount / (totalQuery + 2)) * 50);
 		return result.length === 0 ? undefined : result;
 	};
 
@@ -155,6 +160,8 @@ export const query = async (
 			result.push(stmt.get());
 		}
 		stmt.free();
+		queryCount++;
+		progress(50 + (queryCount / (totalQuery + 2)) * 50);
 		return result;
 	};
 
@@ -449,6 +456,7 @@ SELECT Server, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? AND Timestamp <= ?
 			`SELECT Map, min(Timestamp) as T FROM race WHERE timestamp >= ? AND timestamp < ? GROUP BY Map ORDER BY T`,
 			[mostDistinctMapFinishWindow[0] - 1800, mostDistinctMapFinishWindow[0] + 5400]
 		) as [string, number][];
+
 		// sliding window find the most finishes in a 60 minute window
 		let left = 0;
 		let maxCount = 0;
@@ -471,6 +479,8 @@ SELECT Server, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? AND Timestamp <= ?
 		// collect result
 		const maps = mapFinishes.filter((data) => data[1] >= bestStart && data[1] < bestEnd);
 		fw = [bestStart, maps.length, maps.map((m) => m[0]).join('・')];
+	} else {
+		one(`SELECT 1`);
 	}
 
 	const bi = one(
@@ -508,6 +518,9 @@ FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < 
 		fw,
 		bi
 	};
+
+	console.log(queryCount);
+	progress(50 + ((totalQuery + 1) / (totalQuery + 2)) * 50);
 
 	return {
 		db: db.export(),

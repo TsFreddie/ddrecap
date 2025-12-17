@@ -18,32 +18,31 @@ export const uaIsMobile = (ua: string | null) => {
 	return regex.test(ua);
 };
 
-export const month = (month: number, langLocale: string) => {
+const convertLocale = (displayLocale: string) => {
+	// if display locale has region, use it
+	if (displayLocale.split('-')[1]) return displayLocale;
+
 	let locale = DateTime.local().locale;
-	if (langLocale.split('-')[0] !== locale.split('-')[0]) {
+	if (displayLocale !== locale.split('-')[0]) {
 		// use langLocale if target language is different from browser language
-		locale = langLocale;
+		locale = displayLocale;
 	}
 
+	return locale;
+};
+
+export const month = (month: number, displayLocale: string) => {
+	let locale = convertLocale(displayLocale);
 	return DateTime.fromObject({ month }).setLocale(locale).toLocaleString({ month: 'long' });
 };
 
 export const date = (date: Date, tz: string, displayLocale: string) => {
-	let locale = DateTime.local().locale;
-	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
-		// perfer user locale if the display language is the same lang.
-		locale = displayLocale;
-	}
+	let locale = convertLocale(displayLocale);
 	return DateTime.fromJSDate(date).setLocale(locale).setZone(tz).toLocaleString(DateTime.DATE_MED);
 };
 
 export const time = (date: Date, tz: string, displayLocale: string) => {
-	let locale = DateTime.local().locale;
-	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
-		// perfer user locale if the display language is the same lang.
-		locale = displayLocale;
-	}
-
+	let locale = convertLocale(displayLocale);
 	return DateTime.fromJSDate(date)
 		.setLocale(locale)
 		.setZone(tz)
@@ -51,12 +50,7 @@ export const time = (date: Date, tz: string, displayLocale: string) => {
 };
 
 export const datetime = (date: Date, tz: string, displayLocale: string) => {
-	let locale = DateTime.local().locale;
-	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
-		// perfer user locale if the display language is the same lang.
-		locale = displayLocale;
-	}
-	console.log(locale);
+	let locale = convertLocale(displayLocale);
 	return DateTime.fromJSDate(date)
 		.setLocale(locale)
 		.setZone(tz)
@@ -64,11 +58,7 @@ export const datetime = (date: Date, tz: string, displayLocale: string) => {
 };
 
 export const durationFull = (seconds: number, displayLocale: string, m: typeof messages) => {
-	let locale = DateTime.local().locale;
-	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
-		// perfer user locale if the display language is the same lang.
-		locale = displayLocale;
-	}
+	let locale = convertLocale(displayLocale);
 	const days = Math.floor(seconds / 86400);
 	const hours = Math.floor((seconds % 86400) / 3600);
 	const minutes = Math.floor((seconds % 3600) / 60);
@@ -92,11 +82,7 @@ export const durationFull = (seconds: number, displayLocale: string, m: typeof m
 };
 
 export const duration = (seconds: number, displayLocale: string, m: typeof messages) => {
-	let locale = DateTime.local().locale;
-	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
-		// perfer user locale if the display language is the same lang.
-		locale = displayLocale;
-	}
+	let locale = convertLocale(displayLocale);
 	const hours = Math.floor(seconds / 3600);
 	const minutes = Math.floor((seconds % 3600) / 60);
 	seconds = Math.round(seconds % 60);
@@ -112,11 +98,7 @@ export const duration = (seconds: number, displayLocale: string, m: typeof messa
 };
 
 export const durationMinutes = (seconds: number, displayLocale: string, m: typeof messages) => {
-	let locale = DateTime.local().locale;
-	if (displayLocale.split('-')[0] !== locale.split('-')[0]) {
-		// perfer user locale if the display language is the same lang.
-		locale = displayLocale;
-	}
+	let locale = convertLocale(displayLocale);
 	const hours = Math.floor(seconds / 3600);
 	const minutes = Math.floor((seconds % 3600) / 60);
 	const format = hours == 0 ? m.format_m() : m.format_hm();
