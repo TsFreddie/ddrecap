@@ -7,7 +7,7 @@
 	import * as qrcode from 'qrcode';
 	import { encodeBase64Url } from '$lib/base64url';
 	import { page } from '$app/state';
-	import type { Snippet } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 	import TeeRender from '$lib/components/TeeRender.svelte';
 	import * as m from '$lib/paraglide/messages';
 	import type { YearlyData } from '$lib/query-engine.worker';
@@ -141,7 +141,26 @@
 
 	let timer: NodeJS.Timeout | null = null;
 
+	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+	const maxWidth = rootFontSize * 40;
+	const refFontSize = 34;
+	let fontSize = $state(refFontSize);
+
+	onMount(() => {
+		if (window.innerWidth < maxWidth) {
+			fontSize = refFontSize * (window.innerWidth / maxWidth);
+		} else {
+			fontSize = refFontSize;
+		}
+	});
+
 	const onResize = () => {
+		if (window.innerWidth < maxWidth) {
+			fontSize = refFontSize * (window.innerWidth / maxWidth);
+		} else {
+			fontSize = refFontSize;
+		}
+
 		if (timer != null) {
 			clearTimeout(timer);
 			timer = null;
@@ -488,7 +507,8 @@
 {#snippet cardSnippet(id: number, card: CardData, format: CardFormat)}
 	<div
 		id="card-{id}"
-		class="card relative mx-auto my-8 aspect-square max-w-full text-[7svw] transition-[scale] select-none sm:h-[70%] sm:text-[4svh]"
+		class="card relative mx-auto my-8 aspect-square max-w-full transition-[scale] select-none sm:max-w-160 sm:max-h-160"
+		style:font-size="{fontSize}px"
 		class:odd:motion-translate-x-in-[30%]={id == currentCard}
 		class:odd:motion-translate-x-out-[30%]={id != currentCard}
 		class:odd:motion-rotate-in-[12deg]={id == currentCard}
@@ -531,7 +551,7 @@
 			<div class="absolute right-[5%] bottom-[-5%] left-[5%] flex flex-row flex-wrap text-[0.6em]">
 				{#each card.titles as title, i}
 					<div
-						class="m-[1%] rounded-3xl border border-white/50 px-[4%] py-[1%] text-center font-semibold text-nowrap"
+						class="m-[1%] rounded-[1em] border border-t-white/30 border-l-white/30 border-black/30 px-[4%] py-[1%] text-center font-semibold text-nowrap"
 						style="background-color: {title.bg};{title.color ? `color: ${title.color};` : ''}"
 						class:motion-delay-1000={i == 0}
 						class:motion-delay-1500={i == 1}
@@ -670,7 +690,7 @@
 					{#if totalCards?.titles}
 						{#each totalCards.titles as title}
 							<span
-								class="m-[1%] rounded-3xl border border-black/50 px-[2%] py-[0.25%] text-center font-semibold text-nowrap text-[0.9em]"
+								class="m-[1%] rounded-[1em] border border-t-white/30 border-l-white/30 border-black/30 px-[2%] py-[0.25%] text-center font-semibold text-nowrap text-[0.9em]"
 								style="background-color: {title.bg};{title.color ? `color: ${title.color};` : ''}"
 							>
 								{title.text}
@@ -784,7 +804,7 @@
 				in:fade
 			>
 				<div
-					class="relative w-96 h-87 overflow-hidden rounded-[0.8em] border border-zinc-600 bg-zinc-700 shadow-md transition-all duration-500"
+					class="relative w-100 h-87 overflow-hidden rounded-[0.8em] border border-zinc-600 bg-zinc-700 shadow-md transition-all duration-500"
 				>
 					<div
 						class="relative flex h-32 items-center justify-center overflow-hidden rounded-t-lg bg-cover bg-center"
