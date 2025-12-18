@@ -828,11 +828,13 @@
 					class="relative w-100 h-87 overflow-hidden rounded-[0.8em] border border-zinc-600 bg-zinc-700 shadow-md transition-all duration-500"
 				>
 					<div
-						class="relative flex h-32 items-center justify-center overflow-hidden rounded-t-lg bg-cover bg-center"
-						style="background-image: url(/assets/yearly/bif.png)"
+						class="relative flex h-32 items-center justify-center overflow-hidden rounded-t-lg z-10 shadow-lg shadow-[#154482]"
+						style="background: linear-gradient(180deg, #0f233d 0%, #132e52 25%, #143561 50%, #163f75 75%, #154482 100%);"
 					>
+						<!-- Animated shine effect -->
 						<div
-							class="motion-translate-x-loop-[800%] motion-duration-5000 absolute h-[150%] w-16 translate-x-[-400%] rotate-12 bg-zinc-200/10"
+							class="motion-opacity-loop-30 motion-duration-5000 w-full h-full absolute"
+							style="background: linear-gradient(to bottom, transparent, #3175ce, transparent);"
 						></div>
 						{#if error}
 							<div
@@ -841,20 +843,25 @@
 								Unknown error, please try again later
 							</div>
 						{:else}
-							<div
-								class="rounded-3xl bg-zinc-700/40 px-8 py-4 text-center text-xl font-bold backdrop-blur-lg"
-							>
-								<div
-									class="motion-scale-loop-[110%] motion-duration-2000 w-full text-red-300 text-nowrap"
-								>
-									{m.page_happy_new_year()}
-								</div>
-								{m.page_ddnet_recap({ year: data.year })}
-								<div class="text-sm">
-									{m.page_powered_by()}
-									<a class="text-orange-400 hover:text-orange-300" href="https://teeworlds.cn"
-										>teeworlds.cn</a
+							<div class="relative z-10">
+								<div class="rounded-2xl px-8 py-4 text-center">
+									<div
+										class="w-full text-2xl font-extrabold text-nowrap mb-1 glow-text text-amber-300"
 									>
+										{m.page_happy_new_year()}
+									</div>
+									<div
+										class="text-xl font-bold tracking-wide text-white text-shadow-lg text-shadow-black/30"
+									>
+										{m.page_ddnet_recap({ year: data.year })}
+									</div>
+									<div class="text-sm mt-2 font-normal text-shadow-lg text-shadow-black/30">
+										{m.page_powered_by()}
+										<a
+											class="hover:brightness-125 transition-all font-medium text-orange-400"
+											href="https://teeworlds.cn">teeworlds.cn</a
+										>
+									</div>
 								</div>
 							</div>
 						{/if}
@@ -1086,3 +1093,28 @@
 		</div>
 	</div>
 {/key}
+
+<style>
+	@keyframes glow-pulse {
+		0%,
+		100% {
+			text-shadow:
+				0 0 40px rgba(254, 240, 138, 0.9),
+				0 0 20px rgba(254, 240, 138, 0.6),
+				0 2px 8px rgba(0, 0, 0, 0.9),
+				0 4px 16px rgba(254, 240, 138, 0.4);
+		}
+		50% {
+			text-shadow:
+				0 0 60px rgba(254, 240, 138, 1),
+				0 0 30px rgba(254, 240, 138, 0.8),
+				0 2px 8px rgba(0, 0, 0, 0.9),
+				0 4px 24px rgba(254, 240, 138, 0.6),
+				0 0 80px rgba(254, 240, 138, 0.5);
+		}
+	}
+
+	.glow-text {
+		animation: glow-pulse 1s ease-in-out infinite;
+	}
+</style>
