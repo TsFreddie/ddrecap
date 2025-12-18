@@ -526,7 +526,7 @@
 	>
 		{#if card.mapper}
 			<div
-				class="motion-duration-250 absolute mt-[-10%] duration-500 flex h-[10%] w-[75%] flex-col items-center justify-center overflow-hidden rounded-t-[1em] bg-linear-to-r from-cyan-500 to-blue-500 text-white text-[0.5em] ml-(--n) transition-transform"
+				class="motion-duration-250 absolute mt-[-10%] duration-300 ease-out flex h-[10%] w-[75%] flex-col items-center justify-center overflow-hidden rounded-t-[1em] bg-linear-to-r from-cyan-500 to-blue-500 text-white text-[0.5em] ml-(--n) transition-transform"
 				class:translate-y-[50%]={showContent || id != currentCard}
 				class:translate-y-[120%]={id != currentCard}
 				class:delay-500={showContent || id != currentCard}
@@ -535,7 +535,7 @@
 				style="--n: {5 + ((id * 7.25) % 15)}%; --r: {-2 + ((0.0235 + id * 5.32481238) % 1) * 4}deg"
 			>
 				<div
-					class="px-[4%] transition-transform duration-500"
+					class="px-[4%] transition-transform duration-300 ease-out"
 					class:translate-y-[-50%]={showContent}
 					class:delay-500={showContent || id != currentCard}
 				>
