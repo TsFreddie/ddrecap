@@ -246,5 +246,6 @@
 			},
 			"selectors": ["plural"]
 		}
-	]
+	],
+	"page_donate": "Угостите кофе"
 }

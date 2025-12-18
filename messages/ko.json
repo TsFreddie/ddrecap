@@ -175,5 +175,6 @@
 	],
 	"unit_maps": "{count}개의 맵",
 	"unit_times": "{count}회",
-	"unit_years": "{count}년"
+	"unit_years": "{count}년",
+	"page_donate": "커피 한 잔 사주세요"
 }

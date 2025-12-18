@@ -8,8 +8,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "Bunların <span class=\"text-orange-400\">{count} kez</span>i",
-				"plural=*": "Bunların <span class=\"text-orange-400\">{count} kez</span>i"
+				"plural=*": "Bunların <span class=\"text-orange-400\">{count} kez</span>i",
+				"plural=one": "Bunların <span class=\"text-orange-400\">{count} kez</span>i"
 			},
 			"selectors": ["plural"]
 		}
@@ -40,8 +40,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz",
-				"plural=*": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz"
+				"plural=*": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz",
+				"plural=one": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz"
 			},
 			"selectors": ["plural"]
 		}
@@ -52,8 +52,8 @@
 		{
 			"declarations": ["input finishes", "local plural = finishes: plural"],
 			"match": {
-				"plural=one": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz. Bu haritaya karşı özel bir zaafınız olmalı!",
-				"plural=*": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz. Bu haritaya karşı özel bir zaafınız olmalı!"
+				"plural=*": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz. Bu haritaya karşı özel bir zaafınız olmalı!",
+				"plural=one": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz. Bu haritaya karşı özel bir zaafınız olmalı!"
 			},
 			"selectors": ["plural"]
 		}
@@ -64,8 +64,8 @@
 		{
 			"declarations": ["input total", "local plural = total: plural"],
 			"match": {
-				"plural=one": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız",
-				"plural=*": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız"
+				"plural=*": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız",
+				"plural=one": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız"
 			},
 			"selectors": ["plural"]
 		}
@@ -132,8 +132,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "sizin en iyi dostunuz.<br>Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz",
-				"plural=*": "sizin en iyi dostunuz.<br>Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz"
+				"plural=*": "sizin en iyi dostunuz.<br>Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz",
+				"plural=one": "sizin en iyi dostunuz.<br>Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz"
 			},
 			"selectors": ["plural"]
 		}
@@ -143,8 +143,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "sizin en çok takım olduğunuz ikinci oyuncu. Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz",
-				"plural=*": "sizin en çok takım olduğunuz ikinci oyuncu. Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz"
+				"plural=*": "sizin en çok takım olduğunuz ikinci oyuncu. Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz",
+				"plural=one": "sizin en çok takım olduğunuz ikinci oyuncu. Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz"
 			},
 			"selectors": ["plural"]
 		}
@@ -163,6 +163,7 @@
 	"page_ddnet_recap": "DDNet {year} Özeti",
 	"page_ddnet_recap_desc": "DDNet {year} Özetinizi görüntüleyin",
 	"page_ddnet_recap_for": "{player} için DDNet {year} Özeti",
+	"page_donate": "Bana bir kahve ısmarla",
 	"page_enter_player_name": "Oyuncu adını girin",
 	"page_go": "Git",
 	"page_go_back": "Geri dön",
@@ -221,8 +222,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} harita",
-				"plural=*": "{count} harita"
+				"plural=*": "{count} harita",
+				"plural=one": "{count} harita"
 			},
 			"selectors": ["plural"]
 		}
@@ -231,8 +232,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} kez",
-				"plural=*": "{count} kez"
+				"plural=*": "{count} kez",
+				"plural=one": "{count} kez"
 			},
 			"selectors": ["plural"]
 		}
@@ -241,8 +242,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} yıl",
-				"plural=*": "{count} yıl"
+				"plural=*": "{count} yıl",
+				"plural=one": "{count} yıl"
 			},
 			"selectors": ["plural"]
 		}

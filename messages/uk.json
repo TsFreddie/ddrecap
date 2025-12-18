@@ -8,8 +8,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "З них <span class=\"text-orange-400\">{count} раз</span> це трапилося",
-				"plural=*": "З них <span class=\"text-orange-400\">{count} разів</span> це трапилося"
+				"plural=*": "З них <span class=\"text-orange-400\">{count} разів</span> це трапилося",
+				"plural=one": "З них <span class=\"text-orange-400\">{count} раз</span> це трапилося"
 			},
 			"selectors": ["plural"]
 		}
@@ -40,8 +40,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "Цього року ви перетнули фінішну лінію на {type} картах <span class=\"font-semibold text-orange-400\">{count} раз</span>",
-				"plural=*": "Цього року ви перетнули фінішну лінію на {type} картах <span class=\"font-semibold text-orange-400\">{count} рази</span>"
+				"plural=*": "Цього року ви перетнули фінішну лінію на {type} картах <span class=\"font-semibold text-orange-400\">{count} рази</span>",
+				"plural=one": "Цього року ви перетнули фінішну лінію на {type} картах <span class=\"font-semibold text-orange-400\">{count} раз</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -52,8 +52,8 @@
 		{
 			"declarations": ["input finishes", "local plural = finishes: plural"],
 			"match": {
-				"plural=one": "Ви перетнули її фінішну лінію <span class=\"font-semibold text-orange-400\">{finishes} раз</span>. Мабуть, у вас до цієї карти особлива слабкість!",
-				"plural=*": "Ви перетнули її фінішну лінію <span class=\"font-semibold text-orange-400\">{finishes} рази</span>. Мабуть, у вас до цієї карти особлива слабкість!"
+				"plural=*": "Ви перетнули її фінішну лінію <span class=\"font-semibold text-orange-400\">{finishes} рази</span>. Мабуть, у вас до цієї карти особлива слабкість!",
+				"plural=one": "Ви перетнули її фінішну лінію <span class=\"font-semibold text-orange-400\">{finishes} раз</span>. Мабуть, у вас до цієї карти особлива слабкість!"
 			},
 			"selectors": ["plural"]
 		}
@@ -64,8 +64,8 @@
 		{
 			"declarations": ["input total", "local plural = total: plural"],
 			"match": {
-				"plural=one": "Серед <span class=\"text-orange-400\">{total} нової складної карти</span>, випущеної цього року,<br>ви успішно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> з них",
-				"plural=*": "Серед <span class=\"text-orange-400\">{total} нових складних карт</span>, випущених цього року,<br>ви успішно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> з них"
+				"plural=*": "Серед <span class=\"text-orange-400\">{total} нових складних карт</span>, випущених цього року,<br>ви успішно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> з них",
+				"plural=one": "Серед <span class=\"text-orange-400\">{total} нової складної карти</span>, випущеної цього року,<br>ви успішно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> з них"
 			},
 			"selectors": ["plural"]
 		}
@@ -132,8 +132,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "— ваш найкращий друг.<br>Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} раз</span>",
-				"plural=*": "— ваш найкращий друг.<br>Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} рази</span>"
+				"plural=*": "— ваш найкращий друг.<br>Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} рази</span>",
+				"plural=one": "— ваш найкращий друг.<br>Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} раз</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -143,8 +143,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "— ваш другий за частотою командний гравець. Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} раз</span>",
-				"plural=*": "— ваш другий за частотою командний гравець. Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} рази</span>"
+				"plural=*": "— ваш другий за частотою командний гравець. Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} рази</span>",
+				"plural=one": "— ваш другий за частотою командний гравець. Ви разом фінішували <span class=\"font-semibold text-orange-400\">{count} раз</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -163,6 +163,7 @@
 	"page_ddnet_recap": "Підсумки року в DDNet",
 	"page_ddnet_recap_desc": "Перегляньте свої підсумки {year} року в DDNet",
 	"page_ddnet_recap_for": "Підсумки {year} року в DDNet для {player}",
+	"page_donate": "Почастуйте кавою",
 	"page_enter_player_name": "Введіть ім'я гравця",
 	"page_go": "Вперед",
 	"page_go_back": "Назад",
@@ -221,8 +222,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} карту",
-				"plural=*": "{count} карт"
+				"plural=*": "{count} карт",
+				"plural=one": "{count} карту"
 			},
 			"selectors": ["plural"]
 		}
@@ -231,8 +232,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} раз",
-				"plural=*": "{count} рази"
+				"plural=*": "{count} рази",
+				"plural=one": "{count} раз"
 			},
 			"selectors": ["plural"]
 		}
@@ -241,8 +242,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} рік",
-				"plural=*": "{count} роки"
+				"plural=*": "{count} роки",
+				"plural=one": "{count} рік"
 			},
 			"selectors": ["plural"]
 		}

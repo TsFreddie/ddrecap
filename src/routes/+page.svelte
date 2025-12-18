@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { afterNavigate, goto, invalidateAll, replaceState } from '$app/navigation';
+	import { afterNavigate, goto, replaceState } from '$app/navigation';
 	import { encodeAsciiURIComponent } from '$lib/link';
 	import { fade } from 'svelte/transition';
 	import { datetime, uaIsMobile } from '$lib/helpers';
@@ -15,6 +15,7 @@
 	import { DateTime } from 'luxon';
 	import { generateCards, type CardData } from '$lib/cards';
 	import { getLocale, setLocale, type Locale } from '$lib/paraglide/runtime.js';
+	import { CURRENT_YEAR } from '$lib/consts';
 
 	let pageKey = $state(0);
 
@@ -776,6 +777,7 @@
 					</div>
 				{/if}
 			</div>
+
 			<div class="absolute right-0 bottom-0 left-0 z-20 flex flex-row">
 				<a
 					data-sveltekit-replacestate
@@ -975,6 +977,36 @@
 				{/each}
 			</div>
 		{/if}
+
+		<!-- Coffee button moved to same layer as timezone -->
+		<a
+			href={getLocale() == 'zh-CN'
+				? `https://ifdian.net/order/create?user_id=86452e60dba811ed862c5254001e7c00&remark=${encodeURIComponent(`为 TWCN ${CURRENT_YEAR} 年度总结打赏`)}&affiliate_code=ddnet`
+				: 'https://ko-fi.com/tsfreddie'}
+			class="absolute z-100 right-0 top-0 rounded-bl-xl bg-purple-600 px-3 py-2 text-white hover:bg-purple-700 flex items-center gap-2 group text-sm transition-all duration-700 ease-in-out"
+			class:translate-x-[calc(100%-42px)]={cardReady}
+			title="Buy me a coffee"
+			target="_blank"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="20"
+				height="20"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				class="lucide lucide-coffee-icon lucide-coffee"
+				><path d="M10 2v2" /><path d="M14 2v2" /><path
+					d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"
+				/><path d="M6 2v2" /></svg
+			>
+			<span class="transition-opacity duration-300 whitespace-nowrap" class:opacity-0={cardReady}>
+				{m.page_donate()}
+			</span>
+		</a>
 
 		<div
 			class="absolute z-100 right-0 bottom-0 rounded-tl-xl bg-blue-500 px-4 py-0.5 flex items-center gap-4"

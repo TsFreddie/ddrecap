@@ -175,5 +175,6 @@
 	],
 	"unit_maps": "{count}枚のマップ",
 	"unit_times": "{count}回",
-	"unit_years": "{count}年"
+	"unit_years": "{count}年",
+	"page_donate": "投げ銭"
 }

@@ -8,8 +8,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "Davon geschah es <span class=\"text-orange-400\">{count} Mal</span>",
-				"plural=*": "Davon geschah es <span class=\"text-orange-400\">{count} Mal</span>"
+				"plural=*": "Davon geschah es <span class=\"text-orange-400\">{count} Mal</span>",
+				"plural=one": "Davon geschah es <span class=\"text-orange-400\">{count} Mal</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -40,8 +40,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "Dieses Jahr hast du die Ziellinie von {type}-Karten <span class=\"font-semibold text-orange-400\">{count} Mal</span> überquert",
-				"plural=*": "Dieses Jahr hast du die Ziellinie von {type}-Karten <span class=\"font-semibold text-orange-400\">{count} Mal</span> überquert"
+				"plural=*": "Dieses Jahr hast du die Ziellinie von {type}-Karten <span class=\"font-semibold text-orange-400\">{count} Mal</span> überquert",
+				"plural=one": "Dieses Jahr hast du die Ziellinie von {type}-Karten <span class=\"font-semibold text-orange-400\">{count} Mal</span> überquert"
 			},
 			"selectors": ["plural"]
 		}
@@ -52,8 +52,8 @@
 		{
 			"declarations": ["input finishes", "local plural = finishes: plural"],
 			"match": {
-				"plural=one": "Du hast ihre Ziellinie <span class=\"font-semibold text-orange-400\">{finishes} Mal</span> überquert. Du musst eine Schwäche für diese Karte haben!",
-				"plural=*": "Du hast ihre Ziellinie <span class=\"font-semibold text-orange-400\">{finishes} Mal</span> überquert. Du musst eine Schwäche für diese Karte haben!"
+				"plural=*": "Du hast ihre Ziellinie <span class=\"font-semibold text-orange-400\">{finishes} Mal</span> überquert. Du musst eine Schwäche für diese Karte haben!",
+				"plural=one": "Du hast ihre Ziellinie <span class=\"font-semibold text-orange-400\">{finishes} Mal</span> überquert. Du musst eine Schwäche für diese Karte haben!"
 			},
 			"selectors": ["plural"]
 		}
@@ -64,8 +64,8 @@
 		{
 			"declarations": ["input total", "local plural = total: plural"],
 			"match": {
-				"plural=one": "Unter den <span class=\"text-orange-400\">{total} neuen herausfordernden Karten</span>, die dieses Jahr veröffentlicht wurden,<br>hast du erfolgreich <span class=\"font-semibold text-orange-400\">{completed}</span> davon abgeschlossen",
-				"plural=*": "Unter den <span class=\"text-orange-400\">{total} neuen herausfordernden Karten</span>, die dieses Jahr veröffentlicht wurden,<br>hast du erfolgreich <span class=\"font-semibold text-orange-400\">{completed}</span> davon abgeschlossen"
+				"plural=*": "Unter den <span class=\"text-orange-400\">{total} neuen herausfordernden Karten</span>, die dieses Jahr veröffentlicht wurden,<br>hast du erfolgreich <span class=\"font-semibold text-orange-400\">{completed}</span> davon abgeschlossen",
+				"plural=one": "Unter den <span class=\"text-orange-400\">{total} neuen herausfordernden Karten</span>, die dieses Jahr veröffentlicht wurden,<br>hast du erfolgreich <span class=\"font-semibold text-orange-400\">{completed}</span> davon abgeschlossen"
 			},
 			"selectors": ["plural"]
 		}
@@ -132,8 +132,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "ist dein bester Kumpel.<br>Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet",
-				"plural=*": "ist dein bester Kumpel.<br>Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet"
+				"plural=*": "ist dein bester Kumpel.<br>Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet",
+				"plural=one": "ist dein bester Kumpel.<br>Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet"
 			},
 			"selectors": ["plural"]
 		}
@@ -143,8 +143,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "ist dein zweitmeist geteamter Spieler. Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet",
-				"plural=*": "ist dein zweitmeist geteamter Spieler. Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet"
+				"plural=*": "ist dein zweitmeist geteamter Spieler. Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet",
+				"plural=one": "ist dein zweitmeist geteamter Spieler. Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet"
 			},
 			"selectors": ["plural"]
 		}
@@ -163,6 +163,7 @@
 	"page_ddnet_recap": "DDNet Rückblick {year}",
 	"page_ddnet_recap_desc": "Schau dir deinen DDNet {year} Rückblick an",
 	"page_ddnet_recap_for": "DDNet Rückblick {year} für {player}",
+	"page_donate": "Kauf mir einen Kaffee",
 	"page_enter_player_name": "Spielernamen eingeben",
 	"page_go": "Los",
 	"page_go_back": "Zurück",
@@ -221,8 +222,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} Karte",
-				"plural=*": "{count} Karten"
+				"plural=*": "{count} Karten",
+				"plural=one": "{count} Karte"
 			},
 			"selectors": ["plural"]
 		}
@@ -231,8 +232,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} Mal",
-				"plural=*": "{count} Mal"
+				"plural=*": "{count} Mal",
+				"plural=one": "{count} Mal"
 			},
 			"selectors": ["plural"]
 		}
@@ -241,8 +242,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} Jahr",
-				"plural=*": "{count} Jahre"
+				"plural=*": "{count} Jahre",
+				"plural=one": "{count} Jahr"
 			},
 			"selectors": ["plural"]
 		}
