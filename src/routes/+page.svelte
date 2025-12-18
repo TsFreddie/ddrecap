@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 	import { afterNavigate, goto, replaceState } from '$app/navigation';
 	import { encodeAsciiURIComponent } from '$lib/link';
-	import { fade } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import { datetime, uaIsMobile } from '$lib/helpers';
 	import * as qrcode from 'qrcode';
 	import { encodeBase64Url } from '$lib/base64url';
@@ -577,7 +577,7 @@
 		class="motion-delay-700 flex h-full w-full items-center justify-center text-[0.8em] transition-[backdrop-filter]"
 		class:motion-opacity-in-0={id == currentCard}
 		class:motion-opacity-out-0={id != currentCard}
-		class:backdrop-blur-sm={showContent}
+		class:backdrop-blur-lg={showContent}
 		class:backdrop-brightness-75={showContent}
 		class:backdrop-saturate-50={showContent}
 	>
@@ -781,17 +781,31 @@
 				>
 					{m.page_ddnet_recap_for({ year: data.year, player: data.player.name })}
 				</div>
+
+				<div class="absolute right-0 bottom-0 left-0 z-20 flex flex-row">
+					<a
+						data-sveltekit-replacestate
+						href="/"
+						class="-motion-translate-x-in-100 motion-duration-500 motion-delay-100 rounded-tr-xl backdrop-blur-lg flex items-center justify-center bg-black/80 pl-2 pr-4 py-1.5 text-sm text-white hover:bg-zinc-700"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="lucide lucide-arrow-left-icon lucide-arrow-left"
+							><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg
+						>
+						{m.page_change_name()}
+					</a>
+				</div>
 			{/if}
 
-			<div class="absolute right-0 bottom-0 left-0 z-20 flex flex-row">
-				<a
-					data-sveltekit-replacestate
-					href="/"
-					class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-300 rounded-tr bg-zinc-600 px-4 py-2 text-white hover:bg-zinc-700"
-				>
-					{m.page_change_name()}
-				</a>
-			</div>
 			{#if currentCard == 0 && !startAnimation}
 				<div
 					class="absolute right-0 bottom-[8%] left-0 z-20 flex items-center justify-center text-[7svw] sm:text-[4svh]"
@@ -876,8 +890,9 @@
 											class="h-5 w-full overflow-hidden rounded border border-sky-700 bg-sky-900"
 										>
 											<div
-												class="h-full rounded bg-sky-600"
-												style="width: {loadingProgress * 100}%;"
+												class="h-full rounded bg-sky-600 transition-all duration-300 ease-out shadow-lg shadow-sky-500/50"
+												style="width: {loadingProgress *
+													100}%; box-shadow: 0 0 10px rgba(14, 165, 233, 0.5), 0 0 20px rgba(14, 165, 233, 0.3), 0 0 30px rgba(14, 165, 233, 0.2);"
 											></div>
 										</div>
 									</div>
@@ -1014,7 +1029,7 @@
 		</a>
 
 		<div
-			class="absolute z-100 right-0 bottom-0 rounded-tl-xl bg-blue-500 px-4 py-0.5 flex items-center gap-4"
+			class="absolute z-100 right-0 bottom-0 rounded-tl-xl bg-blue-500 pl-4 pr-2 py-0.5 flex items-center gap-4"
 		>
 			<div class="text-xs flex flex-col items-center justify-center">
 				<div>{m.page_timezone()}</div>
@@ -1022,29 +1037,32 @@
 			</div>
 			<div class="relative">
 				<button
-					class="text-white cursor-pointer font-semibold flex items-center gap-1"
+					class="text-white cursor-pointer font-semibold flex items-center gap-1 text-sm"
 					onclick={() => (dropdownOpen = !dropdownOpen)}
 					onblur={() => setTimeout(() => (dropdownOpen = false), 100)}
 				>
 					{locales.find((l) => l.code === getLocale())?.name ?? getLocale()}
 					<svg
-						class="w-4 h-4"
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
 						fill="none"
 						stroke="currentColor"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-chevron-up-icon lucide-chevron-up"><path d="m18 15-6-6-6 6" /></svg
 					>
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"
-						></path>
-					</svg>
 				</button>
 				{#if dropdownOpen}
 					<div
-						class="absolute bottom-full right-0 mb-1 bg-slate-600 rounded-lg shadow-lg z-10 min-w-[120px]"
+						in:slide={{ duration: 300, easing: easeOut }}
+						class="absolute bottom-full text-sm right-0 mb-1 bg-slate-600/70 backdrop-blur-lg rounded-lg shadow-lg z-10"
 					>
 						{#each locales as locale}
 							<button
-								class="w-full text-left px-4 py-2 text-white hover:bg-slate-700 cursor-pointer first:rounded-t-lg last:rounded-b-lg {locale.code ===
+								class="border-b border-slate-700 text-center w-full px-4 py-2 text-white hover:bg-slate-700 cursor-pointer first:rounded-t-lg last:rounded-b-lg {locale.code ===
 								getLocale()
 									? 'bg-slate-500'
 									: ''}"

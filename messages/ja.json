@@ -102,7 +102,7 @@
 	"format_ms": "m分s秒",
 	"format_s": "s秒",
 	"page_badges_for": "{name}の{year}年バッジ",
-	"page_change_name": "プレイヤー名変更",
+	"page_change_name": "プレイヤー変更",
 	"page_continue": "↓ スクロールして続ける ↓",
 	"page_continue_mobile": "↓ 上にスワイプして続ける ↓",
 	"page_database_time": "データ更新日：{date}",
