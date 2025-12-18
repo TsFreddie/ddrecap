@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @plugin 'tailwindcss-motion';
+@plugin '@tailwindcss/aspect-ratio';
 
 html {
 	@apply bg-zinc-800;
@@ -14,4 +15,9 @@ html {
 .scrollbar-hide {
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
+}
+
+@theme {
+	--breakpoint-sm: 40rem;
+	--container-sm: 40rem;
 }

@@ -144,7 +144,7 @@
 
 	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 	const maxWidth = rootFontSize * 40;
-	const refFontSize = 38;
+	const refFontSize = 40;
 	let fontSize = $state(refFontSize);
 
 	onMount(() => {
@@ -508,7 +508,7 @@
 {#snippet cardSnippet(id: number, card: CardData, format: CardFormat)}
 	<div
 		id="card-{id}"
-		class="card relative mx-auto my-8 aspect-square max-w-full transition-[scale] select-none sm:max-w-160 sm:max-h-160"
+		class="card relative mx-auto my-8 aspect-square max-w-full transition-[scale] select-none sm:max-w-sm sm:max-h-sm"
 		style:font-size="{fontSize}px"
 		class:odd:motion-translate-x-in-[30%]={id == currentCard}
 		class:odd:motion-translate-x-out-[30%]={id != currentCard}
@@ -526,20 +526,25 @@
 	>
 		{#if card.mapper}
 			<div
-				class="motion-duration-250 absolute mt-[-10%] flex h-[10%] w-[75%] flex-col items-center justify-center overflow-hidden rounded-t-xl bg-linear-to-r from-cyan-500 to-blue-500 text-white text-[0.5em] transition-transform"
+				class="motion-duration-250 absolute mt-[-10%] duration-500 flex h-[10%] w-[75%] flex-col items-center justify-center overflow-hidden rounded-t-[1em] bg-linear-to-r from-cyan-500 to-blue-500 text-white text-[0.5em] ml-(--n) transition-transform"
 				class:translate-y-[50%]={showContent || id != currentCard}
 				class:translate-y-[120%]={id != currentCard}
-				class:ml-[20%]={id % 3 == 0}
-				class:ml-[5%]={id % 3 == 1}
-				class:ml-[13%]={id % 3 == 2}
+				class:delay-500={showContent || id != currentCard}
+				class:rotate-(--r)={showContent || id != currentCard}
+				class:rotate-0={id != currentCard}
+				style="--n: {5 + ((id * 7.25) % 15)}%; --r: {-2 + ((0.0235 + id * 5.32481238) % 1) * 4}deg"
 			>
-				<div class="px-[4%] transition-transform" class:translate-y-[-30%]={showContent}>
-					{card.mapper}
+				<div
+					class="px-[4%] transition-transform duration-500"
+					class:translate-y-[-50%]={showContent}
+					class:delay-500={showContent || id != currentCard}
+				>
+					{@html card.mapper}
 				</div>
 			</div>
 		{/if}
 		<div
-			class="absolute h-full w-full overflow-hidden rounded-4xl bg-white shadow-2xl shadow-black"
+			class="absolute h-full w-full overflow-hidden rounded-[1em] bg-white shadow-2xl shadow-black"
 		>
 			<div
 				class="absolute h-full w-full bg-cover bg-center"

@@ -75,14 +75,14 @@ export const generateCards = async (
 	m: typeof messages,
 	locale: string
 ) => {
-	const getMapper = (name: string) => maps?.find((map) => map.name == name)?.mapper || '不详';
+	const getMapper = (name: string) => maps?.find((map) => map.name == name)?.mapper || '[REDACTED]';
 	const mapHasBonus = (name: string) =>
 		maps?.find((map) => map.name == name)?.tiles.includes('BONUS');
 	const bgMap = (name: string) =>
 		maps?.find((map) => map.name == name)?.thumbnail || '/assets/yearly/bif.png';
 
-	const mapFormat = (map: string, mappers: string) => {
-		return `${map} by ${mappers}`;
+	const mapFormat = (map: string) => {
+		return `${escapeHTML(map)} <span class="text-[0.8em] text-gray-300">by <span class="font-semibold text-white">${escapeHTML(getMapper(map))}</span></span>`;
 	};
 
 	const tz = data.tz;
@@ -152,7 +152,7 @@ export const generateCards = async (
 				background: '/assets/yearly/sb.png',
 				leftTeeTop: 5,
 				leftTeeSkin: data.skin,
-				mapper: 'SKYBOW by Exotix'
+				mapper: mapFormat('SKYBOW')
 			});
 		} else {
 			cards.push({
@@ -175,7 +175,7 @@ export const generateCards = async (
 				background: '/assets/yearly/ssu.png',
 				leftTeeTop: 5,
 				leftTeeSkin: data.skin,
-				mapper: 'Sunny Side Up by Ravie'
+				mapper: mapFormat('Sunny Side Up')
 			});
 		}
 	} else if (d.tp === 0) {
@@ -194,7 +194,7 @@ export const generateCards = async (
 				}
 			],
 			background: '/assets/yearly/lf.png',
-			mapper: 'Lavender Forest by Pipou'
+			mapper: mapFormat('Lavender Forest')
 		});
 	} else if (d.tp != null) {
 		const titles = [{ bg: '#b7b7a4', color: '#000', text: m.title_returning_voyage() }];
@@ -227,7 +227,7 @@ export const generateCards = async (
 				}
 			],
 			background: '/assets/yearly/lf.png',
-			mapper: 'Lavender Forest by Pipou'
+			mapper: mapFormat('Lavender Forest')
 		});
 	}
 
@@ -261,7 +261,7 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: m.card_first_finish_verse_2({ map: d.ff[0] })
+					text: m.card_first_finish_verse_2({ map: escapeHTML(d.ff[0]) })
 				},
 				{
 					type: 't',
@@ -276,7 +276,7 @@ export const generateCards = async (
 				}
 			],
 			background: '/assets/yearly/r.png',
-			mapper: 'Romantic by Wartoz & ɳ0vą'
+			mapper: mapFormat('Romantic')
 		});
 	}
 
@@ -326,7 +326,7 @@ export const generateCards = async (
 					}
 				],
 				background: bgMap(d.mpg[0]),
-				mapper: `${d.mpg[0]} by ${getMapper(d.mpg[0])}`
+				mapper: mapFormat(d.mpg[0])
 			});
 		} else {
 			if (d.mpg[1] >= 18)
@@ -372,7 +372,7 @@ export const generateCards = async (
 					}
 				],
 				background: bgMap(d.mpg[0]),
-				mapper: `${d.mpg[0]} by ${getMapper(d.mpg[0])}`
+				mapper: mapFormat(d.mpg[0])
 			});
 		}
 	}
@@ -394,20 +394,20 @@ export const generateCards = async (
 			case 'morning':
 				bg = {
 					background: '/assets/yearly/s.png',
-					mapper: 'Spoon by Ravie'
+					mapper: mapFormat('Spoon')
 				};
 				break;
 			case 'afternoon':
 			case 'evening':
 				bg = {
 					background: '/assets/yearly/w.png',
-					mapper: 'willow by louis'
+					mapper: mapFormat('willow')
 				};
 				break;
 			default:
 				bg = {
 					background: '/assets/yearly/sp.png',
-					mapper: 'Starlit Peaks by ♂S1mple♂'
+					mapper: mapFormat('Starlit Peaks')
 				};
 		}
 
@@ -453,22 +453,22 @@ export const generateCards = async (
 		if (d.mmr[0] >= 1 && d.mmr[0] < 4) {
 			bg = {
 				background: '/assets/yearly/bif.png',
-				mapper: 'Back in Festivity by Silex & Pipou'
+				mapper: mapFormat('Back in Festivity')
 			};
 		} else if (d.mmr[0] >= 4 && d.mmr[0] < 7) {
 			bg = {
 				background: '/assets/yearly/p2.png',
-				mapper: 'powerless2 by spiritdote'
+				mapper: mapFormat('powerless2')
 			};
 		} else if (d.mmr[0] >= 7 && d.mmr[0] < 10) {
 			bg = {
 				background: '/assets/yearly/h2.png',
-				mapper: 'Holidays 2 by Destoros'
+				mapper: mapFormat('Holidays 2')
 			};
 		} else {
 			bg = {
 				background: '/assets/yearly/lt.png',
-				mapper: 'Lonely Travel by QuiX'
+				mapper: mapFormat('Lonely Travel')
 			};
 		}
 
@@ -531,7 +531,7 @@ export const generateCards = async (
 				}
 			],
 			background: '/assets/yearly/wr.png',
-			mapper: 'Withered Rose by louis'
+			mapper: mapFormat('Withered Rose')
 		};
 
 		if (d.tt) {
@@ -593,7 +593,7 @@ export const generateCards = async (
 				}
 			],
 			background: bgMap(d.lnf[0]),
-			mapper: `${d.lnf[0]} by ${getMapper(d.lnf[0])}`
+			mapper: mapFormat(d.lnf[0])
 		});
 	}
 
@@ -631,7 +631,7 @@ export const generateCards = async (
 				}
 			],
 			background: '/assets/yearly/p9.png',
-			mapper: 'Planet 9 by Silex'
+			mapper: mapFormat('Planet 9')
 		});
 
 		if (d.ymf[3] > 1) {
@@ -644,7 +644,7 @@ export const generateCards = async (
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: d.ymf[2],
+					text: escapeHTML(d.ymf[2]),
 					rotation: 2
 				},
 				{
@@ -653,7 +653,7 @@ export const generateCards = async (
 				}
 			);
 			cards[cards.length - 1].background = bgMap(d.ymf[2]);
-			cards[cards.length - 1].mapper = `${d.ymf[2]} by ${getMapper(d.ymf[2])}`;
+			cards[cards.length - 1].mapper = mapFormat(d.ymf[2]);
 		}
 	}
 
@@ -689,7 +689,7 @@ export const generateCards = async (
 				}
 			],
 			background: bgMap(d.nrr[0]),
-			mapper: `${d.nrr[0]} by ${getMapper(d.nrr[0])}`
+			mapper: mapFormat(d.nrr[0])
 		});
 	}
 
@@ -701,52 +701,52 @@ export const generateCards = async (
 		if (type == 'novice') {
 			bg = {
 				background: '/assets/yearly/t.png',
-				mapper: 'Teeasy by Tridemy & Cøke'
+				mapper: mapFormat('Teeasy')
 			};
 		} else if (type == 'moderate') {
 			bg = {
 				background: '/assets/yearly/cs.png',
-				mapper: 'Cyber Space by Kaniosek'
+				mapper: mapFormat('Cyber Space')
 			};
 		} else if (type == 'brutal') {
 			bg = {
 				background: '/assets/yearly/gt.png',
-				mapper: 'GalacTees by Kaniosek'
+				mapper: mapFormat('GalacTees')
 			};
 		} else if (type == 'insane') {
 			bg = {
 				background: '/assets/yearly/c.png',
-				mapper: 'Catharsis by Doshik'
+				mapper: mapFormat('Catharsis')
 			};
 		} else if (type == 'dummy') {
 			bg = {
 				background: '/assets/yearly/q.png',
-				mapper: 'quon by yo bitch'
+				mapper: mapFormat('quon')
 			};
 		} else if (type == 'solo') {
 			bg = {
 				background: '/assets/yearly/a.png',
-				mapper: 'Amethyst by ♂S1mple♂'
+				mapper: mapFormat('Amethyst')
 			};
 		} else if (type.startsWith('ddmax')) {
 			bg = {
 				background: '/assets/yearly/nj.png',
-				mapper: 'Night Jungle by JeanneDark & Knight :3'
+				mapper: mapFormat('Night Jungle')
 			};
 		} else if (type == 'oldschool') {
 			bg = {
 				background: '/assets/yearly/sr.png',
-				mapper: 'Sunrise by geroy231 & Father'
+				mapper: mapFormat('Sunrise')
 			};
 		} else if (type == 'race') {
 			bg = {
 				background: '/assets/yearly/g.png',
-				mapper: 'Grenadium by texnonik'
+				mapper: mapFormat('Grenadium')
 			};
 		} else {
 			bg = {
 				background: '/assets/yearly/qd.png',
-				mapper: 'Quickdraw by FJP'
+				mapper: mapFormat('Quickdraw')
 			};
 		}
 
@@ -864,7 +864,7 @@ export const generateCards = async (
 				}
 			],
 			background: bgMap(d.mfm[0]),
-			mapper: `${d.mfm[0]} by ${getMapper(d.mfm[0])}`
+			mapper: mapFormat(d.mfm[0])
 		});
 	}
 
@@ -890,7 +890,7 @@ export const generateCards = async (
 				}
 			],
 			background: bgMap(d.sfm[0]),
-			mapper: `${d.sfm[0]} by ${getMapper(d.sfm[0])}`
+			mapper: mapFormat(d.sfm[0])
 		});
 	}
 
@@ -916,7 +916,7 @@ export const generateCards = async (
 				}
 			],
 			background: '/assets/yearly/bb.png',
-			mapper: 'Bamboozled by StorмPʜöɴix'
+			mapper: mapFormat('Bamboozled')
 		});
 
 		if (d.sf[2]) {
@@ -979,7 +979,7 @@ export const generateCards = async (
 				}
 			],
 			background: bgMap(d.lf[0]),
-			mapper: `${d.lf[0]} by ${getMapper(d.lf[0])}`
+			mapper: mapFormat(d.lf[0])
 		});
 	}
 
@@ -1017,7 +1017,7 @@ export const generateCards = async (
 				}
 			],
 			background: '/assets/yearly/br.png',
-			mapper: 'Brassrun by Kaniosek'
+			mapper: mapFormat('Brassrun')
 		});
 	}
 
@@ -1039,7 +1039,7 @@ export const generateCards = async (
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: `${d.bi[0]}<br><div style="font-size: 0.75em">${duration(d.bi[1], locale, m)}</div>`,
+					text: `${escapeHTML(d.bi[0])}<br><div style="font-size: 0.75em">${duration(d.bi[1], locale, m)}</div>`,
 					rotation: 1
 				},
 				{
@@ -1062,7 +1062,7 @@ export const generateCards = async (
 				}
 			],
 			background: '/assets/yearly/nn.png',
-			mapper: 'Not Novice by wee & Ybivawka~'
+			mapper: mapFormat('Not Novice')
 		});
 	}
 
@@ -1120,7 +1120,7 @@ export const generateCards = async (
 				rightTeeSkin,
 				rightTeeTop: 55,
 				background: '/assets/yearly/wx.png',
-				mapper: 'weixun by pinfandsj'
+				mapper: mapFormat('weixun')
 			});
 		} else {
 			const rightTeeSkin = await getPlayerSkin(d.mpt[0][0]);
@@ -1144,7 +1144,7 @@ export const generateCards = async (
 					}
 				],
 				background: '/assets/yearly/wx.png',
-				mapper: 'weixun by pinfandsj',
+				mapper: mapFormat('weixun'),
 				rightTeeSkin,
 				rightTeeTop: 20
 			});
@@ -1185,7 +1185,7 @@ export const generateCards = async (
 				}
 			],
 			background: bgMap(d.bt[1]),
-			mapper: `${d.bt[1]} by ${getMapper(d.bt[1])}`
+			mapper: mapFormat(d.bt[1])
 		});
 	}
 
@@ -1217,7 +1217,7 @@ export const generateCards = async (
 				}
 			],
 			background: bgMap(d.map[0]),
-			mapper: `${d.map[0]} by ${getMapper(d.map[0])}`
+			mapper: mapFormat(d.map[0])
 		});
 	}
 
