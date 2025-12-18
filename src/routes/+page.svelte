@@ -144,7 +144,7 @@
 
 	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 	const maxWidth = rootFontSize * 40;
-	const refFontSize = 40;
+	const refFontSize = 42;
 	let fontSize = $state(refFontSize);
 
 	onMount(() => {
@@ -584,8 +584,8 @@
 		<div
 			class="absolute flex flex-col items-center justify-center gap-[3%] transition-opacity"
 			class:opacity-0={!showContent}
-			style="left: {card.l ?? 5}%; top: {card.t ?? 5}%; right: {card.r ?? 5}%; bottom: {card.b ??
-				5}%;"
+			style="left: {card.l ?? 2.5}%; top: {card.t ?? 2.5}%; right: {card.r ??
+				2.5}%; bottom: {card.b ?? 2.5}%;"
 		>
 			{#if card.leftTeeSkin}
 				<div
@@ -658,8 +658,8 @@
 		<div
 			class="absolute flex flex-col items-center justify-center gap-[3%] transition-opacity"
 			class:opacity-0={!showContent}
-			style="left: {card.l ?? 5}%; top: {card.t ?? 5}%; right: {card.r ?? 5}%; bottom: {card.b ??
-				5}%;"
+			style="left: {card.l ?? 2.5}%; top: {card.t ?? 2.5}%; right: {card.r ??
+				2.5}%; bottom: {card.b ?? 2.5}%;"
 		>
 			{#if card.content}
 				{#each card.content as item}
