@@ -111,7 +111,10 @@ export const durationMinutes = (seconds: number, displayLocale: string, m: typeo
 		.toHuman({ listStyle: 'narrow', showZeros: false });
 };
 
-export const getPlayerSkin = async (player: string) => {
+export const getPlayerSkin = async (
+	player: string,
+	fetch: typeof globalThis.fetch = globalThis.fetch
+) => {
 	if (!player) return { n: 'default' };
 	try {
 		const skin = await (await fetch(`/skins?name=${encodeURIComponent(player)}`)).json();

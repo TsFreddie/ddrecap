@@ -519,7 +519,7 @@ FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < 
 		bi
 	};
 
-	console.log(queryCount);
+	console.log('TOTAL QUERY COUNT: ', queryCount);
 	progress(50 + ((totalQuery + 1) / (totalQuery + 2)) * 50);
 
 	return {

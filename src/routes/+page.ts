@@ -3,7 +3,7 @@ import { getPlayerSkin } from '$lib/helpers.js';
 
 export const ssr = false;
 
-export const load = async ({ data, parent }) => {
+export const load = async ({ fetch, data, parent }) => {
 	let ua = null;
 	if (browser) {
 		ua = navigator.userAgent;
@@ -11,7 +11,7 @@ export const load = async ({ data, parent }) => {
 
 	let skin;
 	if (data.player) {
-		skin = await getPlayerSkin(data.player.name);
+		skin = await getPlayerSkin(data.player.name, fetch);
 	}
 
 	return { ua, skin, ...data, ...(await parent()) };

@@ -55,6 +55,7 @@
 	let error = $state(false);
 	let shareableUrl = $state('');
 	let shareableQRCode = $state('');
+	let sqliteDb = $state<Uint8Array | null>(null);
 
 	const leftTeePose = {
 		bodyRotation: 15,
@@ -148,6 +149,24 @@
 	let fontSize = $state(refFontSize);
 
 	onMount(() => {
+		(window as any).DownloadSqlite = () => {
+			if (!sqliteDb) {
+				console.error('No SQLite data available');
+				return;
+			}
+			const blob = new Blob([sqliteDb as Uint8Array<ArrayBuffer>], {
+				type: 'application/vnd.sqlite3'
+			});
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `ddnet_recap_${data.year}_${data.name}.sqlite`;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+		};
+
 		if (window.innerWidth < maxWidth) {
 			fontSize = refFontSize * (window.innerWidth / maxWidth);
 		} else {
@@ -225,6 +244,13 @@
 			});
 
 			d = result.data;
+			sqliteDb = result.db;
+			// Colorful log for hackers
+			console.log('%c🎉 Data generated!', 'color: #0ea5e9; font-size: 1.5em; font-weight: bold;');
+			console.log(
+				`%c📦 ${name}'s player data is available to download as a sqlite database via \`window.DownloadSqlite()\``,
+				'color: #10b981; font-size: 1em;'
+			);
 			totalCards = await generateCards(maps!, data, d, m, getLocale());
 			loadingProgress = 1;
 		} catch (e) {
@@ -256,6 +282,7 @@
 		// make sure we clear the data after navigation, so we prompt the user to generate the page again
 
 		totalCards = null;
+		sqliteDb = null;
 		error = false;
 		cardReady = false;
 		startAnimation = true;
@@ -786,12 +813,12 @@
 					<a
 						data-sveltekit-replacestate
 						href="/"
-						class="-motion-translate-x-in-100 motion-duration-500 motion-delay-100 rounded-tr-xl backdrop-blur-lg flex items-center justify-center bg-black/80 pl-2 pr-4 py-1.5 text-sm text-white hover:bg-zinc-700"
+						class="-motion-translate-x-in-100 motion-duration-500 motion-delay-100 rounded-tr-xl backdrop-blur-lg flex items-center justify-center bg-black/80 pl-2 pr-4 py-1.5 text-sm text-white hover:bg-zinc-900 gap-1"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
+							width="16"
+							height="16"
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
@@ -825,7 +852,7 @@
 				in:fade
 			>
 				<div
-					class="relative w-100 h-87 overflow-hidden rounded-[0.8em] border border-zinc-600 bg-zinc-700 shadow-md transition-all duration-500"
+					class="relative w-100 overflow-hidden rounded-[0.8em] border border-zinc-600 bg-zinc-700 shadow-md transition-all duration-500"
 				>
 					<div
 						class="relative flex h-32 items-center justify-center overflow-hidden rounded-t-lg z-10 shadow-lg shadow-[#154482]"
@@ -834,7 +861,7 @@
 						<!-- Animated shine effect -->
 						<div
 							class="motion-opacity-loop-30 motion-duration-5000 w-full h-full absolute"
-							style="background: linear-gradient(to bottom, transparent, #3175ce, transparent);"
+							style="background: linear-gradient(to bottom, transparent, #3175ce99, transparent);"
 						></div>
 						{#if error}
 							<div
@@ -845,9 +872,10 @@
 						{:else}
 							<div class="relative z-10">
 								<div class="rounded-2xl px-8 py-4 text-center">
-									<div
-										class="w-full text-2xl font-extrabold text-nowrap mb-1 glow-text text-amber-300"
-									>
+									<div class="w-full text-2xl font-extrabold text-nowrap mb-1 text-amber-300">
+										<div class="absolute glow-text">
+											{m.page_happy_new_year()}
+										</div>
 										{m.page_happy_new_year()}
 									</div>
 									<div
@@ -882,7 +910,7 @@
 							{:else if data.player}
 								{#if loadingProgress >= 0}
 									<div
-										class="flex w-full flex-col items-center justify-center gap-4"
+										class="flex w-full flex-col items-center justify-center gap-2"
 										out:fade
 										in:fade
 									>
@@ -1010,7 +1038,7 @@
 			href={getLocale() == 'zh-CN'
 				? `https://ifdian.net/order/create?user_id=86452e60dba811ed862c5254001e7c00&remark=${encodeURIComponent(`为 TWCN ${CURRENT_YEAR} 年度总结打赏`)}&affiliate_code=ddnet`
 				: 'https://ko-fi.com/tsfreddie'}
-			class="absolute z-100 right-0 top-0 rounded-bl-xl bg-purple-600 px-3 py-2 text-white hover:bg-purple-700 shadow-lg shadow-purple-800/40 flex items-center gap-2 group text-sm transition-all duration-700 ease-in-out"
+			class="absolute z-100 right-0 top-0 rounded-bl-xl bg-purple-600 px-3 py-2 text-white hover:bg-purple-800 hover:duration-200 shadow-lg shadow-purple-800/40 flex items-center gap-2 group text-sm transition-all duration-700 ease-in-out"
 			class:translate-x-[calc(100%-42px)]={cardReady}
 			title="Buy me a coffee"
 			target="_blank"
@@ -1095,26 +1123,24 @@
 {/key}
 
 <style>
-	@keyframes glow-pulse {
-		0%,
-		100% {
-			text-shadow:
-				0 0 40px rgba(254, 240, 138, 0.9),
-				0 0 20px rgba(254, 240, 138, 0.6),
-				0 2px 8px rgba(0, 0, 0, 0.9),
-				0 4px 16px rgba(254, 240, 138, 0.4);
+	@keyframes glow {
+		0% {
+			opacity: 0.2;
 		}
 		50% {
-			text-shadow:
-				0 0 60px rgba(254, 240, 138, 1),
-				0 0 30px rgba(254, 240, 138, 0.8),
-				0 2px 8px rgba(0, 0, 0, 0.9),
-				0 4px 24px rgba(254, 240, 138, 0.6),
-				0 0 80px rgba(254, 240, 138, 0.5);
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.2;
 		}
 	}
 
 	.glow-text {
-		animation: glow-pulse 1s ease-in-out infinite;
+		animation: glow 3.5s ease-in-out infinite;
+		text-shadow:
+			0 0 40px rgba(255, 195, 106, 1),
+			0 0 20px rgba(255, 203, 92, 1),
+			0 2px 8px rgba(0, 0, 0, 0.9),
+			0 4px 16px rgba(255, 195, 85, 1);
 	}
 </style>
