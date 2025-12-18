@@ -144,7 +144,7 @@
 
 	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 	const maxWidth = rootFontSize * 40;
-	const refFontSize = 34;
+	const refFontSize = 38;
 	let fontSize = $state(refFontSize);
 
 	onMount(() => {
@@ -552,11 +552,10 @@
 			<div class="absolute right-[5%] bottom-[-5%] left-[5%] flex flex-row flex-wrap text-[0.6em]">
 				{#each card.titles as title, i}
 					<div
-						class="m-[1%] rounded-[1em] border border-t-white/30 border-l-white/30 border-black/30 px-[4%] py-[1%] text-center font-semibold text-nowrap"
-						style="background-color: {title.bg};{title.color ? `color: ${title.color};` : ''}"
-						class:motion-delay-1000={i == 0}
-						class:motion-delay-1500={i == 1}
-						class:motion-delay-2000={i == 2}
+						class="m-[1%] rounded-[1em] border motion-delay-(--n) border-t-white/30 border-l-white/30 border-black/30 px-[4%] py-[1%] text-center font-semibold text-nowrap"
+						style="--n: {1 + i * 0.25}s; background-color: {title.bg};{title.color
+							? `color: ${title.color};`
+							: ''}"
 						class:motion-preset-shrink={showContent && id == currentCard}
 						class:opacity-0={!showContent || id != currentCard}
 					>
@@ -770,13 +769,14 @@
 				{/if}
 				<div class="h-svh"></div>
 			</div>
-			<div class="absolute top-0 right-0 left-[5%] z-20 flex flex-row">
-				{#if data.player}
-					<div class="rounded-b-xl bg-blue-600 px-4 py-2 font-semibold">
-						{m.page_ddnet_recap_for({ year: data.year, player: data.player.name })}
-					</div>
-				{/if}
-			</div>
+
+			{#if data.player && cardReady}
+				<div
+					class="absolute top-0 left-0 z-20 max-w-[calc(100%-72px)] rounded-br-xl bg-blue-600 shadow-lg shadow-blue-800/60 px-4 py-2 font-semibold -motion-translate-x-in-100 motion-delay-700 motion-duration-700"
+				>
+					{m.page_ddnet_recap_for({ year: data.year, player: data.player.name })}
+				</div>
+			{/if}
 
 			<div class="absolute right-0 bottom-0 left-0 z-20 flex flex-row">
 				<a
@@ -983,7 +983,7 @@
 			href={getLocale() == 'zh-CN'
 				? `https://ifdian.net/order/create?user_id=86452e60dba811ed862c5254001e7c00&remark=${encodeURIComponent(`为 TWCN ${CURRENT_YEAR} 年度总结打赏`)}&affiliate_code=ddnet`
 				: 'https://ko-fi.com/tsfreddie'}
-			class="absolute z-100 right-0 top-0 rounded-bl-xl bg-purple-600 px-3 py-2 text-white hover:bg-purple-700 flex items-center gap-2 group text-sm transition-all duration-700 ease-in-out"
+			class="absolute z-100 right-0 top-0 rounded-bl-xl bg-purple-600 px-3 py-2 text-white hover:bg-purple-700 shadow-lg shadow-purple-800/40 flex items-center gap-2 group text-sm transition-all duration-700 ease-in-out"
 			class:translate-x-[calc(100%-42px)]={cardReady}
 			title="Buy me a coffee"
 			target="_blank"

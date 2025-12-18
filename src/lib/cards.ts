@@ -81,6 +81,10 @@ export const generateCards = async (
 	const bgMap = (name: string) =>
 		maps?.find((map) => map.name == name)?.thumbnail || '/assets/yearly/bif.png';
 
+	const mapFormat = (map: string, mappers: string) => {
+		return `${map} by ${mappers}`;
+	};
+
 	const tz = data.tz;
 
 	const cards: CardData[] = [];

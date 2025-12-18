@@ -21,9 +21,7 @@ export const GET = async ({ url }) => {
 				await fetch(`https://teeworlds.cn/api/playerskin?name=${encodeURIComponent(name)}`)
 			).json()
 		);
-	} catch (e) {
-		console.error(e);
-	}
+	} catch {}
 
 	return new Response(skin, {
 		headers: {
