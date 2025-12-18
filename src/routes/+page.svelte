@@ -872,11 +872,15 @@
 						{:else}
 							<div class="relative z-10">
 								<div class="rounded-2xl px-8 py-4 text-center">
-									<div class="w-full text-2xl font-extrabold text-nowrap mb-1 text-amber-300">
-										<div class="absolute glow-text">
+									<div
+										class="w-full flex items-center justify-center text-2xl font-extrabold text-nowrap mb-1 text-amber-300"
+									>
+										<div>
+											<div class="absolute glow-text">
+												{m.page_happy_new_year()}
+											</div>
 											{m.page_happy_new_year()}
 										</div>
-										{m.page_happy_new_year()}
 									</div>
 									<div
 										class="text-xl font-bold tracking-wide text-white text-shadow-lg text-shadow-black/30"
