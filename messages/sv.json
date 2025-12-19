@@ -1,0 +1,251 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"card_biggest_improvement_verse_1": "Den {date} gjorde du din största förbättring med detta rekord",
+	"card_biggest_improvement_verse_2": "genom att slå ditt tidigare rekord på <span class=\"font-semibold text-orange-400\">{time}</span> som sattes den {date}",
+	"card_biggest_improvement_verse_3": "Med en förbättring på",
+	"card_finishes_verse_1": "Du har varit på eld i år och korsat mållinjen totalt",
+	"card_finishes_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "Av dessa hände <span class=\"text-orange-400\">{count} gånger</span>",
+				"plural=one": "Av dessa hände <span class=\"text-orange-400\">{count} gång</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_finishes_verse_2_period": [
+		{
+			"declarations": ["input period"],
+			"match": {
+				"period=afternoon": "på eftermiddagen",
+				"period=dawn": "före gryningen",
+				"period=evening": "på kvällen",
+				"period=midnight": "vid midnatt",
+				"period=morning": "på morgonen",
+				"period=night": "på natten"
+			},
+			"selectors": ["period"]
+		}
+	],
+	"card_finishes_verse_3": "Har denna tidstpunkt speciell betydelse för dig?",
+	"card_first_finish_verse_1": "Kommer du ihåg? Den",
+	"card_first_finish_verse_2": "korsade du mållinjen på <span class=\"font-semibold text-orange-400\">{map}</span>",
+	"card_first_finish_verse_3": "Detta är din första finish någonsin. Det betyder att du varit med i DDNet i",
+	"card_level_designer_verse_1": "I år har du hjälpt till att ge liv åt",
+	"card_level_designer_verse_2": "Dina skapelser inkluderar: {maps}",
+	"card_level_designer_verse_3": "Tack för dina bidrag",
+	"card_map_type_verse_1": "Din mest spelade karttyp är",
+	"card_map_type_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "I år har du korsat mållinjen på {type}-kartor <span class=\"font-semibold text-orange-400\">{count} gånger</span>",
+				"plural=one": "I år har du korsat mållinjen på {type}-kartor <span class=\"font-semibold text-orange-400\">{count} gång</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_map_type_verse_fun": "Du verkar ha upptäckt det sanna sättet att spela DDNet",
+	"card_map_verse_1": "Din mest spelade karta är",
+	"card_map_verse_2": [
+		{
+			"declarations": ["input finishes", "local plural = finishes: plural"],
+			"match": {
+				"plural=*": "Du korsade dess mållinje <span class=\"font-semibold text-orange-400\">{finishes} gånger</span>. Du måste ha en svag punkt för denna karta!",
+				"plural=one": "Du korsade dess mållinje <span class=\"font-semibold text-orange-400\">{finishes} gång</span>. Du måste ha en svag punkt för denna karta!"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_monthly_verse_1": "Din mest aktiva månad är",
+	"card_monthly_verse_2": "Du har spenderat <span class=\"font-semibold text-orange-400\">{percent}</span> av din speltid denna månad",
+	"card_new_map_verse_1": [
+		{
+			"declarations": ["input total", "local plural = total: plural"],
+			"match": {
+				"plural=*": "Bland de <span class=\"text-orange-400\">{total} nya utmanande kartorna</span> som släpptes i år<br>klarade du av <span class=\"font-semibold text-orange-400\">{completed}</span> av dem",
+				"plural=one": "Bland den <span class=\"text-orange-400\">{total} nya utmanande kartan</span> som släpptes i år<br>klarade du av <span class=\"font-semibold text-orange-400\">{completed}</span> av den"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_new_map_verse_2": "Det betyder att du uppnådde en klarandegrad på",
+	"card_new_map_verse_3": "Bland dessa kartor älskar du speciellt",
+	"card_new_map_verse_4": "Du klarade denna karta <span class=\"font-semibold text-orange-400\">{count} gånger</span>",
+	"card_night_owl_verse_1": "Det var ett speciellt ögonblick<br>den <span class=\"font-semibold text-orange-400\">{date}</span>",
+	"card_night_owl_verse_2": "Det tog dig {time} att klara <span class=\"font-semibold text-orange-400\">{map}</span><br>och du korsade mållinjen kl",
+	"card_night_owl_verse_3": "Medan himlen är mörk, brinner din passion klart",
+	"card_night_owl_verse_4": "Kommer du ihåg ansträngningen du lade ned i det ögonblicket?",
+	"card_no_points_verse_1": "Vid slutet av {year} har du <span class=\"text-orange-400\">inga poäng</span> registrerade.",
+	"card_no_points_verse_2": "Men vi vet att du redan påbörjat din resa. Vi hoppas du kommer att njuta av din vistelse på DDNet.",
+	"card_peak_performer_verse_1": "Bland de nya kartorna du erövrat i år,<br>är denna verkligen en <span class=\"font-semibold text-orange-400\">karriärhöjdpunkt</span> för dig",
+	"card_peak_performer_verse_2": "Denna framgång tillförde totalt",
+	"card_peak_performer_verse_3": "Det betyder att du behärskat en galet svår karta",
+	"card_peak_performer_verse_4": "Må du inte vila på dina lagrar,<br>utan fortsätta sträva mot ännu större utmaningar",
+	"card_points_verse": "Vid slutet av {year} <br>har du samlat ihop {points} poäng totalt - ett {word} resultat",
+	"card_points_verse_a": "Du höll dig stadig i år och <span class=\"font-semibold text-orange-400\">tjänade</span> ytterligare",
+	"card_points_verse_a_1000": "I år gav du allt och <span class=\"font-semibold text-orange-400\">skördade</span> ytterligare",
+	"card_points_verse_a_5000": "I år gick du för fullt och <span class=\"font-semibold text-orange-400\">fick</span> ytterligare",
+	"card_points_verse_b": "Vindarna kommer att leda dig till större höjder. Tro på din potential så kommer du att excellera ännu mer",
+	"card_points_verse_b_2": "Genom beslutsamhet och ansträngning har du bevisat ditt värde. Utmaningar är inga hinder för dig",
+	"card_points_verse_b_3": "När du når toppen blir du förkroppsligandet av skicklighet och expertis. Din behärskning är oöverträffad",
+	"card_points_verse_new": "Året {year} är ditt första år i spelet, och du har tjänat totalt",
+	"card_points_word": "tillfredsställande",
+	"card_points_word_10000": "enormt",
+	"card_points_word_3000": "avsevärt",
+	"card_returning_voyage_verse_1": "Vid slutet av {year}<br>har du {points} poäng registrerade",
+	"card_returning_voyage_verse_2": "Jämfört med förra året<br>har du <span class=\"font-semibold text-orange-400\">inte tjänat några nya poäng</span>",
+	"card_returning_voyage_verse_3": "Det var ett tag sedan ditt senaste äventyr",
+	"card_returning_voyage_verse_4": "Vi hoppas innerligt att se dig tillbaka i spelet för",
+	"card_returning_voyage_verse_5": "nya äventyr",
+	"card_runtime_verse_1": "All din racetid i år summerade till",
+	"card_runtime_verse_2": "Enligt <span class=\"font-semibold text-orange-400\">ddstats.tw</span> har du dessutom varit online i {duration} i år",
+	"card_runtime_verse_weird": "Ditt namn dyker på något sätt upp mindre än dina racerekord. Kanske bytte du namn i år?",
+	"card_second_map_verse_1": "Din näst mest spelade karta är",
+	"card_second_map_verse_2": "Du korsade dess mållinje <span class=\"font-semibold text-orange-400\">{finishes} gånger</span>, och förhoppningsvis minns du den!",
+	"card_server_verse_1": "Din mest spelade DDNet-server är",
+	"card_server_verse_2": "Du klarade <span class=\"font-semibold text-orange-400\">{percent} av racen</span> på denna server",
+	"card_server_verse_3": "Dessutom dök du även upp på:<br>{servers}",
+	"card_slowest_verse_1": "Den {date} tog det dig",
+	"card_slowest_verse_2": "att klara {map}",
+	"card_slowest_verse_3": "Detta är ditt <span class=\"font-semibold text-orange-400\">långsammaste klara-rekord</span> i år.<br>Din uthållighet och beslutsamhet hjälpte dig nå slutet",
+	"card_slowest_verse_4": "Eller kanske,",
+	"card_slowest_verse_5_bonus": "var det någon mystisk tidsmagi i farten?",
+	"card_slowest_verse_5_regular": "är detta bara en unik hobby för dig?",
+	"card_speed_demon_verse_1": "Du klarade {map} bara",
+	"card_speed_demon_verse_2": "efter dess release",
+	"card_speed_demon_verse_3a": "Som en hastighetsdemon, som bara lämnar ett sudd efter sig",
+	"card_speed_demon_verse_3b": "Inga kartreleaser kan undkomma din obevekliga jakt",
+	"card_speedrunner_verse_1": "Den {date} klarade du en serie på",
+	"card_speedrunner_verse_2": "<span class=\"font-semibold text-orange-400\">inom en timme</span>.<br>Dessa är kartorna du klarade:",
+	"card_stack_verse_1": "Du och {count} andra Tees bildade en stack på",
+	"card_stack_verse_2": "{count} Tees Team",
+	"card_stack_verse_3": "och klarade {map} tillsammans den {date}",
+	"card_stack_verse_4": "Lagets medlemmar: {members}",
+	"card_steady_progress_verse_1": "Bland de nya kartorna du klarade i år,<br>står denna karta ut som ditt <span class=\"font-semibold text-orange-400\">glansnummer</span>",
+	"card_steady_progress_verse_2": "Genom att behärska denna karta tjänade du",
+	"card_steady_progress_verse_3": "Fortsätt att erövra nya utmaningar,",
+	"card_steady_progress_verse_4": "och gläns på kartor med ännu högre poäng",
+	"card_team_verse_1": "Varje lagrace behöver en pålitlig lagkamrat!",
+	"card_team_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "är din bästa kompis.<br>Ni klarade tillsammans <span class=\"font-semibold text-orange-400\">{count} gånger</span>",
+				"plural=one": "är din bästa kompis.<br>Ni klarade tillsammans <span class=\"font-semibold text-orange-400\">{count} gång</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_team_verse_3": "Dessutom,",
+	"card_team_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "är din näst mest samarbetade spelare. Ni klarade tillsammans <span class=\"font-semibold text-orange-400\">{count} gånger</span>",
+				"plural=one": "är din näst mest samarbetade spelare. Ni klarade tillsammans <span class=\"font-semibold text-orange-400\">{count} gång</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"format_dhms": "",
+	"format_hm": "",
+	"format_hms": "",
+	"format_m": "",
+	"format_ms": "",
+	"format_s": "",
+	"page_badges_for": "{year} märken för {name}",
+	"page_change_name": "Byt namn",
+	"page_continue": "↓ Scrolla för att fortsätta ↓",
+	"page_continue_mobile": "↓ Svep upp för att fortsätta ↓",
+	"page_database_time": "Dataavgränsning: {date}",
+	"page_ddnet_recap": "DDNet Återblick {year}",
+	"page_ddnet_recap_desc": "Kolla in din DDNet Återblick {year}",
+	"page_ddnet_recap_for": "DDNet Återblick {year} för {player}",
+	"page_donate": "Bjud mig på en kaffe",
+	"page_enter_player_name": "Ange spelarnamn",
+	"page_go": "Gå",
+	"page_go_back": "Gå tillbaka",
+	"page_happy_new_year": "Gott nytt år!",
+	"page_loading": "Förbereder..",
+	"page_points_info": "Poäng: {points}",
+	"page_powered_by": "Drivs av",
+	"page_share": "Kolla in {name}s DDNet {year} återblick: {link}",
+	"page_start_recap": "Starta återblick",
+	"page_timezone": "Tidszon",
+	"title_afk_warrior": "AFK Krigare",
+	"title_always_sunny": "Alltid Soligt på DDNet",
+	"title_amazingly_insane": "Otroligt Sinnessjuk",
+	"title_brotherly_bond": "Brödligt Band",
+	"title_casual_enjoyer": "Avslappnad Åskådare",
+	"title_challange_solver": "Utmaningslösare",
+	"title_clockwork": "Urverksprecision",
+	"title_combined_mind": "Kombinerat Sinne",
+	"title_ddmax_enjoyer": "DDmaX-Åskådare",
+	"title_early_bird": "Morgonpigg",
+	"title_full_throttle": "Full Gas",
+	"title_fulltime_player": "Heltidsspelare",
+	"title_inseparable_team": "Oupplösligt Lag",
+	"title_level_designer": "BananDesigner",
+	"title_live_and_learn": "Lev och Lär",
+	"title_live_to_play": "Lever för att Spela",
+	"title_lone_wolf": "Ensam Varg",
+	"title_map_explorer": "Kartupptäckare",
+	"title_map_master": "Kartmästare",
+	"title_monthly": "Kalenderkrossare",
+	"title_narrow_trail": "Smalt Spår",
+	"title_new_beginning": "Resan Börjar",
+	"title_night_owl": "Nattuggla",
+	"title_oldschool_enjoyer": "Oldschool-Åskådare",
+	"title_path_pioneer": "Stigpionjär",
+	"title_peak_performer": "Topppresterare",
+	"title_perseverance": "Uthållighet",
+	"title_points_30000": "Kompletterare",
+	"title_professional_player": "Professionell Spelare",
+	"title_racer": "Racare",
+	"title_returning_voyage": "Återvändsresa",
+	"title_runtime_error": "Korrupt Rymdtid",
+	"title_shared_name": "Delat Namn",
+	"title_snake_oiler": "Ormolja",
+	"title_solo_traveler": "Soloresenär",
+	"title_speed_demon": "Hastighetsdemon",
+	"title_speedrunner": "Speedrunner",
+	"title_steady_progress": "Stadig Framgång",
+	"title_tee_army": "Tee-armé",
+	"title_time_wizard": "Tidsmagiker",
+	"title_true_player": "Sann Spelare",
+	"title_unnamed_hero": "Namnlös Hjälte",
+	"title_unstoppable_duo": "Ohejdbar Duo",
+	"title_veteran": "{years}-årig Veteran",
+	"unit_maps": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "{count} kartor",
+				"plural=one": "{count} karta"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_times": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "{count} gånger",
+				"plural=one": "{count} gång"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_years": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "{count} år",
+				"plural=one": "{count} år"
+			},
+			"selectors": ["plural"]
+		}
+	]
+}

@@ -19,13 +19,17 @@
 
 	let pageKey = $state(0);
 
-	const locales: { code: Locale; name: string }[] = [
+	const locales: { code: Locale; name: string; sub?: string }[] = [
 		{ code: 'en', name: 'English' },
+		{ code: 'cs', name: 'Čeština' },
 		{ code: 'de', name: 'Deutsch' },
 		{ code: 'ja', name: '日本語' },
 		{ code: 'ko', name: '한국어' },
 		{ code: 'pl', name: 'Polski' },
+		{ code: 'pt-BR', name: 'Português', sub: 'Brasil' },
 		{ code: 'ru', name: 'Русский' },
+		{ code: 'sk', name: 'Slovenčina' },
+		{ code: 'sv', name: 'Svenska' },
 		{ code: 'tr', name: 'Türkçe' },
 		{ code: 'uk', name: 'Українська' },
 		{ code: 'zh-CN', name: '简体中文' },
@@ -1097,11 +1101,11 @@
 				{#if dropdownOpen}
 					<div
 						in:slide={{ duration: 300, easing: easeOut }}
-						class="absolute bottom-full text-sm right-0 mb-1 bg-slate-600/70 backdrop-blur-lg rounded-lg shadow-lg z-10"
+						class="absolute bottom-full text-sm right-0 mb-1 bg-slate-600/70 backdrop-blur-lg rounded-lg shadow-lg z-10 grid grid-cols-2 min-w-72 overflow-hidden"
 					>
 						{#each locales as locale}
 							<button
-								class="border-b border-slate-700 text-center w-full px-4 py-2 text-white hover:bg-slate-700 cursor-pointer first:rounded-t-lg last:rounded-b-lg {locale.code ===
+								class="border-b border-r border-slate-800 text-left w-full px-3 py-1.5 text-white text-nowrap hover:bg-slate-700 cursor-pointer {locale.code ===
 								getLocale()
 									? 'bg-slate-500'
 									: ''}"
@@ -1117,6 +1121,9 @@
 								}}
 							>
 								{locale.name}
+								{#if locale.sub}
+									<span class="text-xs text-slate-400 tracking-tighter">({locale.sub})</span>
+								{/if}
 							</button>
 						{/each}
 					</div>

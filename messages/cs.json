@@ -1,0 +1,260 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"card_biggest_improvement_verse_1": "Dne {date} jste dosáhli svého největšího zlepšení s tímto rekordem",
+	"card_biggest_improvement_verse_2": "překonáním vašeho předchozího rekordu <span class=\"font-semibold text-orange-400\">{time}</span> z {date}",
+	"card_biggest_improvement_verse_3": "S dosaženým zlepšením",
+	"card_finishes_verse_1": "Letos jste byli v ohni, překročili jste cílovou čáru celkem",
+	"card_finishes_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "Z toho se <span class=\"text-orange-400\">{count}krát</span> stalo",
+				"plural=one": "Z toho se <span class=\"text-orange-400\">{count}krát</span> stalo",
+				"plural=few": "Z toho se <span class=\"text-orange-400\">{count}krát</span> stalo"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_finishes_verse_2_period": [
+		{
+			"declarations": ["input period"],
+			"match": {
+				"period=afternoon": "odpoledne",
+				"period=dawn": "před úsvitem",
+				"period=evening": "večer",
+				"period=midnight": "o půlnoci",
+				"period=morning": "ráno",
+				"period=night": "v noci"
+			},
+			"selectors": ["period"]
+		}
+	],
+	"card_finishes_verse_3": "Má pro vás tento čas zvláštní význam?",
+	"card_first_finish_verse_1": "Pamatujete? Dne",
+	"card_first_finish_verse_2": "jste překročili cílovou čáru mapy <span class=\"font-semibold text-orange-400\">{map}</span>",
+	"card_first_finish_verse_3": "Toto je váš první finish vůbec. To znamená, že jste na DDNetu již",
+	"card_level_designer_verse_1": "Letos jste pomohli oživit",
+	"card_level_designer_verse_2": "Vaše tvorba zahrnuje: {maps}",
+	"card_level_designer_verse_3": "Děkujeme za váš přínos",
+	"card_map_type_verse_1": "Váš nejhranější typ mapy je",
+	"card_map_type_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "Letos jste překročili cílovou čáru map typu {type} <span class=\"font-semibold text-orange-400\">{count}krát</span>",
+				"plural=one": "Letos jste překročili cílovou čáru map typu {type} <span class=\"font-semibold text-orange-400\">{count}krát</span>",
+				"plural=few": "Letos jste překročili cílovou čáru map typu {type} <span class=\"font-semibold text-orange-400\">{count}krát</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_map_type_verse_fun": "Vypadá to, že jste objevili skutečný způsob hraní DDNetu",
+	"card_map_verse_1": "Vaše nejhranější mapa je",
+	"card_map_verse_2": [
+		{
+			"declarations": ["input finishes", "local plural = finishes: plural"],
+			"match": {
+				"plural=*": "Překročili jste její cílovou čáru <span class=\"font-semibold text-orange-400\">{finishes}krát</span>. Musíte k této mapě mít slabost!",
+				"plural=one": "Překročili jste její cílovou čáru <span class=\"font-semibold text-orange-400\">{finishes}krát</span>. Musíte k této mapě mít slabost!",
+				"plural=few": "Překročili jste její cílovou čáru <span class=\"font-semibold text-orange-400\">{finishes}krát</span>. Musíte k této mapě mít slabost!"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_monthly_verse_1": "Váš nejaktivnější měsíc je",
+	"card_monthly_verse_2": "Strávili jste v tomto měsíci <span class=\"font-semibold text-orange-400\">{percent}</span> svého herního času",
+	"card_new_map_verse_1": [
+		{
+			"declarations": ["input total", "local plural = total: plural"],
+			"match": {
+				"plural=*": "Mezi <span class=\"text-orange-400\">{total} novými náročnými mapami</span> vydanými letos<br>jste úspěšně dokončili <span class=\"font-semibold text-orange-400\">{completed}</span> z nich",
+				"plural=one": "Mezi <span class=\"text-orange-400\">{total} novou náročnou mapou</span> vydanou letos<br>jste úspěšně dokončili <span class=\"font-semibold text-orange-400\">{completed}</span> z ní",
+				"plural=few": "Mezi <span class=\"text-orange-400\">{total} novými náročnými mapami</span> vydanými letos<br>jste úspěšně dokončili <span class=\"font-semibold text-orange-400\">{completed}</span> z nich"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_new_map_verse_2": "To znamená, že jste dosáhli míry dokončení",
+	"card_new_map_verse_3": "Mezi těmito mapami obzvláště milujete",
+	"card_new_map_verse_4": "Tuto mapu jste dokončili <span class=\"font-semibold text-orange-400\">{count}krát</span>",
+	"card_night_owl_verse_1": "Byla tu zvláštní chvíle<br>dne <span class=\"font-semibold text-orange-400\">{date}</span>",
+	"card_night_owl_verse_2": "Zabralo vám to {time} dokončit <span class=\"font-semibold text-orange-400\">{map}</span><br>a cílovou čáru jste překročili v",
+	"card_night_owl_verse_3": "Zatímco nebe je tmavé, vaše vášeň hoří jasně",
+	"card_night_owl_verse_4": "Pamatujete si ještě úsilí, které jste v tu chvíli vložili?",
+	"card_no_points_verse_1": "Ke konci roku {year} <span class=\"text-orange-400\">nemáte žádné body</span> zaznamenané.",
+	"card_no_points_verse_2": "Ale víme, že jste již začali svou cestu. Doufáme, že si pobyt na DDNetu užijete.",
+	"card_peak_performer_verse_1": "Mezi novými mapami, které jste letos dobyli,<br>tato je opravdu <span class=\"font-semibold text-orange-400\">vrcholem vaší kariéry</span>",
+	"card_peak_performer_verse_2": "Tento úspěch přidal celkem",
+	"card_peak_performer_verse_3": "To znamená, že jste zvládli šíleně obtížnou mapu",
+	"card_peak_performer_verse_4": "Nechť neodpočíváte na vavřínech,<br>ale pokračujte v postupu k ještě větším výzvám",
+	"card_points_verse": "Ke konci roku {year} <br>jste nashromáždili {word} celkem {points} bodů",
+	"card_points_verse_a": "Letos jste si udrželi stabilitu, <span class=\"font-semibold text-orange-400\">získali</span> jste navíc",
+	"card_points_verse_a_1000": "Letos jste dali vše, <span class=\"font-semibold text-orange-400\">sklidili</span> jste navíc",
+	"card_points_verse_a_5000": "Letos jste šli naplno, <span class=\"font-semibold text-orange-400\">získali</span> jste navíc",
+	"card_points_verse_b": "Větry vás povedou k větším výšinám. Věřte ve svůj potenciál a budete ještě lepší",
+	"card_points_verse_b_2": "Díky odhodlání a úsilí jste dokázali svou hodnotu. Výzvy pro vás nejsou překážkou",
+	"card_points_verse_b_3": "Dosažením vrcholu se stáváte ztělesněním dovednosti a odbornosti. Vaše mistrovství je nepřekonatelné",
+	"card_points_verse_new": "Tento rok, {year}, je váš první rok ve hře, a získali jste {word} celkem",
+	"card_points_word": "uspokojivý",
+	"card_points_word_10000": "obrovský",
+	"card_points_word_3000": "značný",
+	"card_returning_voyage_verse_1": "Ke konci roku {year}<br>máte zaznamenáno {points} bodů",
+	"card_returning_voyage_verse_2": "Ve srovnání s loňským rokem<br>jste <span class=\"font-semibold text-orange-400\">nezískali žádné nové body</span>",
+	"card_returning_voyage_verse_3": "Už je to nějaký čas od vašeho posledního dobrodružství",
+	"card_returning_voyage_verse_4": "Upřímně doufáme, že vás znovu uvidíme ve hře pro",
+	"card_returning_voyage_verse_5": "nová dobrodružství",
+	"card_runtime_verse_1": "Všechen váš závodní čas letos činil celkem",
+	"card_runtime_verse_2": "Také, podle <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, jste letos byli online {duration}",
+	"card_runtime_verse_weird": "Nějak se vaše jméno objevilo méně než vaše záznamy závodů. Možná jste letos změnili jméno?",
+	"card_second_map_verse_1": "Vaše druhá nejhranější mapa je",
+	"card_second_map_verse_2": "Překročili jste její cílovou čáru <span class=\"font-semibold text-orange-400\">{finishes}krát</span>, a doufáme, že si ji pamatujete!",
+	"card_server_verse_1": "Váš nejhranější DDNet server je",
+	"card_server_verse_2": "Dokončili jste <span class=\"font-semibold text-orange-400\">{percent} závodů</span> na tomto serveru",
+	"card_server_verse_3": "Navíc jste se také objevili na:<br>{servers}",
+	"card_slowest_verse_1": "Dne {date} jste zabrali",
+	"card_slowest_verse_2": "na dokončení {map}",
+	"card_slowest_verse_3": "Toto je váš <span class=\"font-semibold text-orange-400\">nejpomalejší záznam dokončení</span> tento rok.<br>Vaše vytrvalost a odhodlání vám pomohly dosáhnout konce",
+	"card_slowest_verse_4": "Nebo snad,",
+	"card_slowest_verse_5_bonus": "působila tu nějaká záhadná časová magie?",
+	"card_slowest_verse_5_regular": "je to jen váš unikátní koníček?",
+	"card_speed_demon_verse_1": "Dokončili jste {map} již",
+	"card_speed_demon_verse_2": "po jejím vydání",
+	"card_speed_demon_verse_3a": "Jako démon rychlosti, zanechávající za sebou jen rozmazanou stopu",
+	"card_speed_demon_verse_3b": "Žádné vydání mapy nemůže uniknout vašemu neúnavnému pronásledování",
+	"card_speedrunner_verse_1": "Dne {date} jste dokončili sérii",
+	"card_speedrunner_verse_2": "<span class=\"font-semibold text-orange-400\">do hodiny</span>.<br>Toto jsou mapy, které jste dokončili:",
+	"card_stack_verse_1": "Vy a {count} dalších Tees jste vytvořili skupinu o",
+	"card_stack_verse_2": "Tým {count} Tees",
+	"card_stack_verse_3": "a dokončili {map} společně dne {date}",
+	"card_stack_verse_4": "Tým: {members}",
+	"card_steady_progress_verse_1": "Mezi novými mapami, které jste letos dokončili,<br>tato mapa vyniká jako váš <span class=\"font-semibold text-orange-400\">zářivý okamžik</span>",
+	"card_steady_progress_verse_2": "Zvládnutím této mapy jste získali",
+	"card_steady_progress_verse_3": "Pokračujte v dobývání nových výzev,",
+	"card_steady_progress_verse_4": "a zazáříte na mapách s ještě vyšším skóre",
+	"card_team_verse_1": "Každý týmový závod potřebuje spolehlivého parťáka!",
+	"card_team_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "je váš nejlepší kamarád.<br>Společně jste dokončili <span class=\"font-semibold text-orange-400\">{count}krát</span>",
+				"plural=one": "je váš nejlepší kamarád.<br>Společně jste dokončili <span class=\"font-semibold text-orange-400\">{count}krát</span>",
+				"plural=few": "je váš nejlepší kamarád.<br>Společně jste dokončili <span class=\"font-semibold text-orange-400\">{count}krát</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_team_verse_3": "Navíc,",
+	"card_team_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "je váš druhý nejčastější spoluhráč. Společně jste dokončili <span class=\"font-semibold text-orange-400\">{count}krát</span>",
+				"plural=one": "je váš druhý nejčastější spoluhráč. Společně jste dokončili <span class=\"font-semibold text-orange-400\">{count}krát</span>",
+				"plural=few": "je váš druhý nejčastější spoluhráč. Společně jste dokončili <span class=\"font-semibold text-orange-400\">{count}krát</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"format_dhms": "",
+	"format_hm": "",
+	"format_hms": "",
+	"format_m": "",
+	"format_ms": "",
+	"format_s": "",
+	"page_badges_for": "{year} Odznaky pro {name}",
+	"page_change_name": "Změnit jméno",
+	"page_continue": "↓ Rolujte pro pokračování ↓",
+	"page_continue_mobile": "↓ Potáhněte nahoru pro pokračování ↓",
+	"page_database_time": "Střih dat: {date}",
+	"page_ddnet_recap": "DDNet Rekapitulace {year}",
+	"page_ddnet_recap_desc": "Podívejte se na svou DDNet Rekapitulaci {year}",
+	"page_ddnet_recap_for": "DDNet Rekapitulace {year} pro {player}",
+	"page_donate": "Kupte mi kávu",
+	"page_enter_player_name": "Zadejte jméno hráče",
+	"page_go": "Jít",
+	"page_go_back": "Zpět",
+	"page_happy_new_year": "Šťastný nový rok!",
+	"page_loading": "Připravuje se..",
+	"page_points_info": "Body: {points}",
+	"page_powered_by": "Poháněno",
+	"page_share": "Podívejte se na DDNet rekapitulaci {year} hráče {name}: {link}",
+	"page_start_recap": "Začít rekapitulaci",
+	"page_timezone": "Časové pásmo",
+	"title_afk_warrior": "AFK Válečník",
+	"title_always_sunny": "Na DDNetu Vždy Slunečno",
+	"title_amazingly_insane": "Úžasně Šílený",
+	"title_brotherly_bond": "Bratrské Pouto",
+	"title_casual_enjoyer": "Příležitostný Uživatel",
+	"title_challange_solver": "Řešitel Výzev",
+	"title_clockwork": "Hodinkový Mechanismus",
+	"title_combined_mind": "Spojená Mysl",
+	"title_ddmax_enjoyer": "Milovník DDmaXu",
+	"title_early_bird": "Ranní Ptáče",
+	"title_full_throttle": "Na Plný Plyn",
+	"title_fulltime_player": "Hráč na Plný Úvazek",
+	"title_inseparable_team": "Nerozlučný Tým",
+	"title_level_designer": "Designér Úrovní",
+	"title_live_and_learn": "Žít a Učit se",
+	"title_live_to_play": "Žít pro Hraní",
+	"title_lone_wolf": "Samotářský Vlk",
+	"title_map_explorer": "Průzkumník Map",
+	"title_map_master": "Mistr Map",
+	"title_monthly": "Kalendářový Ničitel",
+	"title_narrow_trail": "Úzká Stezka",
+	"title_new_beginning": "Začátek Cesty",
+	"title_night_owl": "Noční Sova",
+	"title_oldschool_enjoyer": "Milovník Oldschoolu",
+	"title_path_pioneer": "Průkopník Cest",
+	"title_peak_performer": "Vrcholový Výkon",
+	"title_perseverance": "Vytrvalost",
+	"title_points_30000": "Dokončovatel",
+	"title_professional_player": "Profesionální Hráč",
+	"title_racer": "Závodník",
+	"title_returning_voyage": "Návratná Cesta",
+	"title_runtime_error": "Pokazený Časoprostor",
+	"title_shared_name": "Sdílené Jméno",
+	"title_snake_oiler": "Hadí Mazal",
+	"title_solo_traveler": "Sólový Cestovatel",
+	"title_speed_demon": "Démon Rychlosti",
+	"title_speedrunner": "Speedrunner",
+	"title_steady_progress": "Stálý Pokrok",
+	"title_tee_army": "Armáda Tees",
+	"title_time_wizard": "Časový Kouzelník",
+	"title_true_player": "Pravý Hráč",
+	"title_unnamed_hero": "Bezejmenný Hrdina",
+	"title_unstoppable_duo": "Nezastavitelná Dvojka",
+	"title_veteran": "Veterán {years} let",
+	"unit_maps": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "{count} map",
+				"plural=one": "{count} mapa",
+				"plural=few": "{count} mapy"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_times": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "{count}krát",
+				"plural=one": "{count}krát",
+				"plural=few": "{count}krát"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_years": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "{count} let",
+				"plural=one": "{count} rok",
+				"plural=few": "{count} roky"
+			},
+			"selectors": ["plural"]
+		}
+	]
+}

@@ -1,0 +1,251 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"card_biggest_improvement_verse_1": "Em {date}, você fez sua maior melhoria com este recorde",
+	"card_biggest_improvement_verse_2": "quebrando seu recorde anterior de <span class=\"font-semibold text-orange-400\">{time}</span> feito em {date}",
+	"card_biggest_improvement_verse_3": "Alcançando uma melhoria de",
+	"card_finishes_verse_1": "Você esteve em chamas este ano, cruzando a linha de chegada um total de",
+	"card_finishes_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "Dessas, <span class=\"text-orange-400\">{count} vezes</span> aconteceram",
+				"plural=one": "Dessas, <span class=\"text-orange-400\">{count} vez</span> aconteceu"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_finishes_verse_2_period": [
+		{
+			"declarations": ["input period"],
+			"match": {
+				"period=afternoon": "à tarde",
+				"period=dawn": "antes do amanhecer",
+				"period=evening": "à noite",
+				"period=midnight": "à meia-noite",
+				"period=morning": "de manhã",
+				"period=night": "à noite"
+			},
+			"selectors": ["period"]
+		}
+	],
+	"card_finishes_verse_3": "Esse horário tem um significado especial para você?",
+	"card_first_finish_verse_1": "Você se lembra? Em",
+	"card_first_finish_verse_2": "você cruzou a linha de chegada de <span class=\"font-semibold text-orange-400\">{map}</span>",
+	"card_first_finish_verse_3": "Esta é sua primeira finalização de todos os tempos. Isso significa que você está no DDNet há",
+	"card_level_designer_verse_1": "Este ano, você ajudou a dar vida a",
+	"card_level_designer_verse_2": "Suas criações incluem: {maps}",
+	"card_level_designer_verse_3": "Obrigado por suas contribuições",
+	"card_map_type_verse_1": "Seu tipo de mapa mais jogado é",
+	"card_map_type_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "Este ano, você cruzou a linha de chegada de mapas {type} <span class=\"font-semibold text-orange-400\">{count} vezes</span>",
+				"plural=one": "Este ano, você cruzou a linha de chegada de mapas {type} <span class=\"font-semibold text-orange-400\">{count} vez</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_map_type_verse_fun": "Você parece ter descoberto a verdadeira maneira de jogar DDNet",
+	"card_map_verse_1": "Seu mapa mais jogado é",
+	"card_map_verse_2": [
+		{
+			"declarations": ["input finishes", "local plural = finishes: plural"],
+			"match": {
+				"plural=*": "Você cruzou sua linha de chegada <span class=\"font-semibold text-orange-400\">{finishes} vezes</span>. Você deve ter um carinho especial por este mapa!",
+				"plural=one": "Você cruzou sua linha de chegada <span class=\"font-semibold text-orange-400\">{finishes} vez</span>. Você deve ter um carinho especial por este mapa!"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_monthly_verse_1": "Seu mês mais ativo é",
+	"card_monthly_verse_2": "Você passou <span class=\"font-semibold text-orange-400\">{percent}</span> do seu tempo de jogo neste mês",
+	"card_new_map_verse_1": [
+		{
+			"declarations": ["input total", "local plural = total: plural"],
+			"match": {
+				"plural=*": "Entre os <span class=\"text-orange-400\">{total} novos mapas desafiadores</span> lançados este ano,<br>você completou com sucesso <span class=\"font-semibold text-orange-400\">{completed}</span> deles",
+				"plural=one": "Entre o <span class=\"text-orange-400\">{total} novo mapa desafiador</span> lançado este ano,<br>você completou com sucesso <span class=\"font-semibold text-orange-400\">{completed}</span> dele"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_new_map_verse_2": "Isso significa que você alcançou uma taxa de conclusão de",
+	"card_new_map_verse_3": "Entre esses mapas, você especialmente ama",
+	"card_new_map_verse_4": "Você finalizou este mapa <span class=\"font-semibold text-orange-400\">{count} vezes</span>",
+	"card_night_owl_verse_1": "Houve um momento especial<br>em <span class=\"font-semibold text-orange-400\">{date}</span>",
+	"card_night_owl_verse_2": "Você levou {time} para completar <span class=\"font-semibold text-orange-400\">{map}</span><br>e cruzou a linha de chegada às",
+	"card_night_owl_verse_3": "Enquanto o céu está escuro, sua paixão queima intensamente",
+	"card_night_owl_verse_4": "Você ainda se lembra do esforço que dedicou naquele momento?",
+	"card_no_points_verse_1": "Ao final de {year}, você <span class=\"text-orange-400\">não tem nenhum ponto</span> registrado.",
+	"card_no_points_verse_2": "Mas sabemos que você já começou sua jornada. Esperamos que você aproveite sua estadia no DDNet.",
+	"card_peak_performer_verse_1": "Nos novos mapas que você conquistou este ano,<br>este é verdadeiramente um <span class=\"font-semibold text-orange-400\">marco na sua carreira</span>",
+	"card_peak_performer_verse_2": "Este sucesso adicionou um total de",
+	"card_peak_performer_verse_3": "Isso significa que você dominou um mapa insanamente difícil",
+	"card_peak_performer_verse_4": "Que você não descanse sobre esses louros,<br>mas continue a buscar desafios ainda maiores",
+	"card_points_verse": "Ao final de {year}, <br>você acumulou um total {word} de {points} pontos",
+	"card_points_verse_a": "Você manteve a constância este ano, <span class=\"font-semibold text-orange-400\">ganhando</span> adicionais",
+	"card_points_verse_a_1000": "Este ano, você deu o seu máximo, <span class=\"font-semibold text-orange-400\">colhendo</span> adicionais",
+	"card_points_verse_a_5000": "Você se esforçou ao máximo este ano, <span class=\"font-semibold text-orange-400\">obtendo</span> adicionais",
+	"card_points_verse_b": "Os ventos o guiarão a alturas maiores. Acredite no seu potencial, e você se destacará ainda mais",
+	"card_points_verse_b_2": "Com determinação e esforço, você provou seu valor. Desafios não são obstáculos para você",
+	"card_points_verse_b_3": "Ao chegar ao topo, você se torna a personificação da habilidade e expertise. Seu domínio é inigualável",
+	"card_points_verse_new": "Este ano, {year}, é seu primeiro ano no jogo, e você ganhou um total {word} de",
+	"card_points_word": "gratificante",
+	"card_points_word_10000": "colossal",
+	"card_points_word_3000": "considerável",
+	"card_returning_voyage_verse_1": "Ao final de {year},<br>você tem {points} pontos registrados",
+	"card_returning_voyage_verse_2": "Comparado ao ano passado,<br>você <span class=\"font-semibold text-orange-400\">não ganhou novos pontos</span>",
+	"card_returning_voyage_verse_3": "Já faz um tempo desde sua última aventura",
+	"card_returning_voyage_verse_4": "Esperamos sinceramente vê-lo de volta ao jogo para",
+	"card_returning_voyage_verse_5": "novas aventuras",
+	"card_runtime_verse_1": "Todo o seu tempo de corrida este ano totalizou",
+	"card_runtime_verse_2": "Além disso, de acordo com <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, você ficou online por {duration} este ano",
+	"card_runtime_verse_weird": "De alguma forma, seu nome apareceu menos que seus registros de corrida. Talvez você tenha mudado de nome este ano?",
+	"card_second_map_verse_1": "Seu segundo mapa mais jogado é",
+	"card_second_map_verse_2": "Você cruzou sua linha de chegada <span class=\"font-semibold text-orange-400\">{finishes} vezes</span>, e esperamos que você se lembre dele!",
+	"card_server_verse_1": "Seu servidor DDNet mais jogado é",
+	"card_server_verse_2": "Você finalizou <span class=\"font-semibold text-orange-400\">{percent} das corridas</span> neste servidor",
+	"card_server_verse_3": "Além disso, você também apareceu em:<br>{servers}",
+	"card_slowest_verse_1": "Em {date}, você levou",
+	"card_slowest_verse_2": "para completar {map}",
+	"card_slowest_verse_3": "Este é seu <span class=\"font-semibold text-orange-400\">registro de conclusão mais lento</span> deste ano.<br>Sua resiliência e determinação o ajudaram a chegar ao fim",
+	"card_slowest_verse_4": "Ou talvez,",
+	"card_slowest_verse_5_bonus": "houve alguma mágica temporal misteriosa em ação?",
+	"card_slowest_verse_5_regular": "isso é apenas um hobby único seu?",
+	"card_speed_demon_verse_1": "Você finalizou {map} apenas",
+	"card_speed_demon_verse_2": "após seu lançamento",
+	"card_speed_demon_verse_3a": "Como um demônio da velocidade, deixando apenas um borrão em seu caminho",
+	"card_speed_demon_verse_3b": "Nenhum lançamento de mapa pode escapar de sua busca implacável",
+	"card_speedrunner_verse_1": "Em {date}, você completou uma sequência de",
+	"card_speedrunner_verse_2": "<span class=\"font-semibold text-orange-400\">dentro de uma hora</span>.<br>Estes são os mapas que você finalizou:",
+	"card_stack_verse_1": "Você e {count} outros Tees formaram uma pilha de",
+	"card_stack_verse_2": "Time de {count} Tees",
+	"card_stack_verse_3": "e finalizaram {map} juntos em {date}",
+	"card_stack_verse_4": "O time: {members}",
+	"card_steady_progress_verse_1": "Nos novos mapas que você finalizou este ano,<br>este mapa se destaca como seu <span class=\"font-semibold text-orange-400\">momento de brilho</span>",
+	"card_steady_progress_verse_2": "Ao dominar este mapa, você ganhou",
+	"card_steady_progress_verse_3": "Continue conquistando novos desafios,",
+	"card_steady_progress_verse_4": "e brilhe em mapas com pontuação ainda maior",
+	"card_team_verse_1": "Toda corrida em equipe precisa de um companheiro confiável!",
+	"card_team_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "é seu melhor amigo.<br>Vocês finalizaram juntos <span class=\"font-semibold text-orange-400\">{count} vezes</span>",
+				"plural=one": "é seu melhor amigo.<br>Vocês finalizaram juntos <span class=\"font-semibold text-orange-400\">{count} vez</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"card_team_verse_3": "Além disso,",
+	"card_team_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "é seu segundo jogador mais parceiro. Vocês finalizaram juntos <span class=\"font-semibold text-orange-400\">{count} vezes</span>",
+				"plural=one": "é seu segundo jogador mais parceiro. Vocês finalizaram juntos <span class=\"font-semibold text-orange-400\">{count} vez</span>"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"format_dhms": "",
+	"format_hm": "",
+	"format_hms": "",
+	"format_m": "",
+	"format_ms": "",
+	"format_s": "",
+	"page_badges_for": "Emblemas de {year} para {name}",
+	"page_change_name": "Alterar nome",
+	"page_continue": "↓ Role para continuar ↓",
+	"page_continue_mobile": "↓ Deslize para cima para continuar ↓",
+	"page_database_time": "Corte dos dados: {date}",
+	"page_ddnet_recap": "Recapitulação DDNet {year}",
+	"page_ddnet_recap_desc": "Confira sua Recapitulação DDNet {year}",
+	"page_ddnet_recap_for": "Recapitulação DDNet {year} de {player}",
+	"page_donate": "Compre-me um café",
+	"page_enter_player_name": "Insira o nome do jogador",
+	"page_go": "Ir",
+	"page_go_back": "Voltar",
+	"page_happy_new_year": "Feliz Ano Novo!",
+	"page_loading": "Preparando..",
+	"page_points_info": "Pontos: {points}",
+	"page_powered_by": "Desenvolvido por",
+	"page_share": "Confira a recapitulação DDNet {year} de {name}: {link}",
+	"page_start_recap": "Iniciar recapitulação",
+	"page_timezone": "Fuso horário",
+	"title_afk_warrior": "Guerreiro AFK",
+	"title_always_sunny": "Sempre Ensolarado no DDNet",
+	"title_amazingly_insane": "Incrivelmente Insano",
+	"title_brotherly_bond": "Laço Fraternal",
+	"title_casual_enjoyer": "Apreciador Casual",
+	"title_challange_solver": "Solucionador de Desafios",
+	"title_clockwork": "Precisão de Relógio",
+	"title_combined_mind": "Mente Combinada",
+	"title_ddmax_enjoyer": "Apreciador de DDmaX",
+	"title_early_bird": "Madrugador",
+	"title_full_throttle": "Aceleração Total",
+	"title_fulltime_player": "Jogador em Tempo Integral",
+	"title_inseparable_team": "Time Inseparável",
+	"title_level_designer": "Designer de Fases",
+	"title_live_and_learn": "Viver e Aprender",
+	"title_live_to_play": "LiveToPlay",
+	"title_lone_wolf": "Lobo Solitário",
+	"title_map_explorer": "Explorador de Mapas",
+	"title_map_master": "Mestre dos Mapas",
+	"title_monthly": "Esmagador de Calendários",
+	"title_narrow_trail": "Trilha Estreita",
+	"title_new_beginning": "Jornada Começa",
+	"title_night_owl": "Coruja Noturna",
+	"title_oldschool_enjoyer": "Apreciador Oldschool",
+	"title_path_pioneer": "Pioneiro de Caminhos",
+	"title_peak_performer": "Desempenho Máximo",
+	"title_perseverance": "Perseverança",
+	"title_points_30000": "Completista",
+	"title_professional_player": "Jogador Profissional",
+	"title_racer": "Corredor",
+	"title_returning_voyage": "Viagem de Retorno",
+	"title_runtime_error": "Espaço-tempo Corrompido",
+	"title_shared_name": "Nome Compartilhado",
+	"title_snake_oiler": "Enganador Serpentino",
+	"title_solo_traveler": "Viajante Solitário",
+	"title_speed_demon": "Demônio da Velocidade",
+	"title_speedrunner": "Speedrunner",
+	"title_steady_progress": "Progresso Constante",
+	"title_tee_army": "Exército de Tees",
+	"title_time_wizard": "Mago do Tempo",
+	"title_true_player": "Verdadeiro Jogador",
+	"title_unnamed_hero": "Herói Sem Nome",
+	"title_unstoppable_duo": "Dupla Imparável",
+	"title_veteran": "Veterano de {years} Anos",
+	"unit_maps": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "{count} mapas",
+				"plural=one": "{count} mapa"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_times": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "{count} vezes",
+				"plural=one": "{count} vez"
+			},
+			"selectors": ["plural"]
+		}
+	],
+	"unit_years": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"plural=*": "{count} anos",
+				"plural=one": "{count} ano"
+			},
+			"selectors": ["plural"]
+		}
+	]
+}
