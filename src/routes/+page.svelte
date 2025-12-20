@@ -917,13 +917,13 @@
 							<div
 								class="motion-preset-shake rounded-3xl bg-red-700/40 px-8 py-4 text-xl font-bold text-white backdrop-blur-sm"
 							>
-								Unknown error, please try again later
+								UNKNOWN_ERROR
 							</div>
 						{:else}
 							<div class="relative z-10">
 								<div class="rounded-2xl px-8 py-4 text-center">
 									<div
-										class="w-full flex items-center justify-center text-2xl font-extrabold text-nowrap mb-1 text-amber-300"
+										class="w-full flex items-center justify-center text-xl font-extrabold text-nowrap mb-1 text-amber-300"
 									>
 										<div>
 											<div class="absolute glow-text">
