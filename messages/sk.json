@@ -9,8 +9,8 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=*": "Z toho sa <span class=\"text-orange-400\">{count}-krát</span> stalo",
-				"plural=one": "Z toho sa <span class=\"text-orange-400\">{count}-krát</span> stalo",
-				"plural=few": "Z toho sa <span class=\"text-orange-400\">{count}-krát</span> stalo"
+				"plural=few": "Z toho sa <span class=\"text-orange-400\">{count}-krát</span> stalo",
+				"plural=one": "Z toho sa <span class=\"text-orange-400\">{count}-krát</span> stalo"
 			},
 			"selectors": ["plural"]
 		}
@@ -42,8 +42,8 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=*": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=one": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=few": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
+				"plural=few": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
+				"plural=one": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -55,8 +55,8 @@
 			"declarations": ["input finishes", "local plural = finishes: plural"],
 			"match": {
 				"plural=*": "Prekročili ste jej cieľovú čiaru <span class=\"font-semibold text-orange-400\">{finishes}-krát</span>. Musíte mať slabosť pre túto mapu!",
-				"plural=one": "Prekročili ste jej cieľovú čiaru <span class=\"font-semibold text-orange-400\">{finishes}-krát</span>. Musíte mať slabosť pre túto mapu!",
-				"plural=few": "Prekročili ste jej cieľovú čiaru <span class=\"font-semibold text-orange-400\">{finishes}-krát</span>. Musíte mať slabosť pre túto mapu!"
+				"plural=few": "Prekročili ste jej cieľovú čiaru <span class=\"font-semibold text-orange-400\">{finishes}-krát</span>. Musíte mať slabosť pre túto mapu!",
+				"plural=one": "Prekročili ste jej cieľovú čiaru <span class=\"font-semibold text-orange-400\">{finishes}-krát</span>. Musíte mať slabosť pre túto mapu!"
 			},
 			"selectors": ["plural"]
 		}
@@ -68,8 +68,8 @@
 			"declarations": ["input total", "local plural = total: plural"],
 			"match": {
 				"plural=*": "Medzi <span class=\"text-orange-400\">{total} novými náročnými mapami</span> vydanými tento rok<br>ste úspešne dokončili <span class=\"font-semibold text-orange-400\">{completed}</span> z nich",
-				"plural=one": "Medzi <span class=\"text-orange-400\">{total} novou náročnou mapou</span> vydanou tento rok<br>ste úspešne dokončili <span class=\"font-semibold text-orange-400\">{completed}</span> z nej",
-				"plural=few": "Medzi <span class=\"text-orange-400\">{total} novými náročnými mapami</span> vydanými tento rok<br>ste úspešne dokončili <span class=\"font-semibold text-orange-400\">{completed}</span> z nich"
+				"plural=few": "Medzi <span class=\"text-orange-400\">{total} novými náročnými mapami</span> vydanými tento rok<br>ste úspešne dokončili <span class=\"font-semibold text-orange-400\">{completed}</span> z nich",
+				"plural=one": "Medzi <span class=\"text-orange-400\">{total} novou náročnou mapou</span> vydanou tento rok<br>ste úspešne dokončili <span class=\"font-semibold text-orange-400\">{completed}</span> z nej"
 			},
 			"selectors": ["plural"]
 		}
@@ -137,8 +137,8 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=*": "je váš najlepší kamarát.<br>Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=one": "je váš najlepší kamarát.<br>Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=few": "je váš najlepší kamarát.<br>Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
+				"plural=few": "je váš najlepší kamarát.<br>Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
+				"plural=one": "je váš najlepší kamarát.<br>Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -149,8 +149,8 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=*": "je váš druhý najčastejší spoluhráč. Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=one": "je váš druhý najčastejší spoluhráč. Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=few": "je váš druhý najčastejší spoluhráč. Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
+				"plural=few": "je váš druhý najčastejší spoluhráč. Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
+				"plural=one": "je váš druhý najčastejší spoluhráč. Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -178,8 +178,12 @@
 	"page_points_info": "Body: {points}",
 	"page_powered_by": "Poháňané",
 	"page_share": "Pozrite sa na DDNet rekapituláciu {year} hráča {name}: {link}",
+	"page_share_copied": "Skopírované",
+	"page_share_failed": "Kopírovanie zlyhalo",
 	"page_start_recap": "Začať rekapituláciu",
 	"page_timezone": "Časové pásmo",
+	"page_to_share": "Kliknite na zdieľanie",
+	"page_to_share_mobile": "Klepnutím zdieľať",
 	"title_afk_warrior": "AFK Bojovník",
 	"title_always_sunny": "Na DDNet Vždy Slniečko",
 	"title_amazingly_insane": "Úžasne Šialený",
@@ -229,8 +233,8 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=*": "{count} mápa",
-				"plural=one": "{count} mapa",
-				"plural=few": "{count} mapy"
+				"plural=few": "{count} mapy",
+				"plural=one": "{count} mapa"
 			},
 			"selectors": ["plural"]
 		}
@@ -240,8 +244,8 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=*": "{count}-krát",
-				"plural=one": "{count}-krát",
-				"plural=few": "{count}-krát"
+				"plural=few": "{count}-krát",
+				"plural=one": "{count}-krát"
 			},
 			"selectors": ["plural"]
 		}
@@ -251,8 +255,8 @@
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
 				"plural=*": "{count} rokov",
-				"plural=one": "{count} rok",
-				"plural=few": "{count} roky"
+				"plural=few": "{count} roky",
+				"plural=one": "{count} rok"
 			},
 			"selectors": ["plural"]
 		}

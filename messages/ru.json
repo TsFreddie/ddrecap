@@ -8,8 +8,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "Из них <span class=\"text-orange-400\">{count} раз</span> это случилось",
-				"plural=*": "Из них <span class=\"text-orange-400\">{count} раз</span> это случилось"
+				"plural=*": "Из них <span class=\"text-orange-400\">{count} раз</span> это случилось",
+				"plural=one": "Из них <span class=\"text-orange-400\">{count} раз</span> это случилось"
 			},
 			"selectors": ["plural"]
 		}
@@ -40,8 +40,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "В этом году вы пересекли финишную черту на {type} картах <span class=\"font-semibold text-orange-400\">{count} раз</span>",
-				"plural=*": "В этом году вы пересекли финишную черту на {type} картах <span class=\"font-semibold text-orange-400\">{count} раза</span>"
+				"plural=*": "В этом году вы пересекли финишную черту на {type} картах <span class=\"font-semibold text-orange-400\">{count} раза</span>",
+				"plural=one": "В этом году вы пересекли финишную черту на {type} картах <span class=\"font-semibold text-orange-400\">{count} раз</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -52,8 +52,8 @@
 		{
 			"declarations": ["input finishes", "local plural = finishes: plural"],
 			"match": {
-				"plural=one": "Вы пересекли её финишную черту <span class=\"font-semibold text-orange-400\">{finishes} раз</span>. Должно быть, у вас к этой карте особая слабость!",
-				"plural=*": "Вы пересекли её финишную черту <span class=\"font-semibold text-orange-400\">{finishes} раза</span>. Должно быть, у вас к этой карте особая слабость!"
+				"plural=*": "Вы пересекли её финишную черту <span class=\"font-semibold text-orange-400\">{finishes} раза</span>. Должно быть, у вас к этой карте особая слабость!",
+				"plural=one": "Вы пересекли её финишную черту <span class=\"font-semibold text-orange-400\">{finishes} раз</span>. Должно быть, у вас к этой карте особая слабость!"
 			},
 			"selectors": ["plural"]
 		}
@@ -64,8 +64,8 @@
 		{
 			"declarations": ["input total", "local plural = total: plural"],
 			"match": {
-				"plural=one": "Среди <span class=\"text-orange-400\">{total} новой сложной карты</span>, выпущенной в этом году,<br>вы успешно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> из них",
-				"plural=*": "Среди <span class=\"text-orange-400\">{total} новых сложных карт</span>, выпущенных в этом году,<br>вы успешно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> из них"
+				"plural=*": "Среди <span class=\"text-orange-400\">{total} новых сложных карт</span>, выпущенных в этом году,<br>вы успешно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> из них",
+				"plural=one": "Среди <span class=\"text-orange-400\">{total} новой сложной карты</span>, выпущенной в этом году,<br>вы успешно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> из них"
 			},
 			"selectors": ["plural"]
 		}
@@ -132,8 +132,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "— ваш лучший друг.<br>Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раз</span>",
-				"plural=*": "— ваш лучший друг.<br>Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раза</span>"
+				"plural=*": "— ваш лучший друг.<br>Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раза</span>",
+				"plural=one": "— ваш лучший друг.<br>Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раз</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -143,8 +143,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "— ваш второй по частоте командный игрок. Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раз</span>",
-				"plural=*": "— ваш второй по частоте командный игрок. Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раза</span>"
+				"plural=*": "— ваш второй по частоте командный игрок. Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раза</span>",
+				"plural=one": "— ваш второй по частоте командный игрок. Вы вместе финишировали <span class=\"font-semibold text-orange-400\">{count} раз</span>"
 			},
 			"selectors": ["plural"]
 		}
@@ -163,6 +163,7 @@
 	"page_ddnet_recap": "Итоги года в DDNet",
 	"page_ddnet_recap_desc": "Посмотрите свои итоги {year} года в DDNet",
 	"page_ddnet_recap_for": "Итоги {year} года в DDNet для {player}",
+	"page_donate": "Угостите кофе",
 	"page_enter_player_name": "Введите имя игрока",
 	"page_go": "Вперёд",
 	"page_go_back": "Назад",
@@ -171,8 +172,12 @@
 	"page_points_info": "Очки: {points}",
 	"page_powered_by": "На платформе",
 	"page_share": "Посмотрите итоги {year} года в DDNet у {name}: {link}",
+	"page_share_copied": "Скопировано",
+	"page_share_failed": "Ошибка копирования",
 	"page_start_recap": "Начать отчёт",
 	"page_timezone": "Часовой пояс",
+	"page_to_share": "Поделиться",
+	"page_to_share_mobile": "Нажмите, чтобы поделиться",
 	"title_afk_warrior": "AFK-Воин",
 	"title_always_sunny": "Вечно Солнечно в DDNet",
 	"title_amazingly_insane": "Удивительно Безумный",
@@ -221,8 +226,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} карту",
-				"plural=*": "{count} карт"
+				"plural=*": "{count} карт",
+				"plural=one": "{count} карту"
 			},
 			"selectors": ["plural"]
 		}
@@ -231,8 +236,8 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} раз",
-				"plural=*": "{count} раза"
+				"plural=*": "{count} раза",
+				"plural=one": "{count} раз"
 			},
 			"selectors": ["plural"]
 		}
@@ -241,11 +246,10 @@
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
-				"plural=one": "{count} год",
-				"plural=*": "{count} года"
+				"plural=*": "{count} года",
+				"plural=one": "{count} год"
 			},
 			"selectors": ["plural"]
 		}
-	],
-	"page_donate": "Угостите кофе"
+	]
 }

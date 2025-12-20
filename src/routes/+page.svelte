@@ -364,7 +364,7 @@
 					year: data.year,
 					link: shareableUrl!
 				});
-				let success = false;
+
 				try {
 					if (navigator.canShare && navigator.canShare()) {
 						navigator.share({
@@ -375,7 +375,6 @@
 							text: text,
 							url: shareableUrl
 						});
-						success = true;
 					}
 				} catch {}
 
@@ -788,7 +787,10 @@
 			>
 				<div class="absolute bottom-0 w-full flex flex-row items-center justify-center">
 					<div
-						class="flex flex-row items-center justify-center rounded-[0.8em] border border-t-white/30 border-l-white/30 border-black/30 bg-green-700 translate-y-[50%] px-[3%] py-[1%] text-center text-[0.65em] text-nowrap text-white gap-1"
+						class="flex flex-row items-center justify-center rounded-[0.8em] border border-t-white/30 border-l-white/30 border-black/30 translate-y-[50%] px-[3%] py-[1%] text-center text-[0.65em] text-nowrap text-white gap-1 transition-colors"
+						class:bg-red-600={shareError}
+						class:bg-green-600={shareInfo}
+						class:bg-blue-600={!shareError && !shareInfo}
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"

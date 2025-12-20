@@ -172,8 +172,12 @@
 	"page_points_info": "Points: {points}",
 	"page_powered_by": "Powered by",
 	"page_share": "Check out {name}'s DDNet {year} recap: {link}",
+	"page_share_copied": "Copied to clipboard",
+	"page_share_failed": "Copy failed",
 	"page_start_recap": "Start recap",
 	"page_timezone": "Timezone",
+	"page_to_share": "Click to share",
+	"page_to_share_mobile": "Tap to share",
 	"title_afk_warrior": "AFK Warrior",
 	"title_always_sunny": "Always Sunny in DDNet",
 	"title_amazingly_insane": "Amazingly Insane",
@@ -247,9 +251,5 @@
 			},
 			"selectors": ["plural"]
 		}
-	],
-	"page_to_share": "Click to share",
-	"page_to_share_mobile": "Tap to share",
-	"page_share_failed": "Copy failed",
-	"page_share_copied": "Copied to clipboard"
+	]
 }

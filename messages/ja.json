@@ -109,6 +109,7 @@
 	"page_ddnet_recap": "DDNet {year} 年まとめ",
 	"page_ddnet_recap_desc": "あなたのDDNet {year}年まとめをチェック",
 	"page_ddnet_recap_for": "{player} の DDNet {year} 年まとめ",
+	"page_donate": "投げ銭",
 	"page_enter_player_name": "プレイヤー名を入力してください",
 	"page_go": "スタート",
 	"page_go_back": "戻る",
@@ -117,8 +118,12 @@
 	"page_points_info": "ポイント：{points}",
 	"page_powered_by": "検索エンジン",
 	"page_share": "{name} の DDNet {year} 年まとめをチェックしよう： {link}",
+	"page_share_copied": "コピーしました",
+	"page_share_failed": "コピー失敗",
 	"page_start_recap": "年まとめを見る",
 	"page_timezone": "タイムゾーン",
+	"page_to_share": "共有する",
+	"page_to_share_mobile": "タップして共有",
 	"title_afk_warrior": "放置の達人",
 	"title_always_sunny": "太陽のようなTee",
 	"title_amazingly_insane": "驚異のインセイナー",
@@ -175,6 +180,5 @@
 	],
 	"unit_maps": "{count}枚のマップ",
 	"unit_times": "{count}回",
-	"unit_years": "{count}年",
-	"page_donate": "投げ銭"
+	"unit_years": "{count}年"
 }

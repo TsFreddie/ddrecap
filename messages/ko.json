@@ -109,6 +109,7 @@
 	"page_ddnet_recap": "DDNet {year} 연말 결산",
 	"page_ddnet_recap_desc": "당신의 DDNet {year} 연말 결산 확인",
 	"page_ddnet_recap_for": "{player}의 DDNet {year} 연말 결산",
+	"page_donate": "커피 한 잔 사주세요",
 	"page_enter_player_name": "플레이어명을 입력하세요",
 	"page_go": "시작",
 	"page_go_back": "돌아가기",
@@ -117,8 +118,12 @@
 	"page_points_info": "포인트: {points}",
 	"page_powered_by": "검색 엔진",
 	"page_share": "{name}의 DDNet {year} 연말 결산 확인하기: {link}",
+	"page_share_copied": "복사됨",
+	"page_share_failed": "복사 실패",
 	"page_start_recap": "연말 결산 보기",
 	"page_timezone": "데이터 시간대",
+	"page_to_share": "공유하기",
+	"page_to_share_mobile": "탭하여 공유",
 	"title_afk_warrior": "자리 비움의 달인",
 	"title_always_sunny": "햇살 가득",
 	"title_amazingly_insane": "인세인 마스터",
@@ -175,6 +180,5 @@
 	],
 	"unit_maps": "{count}개의 맵",
 	"unit_times": "{count}회",
-	"unit_years": "{count}년",
-	"page_donate": "커피 한 잔 사주세요"
+	"unit_years": "{count}년"
 }
