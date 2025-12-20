@@ -79,7 +79,7 @@
 	"card_night_owl_verse_4": "Do you still remember the effort you put in at that moment?",
 	"card_no_points_verse_1": "By the end of {year}, you <span class=\"text-orange-400\">don't have any points</span> on record.",
 	"card_no_points_verse_2": "But we know you already started your journey. We hope you will enjoy your stay in DDNet.",
-	"card_peak_performer_verse_1": "In the new maps you've conquered this year,<br>this one is truly a <span class=\"font-semibold text-orange-400\">career highlight</span> for you",
+	"card_peak_performer_verse_1": "In the new maps you've conquered this year, this one is truly a <span class=\"font-semibold text-orange-400\">career highlight</span> for you",
 	"card_peak_performer_verse_2": "This success added a total of",
 	"card_peak_performer_verse_3": "This means you have mastered an insanely difficult map",
 	"card_peak_performer_verse_4": "May you not rest on these laurels,<br>but continue to push towards even greater challenges",
@@ -247,5 +247,9 @@
 			},
 			"selectors": ["plural"]
 		}
-	]
+	],
+	"page_to_share": "Click to share",
+	"page_to_share_mobile": "Tap to share",
+	"page_share_failed": "Copy failed",
+	"page_share_copied": "Copied to clipboard"
 }

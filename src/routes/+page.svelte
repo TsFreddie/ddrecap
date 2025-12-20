@@ -149,7 +149,7 @@
 
 	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 	const maxWidth = rootFontSize * 40;
-	const refFontSize = 42;
+	const refFontSize = 48;
 	let fontSize = $state(refFontSize);
 
 	onMount(() => {
@@ -364,6 +364,7 @@
 					year: data.year,
 					link: shareableUrl!
 				});
+				let success = false;
 				try {
 					if (navigator.canShare && navigator.canShare()) {
 						navigator.share({
@@ -374,13 +375,21 @@
 							text: text,
 							url: shareableUrl
 						});
-					} else {
-						navigator.clipboard.writeText(text);
-
-						shareInfo = 'Copied to clipboard!';
+						success = true;
 					}
+				} catch {}
+
+				try {
+					navigator.clipboard.writeText(text);
+					shareInfo = m.page_share_copied();
+					setTimeout(() => {
+						shareInfo = '';
+					}, 2000);
 				} catch {
-					shareError = 'Failed to share. You can copy the address manually or take a screenshot';
+					shareError = m.page_share_failed();
+					setTimeout(() => {
+						shareError = '';
+					}, 2000);
 				}
 			}
 		}
@@ -506,6 +515,18 @@
 				return regularFormat;
 		}
 	};
+
+	const hackText = (text: string) => {
+		if (getLocale().startsWith('pl')) {
+			const polishHack = /[^ <>]+\/[^ <>]+/g;
+			return text.replace(polishHack, (match) => {
+				const [a, b] = match.split('/');
+				return `<span class="pl-hack"><span>${b}</span><span>${a}</span></span>`;
+			});
+		}
+
+		return text;
+	};
 </script>
 
 <div></div>
@@ -567,7 +588,7 @@
 			>
 				<div
 					class="px-[4%] transition-transform duration-300 ease-out"
-					class:translate-y-[-50%]={showContent}
+					class:translate-y-[-45%]={showContent}
 					class:delay-500={showContent || id != currentCard}
 				>
 					{@html card.mapper}
@@ -585,7 +606,7 @@
 			</div>
 		</div>
 		{#if card.titles}
-			<div class="absolute right-[5%] bottom-[-5%] left-[5%] flex flex-row flex-wrap text-[0.6em]">
+			<div class="absolute right-[5%] bottom-[-5%] left-[5%] flex flex-row flex-wrap text-[0.55em]">
 				{#each card.titles as title, i}
 					<div
 						class="m-[1%] rounded-[1em] border motion-delay-(--n) border-t-white/30 border-l-white/30 border-black/30 px-[4%] py-[1%] text-center font-semibold text-nowrap"
@@ -608,7 +629,7 @@
 		class="motion-delay-700 flex h-full w-full items-center justify-center text-[0.8em] transition-[backdrop-filter]"
 		class:motion-opacity-in-0={id == currentCard}
 		class:motion-opacity-out-0={id != currentCard}
-		class:backdrop-blur-lg={showContent}
+		class:backdrop-blur-sm={showContent}
 		class:backdrop-brightness-75={showContent}
 		class:backdrop-saturate-50={showContent}
 	>
@@ -620,10 +641,10 @@
 		>
 			{#if card.leftTeeSkin}
 				<div
-					class="motion-duration-500 motion-delay-700 absolute left-[-12.5%] h-[20%] w-[20%]"
+					class="motion-duration-500 motion-delay-700 absolute left-[-10.5%] h-[20%] w-[20%]"
 					style="top: {card.leftTeeTop ?? 0}%"
-					class:motion-translate-x-in-[-50%]={showContent && id == currentCard}
-					class:motion-translate-x-out-[-50%]={!showContent && id != currentCard}
+					class:motion-translate-x-in-[-75%]={showContent && id == currentCard}
+					class:motion-translate-x-out-[-75%]={!showContent && id != currentCard}
 					class:motion-rotate-in-[-12deg]={showContent && id == currentCard}
 					class:motion-rotate-out-[-12deg]={!showContent && id != currentCard}
 				>
@@ -638,10 +659,10 @@
 			{/if}
 			{#if card.rightTeeSkin}
 				<div
-					class="motion-duration-500 motion-delay-700 absolute right-[-12.5%] h-[20%] w-[20%]"
+					class="motion-duration-500 motion-delay-700 absolute right-[-4.5%] h-[20%] w-[20%]"
 					style="top: {card.rightTeeTop ?? 0}%"
-					class:motion-translate-x-in-[50%]={showContent && id == currentCard}
-					class:motion-translate-x-out-[50%]={!showContent && id != currentCard}
+					class:motion-translate-x-in-[75%]={showContent && id == currentCard}
+					class:motion-translate-x-out-[75%]={!showContent && id != currentCard}
 					class:motion-rotate-in-[12deg]={showContent && id == currentCard}
 					class:motion-rotate-out-[12deg]={!showContent && id != currentCard}
 				>
@@ -662,7 +683,7 @@
 							style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
 								0}%);margin-top: {item.t ?? 0}%;margin-bottom: {item.b ?? 0}%;"
 						>
-							{@html item.text}
+							{@html hackText(item.text)}
 						</div>
 					{:else if item.type == 'b'}
 						<div
@@ -715,6 +736,7 @@
 {/snippet}
 
 {#snippet shareFormat(id: number, card: CardData)}
+	{@const titleCount = totalCards?.titles.length || 0}
 	<div class="flex h-full w-full items-center justify-center text-[0.6em]">
 		<div
 			class="absolute top-[2%] right-[2%] bottom-[2%] left-[2%] flex flex-col items-center justify-center gap-[3%]"
@@ -722,11 +744,18 @@
 			<div
 				class="absolute top-0 right-0 bottom-[35%] left-0 flex grow items-center justify-center rounded-[1em] border-[0.25em] border-sky-200/60 bg-sky-100/90 pt-[7%]"
 			>
-				<div class="flex w-full flex-row flex-wrap items-center justify-center">
+				<div
+					class="flex w-full flex-row flex-wrap items-center justify-center"
+					class:text-[0.9em]={titleCount <= 10}
+					class:text-[0.8em]={titleCount > 10 && titleCount <= 15}
+					class:text-[0.7em]={titleCount > 15 && titleCount <= 20}
+					class:text-[0.6em]={titleCount > 20 && titleCount <= 30}
+					class:text-[0.5em]={titleCount > 30}
+				>
 					{#if totalCards?.titles}
 						{#each totalCards.titles as title}
 							<span
-								class="m-[1%] rounded-[1em] border border-t-white/30 border-l-white/30 border-black/30 px-[2%] py-[0.25%] text-center font-semibold text-nowrap text-[0.9em]"
+								class="m-[1%] rounded-[1em] border border-t-white/30 border-l-white/30 border-black/30 px-[2%] py-[0.25%] text-center font-semibold text-nowrap"
 								style="background-color: {title.bg};{title.color ? `color: ${title.color};` : ''}"
 							>
 								{title.text}
@@ -754,24 +783,39 @@
 				/>s
 			</div>
 			<div
-				class="motion-duration-500 motion-delay-1500 absolute bottom-[2.5%] left-[7%] flex h-[30%] w-[55%] flex-row items-center justify-center"
+				class="motion-duration-500 motion-delay-1500 absolute right-[5%] bottom-[2.5%] flex h-[30%] w-[30%]"
 				class:motion-opacity-in-0={id == currentCard}
 			>
-				<div
-					class="rounded-[0.8em] bg-white/80 px-[3%] py-[2%] text-center text-[0.9em] text-black"
-				>
-					{#if shareError}
-						{shareError}
-					{:else if shareInfo}
-						{shareInfo}
-					{:else if navigator.canShare && navigator.canShare()}
-						{isMobile() ? 'Tap' : 'Click'} this card to share
-					{:else}
-						{isMobile() ? 'Tap' : 'Click'} this card to copy your recap link
-					{/if}
+				<div class="absolute bottom-0 w-full flex flex-row items-center justify-center">
+					<div
+						class="flex flex-row items-center justify-center rounded-[0.8em] border border-t-white/30 border-l-white/30 border-black/30 bg-green-700 translate-y-[50%] px-[3%] py-[1%] text-center text-[0.65em] text-nowrap text-white gap-1"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="1.1em"
+							height="1.1em"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="lucide lucide-clipboard-copy-icon lucide-clipboard-copy"
+							><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /><path
+								d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
+							/><path d="M16 4h2a2 2 0 0 1 2 2v4" /><path d="M21 14H11" /><path
+								d="m15 10-4 4 4 4"
+							/></svg
+						>
+						{#if shareError}
+							{shareError}
+						{:else if shareInfo}
+							{shareInfo}
+						{:else}
+							{isMobile() ? m.page_to_share_mobile() : m.page_to_share()}
+						{/if}
+					</div>
 				</div>
-			</div>
-			<div class="absolute right-[5%] bottom-[2.5%] flex h-[30%] w-[30%]">
 				<div
 					class="h-full w-full rounded-[0.8em] bg-white bg-cover bg-center"
 					style="background-image: url({shareableQRCode});"
@@ -817,7 +861,7 @@
 					<a
 						data-sveltekit-replacestate
 						href="/"
-						class="-motion-translate-x-in-100 motion-duration-500 motion-delay-100 rounded-tr-xl backdrop-blur-lg flex items-center justify-center bg-black/80 pl-2 pr-4 py-1.5 text-sm text-white hover:bg-zinc-900 gap-1"
+						class="-motion-translate-x-in-100 motion-duration-500 motion-delay-100 rounded-tr-xl backdrop-blur-sm flex items-center justify-center bg-black/80 pl-2 pr-4 py-1.5 text-sm text-white hover:bg-zinc-900 gap-1"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -869,7 +913,7 @@
 						></div>
 						{#if error}
 							<div
-								class="motion-preset-shake rounded-3xl bg-red-700/40 px-8 py-4 text-xl font-bold text-white backdrop-blur-lg"
+								class="motion-preset-shake rounded-3xl bg-red-700/40 px-8 py-4 text-xl font-bold text-white backdrop-blur-sm"
 							>
 								Unknown error, please try again later
 							</div>
@@ -1101,7 +1145,7 @@
 				{#if dropdownOpen}
 					<div
 						in:slide={{ duration: 300, easing: easeOut }}
-						class="absolute bottom-full text-sm right-0 mb-1 bg-slate-600/70 backdrop-blur-lg rounded-lg shadow-lg z-10 grid grid-cols-2 min-w-72 overflow-hidden"
+						class="absolute bottom-full text-sm right-0 mb-1 bg-slate-600/70 backdrop-blur-sm rounded-lg shadow-lg z-10 grid grid-cols-2 min-w-72 overflow-hidden"
 					>
 						{#each locales as locale}
 							<button

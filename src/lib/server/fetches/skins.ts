@@ -20,19 +20,9 @@ export type SkinInfo = {
 };
 
 export const skins = new FetchCache<SkinInfo>(
-	'https://ddnet.org/skins/skin/skins.json',
+	'https://teeworlds.cn/api/skins',
 	async (response) => {
 		const result = (await response.json()) as SkinInfo;
-		const map: { [key: string]: string } = {};
-		result.skins = result.skins.map((skin) => {
-			skin.url =
-				skin.type == 'normal'
-					? `https://teeworlds.cn/api/skins/${encodeURIComponent(skin.name)}.${skin.imgtype}`
-					: `https://teeworlds.cn/api/skins/${encodeURIComponent(skin.type)}/${encodeURIComponent(skin.name)}.${skin.imgtype}`;
-			map[skin.name] = skin.url;
-			return skin;
-		});
-		result.map = map;
 		return result;
 	}
 );

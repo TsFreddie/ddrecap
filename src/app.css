@@ -17,6 +17,50 @@ html {
 	scrollbar-width: none; /* Firefox */
 }
 
+@keyframes crossfade-a {
+	0% {
+		opacity: 0;
+	}
+	10% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes crossfade-b {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	60% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.pl-hack {
+	position: relative;
+}
+
+.pl-hack > span:last-child {
+	position: absolute;
+	left: 0;
+	animation: crossfade-a 5s infinite;
+}
+
+.pl-hack > span:first-child {
+	animation: crossfade-b 5s infinite;
+}
+
 @theme {
 	--breakpoint-sm: 40rem;
 	--container-sm: 40rem;
