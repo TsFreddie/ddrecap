@@ -658,7 +658,7 @@
 			{/if}
 			{#if card.rightTeeSkin}
 				<div
-					class="motion-duration-500 motion-delay-700 absolute right-[-4.5%] h-[20%] w-[20%]"
+					class="motion-duration-500 motion-delay-700 absolute right-[-9.5%] h-[20%] w-[20%]"
 					style="top: {card.rightTeeTop ?? 0}%"
 					class:motion-translate-x-in-[75%]={showContent && id == currentCard}
 					class:motion-translate-x-out-[75%]={!showContent && id != currentCard}
