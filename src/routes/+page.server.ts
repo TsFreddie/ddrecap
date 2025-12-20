@@ -1,6 +1,5 @@
 import { decodeAsciiURIComponent } from '$lib/link';
 import { decodeBase64Url } from '$lib/base64url';
-import { decode } from 'msgpackr';
 import { CURRENT_YEAR } from '$lib/consts';
 import { getDatabaseTime, getPoints } from '$lib/server/db.js';
 
