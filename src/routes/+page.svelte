@@ -16,6 +16,7 @@
 	import { generateCards, type CardData } from '$lib/cards';
 	import { getLocale, setLocale, type Locale } from '$lib/paraglide/runtime.js';
 	import { CURRENT_YEAR } from '$lib/consts';
+	import { chart } from '$lib/chart.svelte.js';
 
 	let pageKey = $state(0);
 
@@ -149,7 +150,7 @@
 
 	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 	const maxWidth = rootFontSize * 40;
-	const refFontSize = 48;
+	const refFontSize = 46;
 	let fontSize = $state(refFontSize);
 
 	onMount(() => {
@@ -269,7 +270,7 @@
 		replaceState(url.toString(), page.state);
 
 		shareableUrl = url.toString();
-		shareableQRCode = await qrcode.toDataURL(url.toString());
+		shareableQRCode = await qrcode.toDataURL(url.toString(), { errorCorrectionLevel: 'L' });
 
 		await timeout(700);
 		cardReady = true;
@@ -515,12 +516,28 @@
 		}
 	};
 
+	// Mobile firefox have layout issues when absolute is layouted before an element is layouted.
+	// This is a hack to force layouting the element and then add the class to make it absolute.
+	let hackTimeout: NodeJS.Timeout | null = null;
+	const triggerTimeout = () => {
+		if (hackTimeout) {
+			clearTimeout(hackTimeout);
+		}
+		hackTimeout = setTimeout(() => {
+			const hack = document.querySelector('.pl-hack-pre');
+			if (hack) {
+				hack.classList.add('pl-hack');
+			}
+		}, 1000);
+	};
+
 	const hackText = (text: string) => {
 		if (getLocale().startsWith('pl')) {
 			const polishHack = /[^ <>]+\/[^ <>]+/g;
 			return text.replace(polishHack, (match) => {
 				const [a, b] = match.split('/');
-				return `<span class="pl-hack"><span>${b}</span><span>${a}</span></span>`;
+				triggerTimeout();
+				return `<span class="pl-hack-pre"><span>${b}</span><span>${a}</span></span>`;
 			});
 		}
 
@@ -595,20 +612,18 @@
 			</div>
 		{/if}
 		<div
-			class="absolute h-full w-full overflow-hidden rounded-[1em] bg-white shadow-2xl shadow-black"
+			class="absolute h-full w-full bg-cover bg-center overflow-hidden rounded-[1em] bg-white shadow-2xl shadow-black border-[0.05em] border-white/50"
+			style:border={card.border}
+			style:box-shadow={'inset 0 0 1em 0.25em #00000044;'}
+			style="background-image: url({card.background});"
 		>
-			<div
-				class="absolute h-full w-full bg-cover bg-center"
-				style="background-image: url({card.background})"
-			>
-				{@render format(id, card)}
-			</div>
+			{@render format(id, card)}
 		</div>
 		{#if card.titles}
 			<div class="absolute right-[5%] bottom-[-5%] left-[5%] flex flex-row flex-wrap text-[0.55em]">
 				{#each card.titles as title, i}
 					<div
-						class="m-[1%] rounded-[1em] border motion-delay-(--n) border-t-white/30 border-l-white/30 border-black/30 px-[4%] py-[1%] text-center font-semibold text-nowrap"
+						class="m-[1%] rounded-[1em] border-[0.1em] motion-delay-(--n) border-t-white/30 border-l-white/30 border-black/30 px-[4%] py-[1%] text-center font-semibold text-nowrap"
 						style="--n: {1 + i * 0.25}s; background-color: {title.bg};{title.color
 							? `color: ${title.color};`
 							: ''}"
@@ -625,77 +640,91 @@
 
 {#snippet regularFormat(id: number, card: CardData)}
 	<div
-		class="motion-delay-700 flex h-full w-full items-center justify-center text-[0.8em] transition-[backdrop-filter]"
+		class="motion-delay-700 flex h-full w-full items-center justify-center text-[0.8em] transition-[backdrop-filter,box-shadow]"
 		class:motion-opacity-in-0={id == currentCard}
 		class:motion-opacity-out-0={id != currentCard}
-		class:backdrop-blur-sm={showContent}
+		class:backdrop-blur-xs={showContent}
 		class:backdrop-brightness-75={showContent}
 		class:backdrop-saturate-50={showContent}
 	>
 		<div
-			class="absolute flex flex-col items-center justify-center gap-[3%] transition-opacity"
+			class="absolute top-0 bottom-0 left-0 right-0 transition-opacity"
 			class:opacity-0={!showContent}
-			style="left: {card.l ?? 2.5}%; top: {card.t ?? 2.5}%; right: {card.r ??
-				2.5}%; bottom: {card.b ?? 2.5}%;"
 		>
-			{#if card.leftTeeSkin}
-				<div
-					class="motion-duration-500 motion-delay-700 absolute left-[-10.5%] h-[20%] w-[20%]"
-					style="top: {card.leftTeeTop ?? 0}%"
-					class:motion-translate-x-in-[-75%]={showContent && id == currentCard}
-					class:motion-translate-x-out-[-75%]={!showContent && id != currentCard}
-					class:motion-rotate-in-[-12deg]={showContent && id == currentCard}
-					class:motion-rotate-out-[-12deg]={!showContent && id != currentCard}
-				>
-					<TeeRender
-						name={card.leftTeeSkin.n}
-						body={card.leftTeeSkin.b}
-						feet={card.leftTeeSkin.f}
-						className="h-full w-full"
-						pose={leftTeePose}
-					/>
+			{#if card.chart}
+				<div class="absolute top-[5%] bottom-[5%] left-[5%] right-[5%]">
+					<canvas
+						class="w-full! h-full!"
+						width="512"
+						height="512"
+						use:chart={{ config: card.chart, locale: getLocale() }}
+					></canvas>
 				</div>
 			{/if}
-			{#if card.rightTeeSkin}
-				<div
-					class="motion-duration-500 motion-delay-700 absolute right-[-9.5%] h-[20%] w-[20%]"
-					style="top: {card.rightTeeTop ?? 0}%"
-					class:motion-translate-x-in-[75%]={showContent && id == currentCard}
-					class:motion-translate-x-out-[75%]={!showContent && id != currentCard}
-					class:motion-rotate-in-[12deg]={showContent && id == currentCard}
-					class:motion-rotate-out-[12deg]={!showContent && id != currentCard}
-				>
-					<TeeRender
-						name={card.rightTeeSkin.n}
-						body={card.rightTeeSkin.b}
-						feet={card.rightTeeSkin.f}
-						className="h-full w-full"
-						pose={rightTeePose}
-					/>
-				</div>
-			{/if}
-			{#if card.content}
-				{#each card.content as item}
-					{#if item.type == 't'}
-						<div
-							class="rounded-[1em] bg-zinc-700/90 px-[4%] py-[1%] text-center text-[0.7em] border border-t-zinc-600/80 border-l-zinc-600/80 border-zinc-800/40"
-							style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
-								0}%);margin-top: {item.t ?? 0}%;margin-bottom: {item.b ?? 0}%;"
-						>
-							{@html hackText(item.text)}
-						</div>
-					{:else if item.type == 'b'}
-						<div
-							class="rounded-[0.5em] px-[4.5%] py-[1.5%] text-center font-semibold"
-							style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
-								0}%);background-color: {item.bg};margin-top: {item.t ??
-								0}%;margin-bottom: {item.b ?? 0}%;{item.color ? `color: ${item.color};` : ''}"
-						>
-							{@html item.text}
-						</div>
-					{/if}
-				{/each}
-			{/if}
+			<div
+				class="absolute flex flex-col items-center justify-center gap-[3%]"
+				style="left: {card.l ?? 2.5}%; top: {card.t ?? 2.5}%; right: {card.r ??
+					2.5}%; bottom: {card.b ?? 2.5}%;"
+			>
+				{#if card.content}
+					{#each card.content as item}
+						{#if item.type == 't'}
+							<div
+								class="rounded-[1em] border-[0.05em] border-zinc-500 bg-zinc-700/90 px-[4%] py-[1%] text-center text-[0.7em]"
+								style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
+									0}%);margin-top: {item.t ?? 0}%;margin-bottom: {item.b ?? 0}%;"
+							>
+								{@html hackText(item.text)}
+							</div>
+						{:else if item.type == 'b'}
+							<div
+								class="rounded-[0.5em] px-[4.5%] py-[1.5%] text-center font-semibold"
+								style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
+									0}%);background-color: {item.bg};margin-top: {item.t ??
+									0}%;margin-bottom: {item.b ?? 0}%;{item.color ? `color: ${item.color};` : ''}"
+							>
+								{@html item.text}
+							</div>
+						{/if}
+					{/each}
+				{/if}
+				{#if card.leftTeeSkin}
+					<div
+						class="motion-duration-500 motion-delay-700 absolute left-[-10.5%] h-[20%] w-[20%]"
+						style="top: {card.leftTeeTop ?? 0}%"
+						class:motion-translate-x-in-[-75%]={showContent && id == currentCard}
+						class:motion-translate-x-out-[-75%]={!showContent && id != currentCard}
+						class:motion-rotate-in-[-12deg]={showContent && id == currentCard}
+						class:motion-rotate-out-[-12deg]={!showContent && id != currentCard}
+					>
+						<TeeRender
+							name={card.leftTeeSkin.n}
+							body={card.leftTeeSkin.b}
+							feet={card.leftTeeSkin.f}
+							className="h-full w-full"
+							pose={leftTeePose}
+						/>
+					</div>
+				{/if}
+				{#if card.rightTeeSkin}
+					<div
+						class="motion-duration-500 motion-delay-700 absolute right-[-9.5%] h-[20%] w-[20%]"
+						style="top: {card.rightTeeTop ?? 0}%"
+						class:motion-translate-x-in-[75%]={showContent && id == currentCard}
+						class:motion-translate-x-out-[75%]={!showContent && id != currentCard}
+						class:motion-rotate-in-[12deg]={showContent && id == currentCard}
+						class:motion-rotate-out-[12deg]={!showContent && id != currentCard}
+					>
+						<TeeRender
+							name={card.rightTeeSkin.n}
+							body={card.rightTeeSkin.b}
+							feet={card.rightTeeSkin.f}
+							className="h-full w-full"
+							pose={rightTeePose}
+						/>
+					</div>
+				{/if}
+			</div>
 		</div>
 	</div>
 {/snippet}
@@ -741,7 +770,7 @@
 			class="absolute top-[2%] right-[2%] bottom-[2%] left-[2%] flex flex-col items-center justify-center gap-[3%]"
 		>
 			<div
-				class="absolute top-0 right-0 bottom-[35%] left-0 flex grow items-center justify-center rounded-[1em] border-[0.25em] border-sky-200/60 bg-sky-100/90 pt-[7%]"
+				class="absolute top-0 right-0 bottom-[35%] left-0 flex grow items-center justify-center rounded-[1em] border-[0.25em] border-gray-500/60 bg-gray-800/30 backdrop-blur-xs pt-[7%]"
 			>
 				<div
 					class="flex w-full flex-row flex-wrap items-center justify-center"
@@ -754,7 +783,7 @@
 					{#if totalCards?.titles}
 						{#each totalCards.titles as title}
 							<span
-								class="m-[1%] rounded-[1em] border border-t-white/30 border-l-white/30 border-black/30 px-[2%] py-[0.25%] text-center font-semibold text-nowrap"
+								class="m-[1%] rounded-[1em] border-[0.1em] border-t-white/30 border-l-white/30 border-black/30 px-[2%] py-[0.25%] text-center font-semibold text-nowrap"
 								style="background-color: {title.bg};{title.color ? `color: ${title.color};` : ''}"
 							>
 								{title.text}
@@ -763,7 +792,7 @@
 					{/if}
 				</div>
 			</div>
-			<div class="absolute top-[1%] font-semibold text-black">
+			<div class="absolute top-[1%] font-semibold text-white">
 				{m.page_badges_for({ year: data.year, name: data.name! })}
 			</div>
 			<div
@@ -782,9 +811,17 @@
 				/>s
 			</div>
 			<div
-				class="motion-duration-500 motion-delay-1500 absolute right-[5%] bottom-[2.5%] flex h-[30%] w-[30%]"
+				class="motion-duration-500 motion-delay-1500 absolute right-[2.5%] bottom-[2.5%] flex h-[30%] w-[30%]"
 				class:motion-opacity-in-0={id == currentCard}
 			>
+				<div
+					class="absolute top-0 left-0 h-full w-full rounded-[0.8em] bg-cover bg-center bg-[#77bdfa] overflow-hidden border-blue-800/10 border-[0.2em]"
+				>
+					<div
+						style="background-image: url({shareableQRCode});"
+						class="w-full h-full bg-cover bg-center mix-blend-overlay"
+					></div>
+				</div>
 				<div class="absolute bottom-0 w-full flex flex-row items-center justify-center">
 					<div
 						class="flex flex-row items-center justify-center rounded-[0.8em] border border-t-white/30 border-l-white/30 border-black/30 translate-y-[50%] px-[3%] py-[1%] text-center text-[0.65em] text-nowrap text-white gap-1 transition-colors"
@@ -818,10 +855,6 @@
 						{/if}
 					</div>
 				</div>
-				<div
-					class="h-full w-full rounded-[0.8em] bg-white bg-cover bg-center"
-					style="background-image: url({shareableQRCode});"
-				></div>
 			</div>
 		</div>
 	</div>
@@ -863,7 +896,7 @@
 					<a
 						data-sveltekit-replacestate
 						href="/"
-						class="-motion-translate-x-in-100 motion-duration-500 motion-delay-100 rounded-tr-xl backdrop-blur-sm flex items-center justify-center bg-black/80 pl-2 pr-4 py-1.5 text-sm text-white hover:bg-zinc-900 gap-1"
+						class="-motion-translate-x-in-100 motion-duration-500 motion-delay-100 rounded-tr-xl backdrop-blur-xs flex items-center justify-center bg-black/80 pl-2 pr-4 py-1.5 text-sm text-white hover:bg-zinc-900 gap-1"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -915,7 +948,7 @@
 						></div>
 						{#if error}
 							<div
-								class="motion-preset-shake rounded-3xl bg-red-700/40 px-8 py-4 text-xl font-bold text-white backdrop-blur-sm"
+								class="motion-preset-shake rounded-3xl bg-red-700/40 px-8 py-4 text-xl font-bold text-white backdrop-blur-xs"
 							>
 								UNKNOWN_ERROR
 							</div>
@@ -1147,7 +1180,7 @@
 				{#if dropdownOpen}
 					<div
 						in:slide={{ duration: 300, easing: easeOut }}
-						class="absolute bottom-full text-sm right-0 mb-1 bg-slate-600/70 backdrop-blur-sm rounded-lg shadow-lg z-10 grid grid-cols-2 min-w-72 overflow-hidden"
+						class="absolute bottom-full text-sm right-0 mb-1 bg-slate-600/70 backdrop-blur-xs rounded-lg shadow-lg z-10 grid grid-cols-2 min-w-72 overflow-hidden"
 					>
 						{#each locales as locale}
 							<button

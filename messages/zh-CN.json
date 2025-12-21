@@ -7,9 +7,7 @@
 	"card_finishes_verse_2": "在这其中<br>有<span class=\"text-orange-400\"> {count} 次</span>冲线，都是在",
 	"card_finishes_verse_2_period": [
 		{
-			"declarations": [
-				"input period"
-			],
+			"declarations": ["input period"],
 			"match": {
 				"period=afternoon": "下午",
 				"period=dawn": "清晨",
@@ -18,9 +16,7 @@
 				"period=morning": "上午",
 				"period=night": "晚上"
 			},
-			"selectors": [
-				"period"
-			]
+			"selectors": ["period"]
 		}
 	],
 	"card_finishes_verse_3": "这个时间段对你来说有更加特殊的意义吗？",
@@ -173,20 +169,18 @@
 	"title_unstoppable_duo": "所向披靡",
 	"title_veteran": [
 		{
-			"declarations": [
-				"input years"
-			],
+			"declarations": ["input years"],
 			"match": {
 				"years=*": "{years}年老兵",
 				"years=10": "十年老兵",
 				"years=5": "五年老兵"
 			},
-			"selectors": [
-				"years"
-			]
+			"selectors": ["years"]
 		}
 	],
 	"unit_maps": "{count} 张地图",
 	"unit_times": "{count} 次",
-	"unit_years": "{count} 年"
+	"unit_years": "{count} 年",
+	"card_chart_points": "你的 {year} 分数走势",
+	"card_chart_types": "你的 {year} 活跃类型"
 }

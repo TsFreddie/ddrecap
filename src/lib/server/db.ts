@@ -1,5 +1,4 @@
 import { Database } from 'bun:sqlite';
-import { get } from 'svelte/store';
 
 const db = new Database('./cache/ddnet.sqlite');
 
@@ -51,13 +50,13 @@ export function getPlayerDatabase(name: string) {
 			(r) => [r.Map, r.Time, r.Timestamp, r.Server] as [string, number, number, string]
 		),
 		teamRaces: teamRaces.map((r) => {
-			return [
-				Buffer.from(r.ID, 'hex').toString('base64').replace(/=+$/, ''),
-				r.Name,
-				r.Map,
-				r.Time,
-				r.Timestamp
-			] as [string, string, number, string, number];
+			return [Buffer.from(r.ID, 'hex'), r.Name, r.Map, r.Time, r.Timestamp] as [
+				Uint8Array,
+				string,
+				number,
+				string,
+				number
+			];
 		})
 	};
 }

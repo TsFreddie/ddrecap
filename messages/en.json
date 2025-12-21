@@ -251,5 +251,7 @@
 			},
 			"selectors": ["plural"]
 		}
-	]
+	],
+	"card_chart_points": "Your {year} Point Trend",
+	"card_chart_types": "Your {year} Map Activity"
 }

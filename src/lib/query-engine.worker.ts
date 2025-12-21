@@ -3,6 +3,9 @@ import sql, { type BindParams } from 'sql.js';
 import { DateTime, Duration } from 'luxon';
 import type { MapList } from './server/fetches/maps';
 
+const b2s = (bytes: Uint8Array) =>
+	bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
+
 export type YearlyData = {
 	/** first finish [map, timestamp, years] */
 	ff: [string, number, number];
@@ -48,6 +51,10 @@ export type YearlyData = {
 	fw: [number, number, string];
 	/** biggest improvement [map, time, delta, timestamp, prevtimestamp] */
 	bi: [string, number, number, number, number];
+	/** [graph] point chart */
+	graph_p: number[];
+	/** [graph] type charts */
+	graph_t: [string, number][];
 };
 
 export const query = async (
@@ -61,13 +68,13 @@ export const query = async (
 		locateFile: (file) => `/assets/${file}`
 	});
 	progress(20);
-	const playerData = await fetch(`/download/${encodeURIComponent(name)}`);
+	const playerData = await fetch(`/download/${encodeURIComponent(name)}?v=1`);
 	progress(30);
 	const playerDataBuffer = await playerData.arrayBuffer();
 	progress(40);
 	const unpacked: {
 		races: [string, number, number, string][];
-		teamRaces: [string, string, number, string, number][];
+		teamRaces: [Uint8Array, string, number, string, number][];
 	} = unpack(playerDataBuffer as any);
 
 	const db = new SQL.Database();
@@ -94,12 +101,12 @@ export const query = async (
 			Timestamp INTEGER
 		);
 
-		CREATE INDEX maps_map ON maps(Map);
-		CREATE INDEX maps_timestamp ON maps(Timestamp);
-		CREATE INDEX race_map ON race(Map);
-		CREATE INDEX race_timestamp ON race(Timestamp);
-		CREATE INDEX teamrace_map ON teamrace(Map);
-		CREATE INDEX teamrace_timestamp ON teamrace(Timestamp);
+		CREATE INDEX maps_map_idx ON maps(Map);
+		CREATE INDEX maps_timestamp_idx ON maps(Timestamp);
+		CREATE INDEX race_map_idx ON race(Map);
+		CREATE INDEX race_timestamp_idx ON race(Timestamp);
+		CREATE INDEX teamrace_map_idx ON teamrace(Map);
+		CREATE INDEX teamrace_timestamp_idx ON teamrace(Timestamp);
 	`);
 
 	db.run('BEGIN TRANSACTION');
@@ -116,7 +123,7 @@ export const query = async (
 		'INSERT INTO teamrace (ID, Name, Map, Time, Timestamp) VALUES (?, ?, ?, ?, ?)'
 	);
 	for (const teamrace of unpacked.teamRaces) {
-		insertTeamRaceStmt.run(teamrace);
+		insertTeamRaceStmt.run([b2s(teamrace[0]), ...teamrace.slice(1)]);
 	}
 	insertTeamRaceStmt.free();
 
@@ -139,7 +146,7 @@ export const query = async (
 	progress(50);
 
 	let queryCount = 0;
-	const totalQuery = 20;
+	const totalQuery = 22;
 
 	const one = (sql: string, args: BindParams = []) => {
 		const stmt = db.prepare(sql, args);
@@ -519,7 +526,56 @@ FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < 
 		bi
 	};
 
-	console.log('TOTAL QUERY COUNT: ', queryCount);
+	const pointHistory = all(`
+WITH
+first_finishes AS (
+    SELECT 
+        MIN(race.Timestamp) as Timestamp,
+        maps.Points
+    FROM race
+    JOIN maps ON race.Map = maps.Map
+    GROUP BY race.Map
+)
+SELECT 
+    Timestamp,
+    SUM(Points) OVER (ORDER BY Timestamp) as Points
+FROM first_finishes
+ORDER BY Timestamp;`) as [number, number][];
+
+	// find this years point history
+	let pointer = 0;
+	const pointList: number[] = [];
+	const samples = 12;
+	for (let sample = 0; sample <= samples; sample++) {
+		const time = yearStart + (yearEnd - yearStart) * (sample / samples);
+		while (pointer < pointHistory.length && pointHistory[pointer][0] < time) {
+			pointer++;
+		}
+		const points = pointer > 0 ? pointHistory[pointer - 1][1] : 0;
+		pointList.push(points);
+	}
+	data.graph_p = pointList;
+
+	const mapTypeTimes = Object.fromEntries(
+		(
+			all(
+				`SELECT Type, SUM(Time) as Time FROM race JOIN maps ON race.Map = maps.Map WHERE race.Timestamp >= ? AND race.Timestamp <= ? GROUP BY SUBSTR(Type, 1, 3);`,
+				[yearStart, yearEnd]
+			) as [string, number][]
+		).map((t) => [t[0].split('.')[0], t[1]])
+	);
+	const types = [
+		'Oldschool',
+		'DDmaX',
+		'Race',
+		'Novice',
+		'Moderate',
+		'Brutal',
+		'Insane',
+		'Solo',
+		'Dummy'
+	];
+	data.graph_t = types.map((t) => [t, mapTypeTimes[t] || 0]);
 	progress(50 + ((totalQuery + 1) / (totalQuery + 2)) * 50);
 
 	return {

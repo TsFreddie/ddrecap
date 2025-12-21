@@ -1,3 +1,4 @@
+import type { Chart, ChartConfiguration } from 'chart.js';
 import { mapType } from './ddnet/helpers';
 import {
 	date,
@@ -36,6 +37,7 @@ export interface CardBannerItem {
 export type CardItem = CardTextItem | CardBannerItem;
 
 export interface CardData {
+	border?: string;
 	titles?: { bg: string; color: string; text: string }[];
 	content?: CardItem[];
 	w?: number;
@@ -51,6 +53,7 @@ export interface CardData {
 	leftTeeSkin?: { n: string; b?: number; f?: number } | null;
 	rightTeeTop?: number;
 	rightTeeSkin?: { n: string; b?: number; f?: number } | null;
+	chart?: ChartConfiguration;
 }
 
 export const generateCards = async (
@@ -176,6 +179,114 @@ export const generateCards = async (
 				leftTeeTop: 5,
 				leftTeeSkin: data.skin,
 				mapper: mapFormat('Sunny Side Up')
+			});
+		}
+
+		// 今年分数增长图
+		if (d.graph_p && d.graph_p.length > 0) {
+			let min = d.graph_p[0];
+			let max = d.graph_p[d.graph_p.length - 1];
+
+			min = Math.floor(min / 500) * 500;
+			max = Math.ceil(max / 500) * 500;
+
+			if (max - min < 1000) {
+				max = min + 1000;
+			}
+
+			const steps = (max - min) / 500;
+			let stepSize = 500;
+			const ticksLimit = 4;
+			if (steps > ticksLimit) {
+				let i = ticksLimit;
+				while (i >= 1) {
+					if ((max - min) % i === 0) {
+						stepSize = (max - min) / i;
+						break;
+					}
+					i--;
+				}
+				if (i == 0) {
+					stepSize = (max - min) / ticksLimit;
+				}
+			}
+
+			cards.push({
+				b: 80,
+				content: [
+					{
+						type: 'b',
+						bg: '#fdd300',
+						color: '#000',
+						rotation: -1,
+						text: `<div class="text-[0.8em]">${m.card_chart_points({ year: data.year })}</div>`
+					}
+				],
+				chart: {
+					type: 'line',
+					data: {
+						labels: d.graph_p.map((_, i) => i + 1),
+						datasets: [
+							{
+								data: d.graph_p,
+								borderColor: '#fdd300',
+								backgroundColor: 'rgba(253, 211, 0, 0.1)',
+								fill: true,
+								pointRadius: 0,
+								tension: 0.2,
+								borderWidth: 5,
+								borderCapStyle: 'round'
+							}
+						]
+					},
+					options: {
+						layout: {
+							padding: {
+								top: 512 * 0.2,
+								bottom: 0,
+								left: 0,
+								right: 20
+							}
+						},
+						plugins: {
+							legend: { display: false }
+						},
+						scales: {
+							x: {
+								display: true,
+								grid: { color: '#d4d4d855', drawTicks: false, tickColor: '#d4d4d855' },
+								ticks: {
+									color: '#0000',
+									align: 'inner',
+									padding: 10,
+									maxRotation: 0,
+									crossAlign: 'near',
+
+									callback: function (_, index) {
+										if (index === 0) return data.year - 1;
+										if (index === d.graph_p!.length - 1) return data.year;
+										return '';
+									}
+								}
+							},
+							y: {
+								display: true,
+								grid: { color: '#d4d4d855', drawTicks: false, tickColor: '#d4d4d855' },
+								ticks: {
+									padding: 20,
+									stepSize,
+									precision: 0,
+									color: '#0000',
+									align: 'inner'
+								},
+								min,
+								max
+							}
+						}
+					}
+				},
+				background: '/assets/yearly/ssu2.png',
+				mapper: mapFormat('Slippy Slide Up')
 			});
 		}
 	} else if (d.tp === 0) {
@@ -822,6 +933,80 @@ export const generateCards = async (
 				...bg
 			});
 		}
+	}
+
+	if (d.graph_t && d.graph_t.filter((t) => t[1] > 0).length > 0) {
+		// 今年模式雷达图
+		const maxValue = Math.max(...d.graph_t.map((t) => t[1]));
+		const labels = d.graph_t.map((t) => mapType(t[0]));
+		const dataValues = d.graph_t.map((t) => t[1]);
+
+		cards.push({
+			b: 80,
+			content: [
+				{
+					type: 'b',
+					bg: '#fdd300',
+					color: '#000',
+					rotation: 1.2,
+					text: `<div class="text-[0.8em]">${m.card_chart_types({ year: data.year })}</div>`
+				}
+			],
+			chart: {
+				type: 'radar',
+				data: {
+					labels,
+					datasets: [
+						{
+							data: dataValues,
+							borderColor: '#fdd300',
+							backgroundColor: 'rgba(253, 211, 0, 0.2)',
+							borderWidth: 3,
+							pointRadius: 4,
+							pointBackgroundColor: '#fdd300',
+							pointBorderColor: '#fdd300',
+							borderCapStyle: 'round'
+						}
+					]
+				},
+				options: {
+					layout: {
+						padding: {
+							top: 512 * 0.2,
+							bottom: 0,
+							left: 20,
+							right: 20
+						}
+					},
+					plugins: {
+						legend: { display: false }
+					},
+					scales: {
+						r: {
+							angleLines: {
+								color: '#d4d4d855'
+							},
+							grid: {
+								color: '#d4d4d855'
+							},
+							backgroundColor: '#0000001d',
+							pointLabels: {
+								color: '#0000',
+								padding: 10
+							},
+							ticks: {
+								display: false,
+								stepSize: Math.ceil(maxValue / 4)
+							},
+							suggestedMin: 0,
+							suggestedMax: maxValue
+						}
+					}
+				}
+			},
+			background: '/assets/yearly/ssu2.png',
+			mapper: mapFormat('Slippy Slide Up')
+		});
 	}
 
 	if (d.mfm && d.mfm[1] > 1) {

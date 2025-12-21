@@ -13,7 +13,7 @@ export const GET = async ({ params, fetch }) => {
 			status: 404,
 			headers: {
 				'Content-Type': 'application/json',
-				'Cache-Control': 'public, max-age=1800' // 30 minutes
+				'Cache-Control': 'public, max-age=1209600' // two weeks
 			}
 		});
 	}
@@ -29,7 +29,7 @@ export const GET = async ({ params, fetch }) => {
 	return new Response(JSON.stringify({ playtime }), {
 		headers: {
 			'Content-Type': 'application/json',
-			'Cache-Control': 'public, max-age=1800' // 30 minutes
+			'Cache-Control': 'public, max-age=1209600' // two weeks
 		}
 	});
 };
