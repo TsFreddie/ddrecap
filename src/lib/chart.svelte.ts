@@ -4,6 +4,11 @@ import type { Action } from 'svelte/action';
 Chart.defaults.font.size = 22;
 Chart.defaults.font.family =
 	'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji';
+Chart.defaults.animation = {
+	duration: 1000,
+	easing: 'easeInOutQuart',
+	delay: 700,
+}
 
 const chartAreaBackground: Plugin = {
 	id: 'chartAreaBackground',
@@ -156,18 +161,22 @@ const createChart = (node: HTMLCanvasElement, config: ChartConfiguration, locale
 	return chart;
 };
 
-export const chart: Action<HTMLCanvasElement, { config: ChartConfiguration; locale: string }> = (
-	node,
-	params
-) => {
-	let chart = createChart(node, params.config, params.locale);
+export const chart: Action<
+	HTMLCanvasElement,
+	{ show?: boolean; config: ChartConfiguration; locale: string }
+> = (node, params) => {
+	let chart = params.show ? createChart(node, params.config, params.locale) : null;
+	console.log(chart);
 	return {
 		update(params) {
-			chart.destroy();
-			chart = createChart(node, params.config, params.locale);
+			if (chart) {
+				chart.clear();
+				chart.destroy();
+			}
+			chart = params.show ? createChart(node, params.config, params.locale) : null;
 		},
 		destroy() {
-			chart.destroy();
+			if (chart) chart.destroy();
 		}
 	};
 };

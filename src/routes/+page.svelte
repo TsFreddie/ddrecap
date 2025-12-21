@@ -657,7 +657,11 @@
 						class="w-full! h-full!"
 						width="512"
 						height="512"
-						use:chart={{ config: card.chart, locale: getLocale() }}
+						use:chart={{
+							config: card.chart,
+							locale: getLocale(),
+							show: id == currentCard && showContent
+						}}
 					></canvas>
 				</div>
 			{/if}
