@@ -666,7 +666,7 @@
 				</div>
 			{/if}
 			<div
-				class="absolute flex flex-col items-center justify-center gap-[3%]"
+				class="absolute flex flex-col items-center justify-center gap-[2%]"
 				style="left: {card.l ?? 2.5}%; top: {card.t ?? 2.5}%; right: {card.r ??
 					2.5}%; bottom: {card.b ?? 2.5}%;"
 			>
@@ -685,7 +685,10 @@
 								class="rounded-[0.5em] text-center font-semibold"
 								style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
 									0}%);background-color: {item.bg};margin-top: {item.t ??
-									0}%;margin-bottom: {item.b ?? 0}%;{item.color ? `color: ${item.color};` : ''};padding-left: {item.px ?? 4.5}%;padding-right: {item.px ?? 4.5}%;padding-top: {item.py ?? 1.5}%;padding-bottom: {item.py ?? 1.5}%;"
+									0}%;margin-bottom: {item.b ?? 0}%;{item.color
+									? `color: ${item.color};`
+									: ''};padding-left: {item.px ?? 4.5}%;padding-right: {item.px ??
+									4.5}%;padding-top: {item.py ?? 1.5}%;padding-bottom: {item.py ?? 1.5}%;"
 							>
 								{@html item.text}
 							</div>
@@ -740,7 +743,7 @@
 		class:motion-opacity-out-0={id != currentCard}
 	>
 		<div
-			class="absolute flex flex-col items-center justify-center gap-[3%] transition-opacity"
+			class="absolute flex flex-col items-center justify-center gap-[2%] transition-opacity"
 			class:opacity-0={!showContent}
 			style="left: {card.l ?? 2.5}%; top: {card.t ?? 2.5}%; right: {card.r ??
 				2.5}%; bottom: {card.b ?? 2.5}%;"
@@ -771,7 +774,7 @@
 	{@const titleCount = totalCards?.titles.length || 0}
 	<div class="flex h-full w-full items-center justify-center text-[0.6em]">
 		<div
-			class="absolute top-[2%] right-[2%] bottom-[2%] left-[2%] flex flex-col items-center justify-center gap-[3%]"
+			class="absolute top-[2%] right-[2%] bottom-[2%] left-[2%] flex flex-col items-center justify-center gap-[2%]"
 		>
 			<div
 				class="absolute top-0 right-0 bottom-[35%] left-0 flex grow items-center justify-center rounded-[1em] border-[0.25em] border-gray-500/60 bg-gray-800/30 backdrop-blur-xs pt-[7%]"
@@ -1116,9 +1119,9 @@
 					<div
 						aria-label="card {i + 1}"
 						style="--n: {i * 25}ms"
-						class="w-2 h-2 rounded-full bg-white/50 transition-all duration-300 motion-opacity-in-0 motion-scale-in-0 motion-delay-(--n) shadow shadow-black/50
+						class="w-2 h-2 rounded-full transition-all duration-300 motion-opacity-in-0 border border-blue-100/50 motion-scale-in-0 motion-delay-(--n) shadow shadow-black/50
 					
-						{i === currentCard ? 'w-3 h-3 bg-linear-to-r from-blue-400 to-teal-400' : ''}"
+						{i === currentCard ? 'w-3 h-3 bg-linear-to-r from-blue-400 to-teal-400' : 'bg-white/10'}"
 					></div>
 				{/each}
 			</div>

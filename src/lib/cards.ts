@@ -956,7 +956,7 @@ export const generateCards = async (
 				},
 				{
 					type: 'b',
-					bg: '#60a5fa',
+					bg: '#4681e8',
 					color: '#fff',
 					rotation: -0.5,
 					px: 3,
@@ -986,7 +986,7 @@ export const generateCards = async (
 							borderColor: '#60a5fa',
 							backgroundColor: 'rgba(96, 165, 250, 0.2)',
 							borderWidth: 3,
-							pointRadius: 4,
+							pointRadius: 2,
 							pointBackgroundColor: '#60a5fa',
 							pointBorderColor: '#60a5fa',
 							borderCapStyle: 'round'
@@ -1028,8 +1028,8 @@ export const generateCards = async (
 					}
 				}
 			},
-			background: '/assets/yearly/ssu2.png',
-			mapper: mapFormat('Slippy Slide Up')
+			background: '/assets/yearly/ud.png',
+			mapper: mapFormat('Until Dawn')
 		});
 	}
 
@@ -1101,8 +1101,8 @@ export const generateCards = async (
 					datasets: [
 						{
 							data: t5mData,
-							backgroundColor: 'rgba(253, 211, 0, 0.8)',
-							borderColor: '#fdd300',
+							borderColor: '#60a5fa',
+							backgroundColor: 'rgba(96, 165, 250, 0.8)',
 							borderWidth: 2,
 							borderRadius: 4,
 							barPercentage: 0.7,
@@ -1130,7 +1130,7 @@ export const generateCards = async (
 								display: false,
 								callback: () => ''
 							},
-							max: maxFinishes * 1.15
+							max: maxFinishes * 1.3
 						},
 						y: {
 							display: true,
@@ -1245,22 +1245,26 @@ export const generateCards = async (
 		}
 		allTitles.push(...titles);
 
+		// Group bars by y value for proper Gantt display
+		const uniqueYValues = d.graph_fw
+			? [...new Set(d.graph_fw.map((item) => item.y))].sort((a, b) => a - b)
+			: [];
 		const ganttChart: ChartConfiguration | undefined =
 			d.graph_fw && d.graph_fw.length > 0
 				? ({
 						type: 'bar',
 						data: {
-							labels: d.graph_fw.map((_, i) => i),
+							labels: uniqueYValues,
 							datasets: [
 								{
-									data: d.graph_fw.map((item) => [item.x[0], item.x[1]]),
-									backgroundColor: 'rgba(96, 165, 250, 0.1)',
-									borderColor: 'rgba(96, 165, 250, 0.3)',
-									borderWidth: 1,
-									borderRadius: 2,
-									borderAlign: 'inner',
+									data: d.graph_fw.map((item) => ({
+										x: [item.x[0], item.x[1]],
+										y: item.y
+									})) as any,
+									backgroundColor: 'rgba(96, 165, 250, 0.4)',
+									borderRadius: 5,
 									borderSkipped: false,
-									barPercentage: 1,
+									barPercentage: 0.95,
 									categoryPercentage: 1
 								}
 							]
@@ -1290,8 +1294,9 @@ export const generateCards = async (
 									callback: () => ''
 								},
 								y: {
+									type: 'category',
 									display: false,
-									reverse: true,
+									reverse: false,
 									callback: () => ''
 								}
 							}
@@ -1490,7 +1495,7 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: m.card_stack_verse_4({ members: escapeHTML(d.bt[2]) })
+					text: m.card_stack_verse_4({ members: escapeHTML(d.bt[2].join(', ')) })
 				}
 			],
 			background: bgMap(d.bt[1]),

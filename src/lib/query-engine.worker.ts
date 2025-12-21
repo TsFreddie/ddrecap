@@ -36,7 +36,7 @@ export type YearlyData = {
 	/** most played teammates [[name, num], [name, num]] */
 	mpt: [string, number][];
 	/** biggest team size [teamsize, map, playerNames, timestamp] */
-	bt: [number, string, string, number];
+	bt: [number, string, string[], number];
 	/** nearest release record [map, time] */
 	nrr: [string, number];
 	/** mapper special */
@@ -399,7 +399,7 @@ WITH FilteredIDs AS (
     FROM teamrace
     WHERE Timestamp >= ? AND Timestamp <= ? AND ID != ''
 )
-SELECT COUNT() as Num, t.Map, GROUP_CONCAT(t.Name, ', '), t.Timestamp
+SELECT COUNT() as Num, t.Map, GROUP_CONCAT(t.Name, '\u0003'), t.Timestamp
 FROM teamrace t
 JOIN FilteredIDs f ON t.ID = f.ID
 GROUP BY t.ID ORDER BY Num DESC LIMIT 1;`,
@@ -470,9 +470,9 @@ SELECT Server, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? AND Timestamp <= ?
 	// find all the map finishes in the 2 hour span
 	if (mostDistinctMapFinishWindow) {
 		const mapFinishes = all(
-			`SELECT Map, min(Timestamp) as T FROM race WHERE timestamp >= ? AND timestamp < ? GROUP BY Map ORDER BY T`,
+			`SELECT Map, Timestamp, min(Timestamp - Time) as T FROM race WHERE timestamp >= ? AND timestamp < ? GROUP BY Map ORDER BY T`,
 			[mostDistinctMapFinishWindow[0] - 1800, mostDistinctMapFinishWindow[0] + 5400]
-		) as [string, number][];
+		) as [string, number, number][];
 
 		// sliding window find the most finishes in a 60 minute window
 		let left = 0;
@@ -507,16 +507,18 @@ SELECT Server, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? AND Timestamp <= ?
 			.sort((a, b) => a[1] - b[1])
 			.reduce(
 				(acc, [map]) => {
-					if (!acc[map]) acc[map] = Object.keys(acc).length;
+					if (acc[map] == null) acc[map] = Object.keys(acc).length;
 					return acc;
 				},
 				{} as Record<string, number>
 			);
 
-		graph_fw = finishDetails.map(([map, start, end]) => ({
-			x: [start, end],
-			y: mapIds[map]
-		}));
+		graph_fw = finishDetails
+			.map(([map, start, end]) => ({
+				x: [start, end],
+				y: mapIds[map]
+			}))
+			.sort((a, b) => a.y - b.y);
 	} else {
 		one(`SELECT 1`);
 		one(`SELECT 1`);
@@ -549,7 +551,7 @@ FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < 
 		t5m,
 		lf,
 		mpt,
-		bt,
+		bt: [bt[0], bt[1], bt[2].split('\u0003'), bt[3]],
 		map,
 		rt,
 		tt,
