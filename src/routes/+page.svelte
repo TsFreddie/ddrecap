@@ -680,7 +680,10 @@
 							<div
 								class="rounded-[1em] border-[0.05em] border-zinc-500 bg-zinc-700/90 px-[4%] py-[1%] text-center text-[0.7em]"
 								style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
-									0}%);margin-top: {item.t ?? 0}%;margin-bottom: {item.b ?? 0}%;"
+									0}%);margin-top: {item.t ?? 0}%;margin-bottom: {item.b ?? 0}%;{item.max
+									? `
+									max-height: ${item.max}%;`
+									: ''}"
 							>
 								{@html hackText(item.text)}
 							</div>
@@ -717,6 +720,7 @@
 									name={swarm.skin.n}
 									body={swarm.skin.b}
 									feet={swarm.skin.f}
+									emote={swarm.emote}
 									className="h-full w-full"
 									pose={genPose(swarm.angle, swarm.var)}
 								/>

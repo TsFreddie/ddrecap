@@ -14,12 +14,12 @@ import {
 import type { m as messages } from './paraglide/messages';
 import type { YearlyData } from './query-engine.worker';
 import { createRng, stringHash } from './pose';
-import { AsyncQueue } from './async-queue';
 
 export interface CardTextItem {
 	type: 't';
 	text: string;
 	rotation?: number;
+	max?: number;
 	x?: number;
 	t?: number;
 	b?: number;
@@ -67,6 +67,7 @@ export interface CardData {
 		vy: number;
 		delay: number;
 		skin: Skin;
+		emote: number;
 		angle: number;
 		var: number;
 	}[];
@@ -109,10 +110,20 @@ export const generateCards = async (
 
 	const tasks: (() => Promise<void>)[] = [];
 	const runTasks = async () => {
-		for (let i = 0; i < tasks.length; i++) {
-			await tasks[i]();
-			progress(i / (tasks.length - 1));
-		}
+		const totalTasks = tasks.length;
+		let finished = 0;
+		const prog = () => {
+			finished++;
+			progress(finished / totalTasks);
+		};
+		await Promise.all(
+			tasks.map(async (task) => {
+				try {
+					await task();
+				} catch {}
+				prog();
+			})
+		);
 		progress(1);
 	};
 
@@ -1517,6 +1528,7 @@ export const generateCards = async (
 		const deg2rad = Math.PI / 180;
 		const delta = 1 / members.length;
 		const seed = stringHash(data.name);
+		console.log(seed);
 		const rng = createRng(seed);
 
 		let indexes = Array.from({ length: members.length }, (_, i) => i);
@@ -1530,14 +1542,26 @@ export const generateCards = async (
 		for (let i = 0; i < members.length; i++) {
 			// Random angle for this member (distribute evenly with some variance)
 			const baseDeg = i * delta * 310 + 140;
-			const baseAngle = (baseDeg + rng() * delta) * deg2rad;
+			const baseAngle = (baseDeg + rng() * Math.max(delta * 310 - 8, 0)) * deg2rad;
 			const angle = baseAngle;
 
 			// Direction vector
 			const dirX = Math.cos(angle);
 			const dirY = Math.sin(angle);
 
-			const edgeOffset = 1 + (rng() - 0.5);
+			// Calculate corner proximity - corners are at 45°, 135°, 225°, 315°
+			const normalizedAngle = ((((angle * 180) / Math.PI) % 360) + 360) % 360;
+			const cornerAngles = [45, 135, 225, 315];
+			const minCornerDist = Math.min(
+				...cornerAngles.map((c) =>
+					Math.min(Math.abs(normalizedAngle - c), 360 - Math.abs(normalizedAngle - c))
+				)
+			);
+			const linearProximity = 1 - minCornerDist / 45;
+			const cornerProximity = Math.pow(linearProximity, 8); // More concentrated near corners
+			console.log(angle / deg2rad, minCornerDist, cornerProximity);
+			const cornerOffset = -cornerProximity;
+			const edgeOffset = 1 + (rng() * 4.2 - 3.0);
 
 			// Find intersection with card boundary using robust line-rect intersection
 			const intersections: Array<{ t: number; edge: string; x: number; y: number }> = [];
@@ -1606,7 +1630,8 @@ export const generateCards = async (
 				vy: -dirY,
 				delay: indexes[i] * delayDelta + 0.5,
 				skin: { n: 'default' },
-				angle: (-angle * 180) / Math.PI + 165,
+				emote: Math.floor(rng() * 4),
+				angle: (-angle * 180 + 10 * rng()) / Math.PI + 165,
 				var: rng() * 10 - 5
 			};
 
@@ -1619,16 +1644,16 @@ export const generateCards = async (
 			// For left/right edges: use t for vertical positioning
 			// For top/bottom edges: use l for horizontal positioning
 			if (closest.edge === 'left') {
-				entry.l = -edgeOffset;
+				entry.l = -edgeOffset - cornerOffset * 1.5;
 				entry.t = edgeY;
 			} else if (closest.edge === 'right') {
-				entry.r = -edgeOffset;
+				entry.r = -edgeOffset - cornerOffset * 1.5;
 				entry.t = edgeY;
 			} else if (closest.edge === 'top') {
-				entry.t = -edgeOffset;
+				entry.t = -edgeOffset - cornerOffset * 3.5 - 1.0;
 				entry.l = edgeX;
 			} else if (closest.edge === 'bottom') {
-				entry.b = -edgeOffset;
+				entry.b = -edgeOffset - cornerOffset * 3.5;
 				entry.l = edgeX;
 			}
 
@@ -1660,7 +1685,8 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: m.card_stack_verse_4({ members: escapeHTML(d.bt[2].join(', ')) })
+					text: m.card_stack_verse_4({ members: escapeHTML(d.bt[2].join(', ')) }),
+					max: 30
 				}
 			],
 			swarm: swarmEntries,
