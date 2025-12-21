@@ -253,5 +253,7 @@
 		}
 	],
 	"card_chart_points": "Your {year} Point Trend",
-	"card_chart_types": "Your {year} Map Activity"
+	"card_chart_types": "Your {year} Map Activity",
+	"card_chart_completion": "and completion rate",
+	"card_chart_top_maps": "Your {year} Top 5 Most Finished Maps"
 }

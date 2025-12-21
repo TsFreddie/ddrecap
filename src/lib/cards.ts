@@ -29,6 +29,8 @@ export interface CardBannerItem {
 	color?: string;
 	text: string;
 	rotation?: number;
+	px?: number;
+	py?: number;
 	x?: number;
 	t?: number;
 	b?: number;
@@ -409,23 +411,23 @@ export const generateCards = async (
 						bg: '#fdd300',
 						color: '#000',
 						text: `${escapeHTML(d.mpg[0])}`,
-						rotation: -12,
-						x: -50
+						rotation: -6,
+						x: -2
 					},
 					{
 						type: 't',
 						text: m.card_peak_performer_verse_2(),
 						t: -3,
 						b: -3,
-						rotation: -12
+						rotation: -6
 					},
 					{
 						type: 'b',
 						bg: '#fdd300',
 						color: '#000',
 						text: `${d.mpg[1]} pts`,
-						rotation: -12,
-						x: 50
+						rotation: -6,
+						x: 2
 					},
 					{
 						type: 't',
@@ -455,23 +457,23 @@ export const generateCards = async (
 						bg: '#fdd300',
 						color: '#000',
 						text: `${escapeHTML(d.mpg[0])}`,
-						rotation: -12,
-						x: -50
+						rotation: -6,
+						x: -2
 					},
 					{
 						type: 't',
 						text: m.card_steady_progress_verse_2(),
 						t: -3,
 						b: -3,
-						rotation: -12
+						rotation: -6
 					},
 					{
 						type: 'b',
 						bg: '#fdd300',
 						color: '#000',
 						text: `${d.mpg[1]} pts`,
-						rotation: -12,
-						x: 50
+						rotation: -6,
+						x: 2
 					},
 					{
 						type: 't',
@@ -935,11 +937,12 @@ export const generateCards = async (
 		}
 	}
 
-	if (d.graph_t && d.graph_t.filter((t) => t[1] > 0).length > 0) {
+	if (d.graph_t && d.graph_t.activity.filter((t) => t > 0).length > 0) {
 		// 今年模式雷达图
-		const maxValue = Math.max(...d.graph_t.map((t) => t[1]));
-		const labels = d.graph_t.map((t) => mapType(t[0]));
-		const dataValues = d.graph_t.map((t) => t[1]);
+		const maxValue = Math.max(...d.graph_t.activity);
+		const labels = d.graph_t.labels;
+		const activity = d.graph_t.activity.map((t) => t / maxValue);
+		const completion = d.graph_t.completion;
 
 		cards.push({
 			b: 80,
@@ -950,6 +953,17 @@ export const generateCards = async (
 					color: '#000',
 					rotation: 1.2,
 					text: `<div class="text-[0.8em]">${m.card_chart_types({ year: data.year })}</div>`
+				},
+				{
+					type: 'b',
+					bg: '#60a5fa',
+					color: '#fff',
+					rotation: -0.5,
+					px: 3,
+					py: 0.75,
+					t: -1,
+					x: 50,
+					text: `<div class="text-[0.6em]">${m.card_chart_completion()}</div>`
 				}
 			],
 			chart: {
@@ -958,13 +972,23 @@ export const generateCards = async (
 					labels,
 					datasets: [
 						{
-							data: dataValues,
+							data: activity,
 							borderColor: '#fdd300',
 							backgroundColor: 'rgba(253, 211, 0, 0.2)',
 							borderWidth: 3,
 							pointRadius: 4,
 							pointBackgroundColor: '#fdd300',
 							pointBorderColor: '#fdd300',
+							borderCapStyle: 'round'
+						},
+						{
+							data: completion,
+							borderColor: '#60a5fa',
+							backgroundColor: 'rgba(96, 165, 250, 0.2)',
+							borderWidth: 3,
+							pointRadius: 4,
+							pointBackgroundColor: '#60a5fa',
+							pointBorderColor: '#60a5fa',
 							borderCapStyle: 'round'
 						}
 					]
@@ -989,17 +1013,17 @@ export const generateCards = async (
 							grid: {
 								color: '#d4d4d855'
 							},
-							backgroundColor: '#0000001d',
+							backgroundColor: '#0000002d',
 							pointLabels: {
 								color: '#0000',
 								padding: 10
 							},
 							ticks: {
 								display: false,
-								stepSize: Math.ceil(maxValue / 4)
+								stepSize: 0.25
 							},
-							suggestedMin: 0,
-							suggestedMax: maxValue
+							min: 0,
+							max: 1
 						}
 					}
 				}
@@ -1053,29 +1077,74 @@ export const generateCards = async (
 		});
 	}
 
-	if (d.sfm && d.sfm[1] > 1) {
-		// 通过第二多的地图
+	if (d.t5m && d.t5m.length >= 5 && d.t5m.filter((t) => t[1] > 1).length >= 3) {
+		// 通过次数前五的地图
+		const t5mLabels = d.t5m.map((t) => t[0]);
+		const t5mData = d.t5m.map((t) => t[1]);
+		const maxFinishes = Math.max(...t5mData);
+
 		cards.push({
-			titles: [],
+			b: 80,
 			content: [
-				{
-					type: 't',
-					text: m.card_second_map_verse_1()
-				},
 				{
 					type: 'b',
 					bg: '#fdd300',
 					color: '#000',
-					text: `${escapeHTML(d.sfm[0])}`,
-					rotation: -3
-				},
-				{
-					type: 't',
-					text: m.card_second_map_verse_2({ finishes: d.sfm[1] })
+					rotation: -0.43,
+					text: `<div class="text-[0.8em]">${m.card_chart_top_maps({ year: data.year })}</div>`
 				}
 			],
-			background: bgMap(d.sfm[0]),
-			mapper: mapFormat(d.sfm[0])
+			chart: {
+				type: 'bar',
+				data: {
+					labels: t5mLabels,
+					datasets: [
+						{
+							data: t5mData,
+							backgroundColor: 'rgba(253, 211, 0, 0.8)',
+							borderColor: '#fdd300',
+							borderWidth: 2,
+							borderRadius: 4,
+							barPercentage: 0.7,
+							categoryPercentage: 0.8
+						}
+					]
+				},
+				options: {
+					indexAxis: 'y',
+					layout: {
+						padding: {
+							top: 512 * 0.2,
+							bottom: 0,
+							left: 0,
+							right: 10
+						}
+					},
+					plugins: {
+						legend: { display: false }
+					},
+					scales: {
+						x: {
+							min: 0,
+							ticks: {
+								display: false,
+								callback: () => ''
+							},
+							max: maxFinishes * 1.15
+						},
+						y: {
+							display: true,
+							grid: { display: false },
+							ticks: {
+								color: '#0000',
+								padding: 10
+							}
+						}
+					}
+				}
+			},
+			background: bgMap(d.t5m[1][0]),
+			mapper: mapFormat(d.t5m[1][0])
 		});
 	}
 
@@ -1176,8 +1245,63 @@ export const generateCards = async (
 		}
 		allTitles.push(...titles);
 
+		const ganttChart: ChartConfiguration | undefined =
+			d.graph_fw && d.graph_fw.length > 0
+				? ({
+						type: 'bar',
+						data: {
+							labels: d.graph_fw.map((_, i) => i),
+							datasets: [
+								{
+									data: d.graph_fw.map((item) => [item.x[0], item.x[1]]),
+									backgroundColor: 'rgba(96, 165, 250, 0.1)',
+									borderColor: 'rgba(96, 165, 250, 0.3)',
+									borderWidth: 1,
+									borderRadius: 2,
+									borderAlign: 'inner',
+									borderSkipped: false,
+									barPercentage: 1,
+									categoryPercentage: 1
+								}
+							]
+						},
+						options: {
+							indexAxis: 'y',
+							skipBarDataLabels: true,
+							noCustomBackground: true,
+							animation: false,
+							layout: {
+								padding: {
+									top: 0,
+									bottom: 0,
+									left: 0,
+									right: 0
+								}
+							},
+							plugins: {
+								legend: { display: false }
+							},
+							scales: {
+								x: {
+									type: 'linear',
+									display: false,
+									min: Math.min(...d.graph_fw.map((item) => item.x[0])),
+									max: Math.max(...d.graph_fw.map((item) => item.x[1])),
+									callback: () => ''
+								},
+								y: {
+									display: false,
+									reverse: true,
+									callback: () => ''
+								}
+							}
+						}
+					} as ChartConfiguration)
+				: undefined;
+
 		cards.push({
 			titles,
+			chart: ganttChart,
 			content: [
 				{
 					type: 't',

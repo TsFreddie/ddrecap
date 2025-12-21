@@ -29,8 +29,8 @@ export type YearlyData = {
 	mps: [string, number];
 	/** most finished map [map, num] */
 	mfm: [string, number];
-	/** second finished map [map, num] */
-	sfm: [string, number];
+	/** top 5 maps */
+	t5m: [string, number][];
 	/** longest time finished race [map, time, timestamp] */
 	lf: [string, number, number];
 	/** most played teammates [[name, num], [name, num]] */
@@ -54,7 +54,16 @@ export type YearlyData = {
 	/** [graph] point chart */
 	graph_p: number[];
 	/** [graph] type charts */
-	graph_t: [string, number][];
+	graph_t: {
+		labels: string[];
+		activity: number[];
+		completion: number[];
+	};
+	/** [graph] grantt chart for fw */
+	graph_fw: {
+		x: number[];
+		y: number;
+	}[];
 };
 
 export const query = async (
@@ -137,7 +146,7 @@ export const query = async (
 			map.points,
 			map.difficulty,
 			map.mapper,
-			DateTime.fromISO(map.release + 'Z').toSeconds()
+			DateTime.fromISO(map.release + 'Z').toSeconds() || 0
 		]);
 	}
 	insertMapStmt.free();
@@ -347,14 +356,14 @@ SELECT Map, COUNT(Map) as Num FROM race
 		[yearStart, yearEnd]
 	) as [string, number];
 
-	/** Second most finished map */
-	const sfm = one(
+	/** Top 5 most finished map */
+	const t5m = all(
 		`
 SELECT Map, COUNT(Map) as Num FROM race 
     WHERE Timestamp >= ? AND Timestamp <= ?
-    GROUP BY Map ORDER BY Num DESC LIMIT 1 OFFSET 1;`,
+    GROUP BY Map ORDER BY Num DESC LIMIT 5;`,
 		[yearStart, yearEnd]
-	) as [string, number];
+	) as [string, number][];
 
 	/** Longest finished race */
 	const lf = one(
@@ -456,6 +465,7 @@ SELECT Server, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? AND Timestamp <= ?
 	) as [number, number];
 
 	let fw: [number, number, string] | undefined;
+	let graph_fw: typeof data.graph_fw;
 
 	// find all the map finishes in the 2 hour span
 	if (mostDistinctMapFinishWindow) {
@@ -486,7 +496,29 @@ SELECT Server, COUNT(*) as Cnt FROM race WHERE Timestamp >= ? AND Timestamp <= ?
 		// collect result
 		const maps = mapFinishes.filter((data) => data[1] >= bestStart && data[1] < bestEnd);
 		fw = [bestStart, maps.length, maps.map((m) => m[0]).join('・')];
+
+		// re-query details about finishes during the window
+		const finishDetails = all(
+			`SELECT Map, Timestamp - Time as Start, Timestamp as End FROM race WHERE Timestamp >= ? AND Timestamp < ?`,
+			[bestStart, bestEnd]
+		) as [string, number, number][];
+
+		const mapIds = finishDetails
+			.sort((a, b) => a[1] - b[1])
+			.reduce(
+				(acc, [map]) => {
+					if (!acc[map]) acc[map] = Object.keys(acc).length;
+					return acc;
+				},
+				{} as Record<string, number>
+			);
+
+		graph_fw = finishDetails.map(([map, start, end]) => ({
+			x: [start, end],
+			y: mapIds[map]
+		}));
 	} else {
+		one(`SELECT 1`);
 		one(`SELECT 1`);
 	}
 
@@ -514,7 +546,7 @@ FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < 
 		nrr,
 		mps,
 		mfm,
-		sfm,
+		t5m,
 		lf,
 		mpt,
 		bt,
@@ -523,7 +555,8 @@ FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < 
 		tt,
 		sf,
 		fw,
-		bi
+		bi,
+		graph_fw
 	};
 
 	const pointHistory = all(`
@@ -564,6 +597,16 @@ ORDER BY Timestamp;`) as [number, number][];
 			) as [string, number][]
 		).map((t) => [t[0].split('.')[0], t[1]])
 	);
+
+	const mapCompletion = Object.fromEntries(
+		(
+			all(
+				`SELECT Type, COUNT(DISTINCT race.Map) / CAST(COUNT(DISTINCT maps.Map) as REAL) FROM maps LEFT JOIN race ON race.Timestamp < ? AND maps.Timestamp < ? AND race.Map = maps.Map GROUP BY SUBSTR(Type, 1, 3);`,
+				[yearEnd, yearEnd]
+			) as [string, number][]
+		).map((t) => [t[0].split('.')[0], t[1]])
+	);
+
 	const types = [
 		'Oldschool',
 		'DDmaX',
@@ -575,8 +618,15 @@ ORDER BY Timestamp;`) as [number, number][];
 		'Solo',
 		'Dummy'
 	];
-	data.graph_t = types.map((t) => [t, mapTypeTimes[t] || 0]);
+
+	data.graph_t = {
+		labels: types,
+		activity: types.map((t) => mapTypeTimes[t] || 0),
+		completion: types.map((t) => mapCompletion[t] || 0)
+	};
+
 	progress(50 + ((totalQuery + 1) / (totalQuery + 2)) * 50);
+	console.log('TOTAL QUERY COUNT', queryCount);
 
 	return {
 		db: db.export(),

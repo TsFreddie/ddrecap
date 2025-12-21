@@ -7,15 +7,16 @@ Chart.defaults.font.family =
 Chart.defaults.animation = {
 	duration: 1000,
 	easing: 'easeInOutQuart',
-	delay: 700,
-}
+	delay: 700
+};
 
 const chartAreaBackground: Plugin = {
 	id: 'chartAreaBackground',
-	beforeDraw: (chart, args) => {
+	beforeDraw: (chart) => {
+		if ((chart.config.options as any)?.noCustomBackground) return;
 		const { ctx, chartArea } = chart;
 		ctx.save();
-		ctx.fillStyle = '#0000001d';
+		ctx.fillStyle = '#0000002d';
 		ctx.fillRect(chartArea.left, chartArea.top, chartArea.width, chartArea.height);
 		ctx.restore();
 	}
@@ -40,7 +41,12 @@ const renderLabel = (ctx: CanvasRenderingContext2D, label: LabelItem) => {
 	ctx.strokeStyle = '#71717b';
 	ctx.strokeStyle = 'oklch(55.2% 0.016 285.938)';
 	ctx.lineWidth = 1;
-	const measure = ctx.measureText(label.label);
+	let measure = ctx.measureText(label.label);
+	if (measure.width > 220 && label.font) {
+		const targetTextSize = (220 / measure.width) * label.font.size;
+		ctx.font = label.font.string.replace(`${label.font.size}px`, `${targetTextSize}px`);
+		measure = ctx.measureText(label.label);
+	}
 	const measureHeight = ctx.measureText('0');
 	const paddingX = 10;
 	const paddingY = 4;
@@ -85,7 +91,7 @@ const renderLabel = (ctx: CanvasRenderingContext2D, label: LabelItem) => {
 };
 
 const plugin: Plugin = {
-	id: 'custom_ticks',
+	id: 'customTicks',
 	beforeDraw(chart) {
 		const { ctx, scales } = chart;
 		ctx.save();
@@ -145,6 +151,36 @@ const plugin: Plugin = {
 	}
 };
 
+const barDataLabels: Plugin = {
+	id: 'barDataLabels',
+	afterDatasetsDraw(chart) {
+		if ((chart.config as any).type !== 'bar') return;
+		if ((chart.config.options as any)?.skipBarDataLabels) return;
+
+		const { ctx } = chart;
+		ctx.save();
+
+		chart.data.datasets.forEach((dataset, datasetIndex) => {
+			const meta = chart.getDatasetMeta(datasetIndex);
+			meta.data.forEach((bar, index) => {
+				const value = dataset.data[index];
+				if (value == null) return;
+
+				ctx.fillStyle = '#fdd300';
+				ctx.font = `bold 20px ${Chart.defaults.font.family}`;
+				ctx.textAlign = 'left';
+				ctx.textBaseline = 'middle';
+
+				const x = bar.x + 8;
+				const y = bar.y;
+				ctx.fillText(String(value), x, y);
+			});
+		});
+
+		ctx.restore();
+	}
+};
+
 const createChart = (node: HTMLCanvasElement, config: ChartConfiguration, locale: string) => {
 	const copied = $state.snapshot(config);
 	copied.options ??= {};
@@ -154,6 +190,11 @@ const createChart = (node: HTMLCanvasElement, config: ChartConfiguration, locale
 	copied.plugins.push(plugin);
 	if (copied.type === 'line') {
 		copied.plugins.push(chartAreaBackground);
+	}
+
+	if (copied.type === 'bar') {
+		copied.plugins.push(chartAreaBackground);
+		copied.plugins.push(barDataLabels);
 	}
 
 	const chart = new Chart(node, copied as ChartConfiguration);
@@ -166,7 +207,6 @@ export const chart: Action<
 	{ show?: boolean; config: ChartConfiguration; locale: string }
 > = (node, params) => {
 	let chart = params.show ? createChart(node, params.config, params.locale) : null;
-	console.log(chart);
 	return {
 		update(params) {
 			if (chart) {

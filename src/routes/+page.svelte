@@ -682,10 +682,10 @@
 							</div>
 						{:else if item.type == 'b'}
 							<div
-								class="rounded-[0.5em] px-[4.5%] py-[1.5%] text-center font-semibold"
+								class="rounded-[0.5em] text-center font-semibold"
 								style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
 									0}%);background-color: {item.bg};margin-top: {item.t ??
-									0}%;margin-bottom: {item.b ?? 0}%;{item.color ? `color: ${item.color};` : ''}"
+									0}%;margin-bottom: {item.b ?? 0}%;{item.color ? `color: ${item.color};` : ''};padding-left: {item.px ?? 4.5}%;padding-right: {item.px ?? 4.5}%;padding-top: {item.py ?? 1.5}%;padding-bottom: {item.py ?? 1.5}%;"
 							>
 								{@html item.text}
 							</div>
