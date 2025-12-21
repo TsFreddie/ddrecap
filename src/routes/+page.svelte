@@ -17,6 +17,7 @@
 	import { getLocale, setLocale, type Locale } from '$lib/paraglide/runtime.js';
 	import { CURRENT_YEAR } from '$lib/consts';
 	import { chart } from '$lib/chart.svelte.js';
+	import { genPose } from '$lib/pose.js';
 
 	let pageKey = $state(0);
 
@@ -230,7 +231,7 @@
 			if (!maps) {
 				maps = await (await fetch('/maps')).json();
 			}
-			loadingProgress = 0.1;
+			loadingProgress = 0.05;
 
 			// process player data
 			const result = await new Promise<{
@@ -241,9 +242,10 @@
 				queryWorker.postMessage({ maps, name, year: data.year, tz: data.tz });
 				queryWorker.onmessage = (e) => {
 					if (e.data.type == 'progress') {
-						loadingProgress = 0.05 + (e.data.progress / 100) * 0.95;
+						loadingProgress = 0.05 + (e.data.progress / 100) * 0.85;
 					} else if (e.data.type == 'result') {
 						resolve(e.data.result);
+						loadingProgress = 0.9;
 					}
 				};
 			});
@@ -256,7 +258,9 @@
 				`%c📦 ${name}'s player data is available to download as a sqlite database via \`window.DownloadSqlite()\``,
 				'color: #10b981; font-size: 1em;'
 			);
-			totalCards = await generateCards(maps!, data, d, m, getLocale());
+			totalCards = await generateCards(maps!, data, d, m, getLocale(), (percent) => {
+				loadingProgress = 0.9 + percent * 0.1;
+			});
 			loadingProgress = 1;
 		} catch (e) {
 			error = true;
@@ -695,43 +699,68 @@
 						{/if}
 					{/each}
 				{/if}
-				{#if card.leftTeeSkin}
-					<div
-						class="motion-duration-500 motion-delay-700 absolute left-[-10.5%] h-[20%] w-[20%]"
-						style="top: {card.leftTeeTop ?? 0}%"
-						class:motion-translate-x-in-[-75%]={showContent && id == currentCard}
-						class:motion-translate-x-out-[-75%]={!showContent && id != currentCard}
-						class:motion-rotate-in-[-12deg]={showContent && id == currentCard}
-						class:motion-rotate-out-[-12deg]={!showContent && id != currentCard}
-					>
-						<TeeRender
-							name={card.leftTeeSkin.n}
-							body={card.leftTeeSkin.b}
-							feet={card.leftTeeSkin.f}
-							className="h-full w-full"
-							pose={leftTeePose}
-						/>
-					</div>
-				{/if}
-				{#if card.rightTeeSkin}
-					<div
-						class="motion-duration-500 motion-delay-700 absolute right-[-9.5%] h-[20%] w-[20%]"
-						style="top: {card.rightTeeTop ?? 0}%"
-						class:motion-translate-x-in-[75%]={showContent && id == currentCard}
-						class:motion-translate-x-out-[75%]={!showContent && id != currentCard}
-						class:motion-rotate-in-[12deg]={showContent && id == currentCard}
-						class:motion-rotate-out-[12deg]={!showContent && id != currentCard}
-					>
-						<TeeRender
-							name={card.rightTeeSkin.n}
-							body={card.rightTeeSkin.b}
-							feet={card.rightTeeSkin.f}
-							className="h-full w-full"
-							pose={rightTeePose}
-						/>
-					</div>
-				{/if}
 			</div>
+			{#if card.swarm || card.leftTeeSkin || card.rightTeeSkin}
+				<div class="absolute top-[2.5%] bottom-[2.5%] left-[2.5%] right-[2.5%]">
+					{#if card.swarm}
+						{#each card.swarm as swarm}
+							<div
+								class="absolute h-[20%] w-[20%]"
+								class:tee-swarm={showContent && id == currentCard}
+								style="{swarm.t != null ? `top: ${swarm.t - 10}%;` : ''}{swarm.l != null
+									? `left: ${swarm.l - 10}%;`
+									: ''}{swarm.r != null ? `right: ${swarm.r - 10}%;` : ''}{swarm.b != null
+									? `bottom: ${swarm.b - 10}%;`
+									: ''}--delay: {swarm.delay}s;--vx: {-swarm.vx * 100}px;--vy: {-swarm.vy * 100}px;"
+							>
+								<TeeRender
+									name={swarm.skin.n}
+									body={swarm.skin.b}
+									feet={swarm.skin.f}
+									className="h-full w-full"
+									pose={genPose(swarm.angle, swarm.var)}
+								/>
+							</div>
+						{/each}
+					{/if}
+					{#if card.leftTeeSkin}
+						<div
+							class="motion-duration-500 motion-delay-700 absolute left-[-10.5%] h-[20%] w-[20%]"
+							style="top: {card.leftTeeTop ?? 0}%"
+							class:motion-translate-x-in-[-75%]={showContent && id == currentCard}
+							class:motion-translate-x-out-[-75%]={!showContent && id != currentCard}
+							class:motion-rotate-in-[-12deg]={showContent && id == currentCard}
+							class:motion-rotate-out-[-12deg]={!showContent && id != currentCard}
+						>
+							<TeeRender
+								name={card.leftTeeSkin.n}
+								body={card.leftTeeSkin.b}
+								feet={card.leftTeeSkin.f}
+								className="h-full w-full"
+								pose={leftTeePose}
+							/>
+						</div>
+					{/if}
+					{#if card.rightTeeSkin}
+						<div
+							class="motion-duration-500 motion-delay-700 absolute right-[-9.5%] h-[20%] w-[20%]"
+							style="top: {card.rightTeeTop ?? 0}%"
+							class:motion-translate-x-in-[75%]={showContent && id == currentCard}
+							class:motion-translate-x-out-[75%]={!showContent && id != currentCard}
+							class:motion-rotate-in-[12deg]={showContent && id == currentCard}
+							class:motion-rotate-out-[12deg]={!showContent && id != currentCard}
+						>
+							<TeeRender
+								name={card.rightTeeSkin.n}
+								body={card.rightTeeSkin.b}
+								feet={card.rightTeeSkin.f}
+								className="h-full w-full"
+								pose={rightTeePose}
+							/>
+						</div>
+					{/if}
+				</div>
+			{/if}
 		</div>
 	</div>
 {/snippet}
@@ -1230,6 +1259,21 @@
 		100% {
 			opacity: 0.2;
 		}
+	}
+
+	@keyframes teeIn {
+		0% {
+			transform: translateX(var(--vx)) translateY(var(--vy));
+		}
+		100% {
+			transform: translateX(0) translateY(0);
+		}
+	}
+
+	.tee-swarm {
+		animation: teeIn 0.5s ease-out forwards;
+		animation-delay: var(--delay);
+		transform: translateX(var(--vx)) translateY(var(--vy));
 	}
 
 	.glow-text {

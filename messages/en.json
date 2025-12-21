@@ -120,7 +120,7 @@
 	"card_speedrunner_verse_1": "On {date}, you finished a streak of",
 	"card_speedrunner_verse_2": "<span class=\"font-semibold text-orange-400\">within an hour</span>.<br>These are the maps you finished:",
 	"card_stack_verse_1": "You and {count} other Tees formed a stack of",
-	"card_stack_verse_2": "{count} Tees Team",
+	"card_stack_verse_2": "{count} Tees",
 	"card_stack_verse_3": "and finished {map} together on {date}",
 	"card_stack_verse_4": "The team: {members}",
 	"card_steady_progress_verse_1": "In the new maps you've finished this year,<br>this map stands out as your <span class=\"font-semibold text-orange-400\">shining moment</span>",

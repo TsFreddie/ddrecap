@@ -155,7 +155,7 @@ export const query = async (
 	progress(50);
 
 	let queryCount = 0;
-	const totalQuery = 22;
+	const totalQuery = 24;
 
 	const one = (sql: string, args: BindParams = []) => {
 		const stmt = db.prepare(sql, args);
@@ -551,7 +551,7 @@ FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < 
 		t5m,
 		lf,
 		mpt,
-		bt: [bt[0], bt[1], bt[2].split('\u0003'), bt[3]],
+		bt: bt ? [bt[0], bt[1], bt[2].split('\u0003'), bt[3]] : undefined,
 		map,
 		rt,
 		tt,

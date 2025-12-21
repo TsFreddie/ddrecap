@@ -13,6 +13,8 @@ import {
 } from './helpers';
 import type { m as messages } from './paraglide/messages';
 import type { YearlyData } from './query-engine.worker';
+import { createRng, stringHash } from './pose';
+import { AsyncQueue } from './async-queue';
 
 export interface CardTextItem {
 	type: 't';
@@ -37,6 +39,7 @@ export interface CardBannerItem {
 }
 
 export type CardItem = CardTextItem | CardBannerItem;
+type Skin = { n: string; b?: number; f?: number };
 
 export interface CardData {
 	border?: string;
@@ -52,9 +55,21 @@ export interface CardData {
 	mapper?: string;
 	format?: string;
 	leftTeeTop?: number;
-	leftTeeSkin?: { n: string; b?: number; f?: number } | null;
+	leftTeeSkin?: Skin | null;
 	rightTeeTop?: number;
-	rightTeeSkin?: { n: string; b?: number; f?: number } | null;
+	rightTeeSkin?: Skin | null;
+	swarm?: {
+		t?: number;
+		r?: number;
+		l?: number;
+		b?: number;
+		vx: number;
+		vy: number;
+		delay: number;
+		skin: Skin;
+		angle: number;
+		var: number;
+	}[];
 	chart?: ChartConfiguration;
 }
 
@@ -72,13 +87,15 @@ export const generateCards = async (
 		tiles: string[];
 	}[],
 	data: {
+		name: string;
 		tz: string;
 		year: number;
 		skin: { n: string; b?: number; f?: number };
 	},
 	d: Partial<YearlyData>,
 	m: typeof messages,
-	locale: string
+	locale: string,
+	progress: (percent: number) => void
 ) => {
 	const getMapper = (name: string) => maps?.find((map) => map.name == name)?.mapper || '[REDACTED]';
 	const mapHasBonus = (name: string) =>
@@ -88,6 +105,15 @@ export const generateCards = async (
 
 	const mapFormat = (map: string) => {
 		return `${escapeHTML(map)} <span class="text-[0.8em] text-gray-300">by <span class="font-semibold text-white">${escapeHTML(getMapper(map))}</span></span>`;
+	};
+
+	const tasks: (() => Promise<void>)[] = [];
+	const runTasks = async () => {
+		for (let i = 0; i < tasks.length; i++) {
+			await tasks[i]();
+			progress(i / (tasks.length - 1));
+		}
+		progress(1);
 	};
 
 	const tz = data.tz;
@@ -1392,10 +1418,7 @@ export const generateCards = async (
 		}
 		allTitles.push(...titles);
 		if (d.mpt[1]) {
-			const leftTeeSkin = await getPlayerSkin(d.mpt[0][0]);
-			const rightTeeSkin = await getPlayerSkin(d.mpt[1][0]);
-
-			cards.push({
+			const card: CardData = {
 				titles,
 				content: [
 					{
@@ -1429,16 +1452,21 @@ export const generateCards = async (
 						text: m.card_team_verse_4({ count: d.mpt[1][1] })
 					}
 				],
-				leftTeeSkin,
 				leftTeeTop: 8,
-				rightTeeSkin,
 				rightTeeTop: 55,
 				background: '/assets/yearly/wx.png',
 				mapper: mapFormat('weixun')
+			};
+
+			const leftTeePlayer = d.mpt[0][0];
+			const rightTeePlayer = d.mpt[1][0];
+			tasks.push(async () => {
+				card.leftTeeSkin = await getPlayerSkin(leftTeePlayer);
+				card.rightTeeSkin = await getPlayerSkin(rightTeePlayer);
 			});
+			cards.push(card);
 		} else {
-			const rightTeeSkin = await getPlayerSkin(d.mpt[0][0]);
-			cards.push({
+			const card: CardData = {
 				titles,
 				content: [
 					{
@@ -1459,9 +1487,14 @@ export const generateCards = async (
 				],
 				background: '/assets/yearly/wx.png',
 				mapper: mapFormat('weixun'),
-				rightTeeSkin,
 				rightTeeTop: 20
+			};
+
+			const rightTeePlayer = d.mpt[0][0];
+			tasks.push(async () => {
+				card.rightTeeSkin = await getPlayerSkin(rightTeePlayer);
 			});
+			cards.push();
 		}
 	}
 
@@ -1472,8 +1505,140 @@ export const generateCards = async (
 			titles.push({ bg: '#bee9e8', color: '#000', text: m.title_tee_army() });
 		}
 		allTitles.push(...titles);
+
+		// Generate swarm entries for each team member
+		const swarmEntries: NonNullable<CardData['swarm']> = [];
+		const members = d.bt[2] as string[];
+		const cardW = 512;
+		const cardH = 512;
+		const centerX = cardW / 2;
+		const centerY = cardH / 2;
+
+		const deg2rad = Math.PI / 180;
+		const delta = 1 / members.length;
+		const seed = stringHash(data.name);
+		const rng = createRng(seed);
+
+		let indexes = Array.from({ length: members.length }, (_, i) => i);
+		for (let i = members.length - 1; i > 0; i--) {
+			const j = Math.floor(rng() * (i + 1));
+			[indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+		}
+
+		const delayDelta = 1.5 / (members.length - 1);
+
+		for (let i = 0; i < members.length; i++) {
+			// Random angle for this member (distribute evenly with some variance)
+			const baseDeg = i * delta * 310 + 140;
+			const baseAngle = (baseDeg + rng() * delta) * deg2rad;
+			const angle = baseAngle;
+
+			// Direction vector
+			const dirX = Math.cos(angle);
+			const dirY = Math.sin(angle);
+
+			const edgeOffset = 1 + (rng() - 0.5);
+
+			// Find intersection with card boundary using robust line-rect intersection
+			const intersections: Array<{ t: number; edge: string; x: number; y: number }> = [];
+
+			// Left edge (x = 0)
+			if (Math.abs(dirX) > 0.0001) {
+				const tLeft = (0 - centerX) / dirX;
+				if (tLeft > 0) {
+					const yLeft = centerY + tLeft * dirY;
+					if (yLeft >= 0 && yLeft <= cardH) {
+						intersections.push({ t: tLeft, edge: 'left', x: 0, y: yLeft });
+					}
+				}
+			}
+
+			// Right edge (x = cardW)
+			if (Math.abs(dirX) > 0.0001) {
+				const tRight = (cardW - centerX) / dirX;
+				if (tRight > 0) {
+					const yRight = centerY + tRight * dirY;
+					if (yRight >= 0 && yRight <= cardH) {
+						intersections.push({ t: tRight, edge: 'right', x: cardW, y: yRight });
+					}
+				}
+			}
+
+			// Top edge (y = 0)
+			if (Math.abs(dirY) > 0.0001) {
+				const tTop = (0 - centerY) / dirY;
+				if (tTop > 0) {
+					const xTop = centerX + tTop * dirX;
+					if (xTop >= 0 && xTop <= cardW) {
+						intersections.push({ t: tTop, edge: 'top', x: xTop, y: 0 });
+					}
+				}
+			}
+
+			// Bottom edge (y = cardH)
+			if (Math.abs(dirY) > 0.0001) {
+				const tBottom = (cardH - centerY) / dirY;
+				if (tBottom > 0) {
+					const xBottom = centerX + tBottom * dirX;
+					if (xBottom >= 0 && xBottom <= cardW) {
+						intersections.push({ t: tBottom, edge: 'bottom', x: xBottom, y: cardH });
+					}
+				}
+			}
+
+			// Find the closest intersection
+			if (intersections.length === 0) {
+				// Fallback: just don't push it
+				continue;
+			}
+
+			// Sort by distance and take the closest
+			intersections.sort((a, b) => a.t - b.t);
+			const closest = intersections[0];
+
+			// Position at the edge (as percentage)
+			const edgeX = (closest.x / cardW) * 100;
+			const edgeY = (closest.y / cardH) * 100;
+
+			// Determine which edge and set position
+			const entry: NonNullable<CardData['swarm']>[0] = {
+				vx: -dirX,
+				vy: -dirY,
+				delay: indexes[i] * delayDelta + 0.5,
+				skin: { n: 'default' },
+				angle: (-angle * 180) / Math.PI + 165,
+				var: rng() * 10 - 5
+			};
+
+			const member = members[i];
+			tasks.push(async () => {
+				entry.skin = await getPlayerSkin(member);
+			});
+
+			// Set position based on which edge was hit
+			// For left/right edges: use t for vertical positioning
+			// For top/bottom edges: use l for horizontal positioning
+			if (closest.edge === 'left') {
+				entry.l = -edgeOffset;
+				entry.t = edgeY;
+			} else if (closest.edge === 'right') {
+				entry.r = -edgeOffset;
+				entry.t = edgeY;
+			} else if (closest.edge === 'top') {
+				entry.t = -edgeOffset;
+				entry.l = edgeX;
+			} else if (closest.edge === 'bottom') {
+				entry.b = -edgeOffset;
+				entry.l = edgeX;
+			}
+
+			swarmEntries.push(entry);
+		}
+
 		cards.push({
 			titles,
+			l: 6.5,
+			r: 6.5,
 			content: [
 				{
 					type: 't',
@@ -1498,6 +1663,7 @@ export const generateCards = async (
 					text: m.card_stack_verse_4({ members: escapeHTML(d.bt[2].join(', ')) })
 				}
 			],
+			swarm: swarmEntries,
 			background: bgMap(d.bt[1]),
 			mapper: mapFormat(d.bt[1])
 		});
@@ -1563,6 +1729,8 @@ export const generateCards = async (
 	if (allTitles.length == 0) {
 		allTitles.push({ bg: '#8338ec', color: '#fff', text: m.title_unnamed_hero() });
 	}
+
+	await runTasks();
 
 	return {
 		cards,

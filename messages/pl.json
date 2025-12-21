@@ -139,7 +139,7 @@
 	"card_speedrunner_verse_1": "{date} ukończyłeś/ukończyłaś serię",
 	"card_speedrunner_verse_2": "<span class=\"font-semibold text-orange-400\">w ciągu godziny</span>.<br>Oto mapy, które ukończyłeś/ukończyłaś:",
 	"card_stack_verse_1": "Ty i {count} innych Tees utworzyliście stos",
-	"card_stack_verse_2": "{count} Tees Team",
+	"card_stack_verse_2": "{count} Tees",
 	"card_stack_verse_3": "i wspólnie ukończyliście {map} {date}",
 	"card_stack_verse_4": "Zespół: {members}",
 	"card_steady_progress_verse_1": "Ta ukończona mapa to twój <span class=\"font-semibold text-orange-400\">moment świetności</span> w tym roku",

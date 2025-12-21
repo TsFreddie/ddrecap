@@ -120,7 +120,7 @@
 	"card_speedrunner_verse_1": "Am {date} hast du eine Serie von",
 	"card_speedrunner_verse_2": "<span class=\"font-semibold text-orange-400\">innerhalb einer Stunde</span> beendet.<br>Das sind die Karten, die du abgeschlossen hast:",
 	"card_stack_verse_1": "Du und {count} andere Tees bildeten einen Stapel von",
-	"card_stack_verse_2": "{count} Tees Team",
+	"card_stack_verse_2": "{count} Tees",
 	"card_stack_verse_3": "und habt {map} zusammen am {date} beendet",
 	"card_stack_verse_4": "Das Team: {members}",
 	"card_steady_progress_verse_1": "Unter den neuen Karten, die du dieses Jahr beendet hast, sticht diese Karte als dein <span class=\"font-semibold text-orange-400\">glanzvoller Moment</span> hervor",

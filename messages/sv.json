@@ -120,7 +120,7 @@
 	"card_speedrunner_verse_1": "Den {date} klarade du en serie på",
 	"card_speedrunner_verse_2": "<span class=\"font-semibold text-orange-400\">inom en timme</span>.<br>Dessa är kartorna du klarade:",
 	"card_stack_verse_1": "Du och {count} andra Tees bildade en stack på",
-	"card_stack_verse_2": "{count} Tees Team",
+	"card_stack_verse_2": "{count} Tees",
 	"card_stack_verse_3": "och klarade {map} tillsammans den {date}",
 	"card_stack_verse_4": "Lagets medlemmar: {members}",
 	"card_steady_progress_verse_1": "Bland de nya kartorna du klarade i år,<br>står denna karta ut som ditt <span class=\"font-semibold text-orange-400\">glansnummer</span>",
