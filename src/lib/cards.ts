@@ -16,6 +16,7 @@ import type { YearlyData } from './query-engine.worker';
 import { createRng, stringHash } from './pose';
 import { getSkinData } from './stores/skins';
 import normalSkins from '$lib/normal-skins.json';
+import { queue } from './queue-pool';
 
 export interface CardTextItem {
 	type: 't';
@@ -122,7 +123,7 @@ export const generateCards = async (
 		await Promise.all(
 			tasks.map(async (task) => {
 				try {
-					await task();
+					await queue().push(task);
 				} catch {}
 				prog();
 			})

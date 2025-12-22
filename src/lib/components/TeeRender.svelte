@@ -12,7 +12,7 @@
 
 <script lang="ts">
 	import { encodeBase64 } from '$lib/base64';
-	import { skinQueue } from '$lib/skin-queue';
+	import { queue } from '$lib/queue-pool';
 	import { onDestroy, onMount } from 'svelte';
 	import { ddnetColorToRgb } from '$lib/ddnet/helpers';
 	import { rgbToSvgFilter } from '$lib/rgbToSvgFilter';
@@ -84,7 +84,7 @@
 		const controller = new AbortController();
 		abortController = controller;
 
-		const response = await skinQueue.push(async () => {
+		const response = await queue().push(async () => {
 			const targetUrl = thisUrl || (await getSkinUrl(thisName));
 			if (!targetUrl) return null;
 
