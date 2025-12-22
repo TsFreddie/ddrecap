@@ -757,7 +757,7 @@
 					{/each}
 				{/if}
 			</div>
-			{#if card.swarm || card.leftTeeSkin || card.rightTeeSkin}
+			{#if id == currentCard && (card.swarm || card.leftTeeSkin || card.rightTeeSkin)}
 				<div class="absolute top-[2.5%] bottom-[2.5%] left-[2.5%] right-[2.5%]">
 					{#if card.swarm}
 						{#each card.swarm as swarm}
