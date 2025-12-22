@@ -1,6 +1,6 @@
 import { Database } from 'bun:sqlite';
 
-const db = new Database('./cache/ddnet.sqlite');
+const db = new Database('./cache/ddnet.sqlite', { readonly: true });
 
 const getRaceStmt = db.prepare<
 	{
