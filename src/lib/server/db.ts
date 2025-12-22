@@ -1,6 +1,8 @@
 import { Database } from 'bun:sqlite';
 
 const db = new Database('./cache/ddnet.sqlite', { readonly: true });
+db.run(`PRAGMA journal_mode = OFF;`);
+db.run(`PRAGMA synchronous = OFF;`);
 
 const getRaceStmt = db.prepare<
 	{

@@ -25,3 +25,5 @@ vite.config.ts.timestamp-*
 /cache
 
 .vscode
+
+/deploy.sh
