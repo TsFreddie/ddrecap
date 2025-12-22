@@ -18,6 +18,7 @@
 	import { CURRENT_YEAR } from '$lib/consts';
 	import { chart } from '$lib/chart.svelte.js';
 	import { genPose } from '$lib/pose.js';
+	import type { Action } from 'svelte/action';
 
 	let pageKey = $state(0);
 
@@ -180,22 +181,73 @@
 		}
 	});
 
-	const onResize = () => {
-		if (window.innerWidth < maxWidth) {
-			fontSize = refFontSize * (window.innerWidth / maxWidth);
-		} else {
-			fontSize = refFontSize;
-		}
+	let observing = false;
 
+	const onResize = () => {
 		if (timer != null) {
 			clearTimeout(timer);
 			timer = null;
 		}
 
 		timer = setTimeout(() => {
+			if (!observing) {
+				const card = document.getElementById('card-0');
+				if (card) {
+					const width = card.clientWidth;
+					if (width < maxWidth) {
+						fontSize = refFontSize * (width / maxWidth);
+					} else {
+						fontSize = refFontSize;
+					}
+				}
+			}
+
 			scrollToCard(currentCard);
 			timer = null;
 		}, 300);
+	};
+
+	const resizeListener: Action<Element, { active: boolean }> = (element, params) => {
+		let observer: ResizeObserver | null = null;
+		const activate = () => {
+			if (typeof ResizeObserver !== 'undefined') {
+				observer = new ResizeObserver(() => {
+					const width = element.clientWidth;
+					if (width < maxWidth) {
+						fontSize = refFontSize * (width / maxWidth);
+					} else {
+						fontSize = refFontSize;
+					}
+				});
+
+				observer.observe(element);
+				observing = true;
+			}
+		};
+
+		const deactivate = () => {
+			observer?.unobserve(element);
+			observer?.disconnect();
+		};
+
+		if (params.active) {
+			activate();
+		} else {
+			deactivate();
+		}
+
+		return {
+			update(newParams) {
+				if (newParams.active) {
+					activate();
+				} else {
+					deactivate();
+				}
+			},
+			destroy() {
+				deactivate();
+			}
+		};
 	};
 
 	let startAnimation = $state(true);
@@ -580,7 +632,8 @@
 {#snippet cardSnippet(id: number, card: CardData, format: CardFormat)}
 	<div
 		id="card-{id}"
-		class="card relative mx-auto my-8 aspect-square max-w-full transition-[scale] select-none sm:max-w-sm sm:max-h-sm"
+		use:resizeListener={{ active: id == 0 }}
+		class="card relative mx-auto my-8 aspect-square max-w-full max-h-[75svh] transition-[scale] select-none sm:max-w-sm sm:max-h-sm"
 		style:font-size="{fontSize}px"
 		class:odd:motion-translate-x-in-[30%]={id == currentCard}
 		class:odd:motion-translate-x-out-[30%]={id != currentCard}
