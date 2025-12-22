@@ -17,8 +17,8 @@
 		</div>
 
 		<form method="POST" use:enhance class="mt-8 space-y-6">
-			<div class="rounded-md shadow-sm -space-y-px">
-				<div>
+			<div class="flex space-x-2">
+				<div class="flex-1">
 					<label for="access" class="sr-only">Access</label>
 					<!-- svelte-ignore a11y_autofocus -->
 					<input
@@ -33,6 +33,24 @@
 						style="-webkit-text-security: disc; -moz-text-security: disc; text-security: disc;"
 					/>
 				</div>
+				<button
+					type="submit"
+					class="group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-chevron-right-icon lucide-chevron-right"
+						><path d="m9 18 6-6-6-6" /></svg
+					>
+				</button>
 			</div>
 
 			{#if form?.missing}
