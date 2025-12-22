@@ -66,6 +66,11 @@ export type YearlyData = {
 		x: number[];
 		y: number;
 	}[];
+	/** [graph] bar chart for lf */
+	graph_lf: {
+		map: string;
+		time: number;
+	}[];
 };
 
 export const query = async (
@@ -87,6 +92,8 @@ export const query = async (
 		races: [string, number, number, string][];
 		teamRaces: [Uint8Array, string, number, string, number][];
 	} = unpack(playerDataBuffer as any);
+
+	const mapLookup: Record<string, MapList[0]> = {};
 
 	const db = new SQL.Database();
 	db.run(`
@@ -150,6 +157,7 @@ export const query = async (
 			map.mapper,
 			DateTime.fromISO(map.release + 'Z').toSeconds() || 0
 		]);
+		mapLookup[map.name] = map;
 	}
 	insertMapStmt.free();
 
@@ -316,8 +324,7 @@ ON m.Map = r.Map AND m.Points > 0 ORDER BY Time desc LIMIT 1;
 		`
 WITH thisYearMaps AS (SELECT Type, Map FROM maps WHERE Timestamp >= ? AND Timestamp <= ? AND Points > 0)
 SELECT thisYearMaps.Map, COUNT(race.Map) as Finishes
-FROM race RIGHT JOIN thisYearMaps ON race.Map = thisYearMaps.Map WHERE Timestamp >= ? AND Timestamp <= ?
-GROUP BY thisYearMaps.Map ORDER BY Finishes DESC;
+FROM race RIGHT JOIN thisYearMaps ON race.Map = thisYearMaps.Map AND Timestamp >= ? AND Timestamp <= ? GROUP BY thisYearMaps.Map ORDER BY Finishes DESC;
 		`,
 		[berlinYearStart, berlinYearEnd, berlinYearStart, yearEnd]
 	) as [string, number][];
@@ -367,15 +374,25 @@ SELECT Map, COUNT(Map) as Num FROM race
 		[yearStart, yearEnd]
 	) as [string, number][];
 
-	/** Longest finished race */
-	const lf = one(
+	/** Longest finished races list */
+	const lfList = all(
 		`
 SELECT r.Map, r.Time, r.Timestamp FROM maps m JOIN 
 		(SELECT Map, Time, Timestamp from race
 			WHERE Timestamp >= ? AND Timestamp <= ?) r
-	ON m.Map = r.Map AND m.Points > 0 ORDER BY Time DESC LIMIT 1;`,
+	ON m.Map = r.Map AND m.Points > 0 ORDER BY Time DESC;`,
 		[yearStart, yearEnd]
-	) as [string, number, number];
+	) as [string, number, number][];
+
+	/** Longest finished race */
+	const lf = lfList[0] as [string, number, number];
+
+	const graph_lf = lfList
+		.filter((m) => !mapLookup[m[0]] || !mapLookup[m[0]].tiles.includes('BONUS'))
+		.slice(0, 3)
+		.map((m) => {
+			return { map: m[0], time: m[1] };
+		});
 
 	/** most played teammate */
 	const mpt = all(
@@ -572,7 +589,8 @@ FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < 
 		sf,
 		fw,
 		bi,
-		graph_fw
+		graph_fw,
+		graph_lf
 	};
 
 	const pointHistory = all(`

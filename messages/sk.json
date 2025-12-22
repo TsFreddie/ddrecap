@@ -7,6 +7,7 @@
 	"card_chart_points": "Váš bodový trend za rok {year}",
 	"card_chart_top_maps": "Vašich 5 najdokončenejších máp za rok {year}",
 	"card_chart_types": "Vaša aktivita na mapách za rok {year}",
+	"card_chart_slowest_finishes": "Vaše najpomalšie dokončenia za rok {year}",
 	"card_distinct_teammates_verse_1": "Tento rok ste tvorili tím s",
 	"card_distinct_teammates_verse_2": "{count} rôznymi Tee",
 	"card_distinct_teammates_verse_3": "Naozaj silný tím!",

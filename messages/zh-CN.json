@@ -7,6 +7,7 @@
 	"card_chart_points": "你的 {year} 年积分趋势",
 	"card_chart_top_maps": "你的 {year} 年最常完成的 5 张地图",
 	"card_chart_types": "你的 {year} 年地图活动",
+	"card_chart_slowest_finishes": "你的 {year} 年最慢通关记录",
 	"card_distinct_teammates_verse_1": "今年，你与",
 	"card_distinct_teammates_verse_2": "{count} 位不同的 Tee",
 	"card_distinct_teammates_verse_3": "真是个强大的团队！",

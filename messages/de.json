@@ -7,6 +7,7 @@
 	"card_chart_points": "Dein Punktetrend {year}",
 	"card_chart_top_maps": "Deine Top 5 meistgespielten Karten {year}",
 	"card_chart_types": "Deine Kartenaktivität {year}",
+	"card_chart_slowest_finishes": "Deine langsamsten Abschlüsse {year}",
 	"card_distinct_teammates_verse_1": "In diesem Jahr hast du mit",
 	"card_distinct_teammates_verse_2": "{count} verschiedenen Tees",
 	"card_distinct_teammates_verse_3": "Ein wahrhaft mächtiges Team!",

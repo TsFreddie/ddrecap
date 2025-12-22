@@ -1432,6 +1432,40 @@ export const generateCards = async (
 			background: bgMap(d.lf[0]),
 			mapper: mapFormat(d.lf[0])
 		});
+
+		// Add banners for slowest finishes if there are any
+		if (d.graph_lf && d.graph_lf.length > 0) {
+			const content: CardItem[] = [
+				{
+					type: 'b',
+					bg: '#fdd300',
+					color: '#000',
+					rotation: -0.5,
+					text: `<div class="text-[0.8em]">${m.card_chart_slowest_finishes({ year: data.year })}</div>`
+				}
+			];
+
+			// Add banners for each of the slowest finishes
+			for (let i = 0; i < d.graph_lf.length; i++) {
+				const item = d.graph_lf[i];
+				content.push({
+					type: 'b',
+					bg: '#dc2626',
+					color: '#fff',
+					rotation: (rng() - 0.5) * 3,
+					t: 1,
+					b: 1,
+					x: i % 2 === 1 ? rng() + 5 : -rng() - 5,
+					text: `${escapeHTML(item.map)}<br><div style="font-size: 0.75em">${duration(item.time, locale, m)}</div>`
+				});
+			}
+
+			cards.push({
+				content,
+				background: '/assets/yearly/lf.png',
+				mapper: mapFormat('Lavender Forest')
+			});
+		}
 	}
 
 	if (d.fw && d.fw[1] > 2) {

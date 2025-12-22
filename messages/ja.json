@@ -7,6 +7,7 @@
 	"card_chart_points": "あなたの{year}年のポイント推移",
 	"card_chart_top_maps": "あなたの{year}年に最も多く完了したマップトップ5",
 	"card_chart_types": "あなたの{year}年のマップ活動",
+	"card_chart_slowest_finishes": "あなたの{year}年 最も遅いクリア記録",
 	"card_distinct_teammates_verse_1": "今年、あなたは",
 	"card_distinct_teammates_verse_2": "{count}人の異なるTeeたちと",
 	"card_distinct_teammates_verse_3": "本当に強力なチームです！",

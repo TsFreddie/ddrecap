@@ -7,6 +7,7 @@
 	"card_chart_points": "Тенденція ваших балів за {year} рік",
 	"card_chart_top_maps": "Ваші Топ-5 найчастіше завершених карт за {year} рік",
 	"card_chart_types": "Ваша активність на картах за {year} рік",
+	"card_chart_slowest_finishes": "Ваші найповільніші проходження за {year} рік",
 	"card_distinct_teammates_verse_1": "Цього року ви об'єдналися з",
 	"card_distinct_teammates_verse_2": "{count} різними Tee",
 	"card_distinct_teammates_verse_3": "Справжня потужна команда!",

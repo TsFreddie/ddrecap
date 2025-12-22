@@ -7,6 +7,7 @@
 	"card_chart_points": "당신의 {year}년 포인트 추이",
 	"card_chart_top_maps": "당신의 {year}년 가장 많이 완료한 5개의 맵",
 	"card_chart_types": "당신의 {year}년 맵 활동",
+	"card_chart_slowest_finishes": "당신의 {year}년 가장 느린 클리어 기록",
 	"card_distinct_teammates_verse_1": "올해, 당신은",
 	"card_distinct_teammates_verse_2": "{count}명의 다른 Tee들과",
 	"card_distinct_teammates_verse_3": "정말로 강력한 팀이에요!",
