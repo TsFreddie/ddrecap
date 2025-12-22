@@ -38,6 +38,7 @@ export interface CardBannerItem {
 	x?: number;
 	t?: number;
 	b?: number;
+	minX?: number;
 }
 
 export type CardItem = CardTextItem | CardBannerItem;
@@ -1434,7 +1435,12 @@ export const generateCards = async (
 		});
 
 		// Add banners for slowest finishes if there are any
-		if (d.graph_lf && d.graph_lf.length > 0) {
+		if (
+			d.graph_lf &&
+			d.graph_lf.length > 0 &&
+			d.graph_lf.length !== 1 &&
+			d.graph_lf[0].map !== d.lf[0]
+		) {
 			const content: CardItem[] = [
 				{
 					type: 'b',
@@ -1450,20 +1456,23 @@ export const generateCards = async (
 				const item = d.graph_lf[i];
 				content.push({
 					type: 'b',
-					bg: '#dc2626',
+					bg: '#dc2626dd',
 					color: '#fff',
 					rotation: (rng() - 0.5) * 3,
+					py: 0,
+					px: 0,
 					t: 1,
 					b: 1,
+					minX: 55,
 					x: i % 2 === 1 ? rng() + 5 : -rng() - 5,
-					text: `${escapeHTML(item.map)}<br><div style="font-size: 0.75em">${duration(item.time, locale, m)}</div>`
+					text: `<div style="font-size: 0.9em;margin-top:-0.2em">${escapeHTML(item.map)}<br><div style="font-size: 0.75em">${duration(item.time, locale, m)}</div></div>`
 				});
 			}
 
 			cards.push({
 				content,
-				background: '/assets/yearly/lf.png',
-				mapper: mapFormat('Lavender Forest')
+				background: '/assets/yearly/cw.png',
+				mapper: mapFormat('Chill Wood')
 			});
 		}
 	}

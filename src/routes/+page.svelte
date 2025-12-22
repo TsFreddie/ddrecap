@@ -695,7 +695,8 @@
 									0}%;margin-bottom: {item.b ?? 0}%;{item.color
 									? `color: ${item.color};`
 									: ''};padding-left: {item.px ?? 4.5}%;padding-right: {item.px ??
-									4.5}%;padding-top: {item.py ?? 1.5}%;padding-bottom: {item.py ?? 1.5}%;"
+									4.5}%;padding-top: {item.py ?? 1.5}%;padding-bottom: {item.py ??
+									1.5}%;min-width: {item.minX ?? 1}%;"
 							>
 								{@html item.text}
 							</div>
