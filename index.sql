@@ -111,5 +111,9 @@ ORDER BY
 LIMIT
     1;
 
+-- Optimize for READ-ONLY
+PRAGMA journal_mode = OFF;
+PRAGMA locking_mode = EXCLUSIVE;
+
 -- Compact the database
 VACUUM;
