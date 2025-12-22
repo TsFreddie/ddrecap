@@ -35,6 +35,8 @@ export type YearlyData = {
 	lf: [string, number, number];
 	/** most played teammates [[name, num], [name, num]] */
 	mpt: [string, number][];
+	/** distinct teammates */
+	dt: string[];
 	/** biggest team size [teamsize, map, playerNames, timestamp] */
 	bt: [number, string, string[], number];
 	/** nearest release record [map, time] */
@@ -155,7 +157,7 @@ export const query = async (
 	progress(50);
 
 	let queryCount = 0;
-	const totalQuery = 24;
+	const totalQuery = 25;
 
 	const one = (sql: string, args: BindParams = []) => {
 		const stmt = db.prepare(sql, args);
@@ -379,9 +381,9 @@ SELECT r.Map, r.Time, r.Timestamp FROM maps m JOIN
 	const mpt = all(
 		`
 WITH FilteredIDs AS (
-    SELECT DISTINCT ID
-    FROM teamrace
-    WHERE Timestamp >= ? AND Timestamp <= ?
+	   SELECT DISTINCT ID
+	   FROM teamrace
+	   WHERE Timestamp >= ? AND Timestamp <= ?
 )
 SELECT t.Name, COUNT(t.ID) as Num
 FROM teamrace t
@@ -390,6 +392,17 @@ WHERE t.Name != ?
 GROUP BY t.Name ORDER BY Num DESC LIMIT 2;`,
 		[yearStart, yearEnd, name]
 	) as [string, number][];
+
+	/** distinct teammates count */
+	const dt = (
+		all(
+			`
+SELECT DISTINCT t.Name
+FROM teamrace t
+WHERE Timestamp >= ? AND Timestamp <= ? AND t.Name != ?;`,
+			[yearStart, yearEnd, name]
+		) as [string][]
+	).map((x) => x[0]);
 
 	/** biggest team */
 	const bt = one(
@@ -551,6 +564,7 @@ FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < 
 		t5m,
 		lf,
 		mpt,
+		dt,
 		bt: bt ? [bt[0], bt[1], bt[2].split('\u0003'), bt[3]] : undefined,
 		map,
 		rt,

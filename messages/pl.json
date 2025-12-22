@@ -3,6 +3,13 @@
 	"card_biggest_improvement_verse_1": "{date} osiągnąłeś/osiągnęłaś swój największy postęp z tym rekordem",
 	"card_biggest_improvement_verse_2": "bijąc swój poprzedni rekord <span class=\"font-semibold text-orange-400\">{time}</span> ustanowiony {date}",
 	"card_biggest_improvement_verse_3": "Osiągając poprawę o",
+	"card_chart_completion": "i wskaźnik ukończenia",
+	"card_chart_points": "Twój trend punktowy w {year} roku",
+	"card_chart_top_maps": "Twoje 5 najczęściej ukończonych map w {year} roku",
+	"card_chart_types": "Twoja aktywność na mapach w {year} roku",
+	"card_distinct_teammates_verse_1": "W tym roku połączyłeś siły z",
+	"card_distinct_teammates_verse_2": "{count} różnymi Tee",
+	"card_distinct_teammates_verse_3": "Naprawdę potężna drużyna!",
 	"card_finishes_verse_1": "Byłeś/Byłaś w formie w tym roku, przekraczając linię mety łącznie",
 	"card_finishes_verse_2": [
 		{
@@ -38,7 +45,7 @@
 	"card_map_type_verse_1": "Twój najczęściej grany typ mapy to",
 	"card_map_type_verse_2": [
 		{
-			"declarations": ["input count", "local plural = count: plural"],
+			"declarations": ["input count", "input type", "local plural = count: plural"],
 			"match": {
 				"plural=*": "W tym roku przekroczyłeś/przekroczyłaś linię mety na mapach typu {type} <span class=\"font-semibold text-orange-400\">{count} razy</span>",
 				"plural=one": "W tym roku przekroczyłeś/przekroczyłaś linię mety na mapach typu {type} <span class=\"font-semibold text-orange-400\">{count} raz</span>"
@@ -62,7 +69,7 @@
 	"card_monthly_verse_2": "Spędziłeś/Spędziłaś <span class=\"font-semibold text-orange-400\">{percent}</span> swojego czasu gry w tym miesiącu",
 	"card_new_map_verse_1": [
 		{
-			"declarations": ["input total", "local plural = total: plural"],
+			"declarations": ["input completed", "input total", "local plural = total: plural"],
 			"match": {
 				"plural=*": "Spośród <span class=\"text-orange-400\">{total} nowych wymagających map</span> wydanych w tym roku,<br>pomyślnie ukończyłeś/ukończyłaś <span class=\"font-semibold text-orange-400\">{completed}</span> z nich",
 				"plural=few": "Spośród <span class=\"text-orange-400\">{total} nowe wymagające mapy</span> wydane w tym roku,<br>pomyślnie ukończyłeś/ukończyłaś <span class=\"font-semibold text-orange-400\">{completed}</span> z nich",
@@ -112,17 +119,6 @@
 	"card_runtime_verse_1": "Całkowity czas Twoich wyścigów w tym roku wyniósł",
 	"card_runtime_verse_2": "Ponadto, według <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, byłeś/byłaś online przez {duration} w tym roku",
 	"card_runtime_verse_weird": "Twoja nazwa pojawiła się rzadziej niż rekordy Twoich wyścigów. Może zmieniłeś/zmieniłaś nazwę w tym roku?",
-	"card_second_map_verse_1": "Twoja druga najczęściej grana mapa to",
-	"card_second_map_verse_2": [
-		{
-			"declarations": ["input finishes", "local plural = finishes: plural"],
-			"match": {
-				"plural=*": "Przekroczyłeś/Przekroczyłaś jej linię mety <span class=\"font-semibold text-orange-400\">{finishes} razy</span>, i mamy nadzieję, że ją pamiętasz!",
-				"plural=one": "Przekroczyłeś/Przekroczyłaś jej linię mety <span class=\"font-semibold text-orange-400\">{finishes} raz</span>, i mamy nadzieję, że ją pamiętasz!"
-			},
-			"selectors": ["plural"]
-		}
-	],
 	"card_server_verse_1": "Twój najczęściej grany serwer DDNet to",
 	"card_server_verse_2": "Ukończyłeś/Ukończyłaś <span class=\"font-semibold text-orange-400\">{percent} wyścigów</span> na tym serwerze",
 	"card_server_verse_3": "Dodatkowo pojawiłeś/pojawiłaś się także na:<br>{servers}",
@@ -231,10 +227,13 @@
 	"title_runtime_error": "Uszkodzona Czasoprzestrzeń",
 	"title_shared_name": "Wspólna Nazwa",
 	"title_snake_oiler": "Snake Oiler",
+	"title_social_butterfly": "Motyl towarzyski",
+	"title_social_tee": "Towarzyski Tee",
 	"title_solo_traveler": "Samotny Podróżnik",
 	"title_speed_demon": "Demon Prędkości",
 	"title_speedrunner": "Speedrunner",
 	"title_steady_progress": "Stały Postęp",
+	"title_team_player": "Gracz zespołowy",
 	"title_tee_army": "Armia Tees",
 	"title_time_wizard": "Czarodziej Czasu",
 	"title_true_player": "Prawdziwy Gracz",

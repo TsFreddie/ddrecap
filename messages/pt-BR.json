@@ -3,6 +3,13 @@
 	"card_biggest_improvement_verse_1": "Em {date}, você fez sua maior melhoria com este recorde",
 	"card_biggest_improvement_verse_2": "quebrando seu recorde anterior de <span class=\"font-semibold text-orange-400\">{time}</span> feito em {date}",
 	"card_biggest_improvement_verse_3": "Alcançando uma melhoria de",
+	"card_chart_completion": "e taxa de conclusão",
+	"card_chart_points": "Sua Tendência de Pontos em {year}",
+	"card_chart_top_maps": "Seus 5 Mapas Mais Concluídos em {year}",
+	"card_chart_types": "Sua Atividade em Mapas em {year}",
+	"card_distinct_teammates_verse_1": "Este ano, você formou equipe com",
+	"card_distinct_teammates_verse_2": "{count} Tees diferentes",
+	"card_distinct_teammates_verse_3": "Uma equipe verdadeiramente poderosa!",
 	"card_finishes_verse_1": "Você esteve em chamas este ano, cruzando a linha de chegada um total de",
 	"card_finishes_verse_2": [
 		{
@@ -38,7 +45,7 @@
 	"card_map_type_verse_1": "Seu tipo de mapa mais jogado é",
 	"card_map_type_verse_2": [
 		{
-			"declarations": ["input count", "local plural = count: plural"],
+			"declarations": ["input count", "input type", "local plural = count: plural"],
 			"match": {
 				"plural=*": "Este ano, você cruzou a linha de chegada de mapas {type} <span class=\"font-semibold text-orange-400\">{count} vezes</span>",
 				"plural=one": "Este ano, você cruzou a linha de chegada de mapas {type} <span class=\"font-semibold text-orange-400\">{count} vez</span>"
@@ -62,7 +69,7 @@
 	"card_monthly_verse_2": "Você passou <span class=\"font-semibold text-orange-400\">{percent}</span> do seu tempo de jogo neste mês",
 	"card_new_map_verse_1": [
 		{
-			"declarations": ["input total", "local plural = total: plural"],
+			"declarations": ["input completed", "input total", "local plural = total: plural"],
 			"match": {
 				"plural=*": "Entre os <span class=\"text-orange-400\">{total} novos mapas desafiadores</span> lançados este ano,<br>você completou com sucesso <span class=\"font-semibold text-orange-400\">{completed}</span> deles",
 				"plural=one": "Entre o <span class=\"text-orange-400\">{total} novo mapa desafiador</span> lançado este ano,<br>você completou com sucesso <span class=\"font-semibold text-orange-400\">{completed}</span> dele"
@@ -72,7 +79,15 @@
 	],
 	"card_new_map_verse_2": "Isso significa que você alcançou uma taxa de conclusão de",
 	"card_new_map_verse_3": "Entre esses mapas, você especialmente ama",
-	"card_new_map_verse_4": "Você finalizou este mapa <span class=\"font-semibold text-orange-400\">{count} vezes</span>",
+	"card_new_map_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "Você finalizou este mapa <span class=\"font-semibold text-orange-400\">{count} vezes</span>"
+			},
+			"selectors": []
+		}
+	],
 	"card_night_owl_verse_1": "Houve um momento especial<br>em <span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Você levou {time} para completar <span class=\"font-semibold text-orange-400\">{map}</span><br>e cruzou a linha de chegada às",
 	"card_night_owl_verse_3": "Enquanto o céu está escuro, sua paixão queima intensamente",
@@ -102,8 +117,6 @@
 	"card_runtime_verse_1": "Todo o seu tempo de corrida este ano totalizou",
 	"card_runtime_verse_2": "Além disso, de acordo com <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, você ficou online por {duration} este ano",
 	"card_runtime_verse_weird": "De alguma forma, seu nome apareceu menos que seus registros de corrida. Talvez você tenha mudado de nome este ano?",
-	"card_second_map_verse_1": "Seu segundo mapa mais jogado é",
-	"card_second_map_verse_2": "Você cruzou sua linha de chegada <span class=\"font-semibold text-orange-400\">{finishes} vezes</span>, e esperamos que você se lembre dele!",
 	"card_server_verse_1": "Seu servidor DDNet mais jogado é",
 	"card_server_verse_2": "Você finalizou <span class=\"font-semibold text-orange-400\">{percent} das corridas</span> neste servidor",
 	"card_server_verse_3": "Além disso, você também apareceu em:<br>{servers}",
@@ -212,10 +225,13 @@
 	"title_runtime_error": "Espaço-tempo Corrompido",
 	"title_shared_name": "Nome Compartilhado",
 	"title_snake_oiler": "Enganador Serpentino",
+	"title_social_butterfly": "Borboleta Social",
+	"title_social_tee": "Tee Social",
 	"title_solo_traveler": "Viajante Solitário",
 	"title_speed_demon": "Demônio da Velocidade",
 	"title_speedrunner": "Speedrunner",
 	"title_steady_progress": "Progresso Constante",
+	"title_team_player": "Jogador de Equipe",
 	"title_tee_army": "Exército de Tees",
 	"title_time_wizard": "Mago do Tempo",
 	"title_true_player": "Verdadeiro Jogador",

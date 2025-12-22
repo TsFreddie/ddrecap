@@ -3,6 +3,13 @@
 	"card_biggest_improvement_verse_1": "{date} tarihinde, bu rekorla en büyük gelişmenizi gösterdiniz",
 	"card_biggest_improvement_verse_2": "{date} tarihinde kırdığınız <span class=\"font-semibold text-orange-400\">{time}</span> süreli önceki rekorunuzu geliştirerek",
 	"card_biggest_improvement_verse_3": "Şu oranda bir gelişme sağladınız:",
+	"card_chart_completion": "ve tamamlama oranı",
+	"card_chart_points": "{year} Yılı Puan Trendin",
+	"card_chart_top_maps": "{year} Yılı En Çok Tamamlanan 5 Haritan",
+	"card_chart_types": "{year} Yılı Harita Aktiviten",
+	"card_distinct_teammates_verse_1": "Bu yıl, sen",
+	"card_distinct_teammates_verse_2": "{count} farklı Tee ile",
+	"card_distinct_teammates_verse_3": "Gerçekten güçlü bir takım!",
 	"card_finishes_verse_1": "Bu yıl harikalar yarattınız, toplamda",
 	"card_finishes_verse_2": [
 		{
@@ -38,7 +45,7 @@
 	"card_map_type_verse_1": "En çok oynadığınız harita türü",
 	"card_map_type_verse_2": [
 		{
-			"declarations": ["input count", "local plural = count: plural"],
+			"declarations": ["input count", "input type", "local plural = count: plural"],
 			"match": {
 				"plural=*": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz",
 				"plural=one": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz"
@@ -62,7 +69,7 @@
 	"card_monthly_verse_2": "Oyun sürenizin <span class=\"font-semibold text-orange-400\">{percent}</span>unu bu ayda geçirdiniz",
 	"card_new_map_verse_1": [
 		{
-			"declarations": ["input total", "local plural = total: plural"],
+			"declarations": ["input completed", "input total", "local plural = total: plural"],
 			"match": {
 				"plural=*": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız",
 				"plural=one": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız"
@@ -72,7 +79,15 @@
 	],
 	"card_new_map_verse_2": "Bu, şu tamamlama oranına ulaştığınız anlamına geliyor:",
 	"card_new_map_verse_3": "Bu haritalar arasında, özellikle şunu sevdiniz:",
-	"card_new_map_verse_4": "Bu haritayı <span class=\"font-semibold text-orange-400\">{count} kez</span> tamamladınız",
+	"card_new_map_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "Bu haritayı <span class=\"font-semibold text-orange-400\">{count} kez</span> tamamladınız"
+			},
+			"selectors": []
+		}
+	],
 	"card_night_owl_verse_1": "<span class=\"font-semibold text-orange-400\">{date}</span> tarihinde<br>özel bir an yaşandı",
 	"card_night_owl_verse_2": "<span class=\"font-semibold text-orange-400\">{map}</span> haritasını tamamlamak için {time} harcadınız<br>ve bitişe şu saatte ulaştınız:",
 	"card_night_owl_verse_3": "Gökyüzü karanlık olsa da, tutkunuz parlamaya devam ediyor",
@@ -102,8 +117,6 @@
 	"card_runtime_verse_1": "Bu yılki tüm yarış sürenizin toplamı",
 	"card_runtime_verse_2": "Ayrıca, <span class=\"font-semibold text-orange-400\">ddstats.tw</span>'e göre bu yıl toplam {duration} çevrimiçi kaldınız",
 	"card_runtime_verse_weird": "Bir şekilde isminiz, yarış kayıtlarınızdan daha az göründü. Belki de bu yıl isminizi değiştirdiniz?",
-	"card_second_map_verse_1": "En çok oynadığınız ikinci harita",
-	"card_second_map_verse_2": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz ve umarız onu hatırlıyorsunuzdur!",
 	"card_server_verse_1": "En çok oynadığınız DDNet sunucusu",
 	"card_server_verse_2": "Yarışlarınızın <span class=\"font-semibold text-orange-400\">{percent} kadarını</span> bu sunucuda tamamladınız",
 	"card_server_verse_3": "Ayrıca, şu sunucularda da göründünüz:<br>{servers}",
@@ -212,10 +225,13 @@
 	"title_runtime_error": "Boşlukszaman Bozulması",
 	"title_shared_name": "Paylaşılan İsim",
 	"title_snake_oiler": "Yılan Yağlayıcısı",
+	"title_social_butterfly": "Sosyal Kelebek",
+	"title_social_tee": "Sosyal Tee",
 	"title_solo_traveler": "Solo Gezgin",
 	"title_speed_demon": "Hız İblisi",
 	"title_speedrunner": "Hız Koşucusu",
 	"title_steady_progress": "Düzenli İlerleme",
+	"title_team_player": "Takım Oyuncusu",
 	"title_tee_army": "Tee Ordusu",
 	"title_time_wizard": "Zaman Büyücüsü",
 	"title_true_player": "Gerçek Oyuncu",

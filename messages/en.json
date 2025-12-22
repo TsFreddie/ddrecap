@@ -3,6 +3,13 @@
 	"card_biggest_improvement_verse_1": "At {date}, you've made your biggest improvement with this record",
 	"card_biggest_improvement_verse_2": "breaking your previous record <span class=\"font-semibold text-orange-400\">{time}</span> made at {date}",
 	"card_biggest_improvement_verse_3": "Achieving an improvement of",
+	"card_chart_completion": "and completion rate",
+	"card_chart_points": "Your {year} Point Trend",
+	"card_chart_top_maps": "Your {year} Top 5 Most Finished Maps",
+	"card_chart_types": "Your {year} Map Activity",
+	"card_distinct_teammates_verse_1": "This year, you've teamed up with",
+	"card_distinct_teammates_verse_2": "{count} different Tees",
+	"card_distinct_teammates_verse_3": "A truly powerful squad!",
 	"card_finishes_verse_1": "You've been on fire this year, crossing the finish line a total of",
 	"card_finishes_verse_2": [
 		{
@@ -38,7 +45,7 @@
 	"card_map_type_verse_1": "Your most played map type is",
 	"card_map_type_verse_2": [
 		{
-			"declarations": ["input count", "local plural = count: plural"],
+			"declarations": ["input count", "input type", "local plural = count: plural"],
 			"match": {
 				"plural=*": "This year, you've crossed the finish line of {type} maps <span class=\"font-semibold text-orange-400\">{count} times</span>",
 				"plural=one": "This year, you've crossed the finish line of {type} maps <span class=\"font-semibold text-orange-400\">{count} time</span>"
@@ -62,7 +69,7 @@
 	"card_monthly_verse_2": "You've spent <span class=\"font-semibold text-orange-400\">{percent}</span> of your playtime in this month",
 	"card_new_map_verse_1": [
 		{
-			"declarations": ["input total", "local plural = total: plural"],
+			"declarations": ["input completed", "input total", "local plural = total: plural"],
 			"match": {
 				"plural=*": "Among the <span class=\"text-orange-400\">{total} new challenging maps</span> released this year,<br>you successfully completed <span class=\"font-semibold text-orange-400\">{completed}</span> of them",
 				"plural=one": "Among the <span class=\"text-orange-400\">{total} new challenging map</span> released this year,<br>you successfully completed <span class=\"font-semibold text-orange-400\">{completed}</span> of them"
@@ -102,8 +109,6 @@
 	"card_runtime_verse_1": "All your race time this year totaled to",
 	"card_runtime_verse_2": "Also, according to <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, you have been online for {duration} this year",
 	"card_runtime_verse_weird": "Somehow your name appeared less than your race records. Perhaps you changed your name this year?",
-	"card_second_map_verse_1": "Your second most played map is",
-	"card_second_map_verse_2": "You crossed its finish line <span class=\"font-semibold text-orange-400\">{finishes} times</span>, and hopefully you remember it!",
 	"card_server_verse_1": "Your most played DDNet server is",
 	"card_server_verse_2": "You finished <span class=\"font-semibold text-orange-400\">{percent} of the races</span> in this server",
 	"card_server_verse_3": "Additionally, you also appeared in:<br>{servers}",
@@ -212,10 +217,13 @@
 	"title_runtime_error": "Corrupted Spacetime",
 	"title_shared_name": "Shared Name",
 	"title_snake_oiler": "Snake Oiler",
+	"title_social_butterfly": "Social Butterfly",
+	"title_social_tee": "Social Tee",
 	"title_solo_traveler": "Solo Traveler",
 	"title_speed_demon": "Speed Demon",
 	"title_speedrunner": "Speedrunner",
 	"title_steady_progress": "Steady Progress",
+	"title_team_player": "Team Player",
 	"title_tee_army": "Tee Army",
 	"title_time_wizard": "Time Wizard",
 	"title_true_player": "True Player",
@@ -251,9 +259,5 @@
 			},
 			"selectors": ["plural"]
 		}
-	],
-	"card_chart_points": "Your {year} Point Trend",
-	"card_chart_types": "Your {year} Map Activity",
-	"card_chart_completion": "and completion rate",
-	"card_chart_top_maps": "Your {year} Top 5 Most Finished Maps"
+	]
 }

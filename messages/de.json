@@ -3,6 +3,13 @@
 	"card_biggest_improvement_verse_1": "Am {date} hast du deine größte Verbesserung mit diesem Rekord erzielt",
 	"card_biggest_improvement_verse_2": "und deinen vorherigen Rekord von <span class=\"font-semibold text-orange-400\">{time}</span>, aufgestellt am {date}, gebrochen",
 	"card_biggest_improvement_verse_3": "Das ist eine Verbesserung von",
+	"card_chart_completion": "und Abschlussrate",
+	"card_chart_points": "Dein Punktetrend {year}",
+	"card_chart_top_maps": "Deine Top 5 meistgespielten Karten {year}",
+	"card_chart_types": "Deine Kartenaktivität {year}",
+	"card_distinct_teammates_verse_1": "In diesem Jahr hast du mit",
+	"card_distinct_teammates_verse_2": "{count} verschiedenen Tees",
+	"card_distinct_teammates_verse_3": "Ein wahrhaft mächtiges Team!",
 	"card_finishes_verse_1": "Du warst dieses Jahr heiß, bist insgesamt über die Ziellinie gekommen",
 	"card_finishes_verse_2": [
 		{
@@ -38,7 +45,7 @@
 	"card_map_type_verse_1": "Dein am meisten gespielter Kartentyp ist",
 	"card_map_type_verse_2": [
 		{
-			"declarations": ["input count", "local plural = count: plural"],
+			"declarations": ["input count", "input type", "local plural = count: plural"],
 			"match": {
 				"plural=*": "Dieses Jahr hast du die Ziellinie von {type}-Karten <span class=\"font-semibold text-orange-400\">{count} Mal</span> überquert",
 				"plural=one": "Dieses Jahr hast du die Ziellinie von {type}-Karten <span class=\"font-semibold text-orange-400\">{count} Mal</span> überquert"
@@ -62,7 +69,7 @@
 	"card_monthly_verse_2": "Du hast <span class=\"font-semibold text-orange-400\">{percent}</span> deiner Spielzeit in diesem Monat verbracht",
 	"card_new_map_verse_1": [
 		{
-			"declarations": ["input total", "local plural = total: plural"],
+			"declarations": ["input completed", "input total", "local plural = total: plural"],
 			"match": {
 				"plural=*": "Unter den <span class=\"text-orange-400\">{total} neuen herausfordernden Karten</span>, die dieses Jahr veröffentlicht wurden,<br>hast du erfolgreich <span class=\"font-semibold text-orange-400\">{completed}</span> davon abgeschlossen",
 				"plural=one": "Unter den <span class=\"text-orange-400\">{total} neuen herausfordernden Karten</span>, die dieses Jahr veröffentlicht wurden,<br>hast du erfolgreich <span class=\"font-semibold text-orange-400\">{completed}</span> davon abgeschlossen"
@@ -72,7 +79,15 @@
 	],
 	"card_new_map_verse_2": "Das bedeutet, du hast eine Abschlussrate von",
 	"card_new_map_verse_3": "Unter diesen Karten liebst du besonders",
-	"card_new_map_verse_4": "Du hast diese Karte <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet",
+	"card_new_map_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "Du hast diese Karte <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet"
+			},
+			"selectors": []
+		}
+	],
 	"card_night_owl_verse_1": "Es gab einen besonderen Moment<br>am <span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Du hast {time} gebraucht, um <span class=\"font-semibold text-orange-400\">{map}</span> zu vervollständigen,<br>und bist über die Ziellinie gelaufen um",
 	"card_night_owl_verse_3": "Während der Himmel dunkel ist, brennt deine Leidenschaft hell",
@@ -102,8 +117,6 @@
 	"card_runtime_verse_1": "Deine gesamte Rennzeit dieses Jahr betrug",
 	"card_runtime_verse_2": "Außerdem warst du laut <span class=\"font-semibold text-orange-400\">ddstats.tw</span> dieses Jahr {duration} online",
 	"card_runtime_verse_weird": "Irgendwie erschien dein Name weniger oft als deine Rennrekorde. Vielleicht hast du dieses Jahr deinen Namen geändert?",
-	"card_second_map_verse_1": "Deine zweitmeist gespielte Karte ist",
-	"card_second_map_verse_2": "Du hast ihre Ziellinie <span class=\"font-semibold text-orange-400\">{finishes} Mal</span> überquert, und hoffentlich erinnerst du dich daran!",
 	"card_server_verse_1": "Dein am meisten gespielter DDNet-Server ist",
 	"card_server_verse_2": "Du hast <span class=\"font-semibold text-orange-400\">{percent} der Rennen</span> auf diesem Server beendet",
 	"card_server_verse_3": "Außerdem warst du auch auf:<br>{servers}",
@@ -212,10 +225,13 @@
 	"title_runtime_error": "Beschädigte Raumzeit",
 	"title_shared_name": "Geteilter Name",
 	"title_snake_oiler": "Schlangenöler",
+	"title_social_butterfly": "Geselliger Schmetterling",
+	"title_social_tee": "Geselliger Tee",
 	"title_solo_traveler": "Alleinfahrer",
 	"title_speed_demon": "Geschwindigkeitsdämon",
 	"title_speedrunner": "Speedrunner",
 	"title_steady_progress": "Stetiger Fortschritt",
+	"title_team_player": "Teamspieler",
 	"title_tee_army": "Tee-Armee",
 	"title_time_wizard": "Zeitzauberer",
 	"title_true_player": "Wahrer Spieler",

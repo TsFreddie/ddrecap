@@ -3,8 +3,23 @@
 	"card_biggest_improvement_verse_1": "{date}、あなたは今年最大の個人記録を達成しました",
 	"card_biggest_improvement_verse_2": "これは、{date}に記録された{time}を上回るものです",
 	"card_biggest_improvement_verse_3": "記録が向上しました",
+	"card_chart_completion": "と完了率",
+	"card_chart_points": "あなたの{year}年のポイント推移",
+	"card_chart_top_maps": "あなたの{year}年に最も多く完了したマップトップ5",
+	"card_chart_types": "あなたの{year}年のマップ活動",
+	"card_distinct_teammates_verse_1": "今年、あなたは",
+	"card_distinct_teammates_verse_2": "{count}人の異なるTeeたちと",
+	"card_distinct_teammates_verse_3": "本当に強力なチームです！",
 	"card_finishes_verse_1": "今年もあなたは活力に満ち、多くの成果をあげました<br>計<span class=\"font-semibold text-orange-400\">ゴールを通過</span>しました",
-	"card_finishes_verse_2": "そのうち<br><span class=\"text-orange-400\">{count}回</span>のゴールは、",
+	"card_finishes_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "そのうち<br><span class=\"text-orange-400\">{count}回</span>のゴールは、"
+			},
+			"selectors": []
+		}
+	],
 	"card_finishes_verse_2_period": [
 		{
 			"declarations": ["input period"],
@@ -27,16 +42,48 @@
 	"card_level_designer_verse_2": "マップをリリースしました： {maps}",
 	"card_level_designer_verse_3": "DDNetコミュニティへの貢献に心より感謝いたします",
 	"card_map_type_verse_1": "あなたが今年最もプレイしたマップタイプは",
-	"card_map_type_verse_2": "あなたは{type}マップで<span class=\"font-semibold text-orange-400\">{count}回</span>ゴールしました",
+	"card_map_type_verse_2": [
+		{
+			"declarations": ["input count", "input type", "local plural = count: plural"],
+			"match": {
+				"count=*, type=*": "あなたは{type}マップで<span class=\"font-semibold text-orange-400\">{count}回</span>ゴールしました"
+			},
+			"selectors": []
+		}
+	],
 	"card_map_type_verse_fun": "あなたはDDNetの真の楽しみ方を見つけたようです",
 	"card_map_verse_1": "あなたが今年最もクリアしたマップは",
-	"card_map_verse_2": "このマップを<span class=\"font-semibold text-orange-400\">{finishes}回</span>クリアしました。このマップはあなたにとって特別な意味があるに違いありません",
+	"card_map_verse_2": [
+		{
+			"declarations": ["input finishes", "local plural = finishes: plural"],
+			"match": {
+				"finishes=*": "このマップを<span class=\"font-semibold text-orange-400\">{finishes}回</span>クリアしました。このマップはあなたにとって特別な意味があるに違いありません"
+			},
+			"selectors": []
+		}
+	],
 	"card_monthly_verse_1": "あなたが最も活動した月は",
 	"card_monthly_verse_2": "この月で、総プレイ時間の<span class=\"font-semibold text-orange-400\">{percent}</span>を過ごしました",
-	"card_new_map_verse_1": "今年新しくリリースされた<span class=\"text-orange-400\">{total}枚</span>の挑戦的なマップのうち<br>あなたは<span class=\"font-semibold text-orange-400\">{completed}枚</span>をクリアしました<br>これは、今年の新マップの",
+	"card_new_map_verse_1": [
+		{
+			"declarations": ["input completed", "input total", "local plural = total: plural"],
+			"match": {
+				"completed=*, total=*": "今年新しくリリースされた<span class=\"text-orange-400\">{total}枚</span>の挑戦的なマップのうち<br>あなたは<span class=\"font-semibold text-orange-400\">{completed}枚</span>をクリアしました<br>これは、今年の新マップの"
+			},
+			"selectors": []
+		}
+	],
 	"card_new_map_verse_2": "これは、あなたがInsane難度のマップを攻略したことを意味します",
 	"card_new_map_verse_3": "これらのマップの中でも、あなたは特に",
-	"card_new_map_verse_4": "を気に入り、計<span class=\"font-semibold text-orange-400\">{count}回</span>クリアしました",
+	"card_new_map_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "を気に入り、計<span class=\"font-semibold text-orange-400\">{count}回</span>クリアしました"
+			},
+			"selectors": []
+		}
+	],
 	"card_night_owl_verse_1": "特別な瞬間がありました<br><span class=\"font-semibold text-orange-400\">{date}</span>に",
 	"card_night_owl_verse_2": "あなたは{time}かけて<span class=\"font-semibold text-orange-400\">{map}</span>をクリアしました<br>ゴールしたとき、時刻はすでに",
 	"card_night_owl_verse_3": "周囲は静寂に包まれていましたが、あなたの情熱は燃え盛っていました。集中力と忍耐力で、最後の難関を突破したのです",
@@ -66,8 +113,6 @@
 	"card_runtime_verse_1": "今年、あなたがすべてのマップをクリアするのにかかった時間は合計で",
 	"card_runtime_verse_2": "また、<span class=\"font-semibold text-orange-400\">ddstats.tw</span>の統計によると、あなたの今年の総オンライン時間は{duration}でした",
 	"card_runtime_verse_weird": "しかし、なぜか表示されたプレイ時間が、クリアにかかった時間より短くなっています。今年、名前を変更しましたか？",
-	"card_second_map_verse_1": "あなたが今年2番目に多くクリアしたマップは",
-	"card_second_map_verse_2": "このマップを<span class=\"font-semibold text-orange-400\">{finishes}回</span>クリアしました。覚えていますか！",
 	"card_server_verse_1": "あなたが今年最もプレイしたDDNetサーバーは",
 	"card_server_verse_2": "あなたの記録の<span class=\"font-semibold text-orange-400\">{percent}</span>は、このサーバーで獲得されました",
 	"card_server_verse_3": "その他にも、あなたは以下のサーバーでもプレイしています：<br>{servers}",
@@ -92,9 +137,25 @@
 	"card_steady_progress_verse_3": "を獲得しました。今後も困難を乗り越え",
 	"card_steady_progress_verse_4": "より高ポイントのマップで大活躍することを期待しています",
 	"card_team_verse_1": "チームプレイでは、パートナーが何よりの宝物です！",
-	"card_team_verse_2": "はあなたの最高のパートナーです<br>あなたたちは一緒に<span class=\"font-semibold text-orange-400\">{count}回</span>のチーム記録を獲得しました<br>協力の輝かしい成果が、あなたたちの心を照らしています",
+	"card_team_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "はあなたの最高のパートナーです<br>あなたたちは一緒に<span class=\"font-semibold text-orange-400\">{count}回</span>のチーム記録を獲得しました<br>協力の輝かしい成果が、あなたたちの心を照らしています"
+			},
+			"selectors": []
+		}
+	],
 	"card_team_verse_3": "また、あなたは",
-	"card_team_verse_4": "とも<span class=\"font-semibold text-orange-400\">{count}回</span>のチーム記録を獲得し、最高のパートナーに次ぐ成果をあげました",
+	"card_team_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "とも<span class=\"font-semibold text-orange-400\">{count}回</span>のチーム記録を獲得し、最高のパートナーに次ぐ成果をあげました"
+			},
+			"selectors": []
+		}
+	],
 	"format_dhms": "d日h時間m分s秒",
 	"format_hm": "h時間m分",
 	"format_hms": "h時間m分s秒",
@@ -158,10 +219,13 @@
 	"title_runtime_error": "時間の歪み",
 	"title_shared_name": "名前一緒",
 	"title_snake_oiler": "コブラマスター",
+	"title_social_butterfly": "社交的な蝶",
+	"title_social_tee": "社交的なTee",
 	"title_solo_traveler": "孤独な旅人",
 	"title_speed_demon": "風の如き速さ",
 	"title_speedrunner": "最速挑戦者",
 	"title_steady_progress": "着実なる前進",
+	"title_team_player": "チームプレイヤー",
 	"title_tee_army": "Teeの大群",
 	"title_time_wizard": "時間操作者",
 	"title_true_player": "真のプレイヤー",
@@ -178,7 +242,31 @@
 			"selectors": ["years"]
 		}
 	],
-	"unit_maps": "{count}枚のマップ",
-	"unit_times": "{count}回",
-	"unit_years": "{count}年"
+	"unit_maps": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "{count}枚のマップ"
+			},
+			"selectors": []
+		}
+	],
+	"unit_times": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "{count}回"
+			},
+			"selectors": []
+		}
+	],
+	"unit_years": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "{count}年"
+			},
+			"selectors": []
+		}
+	]
 }

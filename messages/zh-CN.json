@@ -3,8 +3,23 @@
 	"card_biggest_improvement_verse_1": "在{date}，你达成了今年最大的个人记录突破",
 	"card_biggest_improvement_verse_2": "打破了之前于{date}创下的{time}记录",
 	"card_biggest_improvement_verse_3": "这一记录提升了",
+	"card_chart_completion": "和完成率",
+	"card_chart_points": "你的 {year} 年积分趋势",
+	"card_chart_top_maps": "你的 {year} 年最常完成的 5 张地图",
+	"card_chart_types": "你的 {year} 年地图活动",
+	"card_distinct_teammates_verse_1": "今年，你与",
+	"card_distinct_teammates_verse_2": "{count} 位不同的 Tee",
+	"card_distinct_teammates_verse_3": "真是个强大的团队！",
 	"card_finishes_verse_1": "今年你活力满满，战果颇丰<br>总共顺利<span class=\"font-semibold text-orange-400\">冲过了终点</span>",
-	"card_finishes_verse_2": "在这其中<br>有<span class=\"text-orange-400\"> {count} 次</span>冲线，都是在",
+	"card_finishes_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "在这其中<br>有<span class=\"text-orange-400\"> {count} 次</span>冲线，都是在"
+			},
+			"selectors": []
+		}
+	],
 	"card_finishes_verse_2_period": [
 		{
 			"declarations": ["input period"],
@@ -27,16 +42,48 @@
 	"card_level_designer_verse_2": "发布的地图为 {maps}",
 	"card_level_designer_verse_3": "诚挚地感谢你对 DDNet 社区做出的贡献",
 	"card_map_type_verse_1": "你今年最常体验的地图类型是",
-	"card_map_type_verse_2": "你在 {type} 图中过了<span class=\"font-semibold text-orange-400\"> {count} 次</span>终点",
+	"card_map_type_verse_2": [
+		{
+			"declarations": ["input count", "input type", "local plural = count: plural"],
+			"match": {
+				"count=*, type=*": "你在 {type} 图中过了<span class=\"font-semibold text-orange-400\"> {count} 次</span>终点"
+			},
+			"selectors": []
+		}
+	],
 	"card_map_type_verse_fun": "你似乎发掘了 DDNet 的真正玩法",
 	"card_map_verse_1": "你今年过关次数最多的地图是",
-	"card_map_verse_2": "你通过了这张图<span class=\"font-semibold text-orange-400\"> {finishes} 次</span>，这张地图对你来说一定有着特别的意义",
+	"card_map_verse_2": [
+		{
+			"declarations": ["input finishes", "local plural = finishes: plural"],
+			"match": {
+				"finishes=*": "你通过了这张图<span class=\"font-semibold text-orange-400\"> {finishes} 次</span>，这张地图对你来说一定有着特别的意义"
+			},
+			"selectors": []
+		}
+	],
 	"card_monthly_verse_1": "你最常活跃的月份是",
 	"card_monthly_verse_2": "你在这个月度过了<span class=\"font-semibold text-orange-400\"> {percent} </span>的总游戏时长",
-	"card_new_map_verse_1": "在今年新发布的<span class=\"text-orange-400\"> {total} 张</span>充满挑战的地图中<br>你成功完成了<span class=\"font-semibold text-orange-400\"> {completed} 张</span><br>如此算下来，你一共完成今年新图的",
+	"card_new_map_verse_1": [
+		{
+			"declarations": ["input completed", "input total", "local plural = total: plural"],
+			"match": {
+				"completed=*, total=*": "在今年新发布的<span class=\"text-orange-400\"> {total} 张</span>充满挑战的地图中<br>你成功完成了<span class=\"font-semibold text-orange-400\"> {completed} 张</span><br>如此算下来，你一共完成今年新图的"
+			},
+			"selectors": []
+		}
+	],
 	"card_new_map_verse_2": "这意味着你已成功攻克了疯狂难度的地图",
 	"card_new_map_verse_3": "在这些地图中，你尤其钟爱",
-	"card_new_map_verse_4": "总共完成了<span class=\"font-semibold text-orange-400\"> {count} 次</span>",
+	"card_new_map_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "总共完成了<span class=\"font-semibold text-orange-400\"> {count} 次</span>"
+			},
+			"selectors": []
+		}
+	],
 	"card_night_owl_verse_1": "有这么一个特殊的时刻<br>在<span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "你耗时 {time} 完成了<span class=\"font-semibold text-orange-400\"> {map} </span><br>在你通过终点时已是",
 	"card_night_owl_verse_3": "周围万籁俱寂，而你却热血沸腾。你凭借着自己的专注与毅力，攻克了那最后一道难关",
@@ -66,8 +113,6 @@
 	"card_runtime_verse_1": "今年你所有过图加起来，一共花了",
 	"card_runtime_verse_2": "另外，据<span class=\"font-semibold text-orange-400\">ddstats.tw</span>统计，你今年总共在线了{duration}",
 	"card_runtime_verse_weird": "但不知为何，你的名字出现的时间比你的过图时间还少。或许今年你申请过改名了？",
-	"card_second_map_verse_1": "你今年通关第二频繁的地图是",
-	"card_second_map_verse_2": "你通过了这张图<span class=\"font-semibold text-orange-400\"> {finishes} 次</span>，希望你还记得它！",
 	"card_server_verse_1": "你今年最常玩的DDNet服务器是",
 	"card_server_verse_2": "你<span class=\"font-semibold text-orange-400\"> {percent} </span>的记录都是在这个服务器上获得的",
 	"card_server_verse_3": "除此之外，你还在以下服务器中出现过：<br>{servers}",
@@ -92,9 +137,25 @@
 	"card_steady_progress_verse_3": "期待你今后继续披荆斩棘",
 	"card_steady_progress_verse_4": "在更高里程的地图中大放异彩",
 	"card_team_verse_1": "合作游戏中，当属伙伴最为重要",
-	"card_team_verse_2": "是你的最佳拍档<br>你们一起总共获得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>团队记录<br>合作的璀璨成果在你们心间熠熠生辉",
+	"card_team_verse_2": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "是你的最佳拍档<br>你们一起总共获得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>团队记录<br>合作的璀璨成果在你们心间熠熠生辉"
+			},
+			"selectors": []
+		}
+	],
 	"card_team_verse_3": "另外，你还与",
-	"card_team_verse_4": "一起获得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>团队记录，仅次于上一位搭档",
+	"card_team_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "一起获得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>团队记录，仅次于上一位搭档"
+			},
+			"selectors": []
+		}
+	],
 	"format_dhms": "d天h小时m分s秒",
 	"format_hm": "h小时m分钟",
 	"format_hms": "h小时m分s秒",
@@ -158,10 +219,13 @@
 	"title_runtime_error": "时间错乱",
 	"title_shared_name": "数据共享",
 	"title_snake_oiler": "好孩子不玩蛇",
+	"title_social_butterfly": "社交达人",
+	"title_social_tee": "社交型 Tee",
 	"title_solo_traveler": "一人的天空",
 	"title_speed_demon": "猎鹰",
 	"title_speedrunner": "速通玩家",
 	"title_steady_progress": "渐入佳境",
+	"title_team_player": "团队合作者",
 	"title_tee_army": "Tee军团",
 	"title_time_wizard": "时间魔术师",
 	"title_true_player": "TRUE PLAYER",
@@ -178,11 +242,31 @@
 			"selectors": ["years"]
 		}
 	],
-	"unit_maps": "{count} 张地图",
-	"unit_times": "{count} 次",
-	"unit_years": "{count} 年",
-	"card_chart_points": "你的 {year} 分数走势",
-	"card_chart_types": "你的 {year} 地图活跃度",
-	"card_chart_completion": "与完成度",
-	"card_chart_top_maps": "你的 {year} 地图冲线次数"
+	"unit_maps": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "{count} 张地图"
+			},
+			"selectors": []
+		}
+	],
+	"unit_times": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "{count} 次"
+			},
+			"selectors": []
+		}
+	],
+	"unit_years": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "{count} 年"
+			},
+			"selectors": []
+		}
+	]
 }

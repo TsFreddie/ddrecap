@@ -35,7 +35,7 @@
 		{ code: 'tr', name: 'Türkçe' },
 		{ code: 'uk', name: 'Українська' },
 		{ code: 'zh-CN', name: '简体中文' },
-		{ code: 'zh-TW', name: '繁体中文' }
+		{ code: 'zh-TW', name: '繁體中文' }
 	];
 	let dropdownOpen = $state(false);
 
@@ -810,20 +810,27 @@
 			class="absolute top-[2%] right-[2%] bottom-[2%] left-[2%] flex flex-col items-center justify-center gap-[2%]"
 		>
 			<div
-				class="absolute top-0 right-0 bottom-[35%] left-0 flex grow items-center justify-center rounded-[1em] border-[0.25em] border-gray-500/60 bg-gray-800/30 backdrop-blur-xs pt-[7%]"
+				class="absolute top-0 right-0 bottom-[35%] left-0 flex flex-col grow items-center rounded-[1em] border-[0.1em] border-white/20 overflow-hidden"
+				style:box-shadow={'inset 0 0 4em 0.25em #00000088;'}
 			>
 				<div
-					class="flex w-full flex-row flex-wrap items-center justify-center"
-					class:text-[0.9em]={titleCount <= 10}
-					class:text-[0.8em]={titleCount > 10 && titleCount <= 15}
-					class:text-[0.7em]={titleCount > 15 && titleCount <= 20}
-					class:text-[0.6em]={titleCount > 20 && titleCount <= 30}
-					class:text-[0.5em]={titleCount > 30}
+					class="w-full font-semibold text-white bg-black/50 shadow-xl shadow-black/30 text-center p-[0.5%]"
+				>
+					{m.page_badges_for({ year: data.year, name: data.name! })}
+				</div>
+
+				<div
+					class="flex grow w-full flex-row flex-wrap place-content-evenly content-evenly justify-evenly"
+					class:text-[0.9em]={titleCount < 10}
+					class:text-[0.8em]={titleCount >= 10 && titleCount < 15}
+					class:text-[0.7em]={titleCount >= 15 && titleCount < 20}
+					class:text-[0.6em]={titleCount >= 20 && titleCount < 30}
+					class:text-[0.5em]={titleCount >= 30}
 				>
 					{#if totalCards?.titles}
 						{#each totalCards.titles as title}
 							<span
-								class="m-[1%] rounded-[1em] border-[0.1em] border-t-white/30 border-l-white/30 border-black/30 px-[2%] py-[0.25%] text-center font-semibold text-nowrap"
+								class="rounded-[1em] border-[0.1em] border-t-white/30 border-l-white/30 bg-zinc-800/30 border-black/30 px-[2%] py-[0.25%] text-center font-semibold text-nowrap"
 								style="background-color: {title.bg};{title.color ? `color: ${title.color};` : ''}"
 							>
 								{title.text}
@@ -831,9 +838,6 @@
 						{/each}
 					{/if}
 				</div>
-			</div>
-			<div class="absolute top-[1%] font-semibold text-white">
-				{m.page_badges_for({ year: data.year, name: data.name! })}
 			</div>
 			<div
 				class="motion-duration-500 motion-delay-700 absolute top-[70%] left-[-9%] h-[20%] w-[20%]"

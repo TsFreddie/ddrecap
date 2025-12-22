@@ -3,6 +3,13 @@
 	"card_biggest_improvement_verse_1": "Den {date} gjorde du din största förbättring med detta rekord",
 	"card_biggest_improvement_verse_2": "genom att slå ditt tidigare rekord på <span class=\"font-semibold text-orange-400\">{time}</span> som sattes den {date}",
 	"card_biggest_improvement_verse_3": "Med en förbättring på",
+	"card_chart_completion": "och slutförandegrad",
+	"card_chart_points": "Din {year}-poängtrend",
+	"card_chart_top_maps": "Dina 5 mest spelade banor {year}",
+	"card_chart_types": "Din kartaktivitet {year}",
+	"card_distinct_teammates_verse_1": "I år har du spelat ihop med",
+	"card_distinct_teammates_verse_2": "{count} olika Tee",
+	"card_distinct_teammates_verse_3": "Ett riktigt kraftfullt gäng!",
 	"card_finishes_verse_1": "Du har varit på eld i år och korsat mållinjen totalt",
 	"card_finishes_verse_2": [
 		{
@@ -38,7 +45,7 @@
 	"card_map_type_verse_1": "Din mest spelade karttyp är",
 	"card_map_type_verse_2": [
 		{
-			"declarations": ["input count", "local plural = count: plural"],
+			"declarations": ["input count", "input type", "local plural = count: plural"],
 			"match": {
 				"plural=*": "I år har du korsat mållinjen på {type}-kartor <span class=\"font-semibold text-orange-400\">{count} gånger</span>",
 				"plural=one": "I år har du korsat mållinjen på {type}-kartor <span class=\"font-semibold text-orange-400\">{count} gång</span>"
@@ -62,7 +69,7 @@
 	"card_monthly_verse_2": "Du har spenderat <span class=\"font-semibold text-orange-400\">{percent}</span> av din speltid denna månad",
 	"card_new_map_verse_1": [
 		{
-			"declarations": ["input total", "local plural = total: plural"],
+			"declarations": ["input completed", "input total", "local plural = total: plural"],
 			"match": {
 				"plural=*": "Bland de <span class=\"text-orange-400\">{total} nya utmanande kartorna</span> som släpptes i år<br>klarade du av <span class=\"font-semibold text-orange-400\">{completed}</span> av dem",
 				"plural=one": "Bland den <span class=\"text-orange-400\">{total} nya utmanande kartan</span> som släpptes i år<br>klarade du av <span class=\"font-semibold text-orange-400\">{completed}</span> av den"
@@ -72,7 +79,15 @@
 	],
 	"card_new_map_verse_2": "Det betyder att du uppnådde en klarandegrad på",
 	"card_new_map_verse_3": "Bland dessa kartor älskar du speciellt",
-	"card_new_map_verse_4": "Du klarade denna karta <span class=\"font-semibold text-orange-400\">{count} gånger</span>",
+	"card_new_map_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "Du klarade denna karta <span class=\"font-semibold text-orange-400\">{count} gånger</span>"
+			},
+			"selectors": []
+		}
+	],
 	"card_night_owl_verse_1": "Det var ett speciellt ögonblick<br>den <span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Det tog dig {time} att klara <span class=\"font-semibold text-orange-400\">{map}</span><br>och du korsade mållinjen kl",
 	"card_night_owl_verse_3": "Medan himlen är mörk, brinner din passion klart",
@@ -102,8 +117,6 @@
 	"card_runtime_verse_1": "All din racetid i år summerade till",
 	"card_runtime_verse_2": "Enligt <span class=\"font-semibold text-orange-400\">ddstats.tw</span> har du dessutom varit online i {duration} i år",
 	"card_runtime_verse_weird": "Ditt namn dyker på något sätt upp mindre än dina racerekord. Kanske bytte du namn i år?",
-	"card_second_map_verse_1": "Din näst mest spelade karta är",
-	"card_second_map_verse_2": "Du korsade dess mållinje <span class=\"font-semibold text-orange-400\">{finishes} gånger</span>, och förhoppningsvis minns du den!",
 	"card_server_verse_1": "Din mest spelade DDNet-server är",
 	"card_server_verse_2": "Du klarade <span class=\"font-semibold text-orange-400\">{percent} av racen</span> på denna server",
 	"card_server_verse_3": "Dessutom dök du även upp på:<br>{servers}",
@@ -212,10 +225,13 @@
 	"title_runtime_error": "Korrupt Rymdtid",
 	"title_shared_name": "Delat Namn",
 	"title_snake_oiler": "Ormolja",
+	"title_social_butterfly": "Social fjäril",
+	"title_social_tee": "Social Tee",
 	"title_solo_traveler": "Soloresenär",
 	"title_speed_demon": "Hastighetsdemon",
 	"title_speedrunner": "Speedrunner",
 	"title_steady_progress": "Stadig Framgång",
+	"title_team_player": "Lagspelare",
 	"title_tee_army": "Tee-armé",
 	"title_time_wizard": "Tidsmagiker",
 	"title_true_player": "Sann Spelare",

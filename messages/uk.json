@@ -3,6 +3,13 @@
 	"card_biggest_improvement_verse_1": "{date} ви досягли свого найбільшого покращення з цим рекордом",
 	"card_biggest_improvement_verse_2": "побивши свій попередній рекорд <span class=\"font-semibold text-orange-400\">{time}</span>, встановлений {date}",
 	"card_biggest_improvement_verse_3": "Досягнуто покращення на",
+	"card_chart_completion": "та рівень завершення",
+	"card_chart_points": "Тенденція ваших балів за {year} рік",
+	"card_chart_top_maps": "Ваші Топ-5 найчастіше завершених карт за {year} рік",
+	"card_chart_types": "Ваша активність на картах за {year} рік",
+	"card_distinct_teammates_verse_1": "Цього року ви об'єдналися з",
+	"card_distinct_teammates_verse_2": "{count} різними Tee",
+	"card_distinct_teammates_verse_3": "Справжня потужна команда!",
 	"card_finishes_verse_1": "Цього року ви були нестримні, всього ви перетнули фінішну лінію",
 	"card_finishes_verse_2": [
 		{
@@ -38,7 +45,7 @@
 	"card_map_type_verse_1": "Ваш найбільш зіграний тип карт —",
 	"card_map_type_verse_2": [
 		{
-			"declarations": ["input count", "local plural = count: plural"],
+			"declarations": ["input count", "input type", "local plural = count: plural"],
 			"match": {
 				"plural=*": "Цього року ви перетнули фінішну лінію на {type} картах <span class=\"font-semibold text-orange-400\">{count} рази</span>",
 				"plural=one": "Цього року ви перетнули фінішну лінію на {type} картах <span class=\"font-semibold text-orange-400\">{count} раз</span>"
@@ -62,7 +69,7 @@
 	"card_monthly_verse_2": "Ви провели <span class=\"font-semibold text-orange-400\">{percent}</span> вашого ігрового часу цього місяця",
 	"card_new_map_verse_1": [
 		{
-			"declarations": ["input total", "local plural = total: plural"],
+			"declarations": ["input completed", "input total", "local plural = total: plural"],
 			"match": {
 				"plural=*": "Серед <span class=\"text-orange-400\">{total} нових складних карт</span>, випущених цього року,<br>ви успішно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> з них",
 				"plural=one": "Серед <span class=\"text-orange-400\">{total} нової складної карти</span>, випущеної цього року,<br>ви успішно завершили <span class=\"font-semibold text-orange-400\">{completed}</span> з них"
@@ -72,7 +79,15 @@
 	],
 	"card_new_map_verse_2": "Це означає, що ваш відсоток завершення склав",
 	"card_new_map_verse_3": "Серед цих карт ви особливо любите",
-	"card_new_map_verse_4": "Ви завершили цю карту <span class=\"font-semibold text-orange-400\">{count} рази</span>",
+	"card_new_map_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "Ви завершили цю карту <span class=\"font-semibold text-orange-400\">{count} рази</span>"
+			},
+			"selectors": []
+		}
+	],
 	"card_night_owl_verse_1": "Був особливий момент<br><span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Вам знадобилося {time}, щоб пройти <span class=\"font-semibold text-orange-400\">{map}</span><br>і перетнути фінішну лінію о",
 	"card_night_owl_verse_3": "Хоча небо темне, ваша пристрасть палає яскраво",
@@ -102,8 +117,6 @@
 	"card_runtime_verse_1": "Весь ваш час перегонів цього року в сумі склав",
 	"card_runtime_verse_2": "Крім того, згідно з <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, ви були онлайн {duration} цього року",
 	"card_runtime_verse_weird": "Чомусь ваше ім'я з'являлося рідше, ніж ваші записи перегонів. Можливо, ви змінювали ім'я цього року?",
-	"card_second_map_verse_1": "Ваша друга за популярністю карта —",
-	"card_second_map_verse_2": "Ви перетнули її фінішну лінію <span class=\"font-semibold text-orange-400\">{finishes} рази</span>, і, сподіваємося, ви її пам'ятаєте!",
 	"card_server_verse_1": "Ваш найбільш зіграний сервер DDNet —",
 	"card_server_verse_2": "Ви завершили <span class=\"font-semibold text-orange-400\">{percent} заїздів</span> на цьому сервері",
 	"card_server_verse_3": "Крім того, ви також з'являлися на:<br>{servers}",
@@ -212,10 +225,13 @@
 	"title_runtime_error": "Спотворений Простір-Час",
 	"title_shared_name": "Спільне Ім'я",
 	"title_snake_oiler": "Зміїний Мастильник",
+	"title_social_butterfly": "Соціальна метелик",
+	"title_social_tee": "Соціальний Tee",
 	"title_solo_traveler": "Соло-Мандрівник",
 	"title_speed_demon": "Демон Швидкості",
 	"title_speedrunner": "Спідранер",
 	"title_steady_progress": "Стабільний Прогрес",
+	"title_team_player": "Командний гравець",
 	"title_tee_army": "Армія Ті",
 	"title_time_wizard": "Чарівник Часу",
 	"title_true_player": "Справжній Гравець",

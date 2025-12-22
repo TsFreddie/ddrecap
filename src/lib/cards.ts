@@ -14,6 +14,8 @@ import {
 import type { m as messages } from './paraglide/messages';
 import type { YearlyData } from './query-engine.worker';
 import { createRng, stringHash } from './pose';
+import { getSkinData } from './stores/skins';
+import normalSkins from '$lib/normal-skins.json';
 
 export interface CardTextItem {
 	type: 't';
@@ -125,6 +127,164 @@ export const generateCards = async (
 			})
 		);
 		progress(1);
+	};
+
+	const seed = stringHash(data.name);
+	const rng = createRng(seed);
+
+	const sample = (names: string[], num: number) => {
+		names = [...names];
+		for (let i = names.length - 1; i > 0; i--) {
+			const j = Math.floor(rng() * (i + 1));
+			[names[i], names[j]] = [names[j], names[i]];
+		}
+		return names.slice(0, num);
+	};
+
+	const generateSwarm = (names: string[], mode: 'player' | 'skin') => {
+		// Generate swarm entries for each team member
+		const swarmEntries: NonNullable<CardData['swarm']> = [];
+		const cardW = 512;
+		const cardH = 512;
+		const centerX = cardW / 2;
+		const centerY = cardH / 2;
+
+		const deg2rad = Math.PI / 180;
+		const delta = 1 / names.length;
+
+		let indexes = Array.from({ length: names.length }, (_, i) => i);
+		for (let i = names.length - 1; i > 0; i--) {
+			const j = Math.floor(rng() * (i + 1));
+			[indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+		}
+
+		const delayDelta = 1.5 / (names.length - 1);
+
+		for (let i = 0; i < names.length; i++) {
+			// Random angle for this member (distribute evenly with some variance)
+			const baseDeg = i * delta * 310 + 140;
+			const baseAngle = (baseDeg + rng() * Math.max(delta * 310 - 8, 0)) * deg2rad;
+			const angle = baseAngle;
+
+			// Direction vector
+			const dirX = Math.cos(angle);
+			const dirY = Math.sin(angle);
+
+			// Calculate corner proximity - corners are at 45°, 135°, 225°, 315°
+			const normalizedAngle = ((((angle * 180) / Math.PI) % 360) + 360) % 360;
+			const cornerAngles = [45, 135, 225, 315];
+			const minCornerDist = Math.min(
+				...cornerAngles.map((c) =>
+					Math.min(Math.abs(normalizedAngle - c), 360 - Math.abs(normalizedAngle - c))
+				)
+			);
+			const linearProximity = 1 - minCornerDist / 45;
+			const cornerProximity = Math.pow(linearProximity, 8); // More concentrated near corners
+			const cornerOffset = -cornerProximity;
+			const edgeOffset = 1 + (rng() * 4.2 - 3.0);
+
+			// Find intersection with card boundary using robust line-rect intersection
+			const intersections: Array<{ t: number; edge: string; x: number; y: number }> = [];
+
+			// Left edge (x = 0)
+			if (Math.abs(dirX) > 0.0001) {
+				const tLeft = (0 - centerX) / dirX;
+				if (tLeft > 0) {
+					const yLeft = centerY + tLeft * dirY;
+					if (yLeft >= 0 && yLeft <= cardH) {
+						intersections.push({ t: tLeft, edge: 'left', x: 0, y: yLeft });
+					}
+				}
+			}
+
+			// Right edge (x = cardW)
+			if (Math.abs(dirX) > 0.0001) {
+				const tRight = (cardW - centerX) / dirX;
+				if (tRight > 0) {
+					const yRight = centerY + tRight * dirY;
+					if (yRight >= 0 && yRight <= cardH) {
+						intersections.push({ t: tRight, edge: 'right', x: cardW, y: yRight });
+					}
+				}
+			}
+
+			// Top edge (y = 0)
+			if (Math.abs(dirY) > 0.0001) {
+				const tTop = (0 - centerY) / dirY;
+				if (tTop > 0) {
+					const xTop = centerX + tTop * dirX;
+					if (xTop >= 0 && xTop <= cardW) {
+						intersections.push({ t: tTop, edge: 'top', x: xTop, y: 0 });
+					}
+				}
+			}
+
+			// Bottom edge (y = cardH)
+			if (Math.abs(dirY) > 0.0001) {
+				const tBottom = (cardH - centerY) / dirY;
+				if (tBottom > 0) {
+					const xBottom = centerX + tBottom * dirX;
+					if (xBottom >= 0 && xBottom <= cardW) {
+						intersections.push({ t: tBottom, edge: 'bottom', x: xBottom, y: cardH });
+					}
+				}
+			}
+
+			// Find the closest intersection
+			if (intersections.length === 0) {
+				// Fallback: just don't push it
+				continue;
+			}
+
+			// Sort by distance and take the closest
+			intersections.sort((a, b) => a.t - b.t);
+			const closest = intersections[0];
+
+			// Position at the edge (as percentage)
+			const edgeX = (closest.x / cardW) * 100;
+			const edgeY = (closest.y / cardH) * 100;
+
+			// Determine which edge and set position
+			const entry: NonNullable<CardData['swarm']>[0] = {
+				vx: -dirX,
+				vy: -dirY,
+				delay: indexes[i] * delayDelta + 0.5,
+				skin: { n: 'default' },
+				emote: Math.floor(rng() * 4),
+				angle: (-angle * 180 + 10 * rng()) / Math.PI + 165,
+				var: rng() * 10 - 5
+			};
+
+			const member = names[i];
+			if (mode === 'player') {
+				tasks.push(async () => {
+					entry.skin = await getPlayerSkin(member);
+				});
+			} else {
+				entry.skin = { n: member };
+			}
+
+			// Set position based on which edge was hit
+			// For left/right edges: use t for vertical positioning
+			// For top/bottom edges: use l for horizontal positioning
+			if (closest.edge === 'left') {
+				entry.l = -edgeOffset - cornerOffset * 1.5;
+				entry.t = edgeY;
+			} else if (closest.edge === 'right') {
+				entry.r = -edgeOffset - cornerOffset * 1.5;
+				entry.t = edgeY;
+			} else if (closest.edge === 'top') {
+				entry.t = -edgeOffset - cornerOffset * 3.5 - 1.0;
+				entry.l = edgeX;
+			} else if (closest.edge === 'bottom') {
+				entry.b = -edgeOffset - cornerOffset * 3.5;
+				entry.l = edgeX;
+			}
+
+			swarmEntries.push(entry);
+		}
+
+		return swarmEntries;
 	};
 
 	const tz = data.tz;
@@ -1509,6 +1669,49 @@ export const generateCards = async (
 		}
 	}
 
+	const skins = await getSkinData();
+
+	if (d.dt && d.dt.length >= 5) {
+		// 不同队友数量
+		const titles = [];
+		const count = d.dt.length;
+		if (count >= 50) {
+			titles.push({ bg: '#ff6b6b', color: '#fff', text: m.title_social_butterfly() });
+		} else if (count >= 20) {
+			titles.push({ bg: '#4ecdc4', color: '#000', text: m.title_team_player() });
+		} else if (count >= 10) {
+			titles.push({ bg: '#ffe66d', color: '#000', text: m.title_social_tee() });
+		}
+		allTitles.push(...titles);
+		cards.push({
+			titles,
+			l: 6.5,
+			r: 6.5,
+			content: [
+				{
+					type: 't',
+					text: m.card_distinct_teammates_verse_1()
+				},
+				{
+					type: 'b',
+					bg: '#fdd300',
+					color: '#000',
+					text: m.card_distinct_teammates_verse_2({ count }),
+					rotation: -4
+				},
+				{
+					type: 't',
+					text: m.card_distinct_teammates_verse_3()
+				}
+			],
+			swarm: skins
+				? generateSwarm(sample(normalSkins, Math.min(d.dt.length, 64)), 'skin')
+				: undefined,
+			background: '/assets/yearly/m.png',
+			mapper: mapFormat('Mint')
+		});
+	}
+
 	if (d.bt && d.bt[0] > 4) {
 		// 最大团队
 		const titles = [];
@@ -1516,149 +1719,6 @@ export const generateCards = async (
 			titles.push({ bg: '#bee9e8', color: '#000', text: m.title_tee_army() });
 		}
 		allTitles.push(...titles);
-
-		// Generate swarm entries for each team member
-		const swarmEntries: NonNullable<CardData['swarm']> = [];
-		const members = d.bt[2] as string[];
-		const cardW = 512;
-		const cardH = 512;
-		const centerX = cardW / 2;
-		const centerY = cardH / 2;
-
-		const deg2rad = Math.PI / 180;
-		const delta = 1 / members.length;
-		const seed = stringHash(data.name);
-		console.log(seed);
-		const rng = createRng(seed);
-
-		let indexes = Array.from({ length: members.length }, (_, i) => i);
-		for (let i = members.length - 1; i > 0; i--) {
-			const j = Math.floor(rng() * (i + 1));
-			[indexes[i], indexes[j]] = [indexes[j], indexes[i]];
-		}
-
-		const delayDelta = 1.5 / (members.length - 1);
-
-		for (let i = 0; i < members.length; i++) {
-			// Random angle for this member (distribute evenly with some variance)
-			const baseDeg = i * delta * 310 + 140;
-			const baseAngle = (baseDeg + rng() * Math.max(delta * 310 - 8, 0)) * deg2rad;
-			const angle = baseAngle;
-
-			// Direction vector
-			const dirX = Math.cos(angle);
-			const dirY = Math.sin(angle);
-
-			// Calculate corner proximity - corners are at 45°, 135°, 225°, 315°
-			const normalizedAngle = ((((angle * 180) / Math.PI) % 360) + 360) % 360;
-			const cornerAngles = [45, 135, 225, 315];
-			const minCornerDist = Math.min(
-				...cornerAngles.map((c) =>
-					Math.min(Math.abs(normalizedAngle - c), 360 - Math.abs(normalizedAngle - c))
-				)
-			);
-			const linearProximity = 1 - minCornerDist / 45;
-			const cornerProximity = Math.pow(linearProximity, 8); // More concentrated near corners
-			console.log(angle / deg2rad, minCornerDist, cornerProximity);
-			const cornerOffset = -cornerProximity;
-			const edgeOffset = 1 + (rng() * 4.2 - 3.0);
-
-			// Find intersection with card boundary using robust line-rect intersection
-			const intersections: Array<{ t: number; edge: string; x: number; y: number }> = [];
-
-			// Left edge (x = 0)
-			if (Math.abs(dirX) > 0.0001) {
-				const tLeft = (0 - centerX) / dirX;
-				if (tLeft > 0) {
-					const yLeft = centerY + tLeft * dirY;
-					if (yLeft >= 0 && yLeft <= cardH) {
-						intersections.push({ t: tLeft, edge: 'left', x: 0, y: yLeft });
-					}
-				}
-			}
-
-			// Right edge (x = cardW)
-			if (Math.abs(dirX) > 0.0001) {
-				const tRight = (cardW - centerX) / dirX;
-				if (tRight > 0) {
-					const yRight = centerY + tRight * dirY;
-					if (yRight >= 0 && yRight <= cardH) {
-						intersections.push({ t: tRight, edge: 'right', x: cardW, y: yRight });
-					}
-				}
-			}
-
-			// Top edge (y = 0)
-			if (Math.abs(dirY) > 0.0001) {
-				const tTop = (0 - centerY) / dirY;
-				if (tTop > 0) {
-					const xTop = centerX + tTop * dirX;
-					if (xTop >= 0 && xTop <= cardW) {
-						intersections.push({ t: tTop, edge: 'top', x: xTop, y: 0 });
-					}
-				}
-			}
-
-			// Bottom edge (y = cardH)
-			if (Math.abs(dirY) > 0.0001) {
-				const tBottom = (cardH - centerY) / dirY;
-				if (tBottom > 0) {
-					const xBottom = centerX + tBottom * dirX;
-					if (xBottom >= 0 && xBottom <= cardW) {
-						intersections.push({ t: tBottom, edge: 'bottom', x: xBottom, y: cardH });
-					}
-				}
-			}
-
-			// Find the closest intersection
-			if (intersections.length === 0) {
-				// Fallback: just don't push it
-				continue;
-			}
-
-			// Sort by distance and take the closest
-			intersections.sort((a, b) => a.t - b.t);
-			const closest = intersections[0];
-
-			// Position at the edge (as percentage)
-			const edgeX = (closest.x / cardW) * 100;
-			const edgeY = (closest.y / cardH) * 100;
-
-			// Determine which edge and set position
-			const entry: NonNullable<CardData['swarm']>[0] = {
-				vx: -dirX,
-				vy: -dirY,
-				delay: indexes[i] * delayDelta + 0.5,
-				skin: { n: 'default' },
-				emote: Math.floor(rng() * 4),
-				angle: (-angle * 180 + 10 * rng()) / Math.PI + 165,
-				var: rng() * 10 - 5
-			};
-
-			const member = members[i];
-			tasks.push(async () => {
-				entry.skin = await getPlayerSkin(member);
-			});
-
-			// Set position based on which edge was hit
-			// For left/right edges: use t for vertical positioning
-			// For top/bottom edges: use l for horizontal positioning
-			if (closest.edge === 'left') {
-				entry.l = -edgeOffset - cornerOffset * 1.5;
-				entry.t = edgeY;
-			} else if (closest.edge === 'right') {
-				entry.r = -edgeOffset - cornerOffset * 1.5;
-				entry.t = edgeY;
-			} else if (closest.edge === 'top') {
-				entry.t = -edgeOffset - cornerOffset * 3.5 - 1.0;
-				entry.l = edgeX;
-			} else if (closest.edge === 'bottom') {
-				entry.b = -edgeOffset - cornerOffset * 3.5;
-				entry.l = edgeX;
-			}
-
-			swarmEntries.push(entry);
-		}
 
 		cards.push({
 			titles,
@@ -1689,7 +1749,7 @@ export const generateCards = async (
 					max: 30
 				}
 			],
-			swarm: swarmEntries,
+			swarm: generateSwarm(d.bt[2], 'player'),
 			background: bgMap(d.bt[1]),
 			mapper: mapFormat(d.bt[1])
 		});

@@ -3,6 +3,13 @@
 	"card_biggest_improvement_verse_1": "Dňa {date} ste dosiahli svoje najväčšie zlepšenie s týmto rekordom",
 	"card_biggest_improvement_verse_2": "prelomením vášho predchádzajúceho rekordu <span class=\"font-semibold text-orange-400\">{time}</span> z {date}",
 	"card_biggest_improvement_verse_3": "S dosiahnutým zlepšením",
+	"card_chart_completion": "a miera dokončenia",
+	"card_chart_points": "Váš bodový trend za rok {year}",
+	"card_chart_top_maps": "Vašich 5 najdokončenejších máp za rok {year}",
+	"card_chart_types": "Vaša aktivita na mapách za rok {year}",
+	"card_distinct_teammates_verse_1": "Tento rok ste tvorili tím s",
+	"card_distinct_teammates_verse_2": "{count} rôznymi Tee",
+	"card_distinct_teammates_verse_3": "Naozaj silný tím!",
 	"card_finishes_verse_1": "Tento rok ste boli v ohni, prekročili ste cieľovú čiaru celkovo",
 	"card_finishes_verse_2": [
 		{
@@ -39,7 +46,7 @@
 	"card_map_type_verse_1": "Váš najhranejší typ mapy je",
 	"card_map_type_verse_2": [
 		{
-			"declarations": ["input count", "local plural = count: plural"],
+			"declarations": ["input count", "input type", "local plural = count: plural"],
 			"match": {
 				"plural=*": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
 				"plural=few": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
@@ -65,7 +72,7 @@
 	"card_monthly_verse_2": "Strávili ste v tomto mesiaci <span class=\"font-semibold text-orange-400\">{percent}</span> vášho herného času",
 	"card_new_map_verse_1": [
 		{
-			"declarations": ["input total", "local plural = total: plural"],
+			"declarations": ["input completed", "input total", "local plural = total: plural"],
 			"match": {
 				"plural=*": "Medzi <span class=\"text-orange-400\">{total} novými náročnými mapami</span> vydanými tento rok<br>ste úspešne dokončili <span class=\"font-semibold text-orange-400\">{completed}</span> z nich",
 				"plural=few": "Medzi <span class=\"text-orange-400\">{total} novými náročnými mapami</span> vydanými tento rok<br>ste úspešne dokončili <span class=\"font-semibold text-orange-400\">{completed}</span> z nich",
@@ -76,7 +83,15 @@
 	],
 	"card_new_map_verse_2": "To znamená, že ste dosiahli mieru dokončenia",
 	"card_new_map_verse_3": "Medzi týmito mapami obzvlášť milujete",
-	"card_new_map_verse_4": "Túto mapu ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
+	"card_new_map_verse_4": [
+		{
+			"declarations": ["input count", "local plural = count: plural"],
+			"match": {
+				"count=*": "Túto mapu ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
+			},
+			"selectors": []
+		}
+	],
 	"card_night_owl_verse_1": "Bola tu špeciálna chvíľa<br>dňa <span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Zabralo vám to {time} dokončiť <span class=\"font-semibold text-orange-400\">{map}</span><br>a cieľovú čiaru ste prekročili o",
 	"card_night_owl_verse_3": "Kým nebo je tmavé, vaša vášeň horí jasne",
@@ -106,8 +121,6 @@
 	"card_runtime_verse_1": "Všetok váš pretekový čas tento rok predstavoval celkom",
 	"card_runtime_verse_2": "Tiež, podľa <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, ste tento rok boli online {duration}",
 	"card_runtime_verse_weird": "Nejako sa vaše meno objavilo menej ako vaše záznamy pretekov. Možno ste tento rok zmenili meno?",
-	"card_second_map_verse_1": "Vaša druhá najhranejšia mapa je",
-	"card_second_map_verse_2": "Prekročili ste jej cieľovú čiaru <span class=\"font-semibold text-orange-400\">{finishes}-krát</span>, a dúfame, že si ju pamätáte!",
 	"card_server_verse_1": "Váš najhranejší DDNet server je",
 	"card_server_verse_2": "Dokončili ste <span class=\"font-semibold text-orange-400\">{percent} pretekov</span> na tomto serveri",
 	"card_server_verse_3": "Navyše ste sa tiež objavili na:<br>{servers}",
@@ -218,10 +231,13 @@
 	"title_runtime_error": "Pokazený Časopriestor",
 	"title_shared_name": "Zdieľané Meno",
 	"title_snake_oiler": "Hadí Mazal",
+	"title_social_butterfly": "Spoločenský motýľ",
+	"title_social_tee": "Spoločenský Tee",
 	"title_solo_traveler": "Sólový Cestovateľ",
 	"title_speed_demon": "Démon Rýchlosti",
 	"title_speedrunner": "Speedrunner",
 	"title_steady_progress": "Stály Pokrok",
+	"title_team_player": "Tímový hráč",
 	"title_tee_army": "Armáda Tees",
 	"title_time_wizard": "Časový Čarodejník",
 	"title_true_player": "Skutočný Hráč",
