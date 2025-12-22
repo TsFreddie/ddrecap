@@ -113,6 +113,7 @@ LIMIT
 
 -- Compact the database
 VACUUM;
+ANALYZE;
 
 -- Disable WAL mode
 PRAGMA journal_mode = DELETE;
