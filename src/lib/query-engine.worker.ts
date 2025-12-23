@@ -360,18 +360,18 @@ SELECT m.Type, COUNT(r.Map) as Finishes FROM Maps m JOIN
 	/** Most finished map */
 	const mfm = one(
 		`
-SELECT Map, COUNT(Map) as Num FROM race 
-    WHERE Timestamp >= ? AND Timestamp <= ?
-    GROUP BY Map ORDER BY Num DESC LIMIT 1;`,
+SELECT race.Map, COUNT(race.Map) as Num FROM race JOIN maps ON race.Map = maps.Map
+    WHERE race.Timestamp >= ? AND race.Timestamp <= ? AND Points > 0
+    GROUP BY race.Map ORDER BY Num DESC LIMIT 1;`,
 		[yearStart, yearEnd]
 	) as [string, number];
 
 	/** Top 5 most finished map */
 	const t5m = all(
 		`
-SELECT Map, COUNT(Map) as Num FROM race 
-    WHERE Timestamp >= ? AND Timestamp <= ?
-    GROUP BY Map ORDER BY Num DESC LIMIT 5;`,
+SELECT race.Map, COUNT(race.Map) as Num FROM race JOIN maps ON race.Map = maps.Map
+    WHERE race.Timestamp >= ? AND race.Timestamp <= ? AND Points > 0
+    GROUP BY race.Map ORDER BY Num DESC LIMIT 5;`,
 		[yearStart, yearEnd]
 	) as [string, number][];
 

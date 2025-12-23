@@ -207,7 +207,6 @@
 	"title_inseparable_team": "Untrennbares Team",
 	"title_level_designer": "Level-Designer",
 	"title_live_and_learn": "Leben und Lernen",
-	"title_live_to_play": "Leben um zu Spielen",
 	"title_lone_wolf": "Einzelgänger",
 	"title_map_explorer": "Karten-Entdecker",
 	"title_map_master": "Karten-Meister",
@@ -239,6 +238,13 @@
 	"title_unnamed_hero": "Namenloser Held",
 	"title_unblockable": "Unblockierbar",
 	"title_unstoppable_duo": "Unaufhaltsames Duo",
+	"title_present_unwrapper": "Geschenkauspacker",
+	"title_running_man": "Laufer",
+	"title_praise_the_sun": "Lobpreise die Sonne",
+	"title_nut": "NUT",
+	"title_grandma_visitor": "Oma-Besucher",
+	"title_to_the_moon": "Zum Mond",
+	"title_floor_is_lava": "Der Boden ist Lava",
 	"title_veteran": "{years}-Jahres-Veteran",
 	"unit_maps": [
 		{

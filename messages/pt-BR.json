@@ -207,7 +207,6 @@
 	"title_inseparable_team": "Time Inseparável",
 	"title_level_designer": "Designer de Fases",
 	"title_live_and_learn": "Viver e Aprender",
-	"title_live_to_play": "LiveToPlay",
 	"title_lone_wolf": "Lobo Solitário",
 	"title_map_explorer": "Explorador de Mapas",
 	"title_map_master": "Mestre dos Mapas",
@@ -240,6 +239,13 @@
 	"title_unblockable": "Imbloqueável",
 	"title_unstoppable_duo": "Dupla Imparável",
 	"title_veteran": "Veterano de {years} Anos",
+	"title_present_unwrapper": "Desempacotador de Presentes",
+	"title_running_man": "Corredor",
+	"title_praise_the_sun": "Louve o Sol",
+	"title_nut": "NUT",
+	"title_grandma_visitor": "Visitante da Vovó",
+	"title_to_the_moon": "Para a Lua",
+	"title_floor_is_lava": "O Chão é Lava",
 	"unit_maps": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],

@@ -207,7 +207,6 @@
 	"title_inseparable_team": "Ayrılmaz Takım",
 	"title_level_designer": "Seviye Tasarımcısı",
 	"title_live_and_learn": "Yaşa ve Öğren",
-	"title_live_to_play": "Oynamak İçin Yaşar",
 	"title_lone_wolf": "Yalnız Kurt",
 	"title_map_explorer": "Harita Kâşifi",
 	"title_map_master": "Harita Ustası",
@@ -239,6 +238,13 @@
 	"title_unnamed_hero": "İsimsiz Kahraman",
 	"title_unblockable": "Engellenemez",
 	"title_unstoppable_duo": "Durdurulamaz İkili",
+	"title_present_unwrapper": "Hediye Açan",
+	"title_running_man": "Koşan Adam",
+	"title_praise_the_sun": "Güneşi Öv",
+	"title_nut": "NUT",
+	"title_grandma_visitor": "Büyükanne Ziyaretçisi",
+	"title_to_the_moon": "Ay'a",
+	"title_floor_is_lava": "Zemin Lav",
 	"title_veteran": "{years} Yıllık Emektar",
 	"unit_maps": [
 		{

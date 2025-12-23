@@ -213,7 +213,6 @@
 	"title_inseparable_team": "Nerozlučný Tým",
 	"title_level_designer": "Designér Úrovní",
 	"title_live_and_learn": "Žít a Učit se",
-	"title_live_to_play": "Žít pro Hraní",
 	"title_lone_wolf": "Samotářský Vlk",
 	"title_map_explorer": "Průzkumník Map",
 	"title_map_master": "Mistr Map",
@@ -245,6 +244,13 @@
 	"title_unnamed_hero": "Bezejmenný Hrdina",
 	"title_unblockable": "Nezablokovatelný",
 	"title_unstoppable_duo": "Nezastavitelná Dvojka",
+	"title_present_unwrapper": "Rozbalovač Dárků",
+	"title_running_man": "Běžec",
+	"title_praise_the_sun": "Chval Slunce",
+	"title_nut": "NUT",
+	"title_grandma_visitor": "Návštěva Babičky",
+	"title_to_the_moon": "Na Měsíc",
+	"title_floor_is_lava": "Podlaha je Láva",
 	"title_veteran": "Veterán {years} let",
 	"unit_maps": [
 		{

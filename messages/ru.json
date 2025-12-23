@@ -207,7 +207,6 @@
 	"title_inseparable_team": "Неразлучная Команда",
 	"title_level_designer": "Дизайнер Уровней",
 	"title_live_and_learn": "Живи и Учись",
-	"title_live_to_play": "Живу, чтобы Играть",
 	"title_lone_wolf": "Одинокий Волк",
 	"title_map_explorer": "Исследователь Карт",
 	"title_map_master": "Мастер Карт",
@@ -239,6 +238,13 @@
 	"title_unnamed_hero": "Безымянный Герой",
 	"title_unblockable": "Неблокируемый",
 	"title_unstoppable_duo": "Неостановимое Дуо",
+	"title_present_unwrapper": "Распаковщик Подарков",
+	"title_running_man": "Бегущий Человек",
+	"title_praise_the_sun": "Восхваляй Солнце",
+	"title_nut": "NUT",
+	"title_grandma_visitor": "Посетитель Бабушки",
+	"title_to_the_moon": "На Луну",
+	"title_floor_is_lava": "Пол - это Лава",
 	"title_veteran": "Ветеран {years} лет",
 	"unit_maps": [
 		{

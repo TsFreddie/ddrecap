@@ -213,7 +213,6 @@
 	"title_inseparable_team": "Nerozlučný Tím",
 	"title_level_designer": "Dizajnér Úrovní",
 	"title_live_and_learn": "Žiť a Učiť sa",
-	"title_live_to_play": "Žiť pre Hranie",
 	"title_lone_wolf": "Samotársky Vlk",
 	"title_map_explorer": "Prieskumník Mápa",
 	"title_map_master": "Majster Mápa",
@@ -246,6 +245,13 @@
 	"title_unblockable": "Nezablokovateľný",
 	"title_unstoppable_duo": "Nezastaviteľná Dvojka",
 	"title_veteran": "Veterán {years} rokov",
+	"title_present_unwrapper": "Rozbaľovač Darčekov",
+	"title_running_man": "Bežec",
+	"title_praise_the_sun": "Chváľ Slunce",
+	"title_nut": "NUT",
+	"title_grandma_visitor": "Návšteva Babičky",
+	"title_to_the_moon": "Na Mesiac",
+	"title_floor_is_lava": "Podlaha je Láva",
 	"unit_maps": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],

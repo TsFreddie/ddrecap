@@ -201,7 +201,6 @@
 	"title_inseparable_team": "뗄 수 없는 팀",
 	"title_level_designer": "맵 제작자",
 	"title_live_and_learn": "신출내기 티",
-	"title_live_to_play": "살면서 놀기",
 	"title_lone_wolf": "고독한 늑대",
 	"title_map_explorer": "개척자",
 	"title_map_master": "신작 헌터",
@@ -233,6 +232,13 @@
 	"title_unnamed_hero": "이름 없는 영웅",
 	"title_unblockable": "블록 불가능",
 	"title_unstoppable_duo": "무적의 두 사람",
+	"title_present_unwrapper": "선물 개봉자",
+	"title_running_man": "러닝맨",
+	"title_praise_the_sun": "태양을 찬양하라",
+	"title_nut": "너트",
+	"title_grandma_visitor": "할머니 방문객",
+	"title_to_the_moon": "달로 가자",
+	"title_floor_is_lava": "바닥은 용암",
 	"title_veteran": [
 		{
 			"declarations": ["input years"],

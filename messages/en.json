@@ -199,7 +199,6 @@
 	"title_inseparable_team": "Inseparable Team",
 	"title_level_designer": "Level Designer",
 	"title_live_and_learn": "Live and Learn",
-	"title_live_to_play": "LiveToPlay",
 	"title_lone_wolf": "Lone Wolf",
 	"title_map_explorer": "Map Explorer",
 	"title_map_master": "Map Master",
@@ -232,6 +231,13 @@
 	"title_unblockable": "Unblockable",
 	"title_unstoppable_duo": "Unstoppable Duo",
 	"title_veteran": "{years}-Year Veteran",
+	"title_present_unwrapper": "Present Unwrapper",
+	"title_running_man": "Running Man",
+	"title_praise_the_sun": "Praise the Sun",
+	"title_nut": "NUT",
+	"title_grandma_visitor": "Grandma Visitor",
+	"title_to_the_moon": "To the Moon",
+	"title_floor_is_lava": "Floor is Lava",
 	"unit_maps": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],

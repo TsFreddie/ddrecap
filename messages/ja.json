@@ -201,7 +201,6 @@
 	"title_inseparable_team": "離れられないチーム",
 	"title_level_designer": "マップ作者",
 	"title_live_and_learn": "生きて学ぶ",
-	"title_live_to_play": "生きるがごとく遊ぶ",
 	"title_lone_wolf": "孤高の狼",
 	"title_map_explorer": "開拓者",
 	"title_map_master": "新星ハンター",
@@ -233,6 +232,13 @@
 	"title_unnamed_hero": "名も無き英雄",
 	"title_unblockable": "止められない",
 	"title_unstoppable_duo": "無敵の2人",
+	"title_present_unwrapper": "プレゼント開封者",
+	"title_running_man": "ランニングマン",
+	"title_praise_the_sun": "太陽を称える",
+	"title_nut": "ナッツ",
+	"title_grandma_visitor": "おばあちゃんの訪問者",
+	"title_to_the_moon": "月へ",
+	"title_floor_is_lava": "床は溶岩",
 	"title_veteran": [
 		{
 			"declarations": ["input years"],

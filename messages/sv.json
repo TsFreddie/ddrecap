@@ -207,7 +207,6 @@
 	"title_inseparable_team": "Oupplösligt Lag",
 	"title_level_designer": "BananDesigner",
 	"title_live_and_learn": "Lev och Lär",
-	"title_live_to_play": "Lever för att Spela",
 	"title_lone_wolf": "Ensam Varg",
 	"title_map_explorer": "Kartupptäckare",
 	"title_map_master": "Kartmästare",
@@ -239,6 +238,13 @@
 	"title_unnamed_hero": "Namnlös Hjälte",
 	"title_unblockable": "Oblockerbar",
 	"title_unstoppable_duo": "Ohejdbar Duo",
+	"title_present_unwrapper": "Presentöppnare",
+	"title_running_man": "Löpare",
+	"title_praise_the_sun": "Prisa Solen",
+	"title_nut": "NUT",
+	"title_grandma_visitor": "Mormors Besökare",
+	"title_to_the_moon": "Till Månen",
+	"title_floor_is_lava": "Golvet är Lava",
 	"title_veteran": "{years}-årig Veteran",
 	"unit_maps": [
 		{

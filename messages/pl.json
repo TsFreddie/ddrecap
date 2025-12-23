@@ -209,7 +209,6 @@
 	"title_inseparable_team": "Nierozłączny Zespół",
 	"title_level_designer": "Projektant Poziomów",
 	"title_live_and_learn": "Żyć i Uczyć Się",
-	"title_live_to_play": "LiveToPlay",
 	"title_lone_wolf": "Samotny Wilk",
 	"title_map_explorer": "Badacz Map",
 	"title_map_master": "Mistrz Map",
@@ -241,6 +240,13 @@
 	"title_unnamed_hero": "Bezimienny Bohater",
 	"title_unblockable": "Nieblokowalny",
 	"title_unstoppable_duo": "Niepowstrzymany Duet",
+	"title_present_unwrapper": "Rozpakowujący Prezenty",
+	"title_running_man": "Biegacz",
+	"title_praise_the_sun": "Chwal Słońce",
+	"title_nut": "NUT",
+	"title_grandma_visitor": "Odwiedzający Babię",
+	"title_to_the_moon": "Na Księżyc",
+	"title_floor_is_lava": "Podłoga to Lawa",
 	"title_veteran": "Weteran {years}-letni",
 	"unit_maps": [
 		{

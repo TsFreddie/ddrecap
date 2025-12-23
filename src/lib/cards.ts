@@ -1237,23 +1237,35 @@ export const generateCards = async (
 
 	if (d.mfm && d.mfm[1] > 1) {
 		// 通过最多的地图
-		const map = d.mfm[0];
+		const map = d.mfm[0].toLowerCase();
 
 		const titles = [];
-		if (map.startsWith('Kobra')) {
+		if (map.startsWith('kobra')) {
 			titles.push({ bg: '#e0e1dd', color: '#000', text: m.title_snake_oiler() });
-		} else if (map == 'LearnToPlay') {
-			titles.push({ bg: '#3d5a80', color: '#fff', text: m.title_live_to_play() });
-		} else if (map == 'Sunny Side Up') {
+		} else if (map == 'sunny side up') {
 			titles.push({ bg: '#ffc300', color: '#000', text: m.title_always_sunny() });
-		} else if (map == 'Tutorial') {
+		} else if (map == 'tutorial') {
 			titles.push({ bg: '#a7c957', color: '#000', text: m.title_live_and_learn() });
-		} else if (map == 'Epix') {
+		} else if (map == 'epix') {
 			titles.push({ bg: '#89c2d9', color: '#000', text: m.title_narrow_trail() });
-		} else if (map == 'Linear') {
+		} else if (map == 'linear') {
 			titles.push({ bg: '#e9edc9', color: '#000', text: m.title_solo_traveler() });
-		} else if (map == 'Multeasymap') {
+		} else if (map == 'multeasymap') {
 			titles.push({ bg: '#6b6c4c', color: '#fff', text: m.title_unblockable() });
+		} else if (map.includes('festivity')) {
+			titles.push({ bg: '#f28482', color: '#fff', text: m.title_present_unwrapper() });
+		} else if (map.startsWith('run_')) {
+			titles.push({ bg: '#ffd6a5', color: '#fff', text: m.title_running_man() });
+		} else if (map == 'luminati') {
+			titles.push({ bg: '#fbbf24', color: '#fff', text: m.title_praise_the_sun() });
+		} else if (map.startsWith('nut_')) {
+			titles.push({ bg: '#8b4513', color: '#fff', text: m.title_nut() });
+		} else if (map == 'grandma') {
+			titles.push({ bg: '#e07a5f', color: '#fff', text: m.title_grandma_visitor() });
+		} else if (map.includes('fly')) {
+			titles.push({ bg: '#f0f428', color: '#fff', text: m.title_to_the_moon() });
+		} else if (map.includes('gores')) {
+			titles.push({ bg: '#dc2626', color: '#fff', text: m.title_floor_is_lava() });
 		}
 
 		allTitles.push(...titles);

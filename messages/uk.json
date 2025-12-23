@@ -207,7 +207,6 @@
 	"title_inseparable_team": "Нерозлучна Команда",
 	"title_level_designer": "Дизайнер Рівнів",
 	"title_live_and_learn": "Живи та Вчись",
-	"title_live_to_play": "Живу, щоб Грати",
 	"title_lone_wolf": "Самотній Вовк",
 	"title_map_explorer": "Дослідник Карт",
 	"title_map_master": "Майстер Карт",
@@ -239,6 +238,13 @@
 	"title_unnamed_hero": "Безіменний Герой",
 	"title_unblockable": "Неблокований",
 	"title_unstoppable_duo": "Незупинне Дуо",
+	"title_present_unwrapper": "Розпаковувач Подарків",
+	"title_running_man": "Бігуча Людина",
+	"title_praise_the_sun": "Слав Сонце",
+	"title_nut": "NUT",
+	"title_grandma_visitor": "Відвідувач Бабусі",
+	"title_to_the_moon": "На Місяць",
+	"title_floor_is_lava": "Підлога - це Лава",
 	"title_veteran": "Ветеран {years} років",
 	"unit_maps": [
 		{

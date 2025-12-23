@@ -201,7 +201,6 @@
 	"title_inseparable_team": "親密無間",
 	"title_level_designer": "製圖達人",
 	"title_live_and_learn": "入門踩斷門檻",
-	"title_live_to_play": "元老級萌新",
 	"title_lone_wolf": "唯我獨尊",
 	"title_map_explorer": "寶藏獵人",
 	"title_map_master": "新潮追隨者",
@@ -233,6 +232,13 @@
 	"title_unnamed_hero": "深藏功與名",
 	"title_unblockable": "沒有什麼能夠阻擋",
 	"title_unstoppable_duo": "所向披靡",
+	"title_present_unwrapper": "節日盲盒",
+	"title_running_man": "奔跑者",
+	"title_praise_the_sun": "讚美太陽",
+	"title_nut": "堅果客",
+	"title_grandma_visitor": "奶奶訪客",
+	"title_to_the_moon": "飛向月球",
+	"title_floor_is_lava": "地板是岩漿",
 	"title_veteran": [
 		{
 			"declarations": ["input years"],
