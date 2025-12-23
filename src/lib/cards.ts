@@ -1842,13 +1842,14 @@ export const generateCards = async (
 				bg: '#A00F2A',
 				color: '#fff',
 				text: m.page_happy_new_year(),
-				rotation: 8,
+				rotation: 8
 			}
 		],
 		l: 45,
 		b: 80,
 		format: 'no-blur',
-		background: '/assets/yearly/year.png'
+		background:
+			data.name === 'nameless tee' ? '/assets/yearly/year-b.png' : '/assets/yearly/year.png'
 	});
 
 	// 分享
