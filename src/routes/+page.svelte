@@ -100,13 +100,13 @@
 		}
 
 		if (scrollRoot) {
-			const targetTop = top;
+			const targetTop = -top; // Negative because we're moving the container up
 
 			let start = Date.now();
 			let end = start + totalTime;
 
 			const _scrollRoot = scrollRoot;
-			const startTop = _scrollRoot.scrollTop;
+			const startTop = parseFloat(_scrollRoot.style.top) || 0;
 
 			scrollVersion++;
 			const version = scrollVersion;
@@ -116,18 +116,12 @@
 				if (time < end) {
 					const progress = easing((time - start) / (end - start));
 					const currentTop = startTop + (targetTop - startTop) * progress;
-					_scrollRoot.scrollTo({
-						top: currentTop,
-						behavior: 'instant'
-					});
-					referenceScrollTop = currentTop;
+					_scrollRoot.style.top = `${currentTop}px`;
+					referenceScrollTop = -currentTop; // Invert to maintain positive reference
 					requestAnimationFrame(update);
 				} else {
-					_scrollRoot.scrollTo({
-						top: targetTop,
-						behavior: 'instant'
-					});
-					referenceScrollTop = targetTop;
+					_scrollRoot.style.top = `${targetTop}px`;
+					referenceScrollTop = -targetTop; // Invert to maintain positive reference
 				}
 			};
 			update();
@@ -137,15 +131,16 @@
 	const scrollToCard = (id: number, totalTime: number = 500, easing = easeOut) => {
 		const card = document.querySelector(`#card-${id}`) as HTMLDivElement;
 		if (scrollRoot && card) {
-			const targetTop =
-				card.offsetTop - scrollRoot.offsetTop - (scrollRoot.clientHeight - card.clientHeight) / 2;
+			const targetTop = card.offsetTop - (window.innerHeight - card.clientHeight) / 2;
 			scorllToPos(targetTop, totalTime);
 		}
 	};
 
 	$effect(() => {
 		if (!browser) return;
-		scrollToCard(currentCard);
+		if (currentCard >= 0 && scrollRoot) {
+			scrollToCard(currentCard);
+		}
 	});
 
 	let timer: NodeJS.Timeout | null = null;
@@ -189,22 +184,23 @@
 			timer = null;
 		}
 
-		timer = setTimeout(() => {
-			if (!observing) {
-				const card = document.getElementById('card-0');
-				if (card) {
-					const width = card.clientWidth;
-					if (width < maxWidth) {
-						fontSize = refFontSize * (width / maxWidth);
-					} else {
-						fontSize = refFontSize;
-					}
+		if (!observing) {
+			const card = document.getElementById('card-0');
+			if (card) {
+				const width = card.clientWidth;
+				if (width < maxWidth) {
+					fontSize = refFontSize * (width / maxWidth);
+				} else {
+					fontSize = refFontSize;
 				}
 			}
+		}
 
-			scrollToCard(currentCard);
-			timer = null;
-		}, 300);
+		// Re-calculate and apply the current card position after resize
+		if (currentCard >= 0) {
+			scrollToCard(currentCard, 0); // No animation on resize
+		}
+		timer = null;
 	};
 
 	const resizeListener: Action<Element, { active: boolean }> = (element, params) => {
@@ -336,6 +332,13 @@
 
 		await timeout(700);
 		cardReady = true;
+
+		// Initialize scrollRoot position at the bottom
+		if (scrollRoot && scrollRoot.scrollHeight > 0) {
+			scrollRoot.style.top = `${-scrollRoot.scrollHeight}px`;
+			referenceScrollTop = scrollRoot.scrollHeight;
+		}
+
 		await timeout(500);
 		scrollToCard(0, 2000, easeInOut);
 		await timeout(2000);
@@ -355,6 +358,12 @@
 		startAnimation = true;
 		loadingProgress = -1;
 		currentCard = -1;
+		referenceScrollTop = 0;
+
+		// Reset scrollRoot position
+		if (scrollRoot) {
+			scrollRoot.style.top = '0px';
+		}
 	});
 
 	let dragStart = 0;
@@ -381,8 +390,7 @@
 
 		const delta = dragStart - ev.clientY;
 		if (scrollRoot)
-			scrollRoot.scrollTop =
-				referenceScrollTop + Math.sign(delta) * Math.pow(Math.abs(delta), 0.5) * 3;
+			scrollRoot.style.top = `${-referenceScrollTop - Math.sign(delta) * Math.pow(Math.abs(delta), 0.5) * 3}px`;
 	};
 
 	const updateCardDelta = (delta: number) => {
@@ -477,17 +485,17 @@
 		if (currentCard == current) {
 			// make a overscroll animation
 			if (scrollRoot) {
-				scrollRoot.scrollTo({
-					top: referenceScrollTop - delta,
-					behavior: 'smooth'
-				});
+				scrollRoot.style.transition = 'top 0.1s ease-out';
+				scrollRoot.style.top = `${-(referenceScrollTop - delta)}px`;
 				overscrollAnimationTimer = setTimeout(() => {
 					overscrollAnimationTimer = null;
 					if (scrollRoot) {
-						scrollRoot.scrollTo({
-							top: referenceScrollTop,
-							behavior: 'smooth'
-						});
+						scrollRoot.style.top = `${-referenceScrollTop}px`;
+						setTimeout(() => {
+							if (scrollRoot) {
+								scrollRoot.style.transition = '';
+							}
+						}, 100);
 					}
 				}, 100);
 			}
@@ -523,12 +531,13 @@
 	$effect(() => {
 		totalCards;
 		// after review data is loaded and rendered. scroll to the bottom
-		if (scrollRoot) {
-			// scroll to bottom
-			scrollRoot.scrollTo({
-				top: scrollRoot.scrollHeight,
-				behavior: 'instant'
-			});
+		if (scrollRoot && scrollRoot.scrollHeight > 0) {
+			// Initialize position if not already set
+			if (!scrollRoot.style.top || scrollRoot.style.top === '0px') {
+				// scroll to bottom
+				scrollRoot.style.top = `${-scrollRoot.scrollHeight}px`;
+				referenceScrollTop = scrollRoot.scrollHeight;
+			}
 		}
 
 		if (!observer) {
@@ -973,7 +982,7 @@
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 {#key pageKey}
-	<div class="fixed top-0 right-0 bottom-0 left-0">
+	<div class="fixed top-0 right-0 bottom-0 left-0 overflow-hidden">
 		<div
 			class="absolute h-full w-full touch-none"
 			onpointerdown={onPointerDown}
@@ -984,16 +993,15 @@
 		>
 			<div
 				bind:this={scrollRoot}
-				class="scrollbar-hide pointer-events-none h-full w-full flex-col gap-1 overflow-y-scroll"
+				class="scrollbar-hide pointer-events-none h-full w-full flex-col gap-1 fixed"
+				style="top: 0px; left: 0; right: 0;"
 			>
-				<div class="h-svh"></div>
 				{#if totalCards}
 					{#each totalCards.cards as card, i}
 						{@const format = getFormat(card.format)}
 						{@render cardSnippet(i, card, format)}
 					{/each}
 				{/if}
-				<div class="h-svh"></div>
 			</div>
 
 			{#if data.player && cardReady}
