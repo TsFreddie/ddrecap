@@ -18,7 +18,7 @@
 	import { CURRENT_YEAR } from '$lib/consts';
 	import { chart } from '$lib/chart.svelte.js';
 	import { genPose } from '$lib/pose.js';
-	import { SnowAnimation } from '$lib/snow.js';
+	import { SnowWebGL } from '$lib/snow.js';
 	import type { Action } from 'svelte/action';
 
 	let pageKey = $state(0);
@@ -620,7 +620,7 @@
 	};
 
 	// Snow animation
-	let snowAnimation: SnowAnimation | null = null;
+	let snowAnimation: SnowWebGL | null = null;
 	let snowCanvas: HTMLCanvasElement | null = $state(null);
 
 	// Check if current card is second to last
@@ -632,7 +632,7 @@
 
 		// Initialize snow animation once when canvas is available
 		if (!snowAnimation) {
-			snowAnimation = new SnowAnimation();
+			snowAnimation = new SnowWebGL();
 			snowAnimation.init(snowCanvas);
 			console.log('Snow animation initialized');
 		}
