@@ -669,9 +669,9 @@
 			</div>
 		{/if}
 		<div
-			class="absolute h-full w-full bg-cover bg-center overflow-hidden rounded-[1em] bg-white shadow-2xl shadow-black border-[0.05em] border-white/50"
+			class="card-format absolute h-full w-full bg-cover bg-center overflow-hidden rounded-[1em] bg-white shadow-2xl shadow-black border-[0.05em] border-white/40"
+			class:card-active={showContent && id == currentCard}
 			style:border={card.border}
-			style:box-shadow={'inset 0 0 1em 0.25em #00000044;'}
 			style="background-image: url({card.background});"
 		>
 			{@render format(id, card)}
@@ -743,13 +743,15 @@
 						{:else if item.type == 'b'}
 							<div
 								class="rounded-[0.5em] text-center font-semibold"
+								class:text-nowrap={item.nr}
+								class:flex-nowrap={item.nr}
 								style="transform: rotate({item.rotation ?? 0}deg) translate({item.x ??
 									0}%);background-color: {item.bg};margin-top: {item.t ??
 									0}%;margin-bottom: {item.b ?? 0}%;{item.color
 									? `color: ${item.color};`
 									: ''};padding-left: {item.px ?? 4.5}%;padding-right: {item.px ??
 									4.5}%;padding-top: {item.py ?? 1.5}%;padding-bottom: {item.py ??
-									1.5}%;min-width: {item.minX ?? 1}%;"
+									1.5}%;min-width: {item.minW ?? 1}%;"
 							>
 								{@html item.text}
 							</div>
@@ -757,7 +759,7 @@
 					{/each}
 				{/if}
 			</div>
-			{#if id == currentCard && (card.swarm || card.leftTeeSkin || card.rightTeeSkin)}
+			{#if card.swarm || card.leftTeeSkin || card.rightTeeSkin}
 				<div class="absolute top-[2.5%] bottom-[2.5%] left-[2.5%] right-[2.5%]">
 					{#if card.swarm}
 						{#each card.swarm as swarm}
@@ -775,6 +777,7 @@
 									body={swarm.skin.b}
 									feet={swarm.skin.f}
 									emote={swarm.emote}
+									hide={id != currentCard}
 									className="h-full w-full"
 									pose={genPose(swarm.angle, swarm.var)}
 								/>
@@ -794,6 +797,7 @@
 								name={card.leftTeeSkin.n}
 								body={card.leftTeeSkin.b}
 								feet={card.leftTeeSkin.f}
+								hide={id != currentCard}
 								className="h-full w-full"
 								pose={leftTeePose}
 							/>
@@ -812,6 +816,7 @@
 								name={card.rightTeeSkin.n}
 								body={card.rightTeeSkin.b}
 								feet={card.rightTeeSkin.f}
+								hide={id != currentCard}
 								className="h-full w-full"
 								pose={rightTeePose}
 							/>
@@ -844,6 +849,8 @@
 					{:else if item.type == 'b'}
 						<div
 							class="rounded-[0.5em] px-4 py-2 text-center font-semibold"
+							class:text-nowrap={item.nr}
+							class:flex-nowrap={item.nr}
 							style="transform: rotate({item.rotation}deg);background-color: {item.bg};{item.color
 								? `color: ${item.color};`
 								: ''}"
@@ -1345,5 +1352,18 @@
 			0 0 20px rgba(255, 203, 92, 1),
 			0 2px 8px rgba(0, 0, 0, 0.9),
 			0 4px 16px rgba(255, 195, 85, 1);
+	}
+
+	.card-format {
+		transition: box-shadow 1s ease-in-out;
+		box-shadow:
+			inset 0 0 1em 0.25em #00000044,
+			0 0.05em 0em #ffffff88;
+	}
+
+	.card-format.card-active {
+		box-shadow:
+			inset 0 0 1em 0.25em #00000044,
+			0 0.05em 0.2em #ffffff88;
 	}
 </style>

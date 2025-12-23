@@ -39,7 +39,10 @@ export interface CardBannerItem {
 	x?: number;
 	t?: number;
 	b?: number;
-	minX?: number;
+	// min-width
+	minW?: number;
+	// no wrap
+	nr?: boolean;
 }
 
 export type CardItem = CardTextItem | CardBannerItem;
@@ -260,7 +263,7 @@ export const generateCards = async (
 			const member = names[i];
 			if (mode === 'player') {
 				tasks.push(async () => {
-					entry.skin = await getPlayerSkin(member);
+					entry.skin = await getPlayerSkin(member, false);
 				});
 			} else {
 				entry.skin = { n: member };
@@ -1464,7 +1467,7 @@ export const generateCards = async (
 					px: 0,
 					t: 1,
 					b: 1,
-					minX: 55,
+					minW: 55,
 					x: i % 2 === 1 ? rng() + 5 : -rng() - 5,
 					text: `<div style="font-size: 0.9em;margin-top:-0.2em">${escapeHTML(item.map)}<br><div style="font-size: 0.75em">${duration(item.time, locale, m)}</div></div>`
 				});
@@ -1676,8 +1679,8 @@ export const generateCards = async (
 			const leftTeePlayer = d.mpt[0][0];
 			const rightTeePlayer = d.mpt[1][0];
 			tasks.push(async () => {
-				card.leftTeeSkin = await getPlayerSkin(leftTeePlayer);
-				card.rightTeeSkin = await getPlayerSkin(rightTeePlayer);
+				card.leftTeeSkin = await getPlayerSkin(leftTeePlayer, false);
+				card.rightTeeSkin = await getPlayerSkin(rightTeePlayer, false);
 			});
 			cards.push(card);
 		} else {
@@ -1707,7 +1710,7 @@ export const generateCards = async (
 
 			const rightTeePlayer = d.mpt[0][0];
 			tasks.push(async () => {
-				card.rightTeeSkin = await getPlayerSkin(rightTeePlayer);
+				card.rightTeeSkin = await getPlayerSkin(rightTeePlayer, false);
 			});
 			cards.push();
 		}
@@ -1839,13 +1842,11 @@ export const generateCards = async (
 				bg: '#A00F2A',
 				color: '#fff',
 				text: m.page_happy_new_year(),
-				rotation: 0
+				rotation: 8,
 			}
 		],
-		t: 80,
-		l: 50,
-		b: 5,
-		r: 5,
+		l: 45,
+		b: 80,
 		format: 'no-blur',
 		background: '/assets/yearly/year.png'
 	});

@@ -2,6 +2,7 @@ import { skins } from '$lib/server/fetches/skins';
 
 export const GET = async ({ url }) => {
 	const name = url.searchParams.get('name');
+	const tryDDStatsFirst = url.searchParams.get('ddstats') === 'true';
 
 	if (!name) {
 		const skinData = await skins.fetch();
@@ -14,14 +15,34 @@ export const GET = async ({ url }) => {
 	}
 
 	let skin = '{}';
+	let found = false;
 
-	try {
-		skin = JSON.stringify(
-			await (
-				await fetch(`https://teeworlds.cn/api/playerskin?name=${encodeURIComponent(name)}`)
-			).json()
-		);
-	} catch {}
+	if (tryDDStatsFirst) {
+		try {
+			const data = await (
+				await fetch(`https://ddstats.tw/player/json?player=${encodeURIComponent(name)}`)
+			).json();
+
+			if (data) {
+				skin = JSON.stringify({
+					n: data.profile.skin_name,
+					c: data.profile.skin_color_body,
+					f: data.profile.skin_color_feet
+				});
+				found = true;
+			}
+		} catch {}
+	}
+
+	if (!found) {
+		try {
+			skin = JSON.stringify(
+				await (
+					await fetch(`https://teeworlds.cn/api/playerskin?name=${encodeURIComponent(name)}`)
+				).json()
+			);
+		} catch {}
+	}
 
 	return new Response(skin, {
 		headers: {

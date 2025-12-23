@@ -31,6 +31,8 @@
 		useDefault = false,
 		/** extra classes */
 		className = '',
+		/** don't render the html elements but still preload the images */
+		hide = false,
 		emote = 0 as number,
 		pose = null as TeePose | null,
 		...rest
@@ -51,8 +53,6 @@
 	const uniqueId = Math.random().toString(36).substring(2, 9);
 
 	let abortController: AbortController | null = null;
-
-	let root = $state(null) as Element | null;
 
 	const fallbackSkin = $derived(
 		useDefault ? (body && feet ? DEFAULT_SKIN_GS : DEFAULT_SKIN) : X_SPEC_SKIN
@@ -154,115 +154,122 @@
 	</defs>
 </svg>
 
-<div
-	bind:this={root}
-	class="tee-render {className}"
-	{...rest}
-	style="background-image: url({skin}); {pose ? `transform: rotate(${pose.bodyRotation}deg)` : ''}"
->
-	{#if bodyFilter && feetFilter}
-		<div class="tee-render-pass">
-			<div
-				class="tee-foot-outline back"
-				style={pose
-					? `transform: translate(${pose.backFootPosition}) rotate(${pose.backFootRotation}deg); filter: url(#${feetFilter.id})`
-					: `filter: url(#${feetFilter.id})`}
-			></div>
-		</div>
-		<div class="tee-render-pass">
-			<div class="tee-body-outline" style={`filter: url(#${bodyFilter.id})`}></div>
-		</div>
-		<div class="tee-render-pass">
-			<div
-				class="tee-foot-outline front"
-				style={pose
-					? `transform: translate(${pose.frontFootPosition}) rotate(${pose.frontFootRotation}deg); filter: url(#${feetFilter.id})`
-					: `filter: url(#${feetFilter.id})`}
-			></div>
-		</div>
-
-		<div class="tee-render-pass">
-			<div
-				class="tee-foot back"
-				style={pose
-					? `transform: translate(${pose.backFootPosition}) rotate(${pose.backFootRotation}deg); filter: url(#${feetFilter.id})`
-					: `filter: url(#${feetFilter.id})`}
-			></div>
-		</div>
-
-		<div class="tee-render-pass">
-			<div class="tee-body" style={`filter: url(#${bodyFilter.id})`}></div>
-			<div
-				class="tee-eyes"
-				style={pose
-					? `transform: translate(${pose.eyesPosition}) rotate(${pose.eyesRotation}deg); filter: url(#${bodyFilter.id})`
-					: `filter: url(#${bodyFilter.id})`}
-			>
+{#if !hide}
+	<div
+		class="tee-render {className}"
+		{...rest}
+		style="background-image: url({skin}); {pose
+			? `transform: rotate(${pose.bodyRotation}deg)`
+			: ''}"
+	>
+		{#if bodyFilter && feetFilter}
+			<div class="tee-render-pass">
 				<div
-					class="tee-eye-left"
-					style="background-position: calc({2 + emote} / (8 - 1) * 100%) calc(3 / (4 - 1) * 100%);"
-				></div>
-				<div
-					class="tee-eye-right"
-					style="background-position: calc({2 + emote} / (8 - 1) * 100%) calc(3 / (4 - 1) * 100%);"
+					class="tee-foot-outline back"
+					style={pose
+						? `transform: translate(${pose.backFootPosition}) rotate(${pose.backFootRotation}deg); filter: url(#${feetFilter.id})`
+						: `filter: url(#${feetFilter.id})`}
 				></div>
 			</div>
-		</div>
-
-		<div class="tee-render-pass">
-			<div
-				class="tee-foot front"
-				style={pose
-					? `transform: translate(${pose.frontFootPosition}) rotate(${pose.frontFootRotation}deg); filter: url(#${feetFilter.id})`
-					: `filter: url(#${feetFilter.id})`}
-			></div>
-		</div>
-	{:else}
-		<div class="tee-render-pass">
-			<div
-				class="tee-foot-outline back"
-				style={pose
-					? `transform: translate(${pose.backFootPosition}) rotate(${pose.backFootRotation}deg)`
-					: ''}
-			></div>
-			<div class="tee-body-outline"></div>
-			<div
-				class="tee-foot-outline front"
-				style={pose
-					? `transform: translate(${pose.frontFootPosition}) rotate(${pose.frontFootRotation}deg)`
-					: ''}
-			></div>
-			<div
-				class="tee-foot back"
-				style={pose
-					? `transform: translate(${pose.backFootPosition}) rotate(${pose.backFootRotation}deg)`
-					: ''}
-			></div>
-			<div class="tee-body"></div>
-			<div
-				class="tee-foot front"
-				style={pose
-					? `transform: translate(${pose.frontFootPosition}) rotate(${pose.frontFootRotation}deg)`
-					: ''}
-			></div>
-			<div
-				class="tee-eyes"
-				style={pose
-					? `transform: translate(${pose.eyesPosition}) rotate(${pose.eyesRotation}deg)`
-					: ''}
-			>
+			<div class="tee-render-pass">
+				<div class="tee-body-outline" style={`filter: url(#${bodyFilter.id})`}></div>
+			</div>
+			<div class="tee-render-pass">
 				<div
-					class="tee-eye-left"
-					style="background-position: calc({2 + emote} / (8 - 1) * 100%) calc(3 / (4 - 1) * 100%);"
-				></div>
-				<div
-					class="tee-eye-right"
-					style="background-position: calc({2 + emote} / (8 - 1) * 100%) calc(3 / (4 - 1) * 100%);"
+					class="tee-foot-outline front"
+					style={pose
+						? `transform: translate(${pose.frontFootPosition}) rotate(${pose.frontFootRotation}deg); filter: url(#${feetFilter.id})`
+						: `filter: url(#${feetFilter.id})`}
 				></div>
 			</div>
-		</div>
-	{/if}
-</div>
+
+			<div class="tee-render-pass">
+				<div
+					class="tee-foot back"
+					style={pose
+						? `transform: translate(${pose.backFootPosition}) rotate(${pose.backFootRotation}deg); filter: url(#${feetFilter.id})`
+						: `filter: url(#${feetFilter.id})`}
+				></div>
+			</div>
+
+			<div class="tee-render-pass">
+				<div class="tee-body" style={`filter: url(#${bodyFilter.id})`}></div>
+				<div
+					class="tee-eyes"
+					style={pose
+						? `transform: translate(${pose.eyesPosition}) rotate(${pose.eyesRotation}deg); filter: url(#${bodyFilter.id})`
+						: `filter: url(#${bodyFilter.id})`}
+				>
+					<div
+						class="tee-eye-left"
+						style="background-position: calc({2 +
+							emote} / (8 - 1) * 100%) calc(3 / (4 - 1) * 100%);"
+					></div>
+					<div
+						class="tee-eye-right"
+						style="background-position: calc({2 +
+							emote} / (8 - 1) * 100%) calc(3 / (4 - 1) * 100%);"
+					></div>
+				</div>
+			</div>
+
+			<div class="tee-render-pass">
+				<div
+					class="tee-foot front"
+					style={pose
+						? `transform: translate(${pose.frontFootPosition}) rotate(${pose.frontFootRotation}deg); filter: url(#${feetFilter.id})`
+						: `filter: url(#${feetFilter.id})`}
+				></div>
+			</div>
+		{:else}
+			<div class="tee-render-pass">
+				<div
+					class="tee-foot-outline back"
+					style={pose
+						? `transform: translate(${pose.backFootPosition}) rotate(${pose.backFootRotation}deg)`
+						: ''}
+				></div>
+				<div class="tee-body-outline"></div>
+				<div
+					class="tee-foot-outline front"
+					style={pose
+						? `transform: translate(${pose.frontFootPosition}) rotate(${pose.frontFootRotation}deg)`
+						: ''}
+				></div>
+				<div
+					class="tee-foot back"
+					style={pose
+						? `transform: translate(${pose.backFootPosition}) rotate(${pose.backFootRotation}deg)`
+						: ''}
+				></div>
+				<div class="tee-body"></div>
+				<div
+					class="tee-foot front"
+					style={pose
+						? `transform: translate(${pose.frontFootPosition}) rotate(${pose.frontFootRotation}deg)`
+						: ''}
+				></div>
+				<div
+					class="tee-eyes"
+					style={pose
+						? `transform: translate(${pose.eyesPosition}) rotate(${pose.eyesRotation}deg)`
+						: ''}
+				>
+					<div
+						class="tee-eye-left"
+						style="background-position: calc({2 +
+							emote} / (8 - 1) * 100%) calc(3 / (4 - 1) * 100%);"
+					></div>
+					<div
+						class="tee-eye-right"
+						style="background-position: calc({2 +
+							emote} / (8 - 1) * 100%) calc(3 / (4 - 1) * 100%);"
+					></div>
+				</div>
+			</div>
+		{/if}
+	</div>
+{/if}
 
 <style>
 	.tee-render-pass {

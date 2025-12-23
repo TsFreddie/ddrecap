@@ -11,7 +11,7 @@ export const load = async ({ fetch, data, parent }) => {
 
 	let skin;
 	if (data.player) {
-		skin = await getPlayerSkin(data.player.name, fetch);
+		skin = await getPlayerSkin(data.player.name, true, fetch);
 	}
 
 	return { ua, skin, ...data, ...(await parent()) };

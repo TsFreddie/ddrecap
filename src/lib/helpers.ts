@@ -113,11 +113,14 @@ export const durationMinutes = (seconds: number, displayLocale: string, m: typeo
 
 export const getPlayerSkin = async (
 	player: string,
+	tryDDStats: boolean,
 	fetch: typeof globalThis.fetch = globalThis.fetch
 ) => {
 	if (!player) return { n: 'default' };
 	try {
-		const skin = await (await fetch(`/skins?name=${encodeURIComponent(player)}`)).json();
+		const skin = await (
+			await fetch(`/skins?name=${encodeURIComponent(player)}${tryDDStats ? `&ddstats=true` : ''}`)
+		).json();
 		if (!skin.n || skin.n === 'x-spec') {
 			return { n: 'default' };
 		}
