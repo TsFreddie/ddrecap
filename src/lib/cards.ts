@@ -1252,6 +1252,8 @@ export const generateCards = async (
 			titles.push({ bg: '#89c2d9', color: '#000', text: m.title_narrow_trail() });
 		} else if (map == 'Linear') {
 			titles.push({ bg: '#e9edc9', color: '#000', text: m.title_solo_traveler() });
+		} else if (map == 'Multeasymap') {
+			titles.push({ bg: '#6b6c4c', color: '#fff', text: m.title_unblockable() });
 		}
 
 		allTitles.push(...titles);
