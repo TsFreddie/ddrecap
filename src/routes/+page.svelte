@@ -658,7 +658,6 @@
 	});
 </script>
 
-<div></div>
 <svelte:window onresize={onResize} onkeydown={onKeyDown} />
 
 <svelte:head>
@@ -765,12 +764,9 @@
 		class:backdrop-brightness-75={showContent}
 		class:backdrop-saturate-50={showContent}
 	>
-		<div
-			class="absolute top-0 bottom-0 left-0 right-0 transition-opacity"
-			class:opacity-0={!showContent}
-		>
+		<div class="absolute inset-0 transition-opacity" class:opacity-0={!showContent}>
 			{#if card.chart}
-				<div class="absolute top-[5%] bottom-[5%] left-[5%] right-[5%]">
+				<div class="absolute inset-[5%]">
 					<canvas
 						class="w-full! h-full!"
 						width="512"
@@ -821,7 +817,7 @@
 				{/if}
 			</div>
 			{#if card.swarm || card.leftTeeSkin || card.rightTeeSkin}
-				<div class="absolute top-[2.5%] bottom-[2.5%] left-[2.5%] right-[2.5%]">
+				<div class="absolute inset-[2.5%]">
 					{#if card.swarm}
 						{#each card.swarm as swarm}
 							<div
@@ -904,11 +900,11 @@
 			{#if card.content}
 				{#each card.content as item}
 					{#if item.type == 't'}
-						<div class="rounded-[1em] bg-zinc-700/80 px-2 py-1 text-center text-[0.7em]">
+						<p class="rounded-[1em] bg-zinc-700/80 px-2 py-1 text-center text-[0.7em]">
 							{@html item.text}
-						</div>
+						</p>
 					{:else if item.type == 'b'}
-						<div
+						<p
 							class="rounded-[0.5em] px-4 py-2 text-center font-semibold"
 							class:text-nowrap={item.nr}
 							class:flex-nowrap={item.nr}
@@ -917,7 +913,7 @@
 								: ''}"
 						>
 							{@html item.text}
-						</div>
+						</p>
 					{/if}
 				{/each}
 			{/if}
@@ -974,7 +970,7 @@
 					feet={data.skin?.f}
 					className="h-full w-full"
 					pose={leftTeePose}
-				/>s
+				/>
 			</div>
 			<div
 				class="motion-duration-500 motion-delay-1500 absolute right-[2.5%] bottom-[2.5%] flex h-[30%] w-[30%]"
@@ -988,7 +984,7 @@
 						class="w-full h-full bg-cover bg-center mix-blend-overlay"
 					></div>
 				</div>
-				<div class="absolute bottom-0 w-full flex flex-row items-center justify-center">
+				<div class="absolute bottom-0 w-full flex items-center justify-center">
 					<div
 						class="flex flex-row items-center justify-center rounded-[0.8em] border border-t-white/30 border-l-white/30 border-black/30 translate-y-[50%] px-[3%] py-[1%] text-center text-[0.65em] text-nowrap text-white gap-1 transition-colors"
 						class:bg-red-600={shareError}
@@ -1124,14 +1120,12 @@
 							<div class="relative z-10">
 								<div class="rounded-2xl px-8 py-4 text-center">
 									<div
-										class="w-full flex items-center justify-center text-xl font-extrabold text-nowrap mb-1 text-amber-300"
+										class="w-full flex items-center justify-center text-xl font-extrabold text-nowrap mb-1 text-amber-300 relative"
 									>
-										<div>
-											<div class="absolute glow-text">
-												{m.page_happy_new_year()}
-											</div>
+										<div class="absolute glow-text">
 											{m.page_happy_new_year()}
 										</div>
+										{m.page_happy_new_year()}
 									</div>
 									<div
 										class="text-xl font-bold tracking-wide text-white text-shadow-lg text-shadow-black/30"
@@ -1165,16 +1159,18 @@
 							{:else if data.player}
 								{#if loadingProgress >= 0}
 									<div
-										class="flex w-full flex-col items-center justify-center gap-2"
+										class="flex flex-col items-center justify-center gap-2 w-full"
 										out:fade
 										in:fade
 									>
-										<div class="font-bold">
+										<p class="font-bold">
 											{m.page_ddnet_recap_for({ year: data.year, player: data.name })}
-										</div>
-										<div class="flex flex-row items-center justify-center gap-2">
-											<div>{m.page_loading()}</div>
-											<div class="w-[3.5rem]text-center">{Math.round(loadingProgress * 100)}%</div>
+										</p>
+										<div class="flex items-center justify-center gap-2">
+											<span>{m.page_loading()}</span>
+											<span class="w-[3.5rem] text-center"
+												>{Math.round(loadingProgress * 100)}%</span
+											>
 										</div>
 										<div
 											class="h-5 w-full overflow-hidden rounded border border-sky-700 bg-sky-900"
@@ -1190,7 +1186,7 @@
 									{#key data.player.name}
 										<div out:fade>
 											<div
-												class="motion-translate-x-in-[-200%] motion-rotate-in-12 motion-duration-1000 motion-delay-100 flex flex-row items-center justify-center gap-8"
+												class="motion-translate-x-in-[-200%] motion-rotate-in-12 motion-duration-1000 motion-delay-100 flex items-center justify-center gap-8"
 											>
 												<TeeRender
 													className="relative h-20 w-20"
@@ -1198,9 +1194,11 @@
 													body={data.skin?.b}
 													feet={data.skin?.f}
 												/>
-												<div class="flex flex-col">
-													<div class="font-semibold text-zinc-300">{data.player.name}</div>
-													<div>{m.page_points_info({ points: `${data.player.points} pts` })}</div>
+												<div class="font-semibold text-zinc-300">
+													<div>{data.player.name}</div>
+													<div class="font-normal">
+														{m.page_points_info({ points: `${data.player.points} pts` })}
+													</div>
 												</div>
 											</div>
 											<div class="flex flex-col">
@@ -1227,14 +1225,14 @@
 							{:else}
 								{#key 'entry'}
 									<div class="flex flex-col gap-2">
-										<div class="text-sm text-zinc-300">
+										<p class="text-sm text-zinc-300">
 											{m.page_enter_player_name()}
 											{#if data.error}
 												<span class="motion-text-loop-red-400 text-red-500">
 													{data.error}
 												</span>
 											{/if}
-										</div>
+										</p>
 										<input
 											type="text"
 											class="w-full rounded border border-zinc-500 bg-zinc-600 px-3 py-2 text-sm font-normal shadow-md md:flex-1"
@@ -1254,7 +1252,7 @@
 										>
 											{m.page_go()}
 										</button>
-										<div class="text-sm">
+										<p class="text-sm">
 											{m.page_database_time({
 												date: datetime(
 													new Date(data.databaseTime * 1000),
@@ -1262,7 +1260,7 @@
 													getLocale()
 												)
 											})}
-										</div>
+										</p>
 									</div>
 								{/key}
 							{/if}
@@ -1348,7 +1346,7 @@
 				{#if dropdownOpen}
 					<div
 						in:slide={{ duration: 300, easing: easeOut }}
-						class="absolute bottom-full text-sm right-0 mb-1 bg-slate-600/70 backdrop-blur-xs rounded-lg shadow-lg z-10 grid grid-cols-2 min-w-72 overflow-hidden"
+						class="absolute bottom-full right-0 mb-1 text-sm bg-slate-600/70 backdrop-blur-xs rounded-lg shadow-lg z-10 grid grid-cols-2 min-w-72 overflow-hidden"
 					>
 						{#each locales as locale}
 							<button
@@ -1381,6 +1379,27 @@
 {/key}
 
 <style>
+	/* Prevent text selection on the entire page except for input elements */
+	* {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	/* Allow text selection for input elements and their content */
+	input,
+	input *,
+	textarea,
+	textarea *,
+	[contenteditable],
+	[contenteditable] * {
+		-webkit-user-select: text;
+		-moz-user-select: text;
+		-ms-user-select: text;
+		user-select: text;
+	}
+
 	@keyframes glow {
 		0% {
 			opacity: 0.2;

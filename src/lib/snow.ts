@@ -195,6 +195,18 @@ export class SnowWebGL {
 			return;
 		}
 
+		// Handle WebGL context loss and restoration
+		canvas.addEventListener('webglcontextlost', (e) => {
+			e.preventDefault();
+			console.warn('WebGL context lost');
+			this.isRunning = false;
+		});
+
+		canvas.addEventListener('webglcontextrestored', () => {
+			console.log('WebGL context restored');
+			this.setupWebGL();
+		});
+
 		this.setupWebGL();
 		this.setupCanvas();
 	}
@@ -231,7 +243,6 @@ export class SnowWebGL {
 		this.velocityLocation = this.gl.getAttribLocation(this.program, 'a_velocity');
 		this.lifeLocation = this.gl.getAttribLocation(this.program, 'a_life');
 		this.initialLifeLocation = this.gl.getAttribLocation(this.program, 'a_initialLife');
-
 		this.resolutionLocation = this.gl.getUniformLocation(this.program, 'u_resolution');
 		this.timeLocation = this.gl.getUniformLocation(this.program, 'u_time');
 		this.deltaTimeLocation = this.gl.getUniformLocation(this.program, 'u_deltaTime');
@@ -396,6 +407,12 @@ export class SnowWebGL {
 	private render(deltaTime: number): void {
 		if (!this.gl || !this.program || !this.canvas) return;
 
+		// Check if WebGL context is lost
+		if (this.gl.isContextLost()) {
+			console.warn('WebGL context is lost, skipping render');
+			return;
+		}
+
 		// Clear canvas
 		this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT);
@@ -405,11 +422,19 @@ export class SnowWebGL {
 		// Use shader program
 		this.gl.useProgram(this.program);
 
-		// Set uniforms
-		this.gl.uniform2f(this.resolutionLocation, this.canvas.width, this.canvas.height);
-		this.gl.uniform1f(this.timeLocation, performance.now() / 1000);
-		this.gl.uniform1f(this.deltaTimeLocation, deltaTime);
-		this.gl.uniform1f(this.isRunningLocation, this.isRunning ? 1.0 : 0.0);
+		// Set uniforms (with validation)
+		if (this.resolutionLocation) {
+			this.gl.uniform2f(this.resolutionLocation, this.canvas.width, this.canvas.height);
+		}
+		if (this.timeLocation) {
+			this.gl.uniform1f(this.timeLocation, performance.now() / 1000);
+		}
+		if (this.deltaTimeLocation) {
+			this.gl.uniform1f(this.deltaTimeLocation, deltaTime);
+		}
+		if (this.isRunningLocation) {
+			this.gl.uniform1f(this.isRunningLocation, this.isRunning ? 1.0 : 0.0);
+		}
 
 		// Prepare particle data
 		const positions: number[] = [];
@@ -446,7 +471,7 @@ export class SnowWebGL {
 		data: number[],
 		size: number
 	): void {
-		if (!this.gl || !buffer || location === null) return;
+		if (!this.gl || !buffer || location === null || location < 0) return;
 
 		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
 		this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(data), this.gl.DYNAMIC_DRAW);
