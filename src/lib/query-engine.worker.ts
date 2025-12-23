@@ -78,13 +78,14 @@ export const query = async (
 	name: string,
 	year: number,
 	tz: string,
+	dbTime: number,
 	progress: (progress: number) => void
 ) => {
 	const SQL = await sql({
 		locateFile: (file) => `/assets/${file}`
 	});
 	progress(20);
-	const playerData = await fetch(`/download/${encodeURIComponent(name)}?v=1`);
+	const playerData = await fetch(`/download/${encodeURIComponent(name)}?v=${dbTime}`);
 	progress(30);
 	const playerDataBuffer = await playerData.arrayBuffer();
 	progress(40);
@@ -669,8 +670,8 @@ ORDER BY Timestamp;`) as [number, number][];
 };
 
 onmessage = async (e) => {
-	const { maps, name, year, tz } = e.data;
-	const result = await query(maps, name, year, tz, (progress) => {
+	const { maps, name, year, tz, dbTime } = e.data;
+	const result = await query(maps, name, year, tz, dbTime, (progress) => {
 		postMessage({ type: 'progress', progress });
 	});
 	postMessage({ type: 'result', result });

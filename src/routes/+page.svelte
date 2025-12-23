@@ -291,7 +291,13 @@
 				data: Partial<YearlyData>;
 			}>((resolve) => {
 				let queryWorker = new QueryWorker();
-				queryWorker.postMessage({ maps, name, year: data.year, tz: data.tz });
+				queryWorker.postMessage({
+					maps,
+					name,
+					year: data.year,
+					tz: data.tz,
+					dbTime: data.databaseTime
+				});
 				queryWorker.onmessage = (e) => {
 					if (e.data.type == 'progress') {
 						loadingProgress = 0.05 + (e.data.progress / 100) * 0.85;
