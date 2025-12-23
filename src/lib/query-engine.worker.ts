@@ -390,7 +390,7 @@ SELECT r.Map, r.Time, r.Timestamp FROM maps m JOIN
 
 	const graph_lf = lfList
 		.filter((m) => !mapLookup[m[0]] || !mapLookup[m[0]].tiles.includes('BONUS'))
-		.slice(0, 3)
+		.slice(0, 4)
 		.map((m) => {
 			return { map: m[0], time: m[1] };
 		});

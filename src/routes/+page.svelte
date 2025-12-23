@@ -518,11 +518,13 @@
 			ev.preventDefault();
 			updateCardDelta(-1); // negative delta moves to next card
 		} else if (key === ' ' || key === 'Spacebar') {
-			// block spacebar
+			// make spacebar move to next card
 			ev.preventDefault();
+			updateCardDelta(-1); // negative delta moves to next card
 		} else if (key === 'Tab') {
-			// block tab
+			// make tab move to next card
 			ev.preventDefault();
+			updateCardDelta(-1); // negative delta moves to next card
 		}
 	};
 

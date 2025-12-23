@@ -1442,8 +1442,7 @@ export const generateCards = async (
 		if (
 			d.graph_lf &&
 			d.graph_lf.length > 0 &&
-			d.graph_lf.length !== 1 &&
-			d.graph_lf[0].map !== d.lf[0]
+			(d.graph_lf.length !== 1 || d.graph_lf[0].map !== d.lf[0])
 		) {
 			const content: CardItem[] = [
 				{
