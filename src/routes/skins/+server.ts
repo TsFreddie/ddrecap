@@ -20,7 +20,9 @@ export const GET = async ({ url }) => {
 	if (tryDDStatsFirst) {
 		try {
 			const data = await (
-				await fetch(`https://ddstats.tw/player/json?player=${encodeURIComponent(name)}`)
+				await fetch(`https://ddstats.tw/player/json?player=${encodeURIComponent(name)}`, {
+					signal: AbortSignal.timeout(5000)
+				})
 			).json();
 
 			if (data) {

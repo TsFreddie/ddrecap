@@ -18,6 +18,7 @@
 	import { CURRENT_YEAR } from '$lib/consts';
 	import { chart } from '$lib/chart.svelte.js';
 	import { genPose } from '$lib/pose.js';
+	import { SnowAnimation } from '$lib/snow.js';
 	import type { Action } from 'svelte/action';
 
 	let pageKey = $state(0);
@@ -300,6 +301,7 @@
 					} else if (e.data.type == 'result') {
 						resolve(e.data.result);
 						loadingProgress = 0.9;
+						queryWorker.terminate();
 					}
 				};
 			});
@@ -616,6 +618,44 @@
 
 		return text;
 	};
+
+	// Snow animation
+	let snowAnimation: SnowAnimation | null = null;
+	let snowCanvas: HTMLCanvasElement | null = $state(null);
+
+	// Check if current card is second to last
+	let isSecondToLastCard = $derived(totalCards && currentCard === totalCards.cards.length - 2);
+
+	// Handle snow animation based on card position
+	$effect(() => {
+		if (!snowCanvas) return;
+
+		// Initialize snow animation once when canvas is available
+		if (!snowAnimation) {
+			snowAnimation = new SnowAnimation();
+			snowAnimation.init(snowCanvas);
+			console.log('Snow animation initialized');
+		}
+
+		// Control start/stop based on card position
+		if (isSecondToLastCard) {
+			console.log('Starting snow animation - isSecondToLastCard:', isSecondToLastCard);
+			snowAnimation.start();
+		} else {
+			console.log('Stopping snow animation - isSecondToLastCard:', isSecondToLastCard);
+			snowAnimation.stop();
+		}
+	});
+
+	// Cleanup on unmount
+	$effect(() => {
+		return () => {
+			if (snowAnimation) {
+				snowAnimation.destroy();
+				snowAnimation = null;
+			}
+		};
+	});
 </script>
 
 <div></div>
@@ -985,6 +1025,9 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 {#key pageKey}
 	<div class="fixed top-0 right-0 bottom-0 left-0 overflow-hidden">
+		<!-- Snow canvas layer -->
+		<canvas bind:this={snowCanvas} class="fixed top-0 left-0 w-full h-full pointer-events-none z-15"
+		></canvas>
 		<div
 			class="absolute h-full w-full touch-none"
 			onpointerdown={onPointerDown}
