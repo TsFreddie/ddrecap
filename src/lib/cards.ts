@@ -1465,7 +1465,6 @@ export const generateCards = async (
 					color: '#fff',
 					rotation: (rng() - 0.5) * 3,
 					py: 0,
-					px: 0,
 					t: 1,
 					b: 1,
 					minW: 55,
