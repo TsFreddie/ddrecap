@@ -717,11 +717,15 @@
 				style="--n: {5 + ((id * 7.25) % 15)}%; --r: {-2 + ((0.0235 + id * 5.32481238) % 1) * 4}deg"
 			>
 				<div
-					class="px-[4%] transition-transform duration-300 ease-out"
-					class:translate-y-[-45%]={showContent}
+					class="px-[4%] transition-[height,margin] duration-300 ease-out text-center flex flex-wrap items-center justify-center"
+					class:h-[1.5em]={showContent}
+					class:mb-[1.5em]={showContent}
+					class:h-[4em]={!showContent}
 					class:delay-500={showContent || id != currentCard}
 				>
-					{@html card.mapper}
+					<div>
+						{@html card.mapper}
+					</div>
 				</div>
 			</div>
 		{/if}
