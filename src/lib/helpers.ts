@@ -111,16 +111,13 @@ export const durationMinutes = (seconds: number, displayLocale: string, m: typeo
 		.toHuman({ listStyle: 'narrow', showZeros: false });
 };
 
-export const getPlayerSkin = async (
+export const getPlayerSkinDDStats = async (
 	player: string,
-	tryDDStats: boolean,
 	fetch: typeof globalThis.fetch = globalThis.fetch
 ) => {
 	if (!player) return { n: 'default' };
 	try {
-		const skin = await (
-			await fetch(`/skins?name=${encodeURIComponent(player)}${tryDDStats ? `&ddstats=true` : ''}`)
-		).json();
+		const skin = await (await fetch(`/skins?name=${encodeURIComponent(player)}`)).json();
 		if (!skin.n || skin.n === 'x-spec') {
 			return { n: 'default' };
 		}
@@ -129,6 +126,26 @@ export const getPlayerSkin = async (
 		console.error('Failed to fetch player skin for ' + player);
 		console.error(e);
 		return { n: 'default' };
+	}
+};
+
+export const getPlayerSkinBatch = async (
+	players: string[],
+	fetch: typeof globalThis.fetch = globalThis.fetch
+): Promise<{ n: string; b?: number; f?: number }[]> => {
+	try {
+		const url = new URL('https://teeworlds.cn/api/playerskinbatch');
+		for (const player of players) {
+			url.searchParams.append('n', player);
+		}
+
+		const skin = await (await fetch(url)).json();
+
+		return skin;
+	} catch (e) {
+		console.error('Failed to fetch player skin for ' + players);
+		console.error(e);
+		return players.map(() => ({ n: 'default' }));
 	}
 };
 

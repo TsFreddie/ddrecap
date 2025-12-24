@@ -146,7 +146,9 @@
 
 	let timer: NodeJS.Timeout | null = null;
 
-	const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+	const rootFontSize = parseFloat(
+		browser ? window.getComputedStyle(document.documentElement).fontSize : '0'
+	);
 	const maxWidth = rootFontSize * 40;
 	const refFontSize = 46;
 	let fontSize = $state(refFontSize);

@@ -7,7 +7,7 @@ import {
 	durationFull,
 	durationMinutes,
 	escapeHTML,
-	getPlayerSkin,
+	getPlayerSkinBatch,
 	month,
 	time
 } from './helpers';
@@ -16,7 +16,6 @@ import type { YearlyData } from './query-engine.worker';
 import { createRng, stringHash } from './pose';
 import { getSkinData } from './stores/skins';
 import normalSkins from '$lib/normal-skins.json';
-import { queue } from './queue-pool';
 
 export interface CardTextItem {
 	type: 't';
@@ -106,6 +105,59 @@ export const generateCards = async (
 	locale: string,
 	progress: (percent: number) => void
 ) => {
+	const skinTasks: { name: string; resolve: (skin: Skin) => void }[] = [];
+
+	const getPlayerSkin = (name: string) => {
+		return new Promise<Skin>((resolve) => {
+			skinTasks.push({ name, resolve });
+		});
+	};
+
+	const runTasks = async () => {
+		const batchSize = 64;
+
+		for (let i = 0; i < skinTasks.length; i += batchSize) {
+			const batch = skinTasks.slice(i, i + batchSize);
+			const skins = await getPlayerSkinBatch(batch.map((task) => task.name));
+			for (let j = 0; j < batch.length; j++) {
+				batch[j].resolve(skins[j]);
+			}
+			progress((i + batchSize) / skinTasks.length);
+		}
+
+		skinTasks.length = 0;
+		progress(1);
+	};
+
+	const cards = await generateCardsInternal(getPlayerSkin, maps, data, d, m, locale);
+	await runTasks();
+	return cards;
+};
+
+const generateCardsInternal = async (
+	getPlayerSkin: (name: string) => Promise<Skin>,
+	maps: {
+		name: string;
+		thumbnail: string;
+		type: string;
+		points: number;
+		difficulty: number;
+		mapper: string;
+		release: string;
+		width: number;
+		height: number;
+		tiles: string[];
+	}[],
+	data: {
+		name: string;
+		tz: string;
+		year: number;
+		skin: { n: string; b?: number; f?: number };
+	},
+	d: Partial<YearlyData>,
+	m: typeof messages,
+	locale: string
+) => {
 	const getMapper = (name: string) => maps?.find((map) => map.name == name)?.mapper || '[REDACTED]';
 	const mapHasBonus = (name: string) =>
 		maps?.find((map) => map.name == name)?.tiles.includes('BONUS');
@@ -114,25 +166,6 @@ export const generateCards = async (
 
 	const mapFormat = (map: string) => {
 		return `${escapeHTML(map)} <span class="text-[0.8em] text-gray-300">by <span class="font-semibold text-white">${escapeHTML(getMapper(map))}</span></span>`;
-	};
-
-	const tasks: (() => Promise<void>)[] = [];
-	const runTasks = async () => {
-		const totalTasks = tasks.length;
-		let finished = 0;
-		const prog = () => {
-			finished++;
-			progress(finished / totalTasks);
-		};
-		await Promise.all(
-			tasks.map(async (task) => {
-				try {
-					await queue().push(task);
-				} catch {}
-				prog();
-			})
-		);
-		progress(1);
 	};
 
 	const seed = stringHash(data.name);
@@ -263,8 +296,8 @@ export const generateCards = async (
 
 			const member = names[i];
 			if (mode === 'player') {
-				tasks.push(async () => {
-					entry.skin = await getPlayerSkin(member, false);
+				getPlayerSkin(member).then((skin) => {
+					entry.skin = skin;
 				});
 			} else {
 				entry.skin = { n: member };
@@ -1711,9 +1744,11 @@ export const generateCards = async (
 
 			const leftTeePlayer = d.mpt[0][0];
 			const rightTeePlayer = d.mpt[1][0];
-			tasks.push(async () => {
-				card.leftTeeSkin = await getPlayerSkin(leftTeePlayer, false);
-				card.rightTeeSkin = await getPlayerSkin(rightTeePlayer, false);
+			getPlayerSkin(leftTeePlayer).then((skin) => {
+				card.leftTeeSkin = skin;
+			});
+			getPlayerSkin(rightTeePlayer).then((skin) => {
+				card.rightTeeSkin = skin;
 			});
 			cards.push(card);
 		} else {
@@ -1742,8 +1777,8 @@ export const generateCards = async (
 			};
 
 			const rightTeePlayer = d.mpt[0][0];
-			tasks.push(async () => {
-				card.rightTeeSkin = await getPlayerSkin(rightTeePlayer, false);
+			getPlayerSkin(rightTeePlayer).then((skin) => {
+				card.rightTeeSkin = skin;
 			});
 			cards.push();
 		}
@@ -1894,8 +1929,6 @@ export const generateCards = async (
 	if (allTitles.length == 0) {
 		allTitles.push({ bg: '#8338ec', color: '#fff', text: m.title_unnamed_hero() });
 	}
-
-	await runTasks();
 
 	return {
 		cards,

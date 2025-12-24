@@ -1,7 +1,5 @@
 import { browser } from '$app/environment';
-import { getPlayerSkin } from '$lib/helpers.js';
-
-export const ssr = false;
+import { getPlayerSkinDDStats } from '$lib/helpers.js';
 
 export const load = async ({ fetch, data, parent }) => {
 	let ua = null;
@@ -11,7 +9,7 @@ export const load = async ({ fetch, data, parent }) => {
 
 	let skin;
 	if (data.player) {
-		skin = await getPlayerSkin(data.player.name, true, fetch);
+		skin = await getPlayerSkinDDStats(data.player.name, fetch);
 	}
 
 	return { ua, skin, ...data, ...(await parent()) };
