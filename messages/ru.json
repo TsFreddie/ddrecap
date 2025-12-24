@@ -79,8 +79,8 @@
 		}
 	],
 	"card_new_map_verse_2": "Это означает, что ваш процент завершения составил",
-	"card_new_map_verse_3": "Среди этих карт вы особенно любите",
-	"card_new_map_verse_4": [
+	"card_new_map_verse_4": "Среди этих карт вы особенно любите",
+	"card_new_map_verse_5": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
@@ -116,7 +116,7 @@
 	"card_returning_voyage_verse_4": "Мы искренне надеемся увидеть вас снова в игре ради",
 	"card_returning_voyage_verse_5": "новых приключений",
 	"card_runtime_verse_1": "Всё ваше гоночное время в этом году в сумме составило",
-	"card_runtime_verse_2": "Кроме того, согласно <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, вы были онлайн {duration} в этом году",
+	"card_runtime_verse_extra": "Кроме того, согласно <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, вы были онлайн {duration} в этом году",
 	"card_runtime_verse_weird": "Почему-то ваше имя появлялось реже, чем ваши гоночные записи. Возможно, вы меняли имя в этом году?",
 	"card_server_verse_1": "Ваш самый играемый сервер DDNet —",
 	"card_server_verse_2": "Вы завершили <span class=\"font-semibold text-orange-400\">{percent} заездов</span> на этом сервере",

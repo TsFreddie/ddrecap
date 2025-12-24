@@ -80,8 +80,8 @@
 		}
 	],
 	"card_new_map_verse_2": "Oznacza to, że osiągnąłeś/osiągnęłaś wskaźnik ukończenia na poziomie",
-	"card_new_map_verse_3": "Spośród tych map, szczególnie upodobałeś/upodobałaś sobie",
-	"card_new_map_verse_4": [
+	"card_new_map_verse_4": "Spośród tych map, szczególnie upodobałeś/upodobałaś sobie",
+	"card_new_map_verse_5": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
@@ -118,7 +118,7 @@
 	"card_returning_voyage_verse_4": "Szczerze mamy nadzieję zobaczyć Cię z powrotem w grze na",
 	"card_returning_voyage_verse_5": "nowe przygody",
 	"card_runtime_verse_1": "Całkowity czas Twoich wyścigów w tym roku wyniósł",
-	"card_runtime_verse_2": "Ponadto, według <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, byłeś/byłaś online przez {duration} w tym roku",
+	"card_runtime_verse_extra": "Ponadto, według <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, byłeś/byłaś online przez {duration} w tym roku",
 	"card_runtime_verse_weird": "Twoja nazwa pojawiła się rzadziej niż rekordy Twoich wyścigów. Może zmieniłeś/zmieniłaś nazwę w tym roku?",
 	"card_server_verse_1": "Twój najczęściej grany serwer DDNet to",
 	"card_server_verse_2": "Ukończyłeś/Ukończyłaś <span class=\"font-semibold text-orange-400\">{percent} wyścigów</span> na tym serwerze",

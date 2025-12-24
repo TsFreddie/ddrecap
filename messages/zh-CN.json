@@ -75,8 +75,8 @@
 		}
 	],
 	"card_new_map_verse_2": "这意味着你今年新图的完成率为",
-	"card_new_map_verse_3": "在这些地图中，你尤其钟爱",
-	"card_new_map_verse_4": [
+	"card_new_map_verse_4": "在这些地图中，你尤其钟爱",
+	"card_new_map_verse_5": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
@@ -112,7 +112,7 @@
 	"card_returning_voyage_verse_4": "希望你知道，此时此刻绝非终点，而是另一个",
 	"card_returning_voyage_verse_5": "全新的起点",
 	"card_runtime_verse_1": "今年你所有过图加起来，一共花了",
-	"card_runtime_verse_2": "另外，据<span class=\"font-semibold text-orange-400\">ddstats.tw</span>统计，你今年总共在线了{duration}",
+	"card_runtime_verse_extra": "另外，据<span class=\"font-semibold text-orange-400\">ddstats.tw</span>统计，你今年总共在线了{duration}",
 	"card_runtime_verse_weird": "但不知为何，你的名字出现的时间比你的过图时间还少。或许今年你申请过改名了？",
 	"card_server_verse_1": "你今年最常玩的DDNet服务器是",
 	"card_server_verse_2": "你<span class=\"font-semibold text-orange-400\"> {percent} </span>的记录都是在这个服务器上获得的",

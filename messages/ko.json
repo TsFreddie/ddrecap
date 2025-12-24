@@ -75,8 +75,8 @@
 		}
 	],
 	"card_new_map_verse_2": "이것은 당신이 달성한 완료율이",
-	"card_new_map_verse_3": "이 중에서 특히",
-	"card_new_map_verse_4": [
+	"card_new_map_verse_4": "이 중에서 특히",
+	"card_new_map_verse_5": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
@@ -112,7 +112,7 @@
 	"card_returning_voyage_verse_4": "지금 이 순간이 끝이 아니라 또 다른",
 	"card_returning_voyage_verse_5": "새로운 시작임을 기억해주세요",
 	"card_runtime_verse_1": "올해 모든 맵 클리어에 소요된 총 시간은",
-	"card_runtime_verse_2": "또한, <span class=\"font-semibold text-orange-400\">ddstats.tw</span> 통계에 따르면 올해 총 접속 시간은 {duration}이었습니다",
+	"card_runtime_verse_extra": "또한, <span class=\"font-semibold text-orange-400\">ddstats.tw</span> 통계에 따르면 올해 총 접속 시간은 {duration}이었습니다",
 	"card_runtime_verse_weird": "그런데 왜 클리어 시간이 접속 시간보다 긴 걸까요? 올해 닉네임을 변경하셨나요?",
 	"card_server_verse_1": "올해 가장 많이 플레이한 DDNet 서버는",
 	"card_server_verse_2": "기록의 <span class=\"font-semibold text-orange-400\">{percent}</span>를 이 서버에서 얻었습니다",

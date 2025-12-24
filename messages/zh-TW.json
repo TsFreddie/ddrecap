@@ -75,8 +75,8 @@
 		}
 	],
 	"card_new_map_verse_2": "這意味著你今年新圖的完成率為",
-	"card_new_map_verse_3": "在這些地圖中，你尤其鍾愛",
-	"card_new_map_verse_4": [
+	"card_new_map_verse_4": "在這些地圖中，你尤其鍾愛",
+	"card_new_map_verse_5": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
@@ -112,7 +112,7 @@
 	"card_returning_voyage_verse_4": "希望你知道，此時此刻絕非終點，而是另一個",
 	"card_returning_voyage_verse_5": "全新的起點",
 	"card_runtime_verse_1": "今年你所有過圖加起來，一共花了",
-	"card_runtime_verse_2": "另外，據<span class=\"font-semibold text-orange-400\">ddstats.tw</span>統計，你今年總共線上了{duration}",
+	"card_runtime_verse_extra": "另外，據<span class=\"font-semibold text-orange-400\">ddstats.tw</span>統計，你今年總共線上了{duration}",
 	"card_runtime_verse_weird": "但不知為何，你的名字出現的時間比你的過圖時間還少。或許今年你申請過改名了？",
 	"card_server_verse_1": "你今年最常玩的DDNet伺服器是",
 	"card_server_verse_2": "你<span class=\"font-semibold text-orange-400\"> {percent} </span>的記錄都是在這個伺服器上獲得的",

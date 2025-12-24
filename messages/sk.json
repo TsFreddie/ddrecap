@@ -83,8 +83,8 @@
 		}
 	],
 	"card_new_map_verse_2": "To znamená, že ste dosiahli mieru dokončenia",
-	"card_new_map_verse_3": "Medzi týmito mapami obzvlášť milujete",
-	"card_new_map_verse_4": [
+	"card_new_map_verse_4": "Medzi týmito mapami obzvlášť milujete",
+	"card_new_map_verse_5": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
@@ -120,7 +120,7 @@
 	"card_returning_voyage_verse_4": "Úprimne dúfame, že vás opäť uvidíme v hre pre",
 	"card_returning_voyage_verse_5": "nové dobrodružstvá",
 	"card_runtime_verse_1": "Všetok váš pretekový čas tento rok predstavoval celkom",
-	"card_runtime_verse_2": "Tiež, podľa <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, ste tento rok boli online {duration}",
+	"card_runtime_verse_extra": "Tiež, podľa <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, ste tento rok boli online {duration}",
 	"card_runtime_verse_weird": "Nejako sa vaše meno objavilo menej ako vaše záznamy pretekov. Možno ste tento rok zmenili meno?",
 	"card_server_verse_1": "Váš najhranejší DDNet server je",
 	"card_server_verse_2": "Dokončili ste <span class=\"font-semibold text-orange-400\">{percent} pretekov</span> na tomto serveri",

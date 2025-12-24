@@ -79,8 +79,8 @@
 		}
 	],
 	"card_new_map_verse_2": "Isso significa que você alcançou uma taxa de conclusão de",
-	"card_new_map_verse_3": "Entre esses mapas, você especialmente ama",
-	"card_new_map_verse_4": [
+	"card_new_map_verse_4": "Entre esses mapas, você especialmente ama",
+	"card_new_map_verse_5": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
@@ -116,7 +116,7 @@
 	"card_returning_voyage_verse_4": "Esperamos sinceramente vê-lo de volta ao jogo para",
 	"card_returning_voyage_verse_5": "novas aventuras",
 	"card_runtime_verse_1": "Todo o seu tempo de corrida este ano totalizou",
-	"card_runtime_verse_2": "Além disso, de acordo com <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, você ficou online por {duration} este ano",
+	"card_runtime_verse_extra": "Além disso, de acordo com <span class=\"font-semibold text-orange-400\">ddstats.tw</span>, você ficou online por {duration} este ano",
 	"card_runtime_verse_weird": "De alguma forma, seu nome apareceu menos que seus registros de corrida. Talvez você tenha mudado de nome este ano?",
 	"card_server_verse_1": "Seu servidor DDNet mais jogado é",
 	"card_server_verse_2": "Você finalizou <span class=\"font-semibold text-orange-400\">{percent} das corridas</span> neste servidor",

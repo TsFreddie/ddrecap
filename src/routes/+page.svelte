@@ -582,8 +582,6 @@
 
 	const getFormat = (format: string | undefined) => {
 		switch (format) {
-			case 'no-blur':
-				return noBlurRegularFormat;
 			case 'share':
 				return shareFormat;
 			default:
@@ -760,9 +758,9 @@
 		class="motion-delay-700 flex h-full w-full items-center justify-center text-[0.8em] transition-[backdrop-filter,box-shadow]"
 		class:motion-opacity-in-0={id == currentCard}
 		class:motion-opacity-out-0={id != currentCard}
-		class:backdrop-blur-xs={showContent}
-		class:backdrop-brightness-75={showContent}
-		class:backdrop-saturate-50={showContent}
+		class:backdrop-blur-xs={showContent && !card.noBackdrop}
+		class:backdrop-brightness-75={showContent && !card.noBackdrop}
+		class:backdrop-saturate-50={showContent && !card.noBackdrop}
 	>
 		<div class="absolute inset-0 transition-opacity" class:opacity-0={!showContent}>
 			{#if card.chart}
@@ -785,7 +783,7 @@
 					2.5}%; bottom: {card.b ?? 2.5}%;"
 			>
 				{#if card.content}
-					{#each card.content as item}
+					{#each card.content.filter((t) => t.text) as item}
 						{#if item.type == 't'}
 							<div
 								class="rounded-[1em] border-[0.05em] border-zinc-500 bg-zinc-700/90 px-[4%] py-[1%] text-center text-[0.7em]"
@@ -880,42 +878,6 @@
 						</div>
 					{/if}
 				</div>
-			{/if}
-		</div>
-	</div>
-{/snippet}
-
-{#snippet noBlurRegularFormat(id: number, card: CardData)}
-	<div
-		class="motion-delay-700 flex h-full w-full items-center justify-center text-[0.8em]"
-		class:motion-opacity-in-0={id == currentCard}
-		class:motion-opacity-out-0={id != currentCard}
-	>
-		<div
-			class="absolute flex flex-col items-center justify-center gap-[2%] transition-opacity"
-			class:opacity-0={!showContent}
-			style="left: {card.l ?? 2.5}%; top: {card.t ?? 2.5}%; right: {card.r ??
-				2.5}%; bottom: {card.b ?? 2.5}%;"
-		>
-			{#if card.content}
-				{#each card.content as item}
-					{#if item.type == 't'}
-						<p class="rounded-[1em] bg-zinc-700/80 px-2 py-1 text-center text-[0.7em]">
-							{@html item.text}
-						</p>
-					{:else if item.type == 'b'}
-						<p
-							class="rounded-[0.5em] px-4 py-2 text-center font-semibold"
-							class:text-nowrap={item.nr}
-							class:flex-nowrap={item.nr}
-							style="transform: rotate({item.rotation}deg);background-color: {item.bg};{item.color
-								? `color: ${item.color};`
-								: ''}"
-						>
-							{@html item.text}
-						</p>
-					{/if}
-				{/each}
 			{/if}
 		</div>
 	</div>

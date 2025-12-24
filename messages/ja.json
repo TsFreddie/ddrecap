@@ -75,8 +75,8 @@
 		}
 	],
 	"card_new_map_verse_2": "これは、あなたが達成したクリア率が",
-	"card_new_map_verse_3": "これらのマップの中でも、あなたは特に",
-	"card_new_map_verse_4": [
+	"card_new_map_verse_4": "これらのマップの中でも、あなたは特に",
+	"card_new_map_verse_5": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
@@ -112,7 +112,7 @@
 	"card_returning_voyage_verse_4": "今この瞬間は終わりではなく、もう一つの",
 	"card_returning_voyage_verse_5": "新たな始まりであることを、覚えておいてください",
 	"card_runtime_verse_1": "今年、あなたがすべてのマップをクリアするのにかかった時間は合計で",
-	"card_runtime_verse_2": "また、<span class=\"font-semibold text-orange-400\">ddstats.tw</span>の統計によると、あなたの今年の総オンライン時間は{duration}でした",
+	"card_runtime_verse_extra": "また、<span class=\"font-semibold text-orange-400\">ddstats.tw</span>の統計によると、あなたの今年の総オンライン時間は{duration}でした",
 	"card_runtime_verse_weird": "しかし、なぜか表示されたプレイ時間が、クリアにかかった時間より短くなっています。今年、名前を変更しましたか？",
 	"card_server_verse_1": "あなたが今年最もプレイしたDDNetサーバーは",
 	"card_server_verse_2": "あなたの記録の<span class=\"font-semibold text-orange-400\">{percent}</span>は、このサーバーで獲得されました",

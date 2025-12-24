@@ -79,8 +79,8 @@
 		}
 	],
 	"card_new_map_verse_2": "Det betyder att du uppnådde en klarandegrad på",
-	"card_new_map_verse_3": "Bland dessa kartor älskar du speciellt",
-	"card_new_map_verse_4": [
+	"card_new_map_verse_4": "Bland dessa kartor älskar du speciellt",
+	"card_new_map_verse_5": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],
 			"match": {
@@ -116,7 +116,7 @@
 	"card_returning_voyage_verse_4": "Vi hoppas innerligt att se dig tillbaka i spelet för",
 	"card_returning_voyage_verse_5": "nya äventyr",
 	"card_runtime_verse_1": "All din racetid i år summerade till",
-	"card_runtime_verse_2": "Enligt <span class=\"font-semibold text-orange-400\">ddstats.tw</span> har du dessutom varit online i {duration} i år",
+	"card_runtime_verse_extra": "Enligt <span class=\"font-semibold text-orange-400\">ddstats.tw</span> har du dessutom varit online i {duration} i år",
 	"card_runtime_verse_weird": "Ditt namn dyker på något sätt upp mindre än dina racerekord. Kanske bytte du namn i år?",
 	"card_server_verse_1": "Din mest spelade DDNet-server är",
 	"card_server_verse_2": "Du klarade <span class=\"font-semibold text-orange-400\">{percent} av racen</span> på denna server",

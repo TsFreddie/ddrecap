@@ -78,6 +78,7 @@ export interface CardData {
 		angle: number;
 		var: number;
 	}[];
+	noBackdrop?: boolean;
 	chart?: ChartConfiguration;
 }
 
@@ -539,6 +540,10 @@ export const generateCards = async (
 					color: '#000',
 					text: m.card_returning_voyage_verse_5(),
 					rotation: -4
+				},
+				{
+					type: 't',
+					text: m.card_returning_voyage_verse_6()
 				}
 			],
 			background: '/assets/yearly/lf.png',
@@ -588,6 +593,10 @@ export const generateCards = async (
 					bg: '#fdd300',
 					color: '#000',
 					rotation: 4
+				},
+				{
+					type: 't',
+					text: m.card_first_finish_verse_4()
 				}
 			],
 			background: '/assets/yearly/r.png',
@@ -843,6 +852,10 @@ export const generateCards = async (
 					bg: '#fdd300',
 					color: '#000',
 					text: `<div style="font-size: 0.75em">${durationFull(d.rt, locale, m)}</div>`
+				},
+				{
+					type: 't',
+					text: m.card_runtime_verse_2()
 				}
 			],
 			background: '/assets/yearly/wr.png',
@@ -852,7 +865,7 @@ export const generateCards = async (
 		if (d.tt) {
 			card.content!.push({
 				type: 't',
-				text: m.card_runtime_verse_2({ duration: durationFull(d.tt, locale, m) })
+				text: m.card_runtime_verse_extra({ duration: durationFull(d.tt, locale, m) })
 			});
 
 			if (d.tt < d.rt * 0.5) {
@@ -943,6 +956,10 @@ export const generateCards = async (
 					color: '#000',
 					text: `${Math.round((d.ymf[1] / d.ymf[0]) * 100)}%`,
 					rotation: -4
+				},
+				{
+					type: 't',
+					text: m.card_new_map_verse_3()
 				}
 			],
 			background: '/assets/yearly/p9.png',
@@ -953,7 +970,7 @@ export const generateCards = async (
 			cards[cards.length - 1].content!.push(
 				{
 					type: 't',
-					text: m.card_new_map_verse_3()
+					text: m.card_new_map_verse_4()
 				},
 				{
 					type: 'b',
@@ -964,7 +981,7 @@ export const generateCards = async (
 				},
 				{
 					type: 't',
-					text: m.card_new_map_verse_4({ count: d.ymf[3] })
+					text: m.card_new_map_verse_5({ count: d.ymf[3] })
 				}
 			);
 			cards[cards.length - 1].background = bgMap(d.ymf[2]);
@@ -1629,6 +1646,10 @@ export const generateCards = async (
 					color: '#000',
 					text: Math.round((d.bi[2] / (d.bi[1] + d.bi[2])) * 1000) / 10 + '%',
 					rotation: -3
+				},
+				{
+					type: 't',
+					text: m.card_biggest_improvement_verse_4()
 				}
 			],
 			background: '/assets/yearly/nn.png',
@@ -1859,7 +1880,7 @@ export const generateCards = async (
 		],
 		l: 45,
 		b: 80,
-		format: 'no-blur',
+		noBackdrop: true,
 		background:
 			data.name === 'nameless tee' ? '/assets/yearly/year-b.png' : '/assets/yearly/year.png'
 	});
