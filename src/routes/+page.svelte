@@ -46,7 +46,6 @@
 	const { data } = $props();
 
 	const timeout = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-	const isMobile = $derived(() => uaIsMobile(data.ua));
 
 	let totalCards = $state(null) as {
 		cards: CardData[];
@@ -152,6 +151,23 @@
 	const maxWidth = rootFontSize * 40;
 	const refFontSize = 46;
 	let fontSize = $state(refFontSize);
+	let skin: { n?: string; b?: number; f?: number } = $state({});
+	let skinLoaded = $state(false);
+
+	const updateSkin = async () => {
+		skin = {};
+		skinLoaded = false;
+		if (data.player) {
+			try {
+				skin = await (
+					await fetch(`/skins?name=${data.player.name}`, { signal: AbortSignal.timeout(10000) })
+				).json();
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		skinLoaded = true;
+	};
 
 	onMount(() => {
 		(window as any).DownloadSqlite = () => {
@@ -177,6 +193,12 @@
 		} else {
 			fontSize = refFontSize;
 		}
+
+		updateSkin();
+	});
+
+	afterNavigate(async () => {
+		updateSkin();
 	});
 
 	let observing = false;
@@ -316,7 +338,7 @@
 				`%c📦 ${name}'s player data is available to download as a sqlite database via \`window.DownloadSqlite()\``,
 				'color: #10b981; font-size: 1em;'
 			);
-			totalCards = await generateCards(maps!, data, d, m, getLocale(), (percent) => {
+			totalCards = await generateCards(maps!, data, skin, d, m, getLocale(), (percent) => {
 				loadingProgress = 0.9 + percent * 0.1;
 			});
 			loadingProgress = 1;
@@ -830,9 +852,7 @@
 									: ''}--delay: {swarm.delay}s;--vx: {-swarm.vx * 100}px;--vy: {-swarm.vy * 100}px;"
 							>
 								<TeeRender
-									name={swarm.skin.n}
-									body={swarm.skin.b}
-									feet={swarm.skin.f}
+									skin={swarm.skin}
 									emote={swarm.emote}
 									hide={id != currentCard}
 									className="h-full w-full"
@@ -851,9 +871,7 @@
 							class:motion-rotate-out-[-12deg]={!showContent && id != currentCard}
 						>
 							<TeeRender
-								name={card.leftTeeSkin.n}
-								body={card.leftTeeSkin.b}
-								feet={card.leftTeeSkin.f}
+								skin={card.leftTeeSkin == 'player' ? skin : card.leftTeeSkin}
 								hide={id != currentCard}
 								className="h-full w-full"
 								pose={leftTeePose}
@@ -870,9 +888,7 @@
 							class:motion-rotate-out-[12deg]={!showContent && id != currentCard}
 						>
 							<TeeRender
-								name={card.rightTeeSkin.n}
-								body={card.rightTeeSkin.b}
-								feet={card.rightTeeSkin.f}
+								skin={card.rightTeeSkin == 'player' ? skin : card.rightTeeSkin}
 								hide={id != currentCard}
 								className="h-full w-full"
 								pose={rightTeePose}
@@ -928,13 +944,7 @@
 				class:motion-rotate-in-[-12deg]={id == currentCard}
 				class:motion-rotate-out-[-12deg]={id != currentCard}
 			>
-				<TeeRender
-					name={data.skin?.n}
-					body={data.skin?.b}
-					feet={data.skin?.f}
-					className="h-full w-full"
-					pose={leftTeePose}
-				/>
+				<TeeRender {skin} className="h-full w-full" pose={leftTeePose} />
 			</div>
 			<div
 				class="motion-duration-500 motion-delay-1500 absolute right-[2.5%] bottom-[2.5%] flex h-[30%] w-[30%]"
@@ -977,7 +987,7 @@
 						{:else if shareInfo}
 							{shareInfo}
 						{:else}
-							{isMobile() ? m.page_to_share_mobile() : m.page_to_share()}
+							{uaIsMobile() ? m.page_to_share_mobile() : m.page_to_share()}
 						{/if}
 					</div>
 				</div>
@@ -1051,7 +1061,7 @@
 					in:fade
 				>
 					<div class="motion-preset-oscillate text-[0.7em]">
-						{isMobile() ? m.page_continue_mobile() : m.page_continue()}
+						{uaIsMobile() ? m.page_continue_mobile() : m.page_continue()}
 					</div>
 				</div>
 			{/if}
@@ -1150,12 +1160,7 @@
 											<div
 												class="motion-translate-x-in-[-200%] motion-rotate-in-12 motion-duration-1000 motion-delay-100 flex items-center justify-center gap-8"
 											>
-												<TeeRender
-													className="relative h-20 w-20"
-													name={data.skin?.n}
-													body={data.skin?.b}
-													feet={data.skin?.f}
-												/>
+												<TeeRender className="relative h-20 w-20" {skin} />
 												<div class="font-semibold text-zinc-300">
 													<div>{data.player.name}</div>
 													<div class="font-normal">
@@ -1165,7 +1170,7 @@
 											</div>
 											<div class="flex flex-col">
 												<button
-													class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 mt-2 rounded bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600 cursor-pointer"
+													class="motion-translate-x-in-[-200%] motion-duration-1000 motion-delay-200 mt-2 rounded disabled:bg-blue-500 disabled:opacity-50 bg-blue-500 px-4 py-2 text-nowrap text-white hover:bg-blue-600 cursor-pointer"
 													onclick={startProcess}
 												>
 													{m.page_start_recap()}

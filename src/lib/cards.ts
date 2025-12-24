@@ -45,7 +45,7 @@ export interface CardBannerItem {
 }
 
 export type CardItem = CardTextItem | CardBannerItem;
-type Skin = { n: string; b?: number; f?: number };
+type Skin = { n?: string; b?: number; f?: number };
 
 export interface CardData {
 	border?: string;
@@ -61,9 +61,9 @@ export interface CardData {
 	mapper?: string;
 	format?: string;
 	leftTeeTop?: number;
-	leftTeeSkin?: Skin | null;
+	leftTeeSkin?: Skin | 'player' | null;
 	rightTeeTop?: number;
-	rightTeeSkin?: Skin | null;
+	rightTeeSkin?: Skin | 'player' | null;
 	swarm?: {
 		t?: number;
 		r?: number;
@@ -98,8 +98,8 @@ export const generateCards = async (
 		name: string;
 		tz: string;
 		year: number;
-		skin: { n: string; b?: number; f?: number };
 	},
+	skin: Skin,
 	d: Partial<YearlyData>,
 	m: typeof messages,
 	locale: string,
@@ -129,7 +129,7 @@ export const generateCards = async (
 		progress(1);
 	};
 
-	const cards = await generateCardsInternal(getPlayerSkin, maps, data, d, m, locale);
+	const cards = await generateCardsInternal(getPlayerSkin, maps, data, skin, d, m, locale);
 	await runTasks();
 	return cards;
 };
@@ -152,8 +152,8 @@ const generateCardsInternal = async (
 		name: string;
 		tz: string;
 		year: number;
-		skin: { n: string; b?: number; f?: number };
 	},
+	skin: Skin,
 	d: Partial<YearlyData>,
 	m: typeof messages,
 	locale: string
@@ -377,6 +377,7 @@ const generateCardsInternal = async (
 		// 今年分数
 		allTitles.push(...titles);
 		if (d.lp == 0) {
+			console.log(skin);
 			cards.push({
 				titles,
 				content: [
@@ -392,7 +393,7 @@ const generateCardsInternal = async (
 				],
 				background: '/assets/yearly/sb.png',
 				leftTeeTop: 5,
-				leftTeeSkin: data.skin,
+				leftTeeSkin: 'player',
 				mapper: mapFormat('SKYBOW')
 			});
 		} else {
@@ -415,7 +416,7 @@ const generateCardsInternal = async (
 				],
 				background: '/assets/yearly/ssu.png',
 				leftTeeTop: 5,
-				leftTeeSkin: data.skin,
+				leftTeeSkin: 'player',
 				mapper: mapFormat('Sunny Side Up')
 			});
 		}

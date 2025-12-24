@@ -18,7 +18,8 @@ export const getSkinData = async () => {
 	return skins;
 };
 
-export const getSkinUrl = async (name: string): Promise<string | null> => {
+export const getSkinUrl = async (name: string | undefined): Promise<string | null> => {
+	if (!name) return null;
 	const skins = await getSkinData();
 	if (!skins) return null;
 	return skins[name] ? new URL(skins[name], 'https://teeworlds.cn').href : null;

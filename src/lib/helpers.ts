@@ -1,6 +1,7 @@
 import { DateTime, Duration } from 'luxon';
 import type { m as messages } from './paraglide/messages';
 import { encodeBase64Url } from './base64url';
+import { browser } from '$app/environment';
 
 export const escapeHTML = (str: string) => {
 	return str
@@ -11,11 +12,13 @@ export const escapeHTML = (str: string) => {
 		.replace(/'/g, '&#x27;');
 };
 
-export const uaIsMobile = (ua: string | null) => {
-	if (!ua) return false;
+export const uaIsMobile = () => {
+	if (!browser) return false;
+	if (typeof navigator === 'undefined') return false;
+	if (!navigator.userAgent) return false;
 	const regex =
 		/(iPhone|iPad|iPod|Android|BlackBerry|Windows Phone|BB10|webOS|IEMobile|Opera Mini|Mobile|Silk-Accelerated|(hpw|web)OS|Opera Mini)/i;
-	return regex.test(ua);
+	return regex.test(navigator.userAgent);
 };
 
 const convertLocale = (displayLocale: string) => {
