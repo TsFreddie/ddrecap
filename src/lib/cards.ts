@@ -1069,7 +1069,7 @@ export const generateCards = async (
 			if (type == 'novice') {
 				titles.push({ bg: '#10002b', color: '#fff', text: m.title_casual_enjoyer() });
 			} else if (type == 'moderate') {
-				titles.push({ bg: '#240046', color: '#fff', text: m.title_challenge_solve() });
+				titles.push({ bg: '#240046', color: '#fff', text: m.title_challenge_solver() });
 			} else if (type == 'brutal') {
 				titles.push({ bg: '#3c096c', color: '#fff', text: m.title_professional_player() });
 			} else if (type == 'insane') {
