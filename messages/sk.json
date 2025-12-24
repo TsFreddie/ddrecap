@@ -12,17 +12,7 @@
 	"card_distinct_teammates_verse_2": "{count} rôznymi Tee",
 	"card_distinct_teammates_verse_3": "Naozaj silný tím!",
 	"card_finishes_verse_1": "Tento rok ste boli v ohni, prekročili ste cieľovú čiaru celkovo",
-	"card_finishes_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "Z toho sa <span class=\"text-orange-400\">{count}-krát</span> stalo",
-				"plural=few": "Z toho sa <span class=\"text-orange-400\">{count}-krát</span> stalo",
-				"plural=one": "Z toho sa <span class=\"text-orange-400\">{count}-krát</span> stalo"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_finishes_verse_2": "Z toho sa <span class=\"text-orange-400\">{count}-krát</span> stalo",
 	"card_finishes_verse_2_period": [
 		{
 			"declarations": ["input period"],
@@ -45,30 +35,10 @@
 	"card_level_designer_verse_2": "Vaša tvorba zahŕňa: {maps}",
 	"card_level_designer_verse_3": "Ďakujeme za váš prínos",
 	"card_map_type_verse_1": "Váš najhranejší typ mapy je",
-	"card_map_type_verse_2": [
-		{
-			"declarations": ["input count", "input type", "local plural = count: plural"],
-			"match": {
-				"plural=*": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=few": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=one": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_map_type_verse_2": "Tento rok ste prekročili cieľovú čiaru máp typu {type} <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
 	"card_map_type_verse_fun": "Vyzerá to, že ste objavili skutočný spôsob hrania DDNet",
 	"card_map_verse_1": "Vaša najhranejšia mapa je",
-	"card_map_verse_2": [
-		{
-			"declarations": ["input finishes", "local plural = finishes: plural"],
-			"match": {
-				"plural=*": "Prekročili ste jej cieľovú čiaru <span class=\"font-semibold text-orange-400\">{finishes}-krát</span>. Musíte mať slabosť pre túto mapu!",
-				"plural=few": "Prekročili ste jej cieľovú čiaru <span class=\"font-semibold text-orange-400\">{finishes}-krát</span>. Musíte mať slabosť pre túto mapu!",
-				"plural=one": "Prekročili ste jej cieľovú čiaru <span class=\"font-semibold text-orange-400\">{finishes}-krát</span>. Musíte mať slabosť pre túto mapu!"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_map_verse_2": "Prekročili ste jej cieľovú čiaru <span class=\"font-semibold text-orange-400\">{finishes}-krát</span>. Musíte mať slabosť pre túto mapu!",
 	"card_monthly_verse_1": "Váš najaktívnejší mesiac je",
 	"card_monthly_verse_2": "Strávili ste v tomto mesiaci <span class=\"font-semibold text-orange-400\">{percent}</span> vášho herného času",
 	"card_new_map_verse_1": [
@@ -84,15 +54,7 @@
 	],
 	"card_new_map_verse_2": "To znamená, že ste dosiahli mieru dokončenia",
 	"card_new_map_verse_4": "Medzi týmito mapami obzvlášť milujete",
-	"card_new_map_verse_5": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "Túto mapu ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
-			},
-			"selectors": []
-		}
-	],
+	"card_new_map_verse_5": "Túto mapu ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
 	"card_night_owl_verse_1": "Bola tu špeciálna chvíľa<br>dňa <span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Zabralo vám to {time} dokončiť <span class=\"font-semibold text-orange-400\">{map}</span><br>a cieľovú čiaru ste prekročili o",
 	"card_night_owl_verse_3": "Kým nebo je tmavé, vaša vášeň horí jasne",
@@ -146,29 +108,9 @@
 	"card_steady_progress_verse_3": "Pokračujte v dobývaní nových výziev,",
 	"card_steady_progress_verse_4": "a zazárite na mapách s ešte vyšším skóre",
 	"card_team_verse_1": "Každý tímový pretek potrebuje spoľahlivého parťáka!",
-	"card_team_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "je váš najlepší kamarát.<br>Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=few": "je váš najlepší kamarát.<br>Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=one": "je váš najlepší kamarát.<br>Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_team_verse_2": "je váš najlepší kamarát.<br>Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
 	"card_team_verse_3": "Navyše,",
-	"card_team_verse_4": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "je váš druhý najčastejší spoluhráč. Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=few": "je váš druhý najčastejší spoluhráč. Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
-				"plural=one": "je váš druhý najčastejší spoluhráč. Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_team_verse_4": "je váš druhý najčastejší spoluhráč. Spoločne ste dokončili <span class=\"font-semibold text-orange-400\">{count}-krát</span>",
 	"format_dhms": "",
 	"format_hm": "",
 	"format_hms": "",
@@ -263,17 +205,7 @@
 			"selectors": ["plural"]
 		}
 	],
-	"unit_times": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "{count}-krát",
-				"plural=few": "{count}-krát",
-				"plural=one": "{count}-krát"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"unit_times": "{count}-krát",
 	"unit_years": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],

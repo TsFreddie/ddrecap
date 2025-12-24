@@ -12,16 +12,7 @@
 	"card_distinct_teammates_verse_2": "{count} farklı Tee ile",
 	"card_distinct_teammates_verse_3": "takım kurdun! Gerçekten güçlü bir takım!",
 	"card_finishes_verse_1": "Bu yıl harikalar yarattınız, toplamda",
-	"card_finishes_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "Bunların <span class=\"text-orange-400\">{count} kez</span>i",
-				"plural=one": "Bunların <span class=\"text-orange-400\">{count} kez</span>i"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_finishes_verse_2": "Bunların <span class=\"text-orange-400\">{count} kez</span>i",
 	"card_finishes_verse_2_period": [
 		{
 			"declarations": ["input period"],
@@ -44,51 +35,16 @@
 	"card_level_designer_verse_2": "Yarattıklarınız arasında şunlar var: {maps}",
 	"card_level_designer_verse_3": "Katkılarınız için teşekkür ederiz",
 	"card_map_type_verse_1": "En çok oynadığınız harita türü",
-	"card_map_type_verse_2": [
-		{
-			"declarations": ["input count", "input type", "local plural = count: plural"],
-			"match": {
-				"plural=*": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz",
-				"plural=one": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_map_type_verse_2": "Bu yıl, {type} haritalarının bitiş çizgisini <span class=\"font-semibold text-orange-400\">{count} kez</span> geçtiniz",
 	"card_map_type_verse_fun": "DDNet'i oynamanın gerçek yolunu keşfetmiş gibisiniz",
 	"card_map_verse_1": "En çok oynadığınız harita",
-	"card_map_verse_2": [
-		{
-			"declarations": ["input finishes", "local plural = finishes: plural"],
-			"match": {
-				"plural=*": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz. Bu haritaya karşı özel bir zaafınız olmalı!",
-				"plural=one": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz. Bu haritaya karşı özel bir zaafınız olmalı!"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_map_verse_2": "Bitiş çizgisini <span class=\"font-semibold text-orange-400\">{finishes} kez</span> geçtiniz. Bu haritaya karşı özel bir zaafınız olmalı!",
 	"card_monthly_verse_1": "En aktif olduğunuz ay",
 	"card_monthly_verse_2": "Oyun sürenizin <span class=\"font-semibold text-orange-400\">{percent}</span>unu bu ayda geçirdiniz",
-	"card_new_map_verse_1": [
-		{
-			"declarations": ["input completed", "input total", "local plural = total: plural"],
-			"match": {
-				"plural=*": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız",
-				"plural=one": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_new_map_verse_1": "Bu yıl yayınlanan <span class=\"text-orange-400\">{total} yeni zorlu harita</span> arasından,<br><span class=\"font-semibold text-orange-400\">{completed}</span> tanesini başarıyla tamamladınız",
 	"card_new_map_verse_2": "Bu, şu tamamlama oranına ulaştığınız anlamına geliyor:",
 	"card_new_map_verse_4": "Bu haritalar arasında, özellikle şunu sevdiniz:",
-	"card_new_map_verse_5": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "Bu haritayı <span class=\"font-semibold text-orange-400\">{count} kez</span> tamamladınız"
-			},
-			"selectors": []
-		}
-	],
+	"card_new_map_verse_5": "Bu haritayı <span class=\"font-semibold text-orange-400\">{count} kez</span> tamamladınız",
 	"card_night_owl_verse_1": "<span class=\"font-semibold text-orange-400\">{date}</span> tarihinde<br>özel bir an yaşandı",
 	"card_night_owl_verse_2": "<span class=\"font-semibold text-orange-400\">{map}</span> haritasını tamamlamak için {time} harcadınız<br>ve bitişe şu saatte ulaştınız:",
 	"card_night_owl_verse_3": "Gökyüzü karanlık olsa da, tutkunuz parlamaya devam ediyor",
@@ -142,27 +98,9 @@
 	"card_steady_progress_verse_3": "puan kazandınız. Yeni zorlukları fethetmeye devam edin,",
 	"card_steady_progress_verse_4": "ve daha yüksek puanlı haritalarda parlamaya devam edin",
 	"card_team_verse_1": "Her takım yarışının güvenilir bir takım arkadaşına ihtiyacı vardır!",
-	"card_team_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "sizin en iyi dostunuz.<br>Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz",
-				"plural=one": "sizin en iyi dostunuz.<br>Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_team_verse_2": "sizin en iyi dostunuz.<br>Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz",
 	"card_team_verse_3": "Ayrıca,",
-	"card_team_verse_4": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "sizin en çok takım olduğunuz ikinci oyuncu. Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz",
-				"plural=one": "sizin en çok takım olduğunuz ikinci oyuncu. Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_team_verse_4": "sizin en çok takım olduğunuz ikinci oyuncu. Birlikte <span class=\"font-semibold text-orange-400\">{count} kez</span> bitirdiniz",
 	"format_dhms": "",
 	"format_hm": "",
 	"format_hms": "",
@@ -246,34 +184,7 @@
 	"title_to_the_moon": "Ay'a",
 	"title_floor_is_lava": "Zemin Lav",
 	"title_veteran": "{years} Yıllık Emektar",
-	"unit_maps": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "{count} harita",
-				"plural=one": "{count} harita"
-			},
-			"selectors": ["plural"]
-		}
-	],
-	"unit_times": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "{count} kez",
-				"plural=one": "{count} kez"
-			},
-			"selectors": ["plural"]
-		}
-	],
-	"unit_years": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "{count} yıl",
-				"plural=one": "{count} yıl"
-			},
-			"selectors": ["plural"]
-		}
-	]
+	"unit_maps": "{count} harita",
+	"unit_times": "{count} kez",
+	"unit_years": "{count} yıl"
 }

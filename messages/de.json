@@ -12,16 +12,7 @@
 	"card_distinct_teammates_verse_2": "{count} verschiedenen Tees",
 	"card_distinct_teammates_verse_3": "Ein wahrhaft mächtiges Team!",
 	"card_finishes_verse_1": "Du warst dieses Jahr kaum zu stoppen und bist insgesamt über die Ziellinie gekommen",
-	"card_finishes_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "Davon geschah es <span class=\"text-orange-400\">{count} Mal</span>",
-				"plural=one": "Davon geschah es <span class=\"text-orange-400\">{count} Mal</span>"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_finishes_verse_2": "Davon geschah es <span class=\"text-orange-400\">{count} Mal</span>",
 	"card_finishes_verse_2_period": [
 		{
 			"declarations": ["input period"],
@@ -44,51 +35,16 @@
 	"card_level_designer_verse_2": "Deine Kreationen beinhalten: {maps}",
 	"card_level_designer_verse_3": "Danke für deine Beiträge",
 	"card_map_type_verse_1": "Dein meistgespielter Kartentyp ist",
-	"card_map_type_verse_2": [
-		{
-			"declarations": ["input count", "input type", "local plural = count: plural"],
-			"match": {
-				"plural=*": "Dieses Jahr hast du die Ziellinie von {type}-Karten <span class=\"font-semibold text-orange-400\">{count} Mal</span> überquert",
-				"plural=one": "Dieses Jahr hast du die Ziellinie von {type}-Karten <span class=\"font-semibold text-orange-400\">{count} Mal</span> überquert"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_map_type_verse_2": "Dieses Jahr hast du die Ziellinie von {type}-Karten <span class=\"font-semibold text-orange-400\">{count} Mal</span> überquert",
 	"card_map_type_verse_fun": "Du scheinst die wahre Art, DDNet zu spielen, entdeckt zu haben",
 	"card_map_verse_1": "Deine meistgespielte Karte ist",
-	"card_map_verse_2": [
-		{
-			"declarations": ["input finishes", "local plural = finishes: plural"],
-			"match": {
-				"plural=*": "Du hast ihre Ziellinie <span class=\"font-semibold text-orange-400\">{finishes} Mal</span> überquert. Du musst eine Schwäche für diese Karte haben!",
-				"plural=one": "Du hast ihre Ziellinie <span class=\"font-semibold text-orange-400\">{finishes} Mal</span> überquert. Du musst eine Schwäche für diese Karte haben!"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_map_verse_2": "Du hast ihre Ziellinie <span class=\"font-semibold text-orange-400\">{finishes} Mal</span> überquert. Du musst eine Schwäche für diese Karte haben!",
 	"card_monthly_verse_1": "Dein aktivster Monat ist",
 	"card_monthly_verse_2": "Du hast <span class=\"font-semibold text-orange-400\">{percent}</span> deiner Spielzeit in diesem Monat verbracht",
-	"card_new_map_verse_1": [
-		{
-			"declarations": ["input completed", "input total", "local plural = total: plural"],
-			"match": {
-				"plural=*": "Unter den <span class=\"text-orange-400\">{total} neuen herausfordernden Karten</span>, die dieses Jahr veröffentlicht wurden,<br>hast du erfolgreich <span class=\"font-semibold text-orange-400\">{completed}</span> davon abgeschlossen",
-				"plural=one": "Unter den <span class=\"text-orange-400\">{total} neuen herausfordernden Karten</span>, die dieses Jahr veröffentlicht wurden,<br>hast du erfolgreich <span class=\"font-semibold text-orange-400\">{completed}</span> davon abgeschlossen"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_new_map_verse_1": "Unter den <span class=\"text-orange-400\">{total} neuen herausfordernden Karten</span>, die dieses Jahr veröffentlicht wurden,<br>hast du erfolgreich <span class=\"font-semibold text-orange-400\">{completed}</span> davon abgeschlossen",
 	"card_new_map_verse_2": "Das bedeutet, du hast eine Abschlussrate von",
 	"card_new_map_verse_4": "Unter diesen Karten liebst du besonders",
-	"card_new_map_verse_5": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "Du hast diese Karte <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet"
-			},
-			"selectors": []
-		}
-	],
+	"card_new_map_verse_5": "Du hast diese Karte <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet",
 	"card_night_owl_verse_1": "Es gab einen besonderen Moment<br>am <span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Du hast {time} gebraucht, um <span class=\"font-semibold text-orange-400\">{map}</span> zu vervollständigen,<br>und bist über die Ziellinie gelaufen um",
 	"card_night_owl_verse_3": "Während der Himmel dunkel ist, brennt deine Leidenschaft hell",
@@ -142,27 +98,9 @@
 	"card_steady_progress_verse_3": "Erobere weiterhin neue Herausforderungen,",
 	"card_steady_progress_verse_4": "und glänze auf noch höher bewerteten Karten",
 	"card_team_verse_1": "Jedes Teamrennen braucht einen vertrauenswürdigen Teamkollegen!",
-	"card_team_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "ist dein bester Kumpel.<br>Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet",
-				"plural=one": "ist dein bester Kumpel.<br>Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_team_verse_2": "ist dein bester Kumpel.<br>Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet",
 	"card_team_verse_3": "Außerdem,",
-	"card_team_verse_4": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "ist dein zweitmeist geteamter Spieler. Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet",
-				"plural=one": "ist dein zweitmeist geteamter Spieler. Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_team_verse_4": "ist dein zweitmeist geteamter Spieler. Ihr habt zusammen <span class=\"font-semibold text-orange-400\">{count} Mal</span> beendet",
 	"format_dhms": "",
 	"format_hm": "",
 	"format_hms": "",
@@ -198,7 +136,6 @@
 	"title_brotherly_bond": "Brüderliche Bindung",
 	"title_casual_enjoyer": "Gelegenheitsspieler",
 	"title_challenge_solver": "Herausforderungsmeister",
-	"title_challenge_solverr": "Herausforderungsmeister",
 	"title_clockwork": "Uhrwerk",
 	"title_combined_mind": "Kombinierter Verstand",
 	"title_ddmax_enjoyer": "DDmaX-Liebhaber",
@@ -257,16 +194,7 @@
 			"selectors": ["plural"]
 		}
 	],
-	"unit_times": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "{count} Mal",
-				"plural=one": "{count} Mal"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"unit_times": "{count} Mal",
 	"unit_years": [
 		{
 			"declarations": ["input count", "local plural = count: plural"],

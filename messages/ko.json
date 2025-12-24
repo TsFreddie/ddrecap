@@ -12,15 +12,7 @@
 	"card_distinct_teammates_verse_2": "{count}명의 다른 Tee들과",
 	"card_distinct_teammates_verse_3": "팀을 이루어! 정말로 강력한 팀이에요!",
 	"card_finishes_verse_1": "올해 활기차게 플레이하며 많은 성과를 냈습니다<br>총 <span class=\"font-semibold text-orange-400\">골인을 완수</span>했습니다",
-	"card_finishes_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "이 중<br><span class=\"text-orange-400\">{count}번</span>의 골인은"
-			},
-			"selectors": ["count"]
-		}
-	],
+	"card_finishes_verse_2": "이 중<br><span class=\"text-orange-400\">{count}번</span>의 골인은",
 	"card_finishes_verse_2_period": [
 		{
 			"declarations": ["input period"],
@@ -43,48 +35,16 @@
 	"card_level_designer_verse_2": "맵을 출시했습니다: {maps}",
 	"card_level_designer_verse_3": "DDNet 커뮤니티에 기여해 주셔서 진심으로 감사합니다",
 	"card_map_type_verse_1": "올해 가장 많이 플레이한 맵 유형은",
-	"card_map_type_verse_2": [
-		{
-			"declarations": ["input count", "input type", "local plural = count: plural"],
-			"match": {
-				"count=*, type=*": "{type} 맵에서 <span class=\"font-semibold text-orange-400\">{count}번</span> 골인했습니다"
-			},
-			"selectors": ["count", "type"]
-		}
-	],
+	"card_map_type_verse_2": "{type} 맵에서 <span class=\"font-semibold text-orange-400\">{count}번</span> 골인했습니다",
 	"card_map_type_verse_fun": "DDNet의 진정한 재미를 발견한 것 같습니다",
 	"card_map_verse_1": "올해 가장 많이 클리어한 맵은",
-	"card_map_verse_2": [
-		{
-			"declarations": ["input finishes", "local plural = finishes: plural"],
-			"match": {
-				"finishes=*": "이 맵을 <span class=\"font-semibold text-orange-400\">{finishes}번</span> 클리어했습니다. 특별한 의미가 있나요?"
-			},
-			"selectors": ["finishes"]
-		}
-	],
+	"card_map_verse_2": "이 맵을 <span class=\"font-semibold text-orange-400\">{finishes}번</span> 클리어했습니다. 특별한 의미가 있나요?",
 	"card_monthly_verse_1": "가장 활발했던 달은",
 	"card_monthly_verse_2": "이 달에 총 플레이 시간의 <span class=\"font-semibold text-orange-400\">{percent}</span>를 보냈습니다",
-	"card_new_map_verse_1": [
-		{
-			"declarations": ["input completed", "input total", "local plural = total: plural"],
-			"match": {
-				"completed=*, total=*": "올해 새로 출시된 <span class=\"text-orange-400\">{total}개의</span> 도전적인 맵 중<br><span class=\"font-semibold text-orange-400\">{completed}개</span>를 클리어했습니다<br>올해 신규 맵의"
-			},
-			"selectors": ["completed", "total"]
-		}
-	],
+	"card_new_map_verse_1": "올해 새로 출시된 <span class=\"text-orange-400\">{total}개의</span> 도전적인 맵 중<br><span class=\"font-semibold text-orange-400\">{completed}개</span>를 클리어했습니다<br>올해 신규 맵의",
 	"card_new_map_verse_2": "이것은 당신이 달성한 완료율이",
 	"card_new_map_verse_4": "이 중에서 특히",
-	"card_new_map_verse_5": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "를 좋아하시나 보네요. 총 <span class=\"font-semibold text-orange-400\">{count}번</span> 클리어했습니다"
-			},
-			"selectors": ["count"]
-		}
-	],
+	"card_new_map_verse_5": "를 좋아하시나 보네요. 총 <span class=\"font-semibold text-orange-400\">{count}번</span> 클리어했습니다",
 	"card_night_owl_verse_1": "특별한 순간이 있었습니다<br><span class=\"font-semibold text-orange-400\">{date}</span>에",
 	"card_night_owl_verse_2": "{time} 동안 <span class=\"font-semibold text-orange-400\">{map}</span>을 클리어했습니다<br>골인할 때는 이미",
 	"card_night_owl_verse_3": "주변은 고요했지만 당신의 열정은 뜨거웠습니다. 집중력과 인내력으로 마지막 관문을 돌파했습니다",
@@ -138,25 +98,9 @@
 	"card_steady_progress_verse_3": "를 얻었습니다. 앞으로도 역경을 헤쳐 나가",
 	"card_steady_progress_verse_4": "더 높은 포인트의 맵에서 빛나시길 기대합니다",
 	"card_team_verse_1": "팀플레이에서는 파트너가 최고의 자산이죠!",
-	"card_team_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "는 최고의 파트너입니다<br>함께 <span class=\"font-semibold text-orange-400\">{count}번</span> 팀 기록을 세웠습니다<br>협력의 빛나는 결과가 마음속에 빛나고 있습니다"
-			},
-			"selectors": ["count"]
-		}
-	],
+	"card_team_verse_2": "는 최고의 파트너입니다<br>함께 <span class=\"font-semibold text-orange-400\">{count}번</span> 팀 기록을 세웠습니다<br>협력의 빛나는 결과가 마음속에 빛나고 있습니다",
 	"card_team_verse_3": "또한,",
-	"card_team_verse_4": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "와도 <span class=\"font-semibold text-orange-400\">{count}번</span> 팀 기록을 세워 최고 파트너 다음의 성과를 냈습니다"
-			},
-			"selectors": ["count"]
-		}
-	],
+	"card_team_verse_4": "와도 <span class=\"font-semibold text-orange-400\">{count}번</span> 팀 기록을 세워 최고 파트너 다음의 성과를 냈습니다",
 	"format_dhms": "d일h시간m분s초",
 	"format_hm": "h시간m분",
 	"format_hms": "h시간m분s초",
@@ -250,31 +194,7 @@
 			"selectors": ["years"]
 		}
 	],
-	"unit_maps": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "{count}개의 맵"
-			},
-			"selectors": ["count"]
-		}
-	],
-	"unit_times": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "{count}회"
-			},
-			"selectors": ["count"]
-		}
-	],
-	"unit_years": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "{count}년"
-			},
-			"selectors": ["count"]
-		}
-	]
+	"unit_maps": "{count}개의 맵",
+	"unit_times": "{count}회",
+	"unit_years": "{count}년"
 }

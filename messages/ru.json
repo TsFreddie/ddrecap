@@ -12,16 +12,7 @@
 	"card_distinct_teammates_verse_2": "{count} разными Tee",
 	"card_distinct_teammates_verse_3": "Поистине мощная команда!",
 	"card_finishes_verse_1": "В этом году вы были неудержимы, всего вы пересекли финишную черту",
-	"card_finishes_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "Из них <span class=\"text-orange-400\">{count} раз</span> это случилось",
-				"plural=one": "Из них <span class=\"text-orange-400\">{count} раз</span> это случилось"
-			},
-			"selectors": ["plural"]
-		}
-	],
+	"card_finishes_verse_2": "Из них <span class=\"text-orange-400\">{count} раз</span> это случилось",
 	"card_finishes_verse_2_period": [
 		{
 			"declarations": ["input period"],
@@ -80,15 +71,7 @@
 	],
 	"card_new_map_verse_2": "Это означает, что ваш процент завершения составил",
 	"card_new_map_verse_4": "Среди этих карт вы особенно любите",
-	"card_new_map_verse_5": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "Вы завершили эту карту <span class=\"font-semibold text-orange-400\">{count} раза</span>"
-			},
-			"selectors": []
-		}
-	],
+	"card_new_map_verse_5": "Вы завершили эту карту <span class=\"font-semibold text-orange-400\">{count} раза</span>",
 	"card_night_owl_verse_1": "Был особенный момент<br><span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Вам потребовалось {time}, чтобы пройти <span class=\"font-semibold text-orange-400\">{map}</span><br>и пересечь финишную черту в",
 	"card_night_owl_verse_3": "Хотя небо темное, ваша страсть горит ярко",

@@ -80,15 +80,7 @@
 	],
 	"card_new_map_verse_2": "Det betyder att du uppnådde en klarandegrad på",
 	"card_new_map_verse_4": "Bland dessa kartor älskar du speciellt",
-	"card_new_map_verse_5": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "Du klarade denna karta <span class=\"font-semibold text-orange-400\">{count} gånger</span>"
-			},
-			"selectors": []
-		}
-	],
+	"card_new_map_verse_5": "Du klarade denna karta <span class=\"font-semibold text-orange-400\">{count} gånger</span>",
 	"card_night_owl_verse_1": "Det var ett speciellt ögonblick<br>den <span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Det tog dig {time} att klara <span class=\"font-semibold text-orange-400\">{map}</span><br>och du korsade mållinjen kl",
 	"card_night_owl_verse_3": "Medan himlen är mörk, brinner din passion klart",
@@ -266,14 +258,5 @@
 			"selectors": ["plural"]
 		}
 	],
-	"unit_years": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"plural=*": "{count} år",
-				"plural=one": "{count} år"
-			},
-			"selectors": ["plural"]
-		}
-	]
+	"unit_years": "{count} år"
 }

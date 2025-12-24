@@ -80,15 +80,7 @@
 	],
 	"card_new_map_verse_2": "Isso significa que você alcançou uma taxa de conclusão de",
 	"card_new_map_verse_4": "Entre esses mapas, você especialmente ama",
-	"card_new_map_verse_5": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "Você finalizou este mapa <span class=\"font-semibold text-orange-400\">{count} vezes</span>"
-			},
-			"selectors": []
-		}
-	],
+	"card_new_map_verse_5": "Você finalizou este mapa <span class=\"font-semibold text-orange-400\">{count} vezes</span>",
 	"card_night_owl_verse_1": "Houve um momento especial<br>em <span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Você levou {time} para completar <span class=\"font-semibold text-orange-400\">{map}</span><br>e cruzou a linha de chegada às",
 	"card_night_owl_verse_3": "Enquanto o céu está escuro, sua paixão queima intensamente",

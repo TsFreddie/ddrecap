@@ -12,15 +12,7 @@
 	"card_distinct_teammates_verse_2": "{count} 位不同的 Tee",
 	"card_distinct_teammates_verse_3": "组成了团队！真是个强大的团队！",
 	"card_finishes_verse_1": "今年你活力满满，战果颇丰<br>总共顺利<span class=\"font-semibold text-orange-400\">冲过了终点</span>",
-	"card_finishes_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "在这其中<br>有<span class=\"text-orange-400\"> {count} 次</span>冲线，都是在"
-			},
-			"selectors": []
-		}
-	],
+	"card_finishes_verse_2": "在这其中<br>有<span class=\"text-orange-400\"> {count} 次</span>冲线，都是在",
 	"card_finishes_verse_2_period": [
 		{
 			"declarations": ["input period"],
@@ -43,48 +35,16 @@
 	"card_level_designer_verse_2": "发布的地图为 {maps}",
 	"card_level_designer_verse_3": "诚挚地感谢你对 DDNet 社区做出的贡献",
 	"card_map_type_verse_1": "你今年最常体验的地图类型是",
-	"card_map_type_verse_2": [
-		{
-			"declarations": ["input count", "input type", "local plural = count: plural"],
-			"match": {
-				"count=*, type=*": "你在 {type} 图中过了<span class=\"font-semibold text-orange-400\"> {count} 次</span>终点"
-			},
-			"selectors": []
-		}
-	],
+	"card_map_type_verse_2": "你在 {type} 图中过了<span class=\"font-semibold text-orange-400\"> {count} 次</span>终点",
 	"card_map_type_verse_fun": "你似乎发掘了 DDNet 的真正玩法",
 	"card_map_verse_1": "你今年过关次数最多的地图是",
-	"card_map_verse_2": [
-		{
-			"declarations": ["input finishes", "local plural = finishes: plural"],
-			"match": {
-				"finishes=*": "你通过了这张图<span class=\"font-semibold text-orange-400\"> {finishes} 次</span>，这张地图对你来说一定有着特别的意义"
-			},
-			"selectors": []
-		}
-	],
+	"card_map_verse_2": "你通过了这张图<span class=\"font-semibold text-orange-400\"> {finishes} 次</span>，这张地图对你来说一定有着特别的意义",
 	"card_monthly_verse_1": "你最常活跃的月份是",
 	"card_monthly_verse_2": "你在这个月度过了<span class=\"font-semibold text-orange-400\"> {percent} </span>的总游戏时长",
-	"card_new_map_verse_1": [
-		{
-			"declarations": ["input completed", "input total", "local plural = total: plural"],
-			"match": {
-				"completed=*, total=*": "在今年新发布的<span class=\"text-orange-400\"> {total} 张</span>充满挑战的地图中<br>你成功完成了<span class=\"font-semibold text-orange-400\"> {completed} 张</span><br>如此算下来，你一共完成今年新图的"
-			},
-			"selectors": []
-		}
-	],
+	"card_new_map_verse_1": "在今年新发布的<span class=\"text-orange-400\"> {total} 张</span>充满挑战的地图中<br>你成功完成了<span class=\"font-semibold text-orange-400\"> {completed} 张</span><br>如此算下来，你一共完成今年新图的",
 	"card_new_map_verse_2": "这意味着你今年新图的完成率为",
 	"card_new_map_verse_4": "在这些地图中，你尤其钟爱",
-	"card_new_map_verse_5": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "总共完成了<span class=\"font-semibold text-orange-400\"> {count} 次</span>"
-			},
-			"selectors": []
-		}
-	],
+	"card_new_map_verse_5": "总共完成了<span class=\"font-semibold text-orange-400\"> {count} 次</span>",
 	"card_night_owl_verse_1": "有这么一个特殊的时刻<br>在<span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "你耗时 {time} 完成了<span class=\"font-semibold text-orange-400\"> {map} </span><br>在你通过终点时已是",
 	"card_night_owl_verse_3": "周围万籁俱寂，而你却热血沸腾。你凭借着自己的专注与毅力，攻克了那最后一道难关",
@@ -138,25 +98,9 @@
 	"card_steady_progress_verse_3": "期待你今后继续披荆斩棘",
 	"card_steady_progress_verse_4": "在更高里程的地图中大放异彩",
 	"card_team_verse_1": "合作游戏中，当属伙伴最为重要",
-	"card_team_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "是你的最佳拍档<br>你们一起总共获得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>团队记录<br>合作的璀璨成果在你们心间熠熠生辉"
-			},
-			"selectors": []
-		}
-	],
+	"card_team_verse_2": "是你的最佳拍档<br>你们一起总共获得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>团队记录<br>合作的璀璨成果在你们心间熠熠生辉",
 	"card_team_verse_3": "另外，你还与",
-	"card_team_verse_4": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "一起获得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>团队记录，仅次于上一位搭档"
-			},
-			"selectors": []
-		}
-	],
+	"card_team_verse_4": "一起获得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>团队记录，仅次于上一位搭档",
 	"format_dhms": "d天h小时m分s秒",
 	"format_hm": "h小时m分钟",
 	"format_hms": "h小时m分s秒",
@@ -250,31 +194,7 @@
 			"selectors": ["years"]
 		}
 	],
-	"unit_maps": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "{count} 张地图"
-			},
-			"selectors": []
-		}
-	],
-	"unit_times": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "{count} 次"
-			},
-			"selectors": []
-		}
-	],
-	"unit_years": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "{count} 年"
-			},
-			"selectors": []
-		}
-	]
+	"unit_maps": "{count} 张地图",
+	"unit_times": "{count} 次",
+	"unit_years": "{count} 年"
 }

@@ -12,15 +12,7 @@
 	"card_distinct_teammates_verse_2": "{count} 位不同的 Tee",
 	"card_distinct_teammates_verse_3": "組成了團隊！真是個強大的團隊！",
 	"card_finishes_verse_1": "今年你活力滿滿，戰果頗豐<br>總共順利<span class=\"font-semibold text-orange-400\">衝過了終點</span>",
-	"card_finishes_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "在這其中<br>有<span class=\"text-orange-400\"> {count} 次</span>衝線，都是在"
-			},
-			"selectors": ["count"]
-		}
-	],
+	"card_finishes_verse_2": "在這其中<br>有<span class=\"text-orange-400\"> {count} 次</span>衝線，都是在",
 	"card_finishes_verse_2_period": [
 		{
 			"declarations": ["input period"],
@@ -43,48 +35,16 @@
 	"card_level_designer_verse_2": "釋出的地圖為 {maps}",
 	"card_level_designer_verse_3": "誠摯地感謝你對 DDNet 社群做出的貢獻",
 	"card_map_type_verse_1": "你今年最常體驗的地圖型別是",
-	"card_map_type_verse_2": [
-		{
-			"declarations": ["input count", "input type", "local plural = count: plural"],
-			"match": {
-				"count=*, type=*": "你在 {type} 圖中過了<span class=\"font-semibold text-orange-400\"> {count} 次</span>終點"
-			},
-			"selectors": ["count", "type"]
-		}
-	],
+	"card_map_type_verse_2": "你在 {type} 圖中過了<span class=\"font-semibold text-orange-400\"> {count} 次</span>終點",
 	"card_map_type_verse_fun": "你似乎發掘了 DDNet 的真正玩法",
 	"card_map_verse_1": "你今年過關次數最多的地圖是",
-	"card_map_verse_2": [
-		{
-			"declarations": ["input finishes", "local plural = finishes: plural"],
-			"match": {
-				"finishes=*": "你通過了這張圖<span class=\"font-semibold text-orange-400\"> {finishes} 次</span>，這張地圖對你來說一定有著特別的意義"
-			},
-			"selectors": ["finishes"]
-		}
-	],
+	"card_map_verse_2": "你通過了這張圖<span class=\"font-semibold text-orange-400\"> {finishes} 次</span>，這張地圖對你來說一定有著特別的意義",
 	"card_monthly_verse_1": "你最常活躍的月份是",
 	"card_monthly_verse_2": "你在這個月度過了<span class=\"font-semibold text-orange-400\"> {percent} </span>的總遊戲時長",
-	"card_new_map_verse_1": [
-		{
-			"declarations": ["input completed", "input total", "local plural = total: plural"],
-			"match": {
-				"completed=*, total=*": "在今年新發布的<span class=\"text-orange-400\"> {total} 張</span>充滿挑戰的地圖中<br>你成功完成了<span class=\"font-semibold text-orange-400\"> {completed} 張</span><br>如此算下來，你一共完成今年新圖的"
-			},
-			"selectors": ["completed", "total"]
-		}
-	],
+	"card_new_map_verse_1": "在今年新發布的<span class=\"text-orange-400\"> {total} 張</span>充滿挑戰的地圖中<br>你成功完成了<span class=\"font-semibold text-orange-400\"> {completed} 張</span><br>如此算下來，你一共完成今年新圖的",
 	"card_new_map_verse_2": "這意味著你今年新圖的完成率為",
 	"card_new_map_verse_4": "在這些地圖中，你尤其鍾愛",
-	"card_new_map_verse_5": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "總共完成了<span class=\"font-semibold text-orange-400\"> {count} 次</span>"
-			},
-			"selectors": ["count"]
-		}
-	],
+	"card_new_map_verse_5": "總共完成了<span class=\"font-semibold text-orange-400\"> {count} 次</span>",
 	"card_night_owl_verse_1": "有這麼一個特殊的時刻<br>在<span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "你耗時 {time} 完成了<span class=\"font-semibold text-orange-400\"> {map} </span><br>在你透過終點時已是",
 	"card_night_owl_verse_3": "周圍萬籟俱寂，而你卻熱血沸騰。你憑藉著自己的專注與毅力，攻克了那最後一道難關",
@@ -138,25 +98,9 @@
 	"card_steady_progress_verse_3": "期待你今後繼續披荊斬棘",
 	"card_steady_progress_verse_4": "在更高分數的地圖中大放異彩",
 	"card_team_verse_1": "合作遊戲中，當屬夥伴最為重要",
-	"card_team_verse_2": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "是你的最佳拍檔<br>你們一起總共獲得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>團隊記錄<br>合作的璀璨成果在你們心間熠熠生輝"
-			},
-			"selectors": ["count"]
-		}
-	],
+	"card_team_verse_2": "是你的最佳拍檔<br>你們一起總共獲得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>團隊記錄<br>合作的璀璨成果在你們心間熠熠生輝",
 	"card_team_verse_3": "另外，你還與",
-	"card_team_verse_4": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "一起獲得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>團隊記錄，僅次於上一位搭檔"
-			},
-			"selectors": ["count"]
-		}
-	],
+	"card_team_verse_4": "一起獲得了<span class=\"font-semibold text-orange-400\"> {count} 次</span>團隊記錄，僅次於上一位搭檔",
 	"format_dhms": "d天h小時m分s秒",
 	"format_hm": "h小時m分鐘",
 	"format_hms": "h小時m分s秒",
@@ -250,31 +194,7 @@
 			"selectors": ["years"]
 		}
 	],
-	"unit_maps": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "{count} 張地圖"
-			},
-			"selectors": ["count"]
-		}
-	],
-	"unit_times": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "{count} 次"
-			},
-			"selectors": ["count"]
-		}
-	],
-	"unit_years": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "{count} 年"
-			},
-			"selectors": ["count"]
-		}
-	]
+	"unit_maps": "{count} 張地圖",
+	"unit_times": "{count} 次",
+	"unit_years": "{count} 年"
 }

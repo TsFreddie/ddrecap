@@ -80,15 +80,7 @@
 	],
 	"card_new_map_verse_2": "Це означає, що ваш відсоток завершення склав",
 	"card_new_map_verse_4": "Серед цих карт ви особливо любите",
-	"card_new_map_verse_5": [
-		{
-			"declarations": ["input count", "local plural = count: plural"],
-			"match": {
-				"count=*": "Ви завершили цю карту <span class=\"font-semibold text-orange-400\">{count} рази</span>"
-			},
-			"selectors": []
-		}
-	],
+	"card_new_map_verse_5": "Ви завершили цю карту <span class=\"font-semibold text-orange-400\">{count} рази</span>",
 	"card_night_owl_verse_1": "Був особливий момент<br><span class=\"font-semibold text-orange-400\">{date}</span>",
 	"card_night_owl_verse_2": "Вам знадобилося {time}, щоб пройти <span class=\"font-semibold text-orange-400\">{map}</span><br>і перетнути фінішну лінію о",
 	"card_night_owl_verse_3": "Хоча небо темне, ваша пристрасть палає яскраво",
