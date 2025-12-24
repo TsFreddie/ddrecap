@@ -1168,9 +1168,7 @@
 										</p>
 										<div class="flex items-center justify-center gap-2">
 											<span>{m.page_loading()}</span>
-											<span class="w-[3.5rem] text-center"
-												>{Math.round(loadingProgress * 100)}%</span
-											>
+											<span class="w-14 text-center">{Math.round(loadingProgress * 100)}%</span>
 										</div>
 										<div
 											class="h-5 w-full overflow-hidden rounded border border-sky-700 bg-sky-900"
@@ -1379,7 +1377,6 @@
 {/key}
 
 <style>
-	/* Prevent text selection on the entire page except for input elements */
 	* {
 		-webkit-user-select: none;
 		-moz-user-select: none;
@@ -1387,13 +1384,7 @@
 		user-select: none;
 	}
 
-	/* Allow text selection for input elements and their content */
-	input,
-	input *,
-	textarea,
-	textarea *,
-	[contenteditable],
-	[contenteditable] * {
+	input {
 		-webkit-user-select: text;
 		-moz-user-select: text;
 		-ms-user-select: text;
