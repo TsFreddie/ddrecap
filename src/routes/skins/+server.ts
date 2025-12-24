@@ -9,7 +9,7 @@ export const GET = async ({ url }) => {
 		return new Response(JSON.stringify(skinData.map), {
 			headers: {
 				'Content-Type': 'application/json',
-				'cache-control': 'public, max-age=21600'
+				'cache-control': 'public, max-age=1209600'
 			}
 		});
 	}
