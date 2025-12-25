@@ -55,6 +55,7 @@
 	let currentCard = $state(-1);
 	let scrollRoot = $state(null) as HTMLDivElement | null;
 	let showContent = $state(true);
+	let isShareCard = $derived(totalCards && currentCard === totalCards.cards.length - 1);
 
 	let referenceScrollTop = 0;
 	let scrollVersion = 0;
@@ -656,15 +657,12 @@
 		if (!snowAnimation) {
 			snowAnimation = new SnowWebGL();
 			snowAnimation.init(snowCanvas);
-			console.log('Snow animation initialized');
 		}
 
 		// Control start/stop based on card position
 		if (isSecondToLastCard) {
-			console.log('Starting snow animation - isSecondToLastCard:', isSecondToLastCard);
 			snowAnimation.start();
 		} else {
-			console.log('Stopping snow animation - isSecondToLastCard:', isSecondToLastCard);
 			snowAnimation.stop();
 		}
 	});
@@ -1025,7 +1023,9 @@
 
 			{#if data.player && cardReady}
 				<div
-					class="absolute top-0 left-0 z-20 max-w-[calc(100%-72px)] rounded-br-xl bg-blue-600 shadow-lg shadow-blue-800/60 px-4 py-2 font-semibold -motion-translate-x-in-100 motion-delay-700 motion-duration-700"
+					in:slide={{ axis: 'y', duration: 700, delay: 700 }}
+					class="absolute top-0 left-0 z-20 max-w-[calc(100%-72px)] rounded-br-xl bg-blue-600 shadow-lg shadow-blue-800/60 px-4 py-2 font-semibold transition-transform duration-700 ease-in-out"
+					class:-translate-y-100={isShareCard}
 				>
 					{m.page_ddnet_recap_for({ year: data.year, player: data.player.name })}
 				</div>
@@ -1257,13 +1257,12 @@
 			</div>
 		{/if}
 
-		<!-- Coffee button moved to same layer as timezone -->
 		<a
 			href={getLocale() == 'zh-CN'
 				? `https://ifdian.net/order/create?user_id=86452e60dba811ed862c5254001e7c00&remark=${encodeURIComponent(`为 TWCN ${CURRENT_YEAR} 年度总结打赏`)}&affiliate_code=ddnet`
 				: 'https://ko-fi.com/tsfreddie'}
 			class="absolute z-100 right-0 top-0 rounded-bl-xl bg-purple-600 px-3 py-2 text-white hover:bg-purple-800 hover:duration-200 shadow-lg shadow-purple-800/40 flex items-center gap-2 group text-sm transition-all duration-700 ease-in-out"
-			class:translate-x-[calc(100%-42px)]={cardReady}
+			class:translate-x-[calc(100%-42px)]={cardReady && !isShareCard}
 			title="Buy me a coffee"
 			target="_blank"
 		>
@@ -1282,7 +1281,11 @@
 					d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"
 				/><path d="M6 2v2" /></svg
 			>
-			<span class="transition-opacity duration-300 whitespace-nowrap" class:opacity-0={cardReady}>
+			<span
+				class="transition-opacity duration-300 whitespace-nowrap"
+				class:opacity-0={cardReady && !isShareCard}
+				class:delay-300={isShareCard}
+			>
 				{m.page_donate()}
 			</span>
 		</a>
