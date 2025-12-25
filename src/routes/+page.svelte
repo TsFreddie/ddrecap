@@ -1204,6 +1204,10 @@
 											type="text"
 											class="w-full rounded border border-zinc-500 bg-zinc-600 px-3 py-2 text-sm font-normal shadow-md md:flex-1"
 											bind:value={gotoName}
+											autocomplete="off"
+											autocorrect="off"
+											autocapitalize="off"
+											spellcheck="false"
 											onkeydown={(ev) => {
 												if (ev.key == 'Enter') {
 													if (gotoName) goForName(gotoName);
