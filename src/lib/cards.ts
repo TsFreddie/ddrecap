@@ -329,7 +329,7 @@ const generateCardsInternal = async (
 	const tz = data.tz;
 
 	const cards: CardData[] = [];
-	const allTitles: { bg: string; color: string; text: string }[] = [];
+	const allTitles: { bg: string; color: string; text: string; exclude?: boolean }[] = [];
 
 	if (d.tp && d.lp != null && d.tp - d.lp > 0) {
 		let firstWord;
@@ -591,8 +591,15 @@ const generateCardsInternal = async (
 
 		const veteranYears = Math.floor(d.ff[2] / 31557600 / 5) * 5;
 		if (veteranYears >= 5) {
-			titles.push({ bg: '#ffba08', color: '#000', text: m.title_veteran({ years: veteranYears }) });
+			titles.push({
+				bg: '#ffba08',
+				color: '#000',
+				text: m.title_veteran({ years: veteranYears }),
+				exclude: true
+			});
 		}
+
+		allTitles.push(...titles);
 
 		let years = (d.ff[2] / 31557600).toFixed(1);
 		if (years.endsWith('.0')) {
@@ -1927,7 +1934,7 @@ const generateCardsInternal = async (
 		background: '/assets/yearly/end.png'
 	});
 
-	if (allTitles.length == 0) {
+	if (allTitles.filter((t) => !t.exclude).length == 0) {
 		allTitles.push({ bg: '#8338ec', color: '#fff', text: m.title_unnamed_hero() });
 	}
 
