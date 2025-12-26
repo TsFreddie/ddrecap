@@ -4,6 +4,7 @@ export type DDStatsProfile = { playtime?: number[]; skin?: { n?: string; b?: num
 
 export const GET = async ({ params, fetch }) => {
 	const name = params.name;
+
 	const profile = await (
 		await fetch(`https://ddstats.tw/player/json?player=${encodeURIComponent(name)}`, {
 			signal: AbortSignal.timeout(5000)

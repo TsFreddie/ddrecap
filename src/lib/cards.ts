@@ -100,7 +100,7 @@ export const generateCards = async (
 		tz: string;
 		year: number;
 	},
-	profile: DDStatsProfile,
+	profile: Promise<DDStatsProfile> | undefined,
 	d: Partial<YearlyData>,
 	m: typeof messages,
 	locale: string,
@@ -130,7 +130,15 @@ export const generateCards = async (
 		progress(1);
 	};
 
-	const cards = await generateCardsInternal(getPlayerSkin, maps, data, profile, d, m, locale);
+	const cards = await generateCardsInternal(
+		getPlayerSkin,
+		maps,
+		data,
+		profile ? await profile : {},
+		d,
+		m,
+		locale
+	);
 	await runTasks();
 	return cards;
 };

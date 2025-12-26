@@ -21,6 +21,7 @@
 	import { SnowWebGL } from '$lib/snow.js';
 	import type { Action } from 'svelte/action';
 	import type { DDStatsProfile } from './ddstats/[name]/+server.js';
+	import { getSkinData } from '$lib/stores/skins.js';
 
 	let pageKey = $state(0);
 
@@ -154,20 +155,25 @@
 	const refFontSize = 46;
 	let fontSize = $state(refFontSize);
 	let profile: DDStatsProfile = $state({});
+	let profilePromise: Promise<DDStatsProfile> | undefined;
 	let skinLoaded = $state(false);
 
 	const updateProfile = async () => {
 		profile = {};
-		skinLoaded = false;
-		if (data.player) {
-			try {
-				profile = await (
-					await fetch(`/ddstats/${data.player.name}`, { signal: AbortSignal.timeout(10000) })
-				).json();
-			} catch (e) {
-				console.log(e);
+		profilePromise = (async () => {
+			skinLoaded = false;
+			if (data.player) {
+				try {
+					return await (
+						await fetch(`/ddstats/${data.player.name}`, { signal: AbortSignal.timeout(10000) })
+					).json();
+				} catch (e) {
+					console.log(e);
+				}
 			}
-		}
+			return {};
+		})();
+		profile = await profilePromise;
 		skinLoaded = true;
 	};
 
@@ -196,6 +202,8 @@
 			fontSize = refFontSize;
 		}
 
+		// trigger skin cache early
+		getSkinData();
 		updateProfile();
 	});
 
@@ -340,9 +348,17 @@
 				`%c📦 ${name}'s player data is available to download as a sqlite database via \`window.DownloadSqlite()\``,
 				'color: #10b981; font-size: 1em;'
 			);
-			totalCards = await generateCards(maps!, data, profile, d, m, getLocale(), (percent) => {
-				loadingProgress = 0.9 + percent * 0.1;
-			});
+			totalCards = await generateCards(
+				maps!,
+				data,
+				profilePromise,
+				d,
+				m,
+				getLocale(),
+				(percent) => {
+					loadingProgress = 0.9 + percent * 0.1;
+				}
+			);
 			loadingProgress = 1;
 		} catch (e) {
 			error = true;
