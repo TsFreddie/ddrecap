@@ -45,8 +45,6 @@ export type YearlyData = {
 	map: string[];
 	/** run time */
 	rt: number;
-	/** tracker time */
-	tt: number;
 	/** server finishes [server, finishes, other servers] */
 	sf: [string, number, string];
 	/** finishes window [start, count, maps] */
@@ -459,17 +457,6 @@ GROUP BY t.ID ORDER BY Num DESC LIMIT 1;`,
 		yearEnd
 	])?.[0] as number;
 
-	/** tracker time */
-	let tt = 0;
-	try {
-		const tracker = (await (await fetch(`/ddstats/${encodeURIComponent(name)}`)).json()) as {
-			playtime: number[];
-		};
-		tt = tracker.playtime.reduce((a, b) => a + b, 0);
-	} catch (e) {
-		console.log(e);
-	}
-
 	/** server finishes */
 	const serverFinishes = all(
 		`
@@ -586,7 +573,6 @@ FROM race JOIN YearMapTimes ON race.Map = YearMapTimes.Map AND race.Timestamp < 
 		bt: bt ? [bt[0], bt[1], bt[2].split('\u0003'), bt[3]] : undefined,
 		map,
 		rt,
-		tt,
 		sf,
 		fw,
 		bi,

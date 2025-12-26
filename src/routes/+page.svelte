@@ -20,6 +20,7 @@
 	import { genPose } from '$lib/pose.js';
 	import { SnowWebGL } from '$lib/snow.js';
 	import type { Action } from 'svelte/action';
+	import type { DDStatsProfile } from './ddstats/[name]/+server.js';
 
 	let pageKey = $state(0);
 
@@ -152,16 +153,16 @@
 	const maxWidth = rootFontSize * 40;
 	const refFontSize = 46;
 	let fontSize = $state(refFontSize);
-	let skin: { n?: string; b?: number; f?: number } = $state({});
+	let profile: DDStatsProfile = $state({});
 	let skinLoaded = $state(false);
 
-	const updateSkin = async () => {
-		skin = {};
+	const updateProfile = async () => {
+		profile = {};
 		skinLoaded = false;
 		if (data.player) {
 			try {
-				skin = await (
-					await fetch(`/skins?name=${data.player.name}`, { signal: AbortSignal.timeout(10000) })
+				profile = await (
+					await fetch(`/ddstats/${data.player.name}`, { signal: AbortSignal.timeout(10000) })
 				).json();
 			} catch (e) {
 				console.log(e);
@@ -195,11 +196,11 @@
 			fontSize = refFontSize;
 		}
 
-		updateSkin();
+		updateProfile();
 	});
 
 	afterNavigate(async () => {
-		updateSkin();
+		updateProfile();
 	});
 
 	let observing = false;
@@ -339,7 +340,7 @@
 				`%c📦 ${name}'s player data is available to download as a sqlite database via \`window.DownloadSqlite()\``,
 				'color: #10b981; font-size: 1em;'
 			);
-			totalCards = await generateCards(maps!, data, skin, d, m, getLocale(), (percent) => {
+			totalCards = await generateCards(maps!, data, profile, d, m, getLocale(), (percent) => {
 				loadingProgress = 0.9 + percent * 0.1;
 			});
 			loadingProgress = 1;
@@ -869,7 +870,7 @@
 							class:motion-rotate-out-[-12deg]={!showContent && id != currentCard}
 						>
 							<TeeRender
-								skin={card.leftTeeSkin == 'player' ? skin : card.leftTeeSkin}
+								skin={card.leftTeeSkin == 'player' ? profile.skin : card.leftTeeSkin}
 								hide={id != currentCard}
 								className="h-full w-full"
 								pose={leftTeePose}
@@ -886,7 +887,7 @@
 							class:motion-rotate-out-[12deg]={!showContent && id != currentCard}
 						>
 							<TeeRender
-								skin={card.rightTeeSkin == 'player' ? skin : card.rightTeeSkin}
+								skin={card.rightTeeSkin == 'player' ? profile.skin : card.rightTeeSkin}
 								hide={id != currentCard}
 								className="h-full w-full"
 								pose={rightTeePose}
@@ -942,7 +943,7 @@
 				class:motion-rotate-in-[-12deg]={id == currentCard}
 				class:motion-rotate-out-[-12deg]={id != currentCard}
 			>
-				<TeeRender {skin} className="h-full w-full" pose={leftTeePose} />
+				<TeeRender skin={profile.skin} className="h-full w-full" pose={leftTeePose} />
 			</div>
 			<div
 				class="motion-duration-500 motion-delay-1500 absolute right-[2.5%] bottom-[2.5%] flex h-[30%] w-[30%]"
@@ -1160,7 +1161,7 @@
 											<div
 												class="motion-translate-x-in-[-200%] motion-rotate-in-12 motion-duration-1000 motion-delay-100 flex items-center justify-center gap-8"
 											>
-												<TeeRender className="relative h-20 w-20" {skin} />
+												<TeeRender className="relative h-20 w-20" skin={profile.skin} />
 												<div class="font-semibold text-zinc-300">
 													<div>{data.player.name}</div>
 													<div class="font-normal">

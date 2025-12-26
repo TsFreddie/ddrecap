@@ -16,6 +16,7 @@ import type { YearlyData } from './query-engine.worker';
 import { createRng, stringHash } from './pose';
 import { getSkinData } from './stores/skins';
 import normalSkins from '$lib/normal-skins.json';
+import type { DDStatsProfile } from '../routes/ddstats/[name]/+server';
 
 export interface CardTextItem {
 	type: 't';
@@ -99,7 +100,7 @@ export const generateCards = async (
 		tz: string;
 		year: number;
 	},
-	skin: Skin,
+	profile: DDStatsProfile,
 	d: Partial<YearlyData>,
 	m: typeof messages,
 	locale: string,
@@ -129,7 +130,7 @@ export const generateCards = async (
 		progress(1);
 	};
 
-	const cards = await generateCardsInternal(getPlayerSkin, maps, data, skin, d, m, locale);
+	const cards = await generateCardsInternal(getPlayerSkin, maps, data, profile, d, m, locale);
 	await runTasks();
 	return cards;
 };
@@ -153,7 +154,7 @@ const generateCardsInternal = async (
 		tz: string;
 		year: number;
 	},
-	skin: Skin,
+	profile: DDStatsProfile,
 	d: Partial<YearlyData>,
 	m: typeof messages,
 	locale: string
@@ -377,7 +378,6 @@ const generateCardsInternal = async (
 		// 今年分数
 		allTitles.push(...titles);
 		if (d.lp == 0) {
-			console.log(skin);
 			cards.push({
 				titles,
 				content: [
@@ -592,8 +592,8 @@ const generateCardsInternal = async (
 		const veteranYears = Math.floor(d.ff[2] / 31557600 / 5) * 5;
 		if (veteranYears >= 5) {
 			titles.push({
-				bg: '#ffba08',
-				color: '#000',
+				bg: '#6b21a8',
+				color: '#fff',
 				text: m.title_veteran({ years: veteranYears }),
 				exclude: true
 			});
@@ -868,16 +868,17 @@ const generateCardsInternal = async (
 
 	if (d.rt) {
 		// 过图时间
+		const tt = profile.playtime ? profile.playtime.reduce((a, b) => a + b, 0) : 0;
 		const titles = [];
-		if ((d.tt || d.rt) >= 365 * 24 * 60 * 60) {
+		if ((tt || d.rt) >= 365 * 24 * 60 * 60) {
 			titles.push({ bg: '#85BDA6', color: '#000', text: m.title_shared_name() });
 		}
 
-		if ((d.tt || d.rt) >= 900 * 3600) {
+		if ((tt || d.rt) >= 900 * 3600) {
 			titles.push({ bg: '#3E885B', color: '#fff', text: m.title_fulltime_player() });
 		}
 
-		if (d.tt && d.tt < d.rt * 0.5) {
+		if (tt && tt < d.rt * 0.5) {
 			titles.push({ bg: '#BEDCFE', color: '#000', text: m.title_runtime_error() });
 		}
 
@@ -903,13 +904,13 @@ const generateCardsInternal = async (
 			mapper: mapFormat('Withered Rose')
 		};
 
-		if (d.tt) {
+		if (tt) {
 			card.content!.push({
 				type: 't',
-				text: m.card_runtime_verse_extra({ duration: durationFull(d.tt, locale, m) })
+				text: m.card_runtime_verse_extra({ duration: durationFull(tt, locale, m) })
 			});
 
-			if (d.tt < d.rt * 0.5) {
+			if (tt < d.rt * 0.5) {
 				card.content!.push({
 					type: 't',
 					text: m.card_runtime_verse_weird()
