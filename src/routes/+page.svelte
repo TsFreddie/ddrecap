@@ -1242,11 +1242,13 @@
 										</button>
 										<p class="text-sm">
 											{m.page_database_time({
-												date: datetime(
-													new Date(data.databaseTime * 1000),
-													data.tz ?? DateTime.local().zoneName,
-													getLocale()
-												)
+												date: browser
+													? datetime(
+															new Date(data.databaseTime * 1000),
+															data.tz ?? DateTime.local().zoneName,
+															getLocale()
+														)
+													: ''
 											})}
 										</p>
 									</div>
