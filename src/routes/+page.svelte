@@ -10,8 +10,8 @@
 	import { onMount, type Snippet } from 'svelte';
 	import TeeRender from '$lib/components/TeeRender.svelte';
 	import * as m from '$lib/paraglide/messages';
-	import type { YearlyData } from '$lib/query-engine.worker';
-	import QueryWorker from '$lib/query-engine.worker?worker';
+	import type { YearlyData } from '$lib/query/engine';
+	import QueryWorker from '$lib/query/client.worker?worker';
 	import { DateTime } from 'luxon';
 	import { generateCards, type CardData } from '$lib/cards';
 	import { getLocale, setLocale, type Locale } from '$lib/paraglide/runtime.js';

@@ -1,7 +1,8 @@
-import { unpack } from 'msgpackr';
-import sql, { type BindParams } from 'sql.js';
+import type { MapList } from '$lib/server/fetches/maps';
 import { DateTime, Duration } from 'luxon';
-import type { MapList } from './server/fetches/maps';
+import { unpack } from 'msgpackr';
+
+type BindParams = (number | string | null)[] | Record<string, number | string | null>;
 
 const b2s = (bytes: Uint8Array) =>
 	bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
@@ -72,6 +73,7 @@ export type YearlyData = {
 };
 
 export const query = async (
+	Database: any,
 	maps: MapList,
 	name: string,
 	year: number,
@@ -79,9 +81,6 @@ export const query = async (
 	dbTime: number,
 	progress: (progress: number) => void
 ) => {
-	const SQL = await sql({
-		locateFile: (file) => `/assets/${file}`
-	});
 	progress(20);
 	const playerData = await fetch(`/download/${encodeURIComponent(name)}?v=${dbTime}`);
 	progress(30);
@@ -94,7 +93,7 @@ export const query = async (
 
 	const mapLookup: Record<string, MapList[0]> = {};
 
-	const db = new SQL.Database();
+	const db = new Database();
 	db.run(`
 		CREATE TABLE race (
 			Map TEXT,
@@ -653,12 +652,4 @@ ORDER BY Timestamp;`) as [number, number][];
 		db: db.export(),
 		data: data
 	};
-};
-
-onmessage = async (e) => {
-	const { maps, name, year, tz, dbTime } = e.data;
-	const result = await query(maps, name, year, tz, dbTime, (progress) => {
-		postMessage({ type: 'progress', progress });
-	});
-	postMessage({ type: 'result', result });
 };

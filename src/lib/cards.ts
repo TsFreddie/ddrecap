@@ -12,7 +12,7 @@ import {
 	time
 } from './helpers';
 import type { m as messages } from './paraglide/messages';
-import type { YearlyData } from './query-engine.worker';
+import type { YearlyData } from './query/engine';
 import { createRng, stringHash } from './pose';
 import { getSkinData } from './stores/skins';
 import normalSkins from '$lib/normal-skins.json';
