@@ -142,7 +142,14 @@ export const getPlayerSkinBatch = async (
 			url.searchParams.append('n', player);
 		}
 
-		const skin = await (await fetch(url)).json();
+		const skin = (await (await fetch(url)).json()).map(
+			(s: { n?: string; b?: number; f?: number }) => {
+				if (!s.n || s.n === 'x-spec') {
+					return { n: 'default' };
+				}
+				return s;
+			}
+		);
 
 		return skin;
 	} catch (e) {
