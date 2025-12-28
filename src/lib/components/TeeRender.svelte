@@ -22,14 +22,6 @@
 		/** Target url of the skin, if not provided, either `name` or `url` must be provided */
 		url = '',
 		skin = {} as { n?: string; b?: number; f?: number },
-		// /** Target name of the skin, if not provided, either `name` or `url` must be provided */
-		// name = '',
-		// /** The body color of the skin, null means no custom body color */
-		// body = null as number | null,
-		// /** The feet color of the skin, null means no custom feet color */
-		// feet = null as number | null,
-		/** Whether to use the default skin, otherwise `x_spec` will be used by default */
-		useDefault = false,
 		/** extra classes */
 		className = '',
 		/** don't render the html elements but still preload the images */
@@ -59,16 +51,14 @@
 
 	let abortController: AbortController | null = null;
 
-	const fallbackSkin = $derived(
-		useDefault ? (body && feet ? DEFAULT_SKIN_GS : DEFAULT_SKIN) : X_SPEC_SKIN
-	);
+	const fallbackSkin = $derived(body && feet ? DEFAULT_SKIN_GS : DEFAULT_SKIN);
 
 	const updateSkin = async () => {
 		const thisLoadingSkin = url || name;
 		const thisUrl = url;
 		const thisName = name;
 
-		if (thisLoadingSkin == loadingSkin) {
+		if (thisLoadingSkin === loadingSkin) {
 			return;
 		}
 
@@ -90,8 +80,7 @@
 		abortController = controller;
 
 		const response = await queue().push(async () => {
-			const targetUrl = thisUrl || (await getSkinUrl(thisName));
-			if (!targetUrl) return null;
+			const targetUrl = thisUrl || (await getSkinUrl(thisName)) || fallbackSkin;
 
 			const url = new URL(targetUrl, window.location.href);
 			if (body && feet) {
