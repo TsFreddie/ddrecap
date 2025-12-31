@@ -14,3 +14,11 @@ The 2025 version of the project is now mostly self-contained, the only external 
 All other data is extracted from the official public database.
 
 The app will download the entire history of a player, import them to a wasm version of sqlite, then query the player data in-browser. This allows the host database to be smaller due to fewer indexes.
+
+### TODO for 2026:
+
+- [ ] Exclude BONUS maps in race time `d.rt` data.
+- [ ] Fix badge colors:
+  - Running man
+  - To the moon
+  - Praise the sun
