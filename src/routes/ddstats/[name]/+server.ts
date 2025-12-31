@@ -25,7 +25,7 @@ export const GET = async ({ params, fetch }) => {
 
 	let skin = {
 		n: profile.profile.skin_name,
-		c: profile.profile.skin_color_body,
+		b: profile.profile.skin_color_body,
 		f: profile.profile.skin_color_feet
 	};
 
