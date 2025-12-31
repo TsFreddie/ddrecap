@@ -17,6 +17,8 @@ The app will download the entire history of a player, import them to a wasm vers
 
 ### TODO for 2026:
 
+Here lists some TODOs for the next version of DDRecap. If you have any ideas, feel free to open an issue or PR.
+
 - [ ] Exclude BONUS maps in race time `d.rt` data.
 - [ ] Fix badge colors:
   - Running man
